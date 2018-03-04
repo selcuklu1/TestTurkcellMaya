@@ -100,8 +100,11 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true)
+                //evrak içerik ekran kontrol
                 .içeriktenEvrakTeslimAlHavaleEt()
+                //havale ekran kotnrol
                 .dagitimBilgileriBirimDoldur2(birim)
+                //birim kontrolü
                 .dosyaEkle()
                 .havaleDosyaEkle(pathToFileText)
                 .havaleDosyaEkleDosyaAdiKontrol(fileName)
@@ -187,9 +190,14 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .evrakSec(konu)
                 .evrakOnizlemeKontrol()
                 .onizlemeTeslimAlveHavaleYap()
+                //havale ekran kontrol
                 .havaleIslemleriKisiDoldur(kisi)
-                //geregi bilgi convert
+                //kisi kontrolü
+                //gerek opsiyon kontrolü
+                //kisi bilgi set et
+                //bilgi opsiyon kontrolü
                 .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                //onaylayan kontrolü
                 .onizlemeDosyaEkle()
                 .onizlemeHavaleDosyaEkle(pathToFileText)
                 .onizlemeHavaleDosyaEkleDosyaAdiKontrol(fileName)
@@ -207,9 +215,13 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         havaleOnayınaGelenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true)
+                //icerik sayfa kontrol
                 .icerikHavaleOnay()
+                //havale onayda kisi kontrolü
                 .dagitimBilgileriBirimDoldur2(birim)
-                //geregi bilgi convert
+                //birim kontrolü
+                //bilgi opsyion sec
+                //bilgi opsiyon kontrolü
                 .dagitimOnayla()
                 .dagitimOnaylaEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -371,10 +383,18 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .evrakSec(konu3)
                 .evrakSecToplu2(konu1, konu2, konu3, true)
                 .havaleIslemleriKisiDetails(kisi, kisiDetails)
+                //kisi eklendiği
+                //kisi opsiyon gerek
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                //birim eklendiği
+                //birim opsiyon gerek
                 .havaleKisiListesi(kullanici)
-                .birimTopluTeslimAlGonder();
+                //kisilistesi eklendiği
+                //kisi listesi opsiyon
+                .birimTopluTeslimAlGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
 
 
         birimHavaleEdilenlerPage
@@ -394,12 +414,20 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu1)
                 .evrakNoIleEvrakSec(konu2)
                 .evrakNoIleEvrakSec(konu3);
+//        Konu
+//        Geldiği yer : seçilen kurum (G)
+//                Kayıt tarihi /sayı
+//        Evrak tarihi / no
 
         gelenEvraklarPage
                 .openPage()
                 .evrakGeldigiGorme(konu1)
                 .evrakGeldigiGorme(konu2)
                 .evrakGeldigiGorme(konu3);
+//        Konu
+//        Geldiği yer : seçilen kurum
+//        Kayıt tarihi /sayı
+//        Evrak tarihi / no / Gereği için
 
         login(ztekin);
 
@@ -408,6 +436,10 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .evrakGeldigiGorme(konu1)
                 .evrakGeldigiGorme(konu2)
                 .evrakGeldigiGorme(konu3);
+//        Konu
+//        Geldiği yer : seçilen kurum
+//        Kayıt tarihi /sayı
+//        Evrak tarihi / no / Gereği için
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -479,7 +511,9 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .openPage()
                 .evrakSec(konu)
                 .evrakTeslimAlHavaletEt()
+                //havale ekran kontrolü
                 .havaleKisiListesi(kullanici)
+                //kullanıcı listesi kontrolü
                 .birimTeslimAlGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 

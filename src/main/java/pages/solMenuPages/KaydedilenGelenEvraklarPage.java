@@ -171,7 +171,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         tblEvraklar.filterBy(text(konu2)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
         btnTopluHavale.get(0).click();
-
+        takeScreenshot();
         return this;
     }
 
