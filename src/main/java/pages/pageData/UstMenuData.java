@@ -105,10 +105,13 @@ public class UstMenuData {
     }
 
     public enum KullaniciIslemleri implements UstMenuDataInterface {
+        KullaniciIcerikSablonlari("Kullanıcı İçerik Şablonları"),
         YonetimHavuzuYonetimi("Yönetim Havuzu Yönetimi"),
         KullaniciYonetimi("Kullanıcı Yönetimi"),
         KullaniciListesiYonetimi("Kullanıcı Listesi Yönetimi"),
         RolYonetimi("Rol Yönetimi");
+
+
 
         private String name;
         private String groupName = UstMenuGroup.KullaniciIslemleri.getName();
@@ -190,7 +193,7 @@ public class UstMenuData {
 
     public enum Raporlar implements UstMenuDataInterface {
         EvrakBeklemeSuresiRaporu("Evrak Bekleme Süresi Raporu"),
-        IptalEdilenEvraklarRaporu("İptal Edilen Evraklar Raporu\t"),
+        IptalEdilenEvraklarRaporu("İptal Edilen Evraklar Raporu"),
         VekaletRaporu("Vekalet Raporu"),
         HavaleEdilenEvrakRaporu("Havale Edilen Evrak Raporu"),
         BelgeDogrulama("Belge Doğrulama"),
