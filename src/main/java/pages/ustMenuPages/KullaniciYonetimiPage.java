@@ -370,8 +370,8 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage gorevliOlduguBirimGuncelle() {
         String title = cmlBirim.getSelectedTitles().last().text();
 
-        tblKullaniciBirim.filterBy(text(title)).shouldHaveSize(1)
-                .first().$("[id$='updateKullaniciBirimButton']").click();
+        tblKullaniciBirim.filterBy(text(title))
+                .first().$("button[id$='updateKullaniciBirimButton']").click();
         return this;
     }
 

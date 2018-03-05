@@ -571,7 +571,7 @@ login(TestData.gsahin);
         String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
-        String gizlilikDerecesi = "Tasnif Dışı";
+        String gizlilikDerecesi = "Gizli";
         String ivedilik = "Normal";
         String geregi = "Optiim Birim";
 
@@ -579,18 +579,18 @@ login(TestData.gsahin);
 
         login(TestData.username23t,TestData.passwor23t);
 
-        kullaniciYonetimiPage
-                .openPage()
-                .kullaniciAdiDoldur("username23t")
-                .ara()
-                .tabloBirimKontrol()
-                .kullaniciListesiGuncelleButonuTikla()
-                .gorevliOlduguBirimlerKontol()
-                .gorevliOlduguBirimGuncelle()
-                .kullaniciBirimAtamaGizlilikDerecesiSec("Tasnif Dışı")
-                .kullaniciBirimAtamaKaydetTikla()
-                .kullaniciGuncellemeKaydet()
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        kullaniciYonetimiPage
+//                .openPage()
+//                .kullaniciAdiDoldur("username23t")
+//                .ara()
+//                .tabloBirimKontrol()
+//                .kullaniciListesiGuncelleButonuTikla()
+//                .gorevliOlduguBirimlerKontol()
+//                .gorevliOlduguBirimGuncelle()
+//                .kullaniciBirimAtamaGizlilikDerecesiSec("Tasnif Dışı")
+//                .kullaniciBirimAtamaKaydetTikla()
+//                .kullaniciGuncellemeKaydet()
+//                .islemMesaji().basariliOlmali(basariMesaji);
 //
 //        logout();
 //        login("gsahin", "123");
@@ -638,7 +638,8 @@ login(TestData.gsahin);
         evrakOlustur();
 
 //        login("username23t", "123");
-        login(TestData.username23t,TestData.passwor23t);
+//        login(TestData.username23t,TestData.passwor23t);
+        login(TestData.username22n,TestData.passwor22n);
         String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
 
 
@@ -711,10 +712,13 @@ login(TestData.gsahin);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS1938"}
+            , description = "TS2226: Genel evrak raporunda gizlilik klerans kontrolü (evrakta izi olan kullanıcı ile)")
     public void TS2226() throws InterruptedException {
 
-        login(TestData.gsahin);
+//        login(TestData.gsahin);
+        login(TestData.username23t,TestData.passwor23t);
 
         genelEvrakRaporuPage
                 .openPage()
@@ -726,7 +730,9 @@ login(TestData.gsahin);
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS1938"}, description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS1938"}
+            , description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
     public void TS2140() throws InterruptedException {
 
 //        login("gsahin", "123");
