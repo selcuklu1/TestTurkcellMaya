@@ -101,6 +101,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement txtEvrakBilgileriAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
     SelenideElement dagitimBilgileriKisiOpsiyon = $("select[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable']");
     SelenideElement eklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement eklenenIcerikBirimOpsiyon = $("select[id='inboxItemInfoForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu']");
 
     SelenideElement dosyaPath = $(By.xpath("//input[@id='mainPreviewForm:fileUploadHavaleEk_input']"));
     SelenideElement icerikDosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
@@ -302,6 +303,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında \"{onaylayan}\" seçilir")
     public KaydedilenGelenEvraklarPage icerikDagitimBilgileriOnaylayanWithDetails(String onaylayan, String details) {
+        cmbIcerikHavaleIslemleriOnaylayacakKisi.openTreePanel();
+        cmbIcerikHavaleIslemleriOnaylayacakKisi.closeTreePanel();
         cmbIcerikHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
@@ -324,6 +327,13 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     public KaydedilenGelenEvraklarPage eklenenIcerikBirimKontrolu(String birim) {
         Assert.assertEquals(txtIcerikEklenenBirim.isDisplayed(), true, "Birim Eklendi");
         Allure.addAttachment("Birim Eklendi:", birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
+    public KaydedilenGelenEvraklarPage eklenenIcerikBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(eklenenIcerikBirimOpsiyon.getSelectedText().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
         return this;
     }
 
@@ -574,7 +584,6 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         txtHavaleIslemleriKisi.selectLov(kisi);
         return this;
     }
-
     @Step("İçerik Havale İşlemleri Kişi alanında \"{kisi}\" seç")
     public KaydedilenGelenEvraklarPage icerikHavaleIslemleriKisiDoldur(String kisi) {
         txtIcerikHavaleIslemleriKisi.selectLov(kisi);
@@ -743,7 +752,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Havale İşlemleri Kişi alanında \"{kisi}\" kontrol")
     public KaydedilenGelenEvraklarPage havaleIslemleriKisiKontrol(String kisi) {
         boolean durum = txtIcerikHavaleIslemleriKisi.isLovValueSelectable(kisi);
-        Assert.assertEquals(durum,false,"Kişi Bulundu:" + kisi);
+        Assert.assertEquals(durum,false,"Kişi Kontrolü:" + kisi);
         Allure.addAttachment(kisi, " seçilemedi");
         txtIcerikHavaleIslemleriKisi.closeTreePanel();
         return this;
