@@ -89,17 +89,17 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         login(mbozdemir);
 
-//        gelenEvrakKayitPage
-//                .openPage()
-//                .ekBilgiFiltreAc()
-//                .evrakEkleriDosyaEkleme(pathToFileExcel)
-//                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
-//                .evrakEkTabViewEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-1")
-//                .ekBilgiFizikselEkEkle()
-//                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
-//                .fizikselEkTabViewAciklamaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-2");
+        gelenEvrakKayitPage
+                .openPage()
+                .ekBilgiFiltreAc()
+                .evrakEkleriDosyaEkleme(pathToFileExcel)
+                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
+                .evrakEkTabViewEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .ekBilgiFizikselEkEkle()
+                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
+                .fizikselEkTabViewAciklamaEkle()
+                .dosyaEkleTabTabloKontrolu("Ek-2");
 
         gelenEvrakKayitPage
                 .openPage()
