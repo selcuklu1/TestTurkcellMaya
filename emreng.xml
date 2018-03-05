@@ -5,8 +5,8 @@
 
     <test name="Emre Sencan Tests">
         <packages>
-            <package name="tests.GizlilikKleransi"/>
-            <package name="tests.VekaletIslemleri"/>
+            <package name="tests.EvrakDevret"/>
+            <package name="tests.KullaniciListesiYonetimi"/>
         </packages>
     </test>
 </suite>

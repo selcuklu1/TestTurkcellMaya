@@ -663,6 +663,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Evet tıklanır")
+    public GelenEvrakKayitPage kaydedilenGelenEvraklarEvet() {
+        $("[id='evetDugmesiUstYaziHavaleYer']").pressEnter();
+
+        return this;
+    }
+
 
     @Step("Evrak sayısı sağ tarafına \"{sayi}\" girilir ")
     public GelenEvrakKayitPage evrakSayiSagDoldur(String sayi) {
@@ -1862,17 +1869,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
     @Step("Teslim Alınmayı Bekleyenler evrak düşürmektedir.")
     public void gelenEvrakKayitBirimHavaleEt(String konu,String kurum,String birim) {
         String konuKodu = "Diğer";
-        String evrakSayiSag = createRandomText(15);
+        String evrakSayiSag = createRandomNumber(7);
 
-        //1.Teslim Alınmayı Bekleyenler evrak düşürmektedir.
-        openPage()
+                openPage()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
-                .evrakTarihiDoldur(getSysDate())
+                .evrakTarihiDoldur(getSysDateForKis())
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriBirimDoldur(birim)
@@ -1897,6 +1902,24 @@ public class GelenEvrakKayitPage extends MainPage {
                 .havaleIslemleriKisiDoldur(kullanici)
                 .kaydet()
                 .evetDugmesi()
+                .yeniKayitButton();
+    }
+
+    @Step("Kaydedilen Gelen Evraklar sayfasına evrak düşürmektedir.")
+    public void gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(String konu,String kurum){
+
+        String konuKodu = "Diğer";
+        String evrakTarihi = getSysDateForKis();
+        String evrakSayiSag = createRandomNumber(8);
+        openPage()
+                .konuKoduDoldur(konuKodu)
+                .konuDoldur(konu)
+                .evrakTarihiDoldur(evrakTarihi)
+                .geldigiKurumDoldurLovText(kurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .kaydet()
+                .kaydedilenGelenEvraklarEvet()
+                //.evetDugmesi()
                 .yeniKayitButton();
     }
 }

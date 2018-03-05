@@ -54,7 +54,7 @@ public class EditorTab extends MainPage {
         if (clickIfOpen.length > 0 || !tab.attr("class").equals("tabMenuContainerSelected"))
             tab.$("button").click();
 
-        System.out.println("[id$=allPanels_content]"+ page.$("[id$=allPanels_content]").getCssValue("class"));
+        //System.out.println("[id$=allPanels_content]"+ page.$("[id$=allPanels_content]").getCssValue("class"));
         page.$("[id$=allPanels_content]").shouldBe(visible);
         page.$$("span.cke_toolbar a[id*=cke]").shouldHave(sizeGreaterThan(0));
         page.$$("span.cke_toolbar a[id*=cke]").filterBy(not(cssClass("cke_button_disabled"))).shouldHave(sizeGreaterThanOrEqual(0));

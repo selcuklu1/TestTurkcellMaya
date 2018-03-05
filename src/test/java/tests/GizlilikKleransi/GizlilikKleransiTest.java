@@ -568,7 +568,7 @@ login(TestData.gsahin);
         String icerik = "TS1938() " + getSysDate();
         String konuKodu = "010.01";
 //        String kaldiralacakKlasor = "TestBaris";
-        String kaldiralacakKlasor = "gündem";
+        String kaldiralacakKlasor = "Diğer";
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String gizlilikDerecesi = "Tasnif Dışı";

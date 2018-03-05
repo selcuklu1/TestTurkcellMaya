@@ -827,12 +827,23 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Geregi alanında \"{geregi}\" seç")
         public BilgilerTab geregiSec(String geregi) {
-            sleep(4000);
+            sleep(3000);
             cmbGeregi.sendKeys(geregi);
             cmbGeregi.selectLov(geregi);
             cmbGeregi.closeTreePanel();
             return this;
         }
+
+        @Step("Geregi alanında \"{geregi}\" seç")
+        public BilgilerTab geregiSec2(String geregi) {
+            sleep(1000);
+//            cmbGeregi.sendKeys(geregi);
+            cmbGeregi.selectLov(geregi);
+//            cmbGeregi.closeTreePanel();
+            return this;
+        }
+
+
 
         @Step("Geregi alanında \"{kisAd}\" kısa adı girilir, {kurum} kurumu geldiği görülür ve seçilir.")
         public BilgilerTab geregiAlanindaKurumKisaAdSec(String kisAd, String kurum) {

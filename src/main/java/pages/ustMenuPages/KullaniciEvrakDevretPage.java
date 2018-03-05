@@ -187,18 +187,18 @@ public class KullaniciEvrakDevretPage extends MainPage {
     public KullaniciEvrakDevretPage tabloAlanKontrolleri() {
         String tabText = "";
 
-//        ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
-
-        ElementsCollection tblgenel = $$(By.id("'kullaniciEvrakDevretForm:evrakDevretAccordionPanelId'"));
-
-        for (int i = 2; i < 11; i++) {
+        for (int i = 1; i < 11; i++) {
             SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[" + i + "]/a");
+            String tabName = tab.text();
             tabText = tab.text();
             tabText = tabText.replaceAll("\\s+", "");
 
             String txt = clearTurkishChars(tabText);
             System.out.println(txt);
-            tab.click();
+            String kontrol = $x("//a[text()='" + tabName + "']/../../h3").getAttribute("aria-expanded");
+            System.out.println(kontrol);
+            if (kontrol.equals("false"))
+                tab.click();
             ElementsCollection tblTab = $$("[id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId:devir" + txt + "_data'] tr[data-ri]");
             int size = tblTab.size();
             if (size > 0) {
@@ -211,8 +211,12 @@ public class KullaniciEvrakDevretPage extends MainPage {
                             .shouldBe(Condition.visible);
                 }
                 Allure.addAttachment(tabText, tabText + " listesinde kayıt bulundu. Buton ve checkbox kontrolleri yapıldı.");
-            } else
+                tab.click();
+            } else {
                 Allure.addAttachment(tabText, tabText + " listesi boş.");
+                tab.click();
+            }
+
         }
 
         SelenideElement tab = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[1]/a");
@@ -230,12 +234,19 @@ public class KullaniciEvrakDevretPage extends MainPage {
 
     @Step("Tablo Evrak Seçimi : {konu}")
     public KullaniciEvrakDevretPage tabloEvrakSecimi(String tabName, String konu) {
+
+//        sleep(5000);
+        SelenideElement tabGelenEvrak = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[1]/a");
+        tabGelenEvrak.click();
+
         ElementsCollection tblTab;
         SelenideElement tab = $x("//a[text()='" + tabName + "']");
         String kontrol = $x("//a[text()='" + tabName + "']/../../h3").getAttribute("aria-expanded");
         System.out.println(kontrol);
+
         if (kontrol.equals("false"))
             tab.click();
+
         String tabText = tabName.replaceAll("\\s+", "");
         tabText = clearTurkishChars(tabText);
         System.out.println(tabText);

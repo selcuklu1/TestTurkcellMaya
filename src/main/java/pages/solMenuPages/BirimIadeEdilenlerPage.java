@@ -290,29 +290,28 @@ public class BirimIadeEdilenlerPage extends MainPage {
 
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public BirimIadeEdilenlerPage havaleAlanKontrolleri() {
-        String text = "";
-        if (onaylayacakKisi.isDisplayed()) {
-            text += "Onaylayacak Kisi,";
-        }
-        if (birimKontrol.isDisplayed()) {
-            text += "Birim Kontrol,";
-        }
-        if (kisiKontrol.isDisplayed()) {
-            text += "Kisi Kontrol, ";
-        }
-        if (kullanıcıListeKontrol.isDisplayed()) {
-            text += "Kullanıcı Liste,";
-        }
-        if (aciklamaKontrol.isDisplayed()) {
-            text += "Aciklama,";
-        }
-        if (dosyaEkleKontrol2.isDisplayed()) {
-            text += "Dosya Ekle";
-        }
+
+        Assert.assertEquals(onaylayacakKisi.isDisplayed(), true, "Onaylayacak Kişi Alanı ");
+        Allure.addAttachment("Onaylayacak Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(birimKontrol.isDisplayed(),true,"Birim Alanı ");
+        Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
+
+        Assert.assertEquals(kisiKontrol.isDisplayed(), true, "Kisi Alanı ");
+        Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(kullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı ");
+        Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(aciklamaKontrol.isDisplayed(), true, "Aciklama Alanı ");
+        Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(dosyaEkleKontrol2.isDisplayed(), true, "Dosya Ekle Alanı ");
+        Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
+
 //        if(islemSureKontrol.isDisplayed()) {
 //            text += "İslem Sure alanları gösterilmektedir.";
 //        }
-        Allure.addAttachment("Alan Kontrolleri : ", text);
         takeScreenshot();
         return this;
     }
