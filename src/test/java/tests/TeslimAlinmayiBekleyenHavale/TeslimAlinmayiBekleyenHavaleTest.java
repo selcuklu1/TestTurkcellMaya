@@ -269,20 +269,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     public void TS2300PreCondition() {
 
         login(usernameZTEKIN, passwordZTEKIN);
-
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
-        //1.Teslim Alınmayı Bekleyenler
-        gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS2300)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(birim)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS2300,kurum,birim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2300)
