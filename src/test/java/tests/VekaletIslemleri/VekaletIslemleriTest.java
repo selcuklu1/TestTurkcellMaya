@@ -93,6 +93,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String[] evrakNo = new String[2];
         aciklama = "onay " + getSysDate() + " evrak";
         redNedeni = "Red Edildi " + createRandomNumber(10) + " nedeni";
+        String onayVerecekKullanici = "Username22N TEST";
 
         if ($("[id='aktifVekaletinizVarUyariMesajiDialog']").isDisplayed()) {
             mainPage
@@ -125,7 +126,7 @@ public class VekaletIslemleriTest extends BaseTest {
                     .dokumanAra()
                     .evrakAramaTabloKontrolveSecim(evrakNo[i]);
         }
-        String onayVerecekKullanici = "Zübeyde TEKİN";
+
         vekaletVerPage
                 .vekaletVerenDoldur(nameVV)
                 .devredilecekEvraklarKontrolu()
@@ -154,7 +155,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
 
-        login(ztekin);
+        login(TestData.username22n,TestData.passwor22n);
 
 //        String aciklama = "onay 20171206220943 evrak";
 
@@ -195,7 +196,7 @@ public class VekaletIslemleriTest extends BaseTest {
         vekaletVer();
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //emre
-        login(ztekin);
+        login(TestData.username22n,TestData.passwor22n);
 
 //        String aciklama = "onay 20180109134612 evrak";
         vekaletOnaylariPage
@@ -471,7 +472,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS2208"}
+//            , dependsOnMethods = {"TS2208"}
             , description = "TS2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TS2212() throws InterruptedException {
 

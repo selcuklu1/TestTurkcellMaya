@@ -1349,6 +1349,28 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\"  \"{evrakTarihi}\" \"{evrakNo}\" \"{bilgi}\" \"{kayitTarihi}\" \"{sayiSag}\"")
+    public GelenEvraklarPage evrakAlanVeAdetKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo, String bilgi,String kayitTarihi,String sayiSag,int adet) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(bilgi))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .shouldHaveSize(adet);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("Bilgi", bilgi);
+        Allure.addAttachment("KayitTarihi", kayitTarihi);
+        Allure.addAttachment("Sayi", sayiSag);
+        return this;
+    }
+
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvraklarPage icerikHavaleAlanKontrolleri() {
             Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");

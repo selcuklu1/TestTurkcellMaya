@@ -593,7 +593,7 @@ searchTable().findRowAndSelect(text(konu));
     @Step("Etiket bastır ekranında Gideceği Yer ve Adres kontrolü")
     public PostaListesiPage etiketBastirEkraniKontrolü(String adres, String konu) {
         Assert.assertEquals(txtEtiketBastir.text().contains(konu), true);
-//        Assert.assertEquals(txtEtiketBastir.text().contains(adres), true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres), true);
         return this;
     }
 

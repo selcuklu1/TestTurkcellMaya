@@ -46,7 +46,7 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-    SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
+    SelenideElement ustYazi = $(By.xpath("//input[@id='gidenEvrakDefterKaydiForm:ustYaziForm:gedkUploadButton_input']"));
     SelenideElement lblEklenenPdfUstYazi = $("[id$='eklendiYazisi'] label");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
     SelenideElement dateTxtMiat = $("[id$='miatCalendar_input']");
@@ -301,6 +301,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Üst yazi \"{path}\" ekle")
     public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
