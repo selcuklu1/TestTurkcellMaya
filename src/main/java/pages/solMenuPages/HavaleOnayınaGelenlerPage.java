@@ -64,11 +64,11 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     SelenideElement lblSayfa = $("div[id='inboxItemInfo']");
     SelenideElement lblOnizlemeSayfa = $("div[id='mainPreviewForm:onizlemePanel']");
-
     //Dagitim Kontrolleri
     SelenideElement dagitimBirimKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:j_idt']");
-    SelenideElement dagitimKisiKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
+    SelenideElement dagitimBirimOpsiyon = $("select[id^='inboxItemInfoForm:dagitimBilgileriBirimLov_id:LovSecilenTable:0:selectOneMenu']");
 
+    SelenideElement dagitimKisiKontrolu = $("div[id^='inboxItemInfoForm:dagitimBilgileriKullaniciLov_id:LovSecilenTable:0:j_idt']");
     @Step("Birim Havale Onayına Gelenler sayfası aç")
     public HavaleOnayınaGelenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.HavaleOnayinaGelenler);
@@ -209,17 +209,33 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi alanında eklenen \"{birim}\" kontrolü")
+    @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimKontrolu(String birim) {
-        Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
+        Assert.assertEquals(dagitimBirimKontrolu.isDisplayed(), true, "Birim Eklendi");
         Allure.addAttachment("Birim Eklendi:", birim);
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
-        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Assert.assertEquals(dagitimBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
         Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+//    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+    @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
+    public HavaleOnayınaGelenlerPage havaleIslemleriBirimOpsiyonSec(String opsiyon) {
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+
+        if (opsiyon.equals(gerek))
+            dagitimBirimOpsiyon.selectOptionByValue("G");
+        else if (opsiyon.equals(bilgi))
+            dagitimBirimOpsiyon.selectOptionByValue("B");
+        else if (opsiyon.equals(koordinasyon))
+            dagitimBirimOpsiyon.selectOptionByValue("K");
+
         return this;
     }
 

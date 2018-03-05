@@ -31,7 +31,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
     public void beforeTests(Method method) {
 
         login();
-
+//test deneme
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();

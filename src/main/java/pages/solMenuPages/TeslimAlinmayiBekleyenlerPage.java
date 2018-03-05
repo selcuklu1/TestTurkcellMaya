@@ -162,9 +162,9 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Teslim Al Gönder")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeGonder() {
-        $(By.id("mainPreviewForm:btnTeslimAlGonder")).click();
+        $(By.id("mainPreviewForm:btnTeslimAlGonder")).pressEnter();
         return this;
     }
 
@@ -261,6 +261,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
     public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi) {
         txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi);
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
+    public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi,String birim) {
+        txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
         return this;
     }
 

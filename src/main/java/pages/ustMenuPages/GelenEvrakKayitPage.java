@@ -1869,17 +1869,15 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
     @Step("Teslim Alınmayı Bekleyenler evrak düşürmektedir.")
     public void gelenEvrakKayitBirimHavaleEt(String konu,String kurum,String birim) {
         String konuKodu = "Diğer";
-        String evrakSayiSag = createRandomNumber(15);
+        String evrakSayiSag = createRandomNumber(7);
 
-        //1.Teslim Alınmayı Bekleyenler evrak düşürmektedir.
-        openPage()
+                openPage()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
-                .evrakTarihiDoldur(getSysDate())
+                .evrakTarihiDoldur(getSysDateForKis())
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriBirimDoldur(birim)
