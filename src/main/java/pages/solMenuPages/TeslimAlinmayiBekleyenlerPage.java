@@ -74,6 +74,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
     ElementsCollection lblIadeEdilecekKullanici = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    ElementsCollection lblIadeEdilecekBirim = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
@@ -561,6 +562,10 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden evrak önizlemede aç")
     public TeslimAlinmayiBekleyenlerPage konuyaGoreIcerikGoster(String konu) {
 
+//        new TeslimAlinmayiBekleyenlerPage().searchTable()
+//                .findRowAndSelect(text(konu))
+//                .icerikGoster();
+
         tblEvraklar
                 .filterBy(Condition.text(konu))
                 .first()
@@ -723,6 +728,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEdilecekBirimKontrolu(String birim) {
+        boolean durum = lblIadeEdilecekBirim.filterBy(Condition.text(birim)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Birim Kontrolü","");
+        return this;
+    }
+
     @Step("Not alanını doldur: {not}")
     public TeslimAlinmayiBekleyenlerPage iadeEtNotDoldur(String not) {
         txtNot.setValue(not);
@@ -753,6 +766,28 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" \"{kayitTarihi}\" \"{sayiSag}\" \"{digerKontrol}\"")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo,String kayitTarihi,String sayiSag,String digerKontrol) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .filterBy(Condition.text(digerKontrol))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("KayıtTarihi", kayitTarihi);
+        Allure.addAttachment("Sayı", sayiSag);
+        Allure.addAttachment("Diger Kontrolü", digerKontrol);
+        return this;
+    }
+
     @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo) {
         System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
@@ -766,6 +801,17 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Allure.addAttachment("EvrakTarihi", evrakTarihi);
         Allure.addAttachment("GeldigiKurum", geldigiKurum);
         Allure.addAttachment("EvrakNo", evrakNo);
+        return this;
+    }
+
+    @Step("Tabloda (B) kontrolü")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu,String b) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(b))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Tabloda (B) kontrolü", b);
+
         return this;
     }
 

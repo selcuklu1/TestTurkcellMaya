@@ -167,8 +167,8 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Sec Checkbox ile")
-    public HavaleOnayınaGelenlerPage evrakSecCheckBox(String konu1, boolean secim) {
+    @Step("Evrak Sec Evrak Onayla")
+    public HavaleOnayınaGelenlerPage evrakSecEvrakOnayla(String konu1, boolean secim) {
         tblEvraklar.filterBy(text(konu1)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
 
         btnOnayla.get(0).click();

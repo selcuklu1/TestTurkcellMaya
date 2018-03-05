@@ -280,6 +280,11 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         String bilgi = "BİLGİ İÇİN GÖNDER";
         String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
         String evrakNo;
+        String evrakSayiSag = createRandomNumber(5);
+        String gKontrolu = "(G)";
+        String bilgiicin = "Bilgi için";
+        String koordinasyonicin = "Koordinasyon İçin";
+
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -292,7 +297,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriKisiSec(kisi)
@@ -331,20 +336,30 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu)
                 .tabHavaleYapKontrol()
                 .tabHavaleYap()
                 .onizlemeHavaleAlanKontrolleri()
-                .havaleIslemleriKisiSec(kullanici,details)
+
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .eklenenBirimKontrolu(birim)
-                .havaleIslemleriKisiStatusKontrol(kullanici,true)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+
+                .havaleIslemleriKisiSec(onaylayacakKisi,details)
+                .eklenenKisiKontrolu(onaylayacakKisi)
                 .eklenenKisiOpsiyonKontrolu(gerek)
                 .havaleIslemleriKisiOpsiyonSec(bilgi)
                 .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .kullaniciListesiSec(kullaniciListesi)
+                .kullaniciListesiKullaniciGrupDetayEvet()
+                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
+                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
+                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
+
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali();
 
@@ -356,17 +371,23 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
-
-        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,evrakTarihi,evrakSayiSag,gKontrolu);
 
         gelenEvraklarPage
                 .openPage()
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,bilgiicin,evrakTarihi,evrakSayiSag);
 
+        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo);
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,evrakTarihi,evrakSayiSag,gKontrolu);
+        gelenEvraklarPage
+                .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,koordinasyonicin,evrakTarihi,evrakSayiSag);
+
+//        teslimAlinmayiBekleyenlerPage
+//                .openPage()
+//                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,evrakTarihi,evrakSayiSag,koordinasyonicin);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -380,6 +401,8 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         String evrakNo;
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName ="test.txt";
+        String evrakSayiSag = createRandomNumber(5);
+        String bilgiicin = "Bilgi için";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -392,7 +415,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriKisiSec(kisi)
@@ -432,18 +455,17 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .openPage()
                 .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
-
         testStatus(testid, "Test Başladı");
         login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,bilgiicin,evrakTarihi,evrakSayiSag)
                 .tabloEvrakNoSec(konu)
                 .onizlemeIadeEtKontrol()
                 .onizlemeIadeEt()
                 .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
+
                 .iadeEtNotInputDoldur(konu)
                 .onizlemeIadeEtDosyaEkle()
                 .onizlemeIadeDosyaEkle(pathToFileText)
@@ -500,6 +522,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu)
+                .evrakOnizlemeKontrolu()
                 .tabHavaleYapKontrol()
                 .tabHavaleYap()
                 .onizlemeHavaleAlanKontrolleri()
@@ -568,7 +591,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         evrakNo1 = gelenEvrakKayitPage.popUpsv2();
 
         testStatus(testid, "PreCondition 2. Evrak Oluşturma");
-        String konu2 = "TS-2291-" + getSysDate();
+        String konu2 = "TS-489-" + getSysDate();
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
         gelenEvrakKayitPage
                 .openPage()
@@ -711,18 +734,18 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .sorgula()
                 .rapordaEvraklarıListele(konu2);
 
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
-        havaleEdilenEvrakRaporuPage
-                .openPage()
-                .havaleEdilenKullaniciDoldur(kisi)
-                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
-                .havaleTarihAraligiBitisDoldur(evrakTarihi)
-                .sorgula()
-                .rapordaEvraklarıListele(konu1)
-                .sorgula()
-                .rapordaEvraklarıListele(konu2)
-                .rapordaEvraklarıListeleDetayTikla(konu2)
-                .ekranKontrolEvrakDetayi();
+//        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//        havaleEdilenEvrakRaporuPage
+//                .openPage()
+//                .havaleEdilenKullaniciDoldur(kisi)
+//                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+//                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+//                .sorgula()
+//                .rapordaEvraklarıListele(konu1)
+//                .sorgula()
+//                .rapordaEvraklarıListele(konu2)
+//                .rapordaEvraklarıListeleDetayTikla(konu2)
+//                .ekranKontrolEvrakDetayi();
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
         havaleEdilenEvrakRaporuPage
@@ -747,6 +770,8 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         String evrakNo;
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName ="test.txt";
+        String evrakSayiSag = createRandomNumber(5);
+        String digerKontrol = "(G)";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -759,41 +784,43 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .gizlilikDerecesiSec(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec(kisi)
+//                .dagitimBilgileriKisiSec(kisi)
+                .dagitimBilgileriBirimDoldur2(birim)
                 .kaydet();
 
         evrakNo = gelenEvrakKayitPage.popUpsv2();
 
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//
+//        gelenEvraklarPage
+//                .openPage()
+//                .tabloEvrakNoSec(konu)
+//                .tabHavaleYapKontrol()
+//                .tabHavaleYap()
+//                .onizlemeHavaleAlanKontrolleri()
+//
+//                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+//                .eklenenBirimKontrolu(birim)
+//                .eklenenBirimOpsiyonKontrolu(gerek)
 
-        gelenEvraklarPage
-                .openPage()
-                .tabloEvrakNoSec(konu)
-                .tabHavaleYapKontrol()
-                .tabHavaleYap()
-                .onizlemeHavaleAlanKontrolleri()
+//                .havaleIslemleriKisiSec(onaylayacakKisi,details)
+//                .eklenenKisiKontrolu(onaylayacakKisi)
+//                .eklenenKisiOpsiyonKontrolu(gerek)
+//                .havaleIslemleriKisiOpsiyonSec(bilgi)
+//                .eklenenKisiOpsiyonKontrolu(bilgi)
 
-                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .eklenenBirimKontrolu(birim)
-                .eklenenBirimOpsiyonKontrolu(gerek)
+//                .kullaniciListesiSec(kullaniciListesi)
+//                .kullaniciListesiKullaniciGrupDetayEvet()
+//                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
+//                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
+//                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
+//                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
 
-                .havaleIslemleriKisiSec(onaylayacakKisi,details)
-                .eklenenKisiKontrolu(onaylayacakKisi)
-                .eklenenKisiOpsiyonKontrolu(gerek)
-                .havaleIslemleriKisiOpsiyonSec(bilgi)
-                .eklenenKisiOpsiyonKontrolu(bilgi)
-
-                .kullaniciListesiSec(kullaniciListesi)
-                .kullaniciListesiKullaniciGrupDetayEvet()
-                .eklenenKullaniciListesiKontrolu(kullaniciListesi)
-                .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
-                .havaleIslemleriKullaniciListesiOpsiyonSec(koordinasyon)
-                .eklenenKullaniciListesiOpsiyonKontrolu(koordinasyon)
-                .havaleYapGonder()
-                .islemMesaji().basariliOlmali();
+//                .havaleYapGonder()
+//                .islemMesaji().basariliOlmali();
 
 //        havaleEttiklerimPage
 //                .openPage()
@@ -805,10 +832,11 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,evrakTarihi,evrakSayiSag,digerKontrol)
                 .onizlemeIadeEtKontrol()
                 .onizlemeIadeEt()
-                .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
+//                .onizlemeIadeEdilecekKullaniciKontrolu(kisi)
+                .onizlemeIadeEdilecekBirimKontrolu(birim)
                 .iadeEtNotDoldur(konu)
                 .onizlemeIadeEtDosyaEkle()
                 .onizlemeIadeDosyaEkle(pathToFileText)
@@ -817,8 +845,6 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
-        //TODO: Bu sayfaya gelmiyor. Sadece birime iade olsa buraya düşebilir.
-        //gelenEvraklarPage deki kisi ve kullanıcı listesini çıkar
         birimIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu);

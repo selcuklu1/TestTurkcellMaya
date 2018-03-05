@@ -22,7 +22,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
 
-    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]");
     ElementsCollection tableEvraklar2 = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));
@@ -170,6 +170,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
     SelenideElement btnRaporAlExcel = $("[id$='GecmisiDataTable:evrakGecmisiExport']");
     SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    SelenideElement genelNotPopupKontrol = $("div[id='evrakOnizlemeNotlarDialogId']");
+    SelenideElement genelNotPopupMesajKontrol = $("[id='evrakOnizlemeNotlariDatatableId_data']");
+
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -440,7 +443,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    @Step("Havale dosya sil")
     public GelenEvraklarPage onizlemeHavaleEklenenDosyaSil() {
         btnOnizlemeHavaleEklenenDosya.click();
         return this;
@@ -1324,40 +1327,47 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\"  \"{evrakTarihi}\" \"{evrakNo}\" \"{bilgi}\" \"{kayitTarihi}\" \"{sayiSag}\"")
+    public GelenEvraklarPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo, String bilgi,String kayitTarihi,String sayiSag) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(bilgi))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("Bilgi", bilgi);
+        Allure.addAttachment("KayitTarihi", kayitTarihi);
+        Allure.addAttachment("Sayi", sayiSag);
+        return this;
+    }
+
     @Step("Havale İşlemleri Alanındaki Kontroller")
     public GelenEvraklarPage icerikHavaleAlanKontrolleri() {
-        String text = "";
-        if(txtIcerikBirimKontrol.isDisplayed()) {
-            text += "Birim Kontrol,";
             Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(),true,"Birim Alanı Görüntülendi");
             Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
-        }
-        if (txtIcerikKisiKontrol.isDisplayed()) {
-            text += "Kisi Kontrol, ";
+
             Assert.assertEquals(txtIcerikKisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
             Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
-        }
-        if (txtIcerikKullanıcıListeKontrol.isDisplayed()) {
-            text += "Kullanıcı Liste,";
+
             Assert.assertEquals(txtIcerikKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
             Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
-        }
-        if (txtIcerikAciklamaKontrol.isDisplayed()) {
-            text += "Aciklama,";
+
             Assert.assertEquals(txtIcerikAciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
             Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
-        }
-        if (btnIcerikDosyaEkleKontrol.isDisplayed()) {
-            text += "Dosya Ekle,";
+
             Assert.assertEquals(btnIcerikDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
             Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
-        }
-        if (txtIcerikIslemSureKontrol.isDisplayed()) {
-            text += "İslem Sure alanları gösterilmektedir.";
+
             Assert.assertEquals(txtIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
             Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
-        }
-        Allure.addAttachment("Alan Kontrolleri : ", text);
         return this;
     }
 
@@ -1575,7 +1585,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Iade Et buton kontrolü")
+    @Step("Iade Et buton tıkla")
     public GelenEvraklarPage onizlemeIadeEt() {
         btnOnizlemeIadeEt.click();
         return this;
@@ -1588,6 +1598,23 @@ public class GelenEvraklarPage extends MainPage {
         Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü","");
         return this;
     }
+
+    @Step("Genel Popup Kontrolü")
+    public GelenEvraklarPage genelNotPopupKontrol() {
+        Assert.assertEquals(genelNotPopupKontrol.isDisplayed(),true, "Genel Popup Kontrolü");
+        Allure.addAttachment("Genel Popup Kontrolü","");
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Genel Popup Mesaj Kontrolü")
+    public GelenEvraklarPage genelNotPopupMesajKontrol(String mesaj) {
+        Assert.assertEquals(genelNotPopupMesajKontrol.isDisplayed(),true, "Genel Popup Mesaj Kontrolü");
+        Allure.addAttachment("Genel Popup Mesaj Kontrolü","");
+        return this;
+    }
+
+
 
 
 }
