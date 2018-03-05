@@ -1,6 +1,7 @@
 package tests.EvrakHavaleIslemleri;
 
 import common.BaseTest;
+import common.ReusableSteps;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.BirimHavaleEdilenlerPage;
@@ -17,6 +18,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    ReusableSteps reusableSteps;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -24,19 +26,27 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        reusableSteps = new ReusableSteps();
     }
 
     @Test(enabled = true, description = "2295: Toplu havale ekranı alan kontrolü")
     public void TS2295() {
 
+        useFirefox();
         String konuKodu = "TS2295-"+createRandomNumber(15);
         String konuKodu2 = "TS2295-2_"+createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullanici = "Zübeyde Tekin";
-        String birim = "Zübeyde Tekin";
+        String birim = "Yazılım Geliştirme Direktörlüğü";
 
         login(usernameZTEKIN,passwordZTEKIN);
         gelenEvrakKayitPage.gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
+        login(usernameZTEKIN,passwordZTEKIN);
+        gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
+        login(usernameYAKYOL,passwordYAKYOL);
+        reusableSteps.teslimAlinanlarEvrakOlustur(konuKodu,kurum,birim);
+        login(usernameYAKYOL,passwordYAKYOL);
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKodu,kurum,birim);
 
         gelenEvrakKayitPage
                 .evrakOlusturSayfaKapat();
@@ -55,7 +65,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         login(usernameZTEKIN,passwordZTEKIN);
 
-        //gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
+        gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
 
         kaydedilenGelenEvraklarPage
                 .openPage()

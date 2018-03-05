@@ -76,7 +76,7 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Not alanını doldur: {not}")
+    @Step("Not alanı kontrol")
     public HavaleOnayinaSunduklarimPage notAlaniKontrol() {
         Assert.assertEquals(txtGeriAlNot.isDisplayed(),true,"Not alanı kontrol");
         Allure.addAttachment("Not alanı kontrol" , "");
