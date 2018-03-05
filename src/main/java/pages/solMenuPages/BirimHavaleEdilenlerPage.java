@@ -40,7 +40,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
     SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     //    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
-    SelenideElement btnGeriAl = $("button[id^='inboxItemInfoForm:j_idt']");
+    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
     SelenideElement onizlemeGeriAl = $("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");

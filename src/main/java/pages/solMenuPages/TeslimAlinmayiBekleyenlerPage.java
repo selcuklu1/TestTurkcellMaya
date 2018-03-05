@@ -65,7 +65,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
-    SelenideElement evrakTeslimAl = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
+    SelenideElement evrakTeslimAl = $("[class='ui-button-icon-left ui-icon teslimAl']");
 
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement teslimAlGönder = $("[id='mainPreviewForm:btnTeslimAlGonder']");
@@ -126,7 +126,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Teslim al ve kapat")
     public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat() {
-        btnTeslimAlVeKapatTeslimAlVeKapat.click();
+        btnTeslimAlVeKapatTeslimAlVeKapat.pressEnter();
         return this;
     }
 
@@ -162,9 +162,9 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Teslim Al Gönder")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeGonder() {
-        $(By.id("mainPreviewForm:btnTeslimAlGonder")).click();
+        $(By.id("mainPreviewForm:btnTeslimAlGonder")).pressEnter();
         return this;
     }
 
@@ -261,6 +261,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
     public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi) {
         txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi);
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
+    public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi,String birim) {
+        txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
         return this;
     }
 
@@ -825,4 +831,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç teslim al")
+    public TeslimAlinmayiBekleyenlerPage secilenEvrakTeslimAl(String konuKodu){
+        openPage()
+                .evrakNoIleEvrakSec(konuKodu)
+                .teslimAlGonder()
+                .evrakTeslimAlPopUpEvet();
+        return this;
+    }
+    
 }

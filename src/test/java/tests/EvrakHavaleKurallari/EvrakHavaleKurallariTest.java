@@ -121,6 +121,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .birimEkleBirimDoldur(birim)
                 .birimEkleEkle()
                 .kuralAdiDoldur(kuralAdi)
+               // .geldigiYerTipiSec("Birim")
                 .geldigiYerBirimDoldur(birim)
                 .geldigiYerKullaniciDoldur(kullanici)
                 .geldigiYerKurumDoldur(kurum)
@@ -212,7 +213,8 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String geldigiYerKullanici = "Kullanıcı";
         String kullanici = "Zübeyde Tekin";
         String kullanici2 = "Can Şeker";
-        String birim = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR YARDIMCISI";
+        String kuralAdi = "TC-2069 Sakın Silme";
+        String birim = "Yazılım Geliştirme Direktörlüğü";
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String geldigiYerBirim = "Birim";
         String geldigiYerGercekKisi = "Gerçek Kişi";
@@ -235,25 +237,25 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .ara()
                 .geldigiYerTipiSec(geldigiYerBirim)
                 .ara()
-                .geldigiYerBirimDoldur(birim)
+                .filtreleGeldigiYerBirimDoldur(birim)
                 .ara()
                 .geldigiYerTipiSec(geldigiYerGercekKisi)
                 .ara()
-                .geldigiYerGercekKisiDoldur(kullanici)
+                .filtreleGeldigiYerGercekKisiDoldur(kullanici)
                 .ara()
                 .geldigiYerTipiSec(geldigiYerTuzelKisi)
                 .ara()
-                .geldigiYerTuzelKisiDoldur(kullanici2)
+                .filtreleGeldigiYerTuzelKisiDoldur(kullanici2)
                 .ara()
                 .geldigiYerTipiSec(geldigiYerKurum)
                 .ara()
-                .geldigiYerKurumDoldur(kurum)
+                .filtreleGeldigiYerKurumDoldur(kurum)
                 .ara()
                 .birimDoldur(birim)
                 .ara()
                 .altBirimDahilSec(true)
                 .ara()
-                .kuralAdiDoldur(kullanici2)
+                .filtrelemeKuralAdiDoldur(kuralAdi)
                 .geldigiYerTipiSec(geldigiYerSeciniz)
                 .ara();
     }
@@ -268,7 +270,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String evrakTuru = "Diğer";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String kisi = "Zübeyde Tekin";
-        String birim2 = "YGD";
+        String birim2 = "BHUPGMY";
 
         login("cseker", passwordZTEKIN);
         //TODO PRE Conditon bir kural bulunmalı
@@ -299,7 +301,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .otomatikHavaleSec()
-                .islemMesaji().dikkatOlmali(uyariMesaji);
+                .islemMesaji().isDikkat(uyariMesaji);
 
         evrakHavaleKurallariYonetimiPage
                 .openPage()

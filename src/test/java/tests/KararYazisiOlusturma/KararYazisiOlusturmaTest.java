@@ -153,6 +153,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String konuKodu = "Diğer";
         String konuKoduRandom = "TS-2240_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
+        String evrakSagSayi = createRandomNumber(7);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
 
@@ -165,14 +166,11 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .konuDoldur(konuKoduRandom)
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSagSayi)
                 .havaleIslemleriBirimDoldur(kullaniciAdi)
                 .kaydet()
                 .evetDugmesi()
                 .benzerKayit();
-        //   .yeniKayitButton();
-        //TODO
-
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -180,7 +178,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .teslimAlVeKapat()
                 .teslimAlVeKapatAlanGeldigiGorme()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasor)
-                .konuKoduDoldur(konuKodu)
+                //.konuKoduDoldur(konuKodu)
                 .teslimAlveKapatTeslimAlVeKapat();
 
         gundemIzlemePage
@@ -291,7 +289,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("4")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("9")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
                 .sistemdeKayitliEvrakEkleArti()
                 .tercumeEkleTabAc()
