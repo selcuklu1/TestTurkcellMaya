@@ -169,7 +169,7 @@ public class TeslimAlinanlarPage extends MainPage {
 
     @Step("Kullan butonunu tıkla")
     public TeslimAlinanlarPage kullaniciGrupDetayKullan() {
-        $$("[id='mainPreviewForm:kullaniciGrubuDetayViewDialog'] button").filterBy(Condition.text("Kullan")).first().click();
+       clickJs($("[id='mainPreviewForm:kullaniciGrubuDetayKullanViewDialog']"));
         return this;
     }
 

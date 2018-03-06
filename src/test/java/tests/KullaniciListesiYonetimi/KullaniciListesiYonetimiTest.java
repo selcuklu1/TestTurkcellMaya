@@ -38,6 +38,8 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     String durumPasifler = "Sadece Pasifler";
     String durumAktifler = "Sadece Aktifler";
     String guncelAd = ad + " Guncellendi";
+    String mesaj ="Kullanıcı grubunun durumunu değiştirmek istediğinize emin misiniz?";
+    String btnEvet = "Evet";
 
 
     String konuKodu = "Diğer";
@@ -76,13 +78,21 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .aciklamaDoldur(aciklama)
                 .birimSec(birim)
                 .kullanicilarSec(kullanici1)
+                .kullaniciListesiListedenCikartButonKontrolu()
                 .kaydet()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
         kullaniciListesiYonetimiPage
                 .kullanicilarSec(kullanici2)
+                .kullaniciListesiListedenCikartButonKontrolu()
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        kullaniciListesiYonetimiPage
+                .sayfaKontrolu()
+                .sorgulaVeFiltreleAdDoldur(ad)
+                .ara()
+                .kullaniciListesiTablosuKullaniciAdiKontrolu(ad,true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -93,14 +103,21 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
+//        String ad = "TS1005 120143";
+
+
         kullaniciListesiYonetimiPage
                 .openPage()
-                .sorgulaVeFiltreleAdDoldur(ad)
+//                .sorgulaVeFiltreleAdDoldur(ad)
                 .durumSec(durumAktifler)
+                .ara()
+                .tabloAktifPasifButonKontrolu(durumAktifler)
+                .sorgulaVeFiltreleTabAc()
+                .sorgulaVeFiltreleAdDoldur(ad)
                 .ara()
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, true)
                 .pasifYap(ad)
-                .islemOnayiPopUpEvetHayır("Evet")
+                .islemOnayiPopUpEvetHayır(btnEvet,mesaj)
                 .sorgulaVeFiltreleTabAc()
                 .durumSec(durumPasifler)
                 .ara()
@@ -119,7 +136,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
-        String btnEvet = "Evet";
+
 
 //        String ad = "TS1005 142310";
         kullaniciListesiYonetimiPage
@@ -128,7 +145,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .durumSec(durumPasifler)
                 .ara()
                 .aktifYap(ad)
-                .islemOnayiPopUpEvetHayır(btnEvet)
+                .islemOnayiPopUpEvetHayır(btnEvet,mesaj)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciListesiYonetimiPage
@@ -150,7 +167,8 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     public void TS1000() throws InterruptedException {
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-
+//        String ad = "TS1005 113204";
+//
 //        String guncelAd = ad + " Guncellendi";
 
         kullaniciListesiYonetimiPage
@@ -174,6 +192,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         kullaniciListesiYonetimiPage
+                .sayfaKontrolu()
                 .sorgulaVeFiltreleTabAc()
                 .sorgulaVeFiltreleAdTemizle()
                 .sorgulaVeFiltreleAdDoldur(guncelAd)
@@ -461,7 +480,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiTabloKontrolu()
                 .pasifYap(ad)
-                .islemOnayiPopUpEvetHayır("Evet")
+                .islemOnayiPopUpEvetHayır(btnEvet,mesaj)
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false)
                 .sorgulaVeFiltreleTabAc()
                 .durumSec(durumPasifler)
@@ -564,7 +583,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiTabloKontrolu()
                 .aktifYap(ad)
-                .islemOnayiPopUpEvetHayır("Evet")
+                .islemOnayiPopUpEvetHayır(btnEvet,mesaj)
                 .kullaniciListesiTablosuKullaniciAdiKontrolu(ad, false)
                 .sorgulaVeFiltreleTabAc()
                 .durumSec(durumAktifler)

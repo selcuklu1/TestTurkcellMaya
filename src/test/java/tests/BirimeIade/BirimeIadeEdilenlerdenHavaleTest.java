@@ -86,7 +86,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali("İşlem Başarılıdır!");
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
@@ -178,7 +178,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali("İşlem Başarılıdır!");
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage

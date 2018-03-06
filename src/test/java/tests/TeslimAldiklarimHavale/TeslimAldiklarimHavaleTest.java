@@ -67,19 +67,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         login(usernameZTEKIN, passwordZTEKIN);
 
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
-        //1.Teslim Alınmayı Bekleyenler
-        gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS1597)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(birim)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS1597,kurum,birim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSecNoTeslimAl(konuKoduRandomTS1597, true);
@@ -211,8 +199,8 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1591: Teslim aldıklarım listesinden yapılan havalenin Havale Edilen Evrak Raporundan kontrolü")
-    public void TS1591() {
+    @Test(enabled = true, description = "TS1591b: Teslim aldıklarım listesinden yapılan havalenin Havale Edilen Evrak Raporundan kontrolü")
+    public void TS1591b() {
 
         login(usernameZTEKIN, passwordZTEKIN);
 
