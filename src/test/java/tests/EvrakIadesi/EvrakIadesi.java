@@ -107,6 +107,7 @@ public class EvrakIadesi extends BaseTest {
                 .kullan()
                 .paraflaKontrol();
 
+
         evrakOlusturPage
                 .editorTabAc();
 
@@ -124,7 +125,7 @@ public class EvrakIadesi extends BaseTest {
 
         evrakOlusturPage
                 .parafla()
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);

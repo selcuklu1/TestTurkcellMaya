@@ -48,7 +48,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("s-İmzla seç")
     public EvrakPageButtons sImzalaRadioSec() {
-        /*if (islemMesaji().getMessageTitles().size() > 0)
+/*        if (islemMesaji().getMessageTitles().size() > 0)
             if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
                 islemMesaji().closeMessage();
             else
