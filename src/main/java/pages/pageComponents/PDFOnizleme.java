@@ -3,7 +3,13 @@ package pages.pageComponents;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Quotes;
 import pages.MainPage;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -39,7 +45,8 @@ public class PDFOnizleme extends MainPage{
 
     @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
-        scaleSelect.selectOptionByValue("1");
+        scaleSelect(scaleSelect.shouldBe(Condition.visible).toWebElement(), "1");
+        //scaleSelect.selectOptionByValue("1");
         //scaleSelect.selectOptionByValue("page-actual");
         //scaleSelect.selectOption("100%");
         //byvalue: page-actual
@@ -118,5 +125,13 @@ public class PDFOnizleme extends MainPage{
             takeScreenshot();
         }
         return this;
+    }
+
+
+    //Firefox scroll error yüzünden kullanılıyor 6.03.2018
+    public void scaleSelect(WebElement element, String value) {
+        List<WebElement> options = element.findElements(By.xpath(
+                ".//option[@value = " + Quotes.escape(value) + "]"));
+        clickJs(element);
     }
 }

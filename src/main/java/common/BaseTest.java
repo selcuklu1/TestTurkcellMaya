@@ -263,6 +263,7 @@ public class BaseTest extends BaseLibrary {
                     .addPreference("browser.helperApps.neverAsk.saveToDisk", neverAsk);
             //options.addPreference("browser.helperApps.neverAsk.openFile", "true");
             //options.addPreference("browser.helperApps.neverAsk.saveToDisk", "true");
+            options.setCapability(CapabilityType.BROWSER_VERSION, "151");
 
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
              *//*capabilities.setVersion("151");
