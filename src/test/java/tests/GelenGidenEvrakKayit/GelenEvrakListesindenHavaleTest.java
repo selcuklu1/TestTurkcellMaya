@@ -46,7 +46,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
     String geldigiKurum = "Esk Kurum 071216 2";
     String evrakGelisTipi = "Posta";
     String ivedilik = "Normal";
-    String kisi = "Zübeyde Tekin";
+    String kisi = "Zübeyde TEKİN";
     String kullanici = "Yasemin Çakıl";
 
     String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
