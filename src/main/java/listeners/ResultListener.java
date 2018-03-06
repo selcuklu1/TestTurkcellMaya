@@ -44,11 +44,11 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
         System.out.println("///////////////////////////////////////////////////////");
     }*/
 
-    @Attachment(value = "Page screenshot", type = "image/png")
+    @Attachment(value = "Error screenshot", type = "image/png")
     public byte[] takeScreenshotOnFail() {
         byte[] bytes = new byte[]{};
         try {
-            bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
         } catch (WebDriverException e) {
             System.out.println("Error takeScreenshot:" + e.getMessage());
         }
@@ -112,10 +112,10 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
     }
 
     @Override
-    @Attachment(value = "Page screenshot", type = "image/png")
+    @Attachment(value = "Error screenshot", type = "image/png")
     public void onTestFailure(ITestResult result) {
             try {
-                ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+                takeScreenshotOnFail();
             }
             catch (Exception e){
                 System.out.println("Take Screenshot error: " + e);
