@@ -38,7 +38,7 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
 //BrowserPerTest.class
 @Listeners({ResultListener.class
-        //, MethodInterceptor.class
+//        , MethodInterceptor.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
