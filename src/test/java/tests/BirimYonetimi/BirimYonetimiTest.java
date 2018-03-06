@@ -285,7 +285,7 @@ public class BirimYonetimiTest extends BaseTest {
         //1109 senaryosu yerine pre. con. koşuluyor
         List<String> birim = new ReusableSteps().yeniBirimKayit();
 
-        String birimAdı = birim.get(0);
+        String birimAdi = birim.get(0);
         String birimKisaAdi = birim.get(1);
         String idariBirimKimlikKodu = birim.get(2);
         String basariMesaji = "İşlem başarılıdır!";
@@ -296,7 +296,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .ara()
                 .kullaniciListesiGuncelle()
                 .gorevliOlduguBirimlerEkle()
-                .kullaniciBirimAtamaBirimDoldur(birimAdı)
+                .kullaniciBirimAtamaBirimDoldur(birimAdi)
                 .kullaniciBirimAtamaGorevDoldur("Uzman Test Mühendisi")
                 .kullaniciBirimAtamaKaydet()
                 .rolListeriEkle()
@@ -311,8 +311,23 @@ public class BirimYonetimiTest extends BaseTest {
         login(TestData.usernameSCELIK, TestData.passwordSCELIK);
 
         mainPage
-                .birimSec(Condition.text(birimAdı))
-                .evrakIslemleriIslemYaptiklarimMenuKontrol();
+                .birimSec(Condition.text(birimAdi))
+                .evrakIslemleriIslemYaptiklarimMenuKontrol()
+
+             .birimSec(Condition.text("Optiim Birim"));
+
+
+        testStatus("TS1461", "Rol Silme ve Birimi pasife alma");
+
+        kullaniciYonetimiPage
+                .openPage()
+                .kullaniciAdiDoldur("scelik")
+                .ara()
+                .kullaniciListesiGuncelle()
+                .rolSil(birimAdi)
+                .gorevliOlduguBirimSil(birimAdi)
+
+                .kaydet();
 
     }
 
