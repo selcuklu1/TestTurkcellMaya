@@ -50,6 +50,13 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kullanıcı Listesi Yönetimi sayfası açıldığı görülür.")
+    public KullaniciListesiYonetimiPage sayfaKontrolu() {
+        SelenideElement sayfa = $(By.xpath("//div[@id='window1Dialog']//span[text()='Kullanıcı Listesi Yönetimi']"));
+        Assert.assertEquals(sayfa.isDisplayed(), true, "Ekran açıldı.");
+        return this;
+    }
+
     @Step("Kullanıcı Listesi Yönetimi sayfası alan kontrolü yapılır.")
     public KullaniciListesiYonetimiPage ekranAlanKontrolu() {
         Assert.assertEquals(tabSorgulamaVeFiltreleme.isDisplayed(), true, "Sorgu ve Filtrele tabı gözüküyor.");
@@ -129,6 +136,19 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("")
+    public KullaniciListesiYonetimiPage kullaniciListesiListedenCikartButonKontrolu(){
+
+        ElementsCollection kullaniciListesi= $$("tbody[id='kullaniciGrubuEditorForm:kullaniciGrubuKullaniciLov_id:LovSecilenTable_data'] tr[data-ri]");
+        for(int i = 0 ; i<kullaniciListesi.size();i++) {
+            boolean display = kullaniciListesi
+                    .get(i)
+                    .$("span[class='ui-button-icon-left ui-icon delete-icon']").isDisplayed();
+            Assert.assertEquals(display, true, "Listeden çıkart butonu mevcut");
+        }
+        return this;
+    }
+
     @Step("Durum alanında \"{durum}\" seçilir.")
     public KullaniciListesiYonetimiPage durumSec(String durum) {
         cmbDurum.selectOption(durum);
@@ -139,13 +159,13 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     public KullaniciListesiYonetimiPage durumKontrolu(String text) {
         String text1 = cmbDurum.getText();
         System.out.println(text1);
-        Assert.assertEquals(text1,text,"Durumu Sadece Aktifler seçili olarak gelmeli");
+        Assert.assertEquals(text1, text, "Durumu Sadece Aktifler seçili olarak gelmeli");
         String[] cmbTexts = cmbDurum.innerText().split("\n");
         cmbTexts[0].contains("Tümü");
         cmbTexts[1].contains("Sadece Aktifler");
         cmbTexts[2].contains("Sadece Pasifler");
 
-        Allure.addAttachment("Durum : ","Durum Combosunda (Tümü, Sadece Aktifler, Sadece Pasifler) seçenekleri mevcuttur. \n" +
+        Allure.addAttachment("Durum : ", "Durum Combosunda (Tümü, Sadece Aktifler, Sadece Pasifler) seçenekleri mevcuttur. \n" +
                 "Default olarak Sadece Aktifler seçili gelir.");
         return this;
     }
@@ -168,6 +188,26 @@ public class KullaniciListesiYonetimiPage extends MainPage {
             Allure.addAttachment("Tablo Kontrolü : ", "Kayıt bulunamamıştır.");
         return this;
     }
+
+    @Step("Kullanıcı Listesi tablosunda her kaydın yanında Güncelle ve Aktif/Pasif yap seçenekleri yer alır.")
+    public KullaniciListesiYonetimiPage tabloAktifPasifButonKontrolu(String durum) {
+
+//        ElementsCollection kisiselPages = $$("th[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
+//
+//        for(int i = 0; i<kisiselPages.size();i++){
+//            kisiselPages.get(i).click();
+        for (int j = 0; j < tblKullaniciListesi.size(); j++) {
+            if (durum.equals("Sadece Aktifler"))
+                tblKullaniciListesi.get(j)
+                        .$("button[id$='kullaniciGrubuAktif_id'] [class='ui-button-icon-left ui-icon to-passive-status-icon']").shouldBe(Condition.visible);
+            else
+                tblKullaniciListesi.get(j)
+                        .$("button[id$='kullaniciGrubuAktif_id'] [class='ui-button-icon-left ui-icon to-active-status-icon']").shouldBe(Condition.visible);
+        }
+//        }
+        return this;
+    }
+
 
     @Step("Kullanici Listesi tablosu kontrolu : \"{kullaniciAdi}\", \"{shouldBeExist}\" ")
     public KullaniciListesiYonetimiPage kullaniciListesiTablosuKullaniciAdiKontrolu(String kullaniciAdi, boolean shouldBeExist) {
@@ -205,15 +245,15 @@ public class KullaniciListesiYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı Listesi tablosunda buton kontrolu.")
+    @Step("Kullanıcı Listesi tablosunda her kaydın yanında Güncelle ve Aktif/Pasif yap seçenekleri yer alır.")
     public KullaniciListesiYonetimiPage tumTabloButonKontrolu() {
 
         ElementsCollection kisiselPages = $$("th[id='kullaniciGrubuListingForm:kullaniciGrubuDataTable_paginator_top'] > span[class='ui-paginator-pages'] >  span");
 
 
-        for(int i = 0; i<kisiselPages.size();i++){
+        for (int i = 0; i < kisiselPages.size(); i++) {
             kisiselPages.get(i).click();
-            for (int j = 0; j<tblKullaniciListesi.size();j++) {
+            for (int j = 0; j < tblKullaniciListesi.size(); j++) {
                 tblKullaniciListesi.get(j)
                         .$("button[id$=':kullaniciGrubuGuncelle_id']").shouldBe(Condition.visible);
                 tblKullaniciListesi.get(j)
@@ -255,9 +295,12 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     }
 
     @Step("İşlem Onayı popUpı \"{butonText}\" butonuna basılarak kapatılır.")
-    public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText) {
+    public KullaniciListesiYonetimiPage islemOnayiPopUpEvetHayır(String butonText,String mesaj) {
         SelenideElement btnKapat = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//span[text()='" + butonText + "']//..//..//button"));
-        btnKapat.click();
+        SelenideElement popupMesaj = $(By.xpath("//div[@id='baseConfirmationDialog:dialog']//div[@class='content']"));
+        Assert.assertEquals(popupMesaj.text().equals(mesaj),true,"iki mesajda eşit");
+
+       btnKapat.click();
         return this;
     }
 
@@ -274,7 +317,7 @@ public class KullaniciListesiYonetimiPage extends MainPage {
     }
 
     @Step("Sorgula ve Filtrele tabı açılır.")
-    public KullaniciListesiYonetimiPage sorgulaVeFiltreleTabAc(){
+    public KullaniciListesiYonetimiPage sorgulaVeFiltreleTabAc() {
         tabSorgulamaVeFiltreleme.click();
         return this;
     }

@@ -491,12 +491,12 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         System.out.println("Dağınım Planı: " + planAdi);
 
         //TS1280 tanımlanıyor
-//        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
-//        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
-//        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
-//        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
-//        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
-//        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
+        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
 
