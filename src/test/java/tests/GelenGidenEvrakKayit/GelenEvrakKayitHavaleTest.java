@@ -566,7 +566,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .popUpsv2();
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
+//                .islemMesaji().basariliOlmali()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         havaleOnayinaSunduklarimPage

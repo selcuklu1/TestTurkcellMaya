@@ -1133,6 +1133,17 @@ public class BilgilerTab extends MainPage {
         return this;
     }
 
+    @Step("Alanları doldurulur")
+    public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi) {
+        konuKoduSec("010.01");
+        konuDoldur(konu);
+        kaldiralacakKlasorleriSec("Diğer");
+        geregiSecimTipiSec(geregiSecimTipi);
+        geregiSec(geregi);
+        onayAkisiTemizle();
+        return this;
+    }
+
 
     @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konuKodu, String konu, String kaldirilacakKlasorleri, Ivedilik ivedilik, GeregiSecimTipi geregiSecimTipi, String geregi, String[][] onayAkisKullaniciTipi) {

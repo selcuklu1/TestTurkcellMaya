@@ -29,6 +29,7 @@ public class PDFOnizleme extends MainPage{
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
+        setScale100();
     }
 
     public PDFOnizleme(String title) {
@@ -38,7 +39,9 @@ public class PDFOnizleme extends MainPage{
 
     @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
-        scaleSelect.selectOption("100%");
+        scaleSelect.selectOptionByValue("1");
+        //scaleSelect.selectOptionByValue("page-actual");
+        //scaleSelect.selectOption("100%");
         //byvalue: page-actual
         //byvalue: 1
         return this;
@@ -71,7 +74,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme {pageNumber} sayfada tekst kontrolü")
     public PDFOnizleme checkText(int pageNumber, Condition... conditions) {
         SelenideElement page = getPage(pageNumber).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page = page.$(".textLayer").shouldHave(condition);
             //page = page.waitUntil(condition, 30000);
@@ -83,7 +86,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme tekst kontrolü {conditions}")
     public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page.$(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);
@@ -95,7 +98,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme tekst kontrolü")
     public PDFOnizleme checkTextAndCloseWindow(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page.$(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);

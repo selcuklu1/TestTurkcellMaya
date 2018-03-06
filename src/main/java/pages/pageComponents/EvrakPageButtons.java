@@ -165,9 +165,17 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("Iade et")
     public EvrakPageButtons evrakIadeEt(String iadeNotu) {
-        getContainer().$x("descendant::td[@class='buttonMenuContainerDefault' and descendant::span[.='İade Et']]//button").click();
+        getButton("İade Et").click();
+        //getContainer().$x("descendant::td[@class='buttonMenuContainerDefault' and descendant::span[.='İade Et']]//button").click();
         //getContainer().$("button .iadeEt").click();
         $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
+        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        return this;
+    }
+
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt() {
+        getButton("İade Et").click();
         $("#inboxItemInfoForm\\:iadeEtButton_id").click();
         return this;
     }

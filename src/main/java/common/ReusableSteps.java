@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 import pages.LoginPage;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.solMenuPages.ImzaBekleyenlerPage;
+import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
 import pages.ustMenuPages.BirimYonetimiPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
@@ -38,6 +39,20 @@ public class ReusableSteps extends BaseLibrary{
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitBirimHavaleEt(konu,kurum,birim);
+    }
+
+    @Step("Teslim Alınmayı Bekleyenler sayfasında evrak oluştur.")
+    public void teslimAlinanlarEvrakOlustur(String konu,String kurum,String birim) {
+
+        GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();
+        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitBirimHavaleEt(konu,kurum,birim);
+
+        teslimAlinmayiBekleyenlerPage
+                .secilenEvrakTeslimAl(konu);
+
     }
 
     @Step("Gelen Evraklar sayfasında evrak oluştur.")

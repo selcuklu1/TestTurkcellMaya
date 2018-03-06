@@ -192,11 +192,11 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String gizlilikDerecesi = "Gizli";
         String evrakSayiSag = createRandomNumber(10);
-        String kisi = "Zübeyde Tekin";
+        String kisi = "Mehmet Bozdemir";
         String icerik = createRandomText(15);
-        String onayAkisi = "CanKontrol";
+        String onayAkisi = "TS0932";
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -211,7 +211,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evetDugmesi()
                 .yeniKayitButton();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -249,7 +249,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -301,12 +301,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kisi2 = "Optiim";
         String gizlilikDerecesi = "Gizli";
         String evrakSayiSag = createRandomNumber(10);
-        String kisi = "Zübeyde Tekin";
+        String kisi = "Mehmet Bozdemir";
         String kisiKurum = "Gerçek Kişi";
         String icerik = createRandomText(15);
-        String onayAkisi = "CanKontrol";
+        String onayAkisi = "TS0932";
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -322,7 +322,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evetDugmesi()
                 .yeniKayitButton();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -360,7 +360,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -412,12 +412,12 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String kisi2 = "Can Şeker";
         String gizlilikDerecesi = "Gizli";
         String evrakSayiSag = createRandomNumber(10);
-        String kisi = "Zübeyde Tekin";
+        String kisi = "Mehmet Bozdemir";
         String kisiKurum = "Tüzel Kişi";
         String icerik = createRandomText(15);
-        String onayAkisi = "CanKontrol";
+        String onayAkisi = "TS0932";
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -433,7 +433,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .evetDugmesi()
                 .yeniKayitButton();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
@@ -471,7 +471,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .kontrolEtNotDoldur(icerik)
                 .kontrolEtGonder();
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         imzaBekleyenlerPage
                 .openPage()

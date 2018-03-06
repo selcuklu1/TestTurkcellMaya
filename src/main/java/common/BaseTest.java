@@ -38,7 +38,7 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
 //BrowserPerTest.class
 @Listeners({ResultListener.class
-        //, MethodInterceptor.class
+//        , MethodInterceptor.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
@@ -284,14 +284,14 @@ public class BaseTest extends BaseLibrary {
     public void useFirefox() {
         try {
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setAcceptInsecureCerts(true);
+            //capabilities.setAcceptInsecureCerts(true);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
-            throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
+            throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
 
         //System.out.println("Browser: " + getCapabilities().getBrowserName());

@@ -834,21 +834,21 @@ public class EvrakOnizleme extends MainPage {
             return this;
         }
 
-        @Step("Evrak Geçmişi listesinde {aramaKriterleri} bulunur")
-        public EvrakGecmisi evrakGecmisiListesindeBulunur(Condition... aramaKriterleri) {
+        @Step("Evrak Geçmişi listesinde {aramaKriterleri} bulunmalı")
+        public EvrakGecmisi kayitBulunmali(Condition... aramaKriterleri) {
             searchTable.findRows(aramaKriterleri)
                     .shouldHave(CollectionCondition.sizeGreaterThan(0));
             return this;
         }
 
         @Step("Evrak Geçmişi listesinde son hareket(ilk satır) {kontrolKriterleri} kontrol")
-        public EvrakGecmisi evrakGecmisiListesindeSonHareketKontrol(Condition... kontrolKriterleri) {
-            searchTable.findRows().shouldHave(kontrolKriterleri);
+        public EvrakGecmisi sonHareketKontrol(Condition... kontrolKriterleri) {
+            searchTable.findRows().getFoundRows().first().shouldHave(kontrolKriterleri);
             return this;
         }
 
         @Step("Evrak Geçmişinde bulunan kayıt {kontrolKriterleri} kontrollü")
-        public EvrakGecmisi evrakGecmisiBulununaKayitKontrol(Condition... kontrolKriterleri){
+        public EvrakGecmisi bulunanKayittaKontrol(Condition... kontrolKriterleri){
             searchTable.shouldHave(kontrolKriterleri);
             return this;
         }
