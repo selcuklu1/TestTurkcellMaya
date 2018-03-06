@@ -593,8 +593,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
-                .geriAl()
-                .islemMesaji().basariliOlmali();
+                .geriAl();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -608,8 +608,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
-                .geriAl()
-                .islemMesaji().basariliOlmali();
+                .geriAl();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()

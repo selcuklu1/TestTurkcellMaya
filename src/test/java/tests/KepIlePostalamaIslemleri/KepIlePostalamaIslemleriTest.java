@@ -236,12 +236,12 @@ public class KepIlePostalamaIslemleriTest extends BaseTest {
                 .sagAlandaGuncellemeEkranGeldigiGorme()
                 .yeniKepAdresBilgileriEkle()
                 .popupKepAdresiDoldur(kepAdresi1)
-                .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
-                .popupKaydet()
+                .popupKepHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
+                .popupKepAdresBilgileriKaydet()
                 .yeniKepAdresBilgileriEkle()
                 .popupKepAdresiDoldur(kepAdresi2)
-                .popupHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
-                .popupKaydet()
+                .popupKepHizmetSaglayicisiSec(popupKepHizmetSaglayicisiSec)
+                .popupKepAdresBilgileriKaydet()
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 

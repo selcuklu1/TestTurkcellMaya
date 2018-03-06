@@ -756,7 +756,9 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .sorgula()
                 .rapordaEvraklarıListele(konu1)
                 .sorgula()
-                .rapordaEvraklarıListele(konu2);
+                .rapordaEvraklarıListele(konu2)
+                .rapordaEvraklarıListeleDetayTikla(konu2)
+                .ekranKontrolEvrakDetayi();
     }
 
     @Severity(SeverityLevel.CRITICAL)
