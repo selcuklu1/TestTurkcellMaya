@@ -1244,7 +1244,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Benzer Kayıt tıklanır")
     public GelenEvrakKayitPage benzerKaydet() {
-        if ($$(("[id='evetButtonBenzerKaydet']")).size() == 1) {
+        if ($(("[id='evetButtonBenzerKaydet']")).shouldBe(visible).exists() == true) {
             $("[id='evetButtonBenzerKaydet']").pressEnter();
         } else {
         }
