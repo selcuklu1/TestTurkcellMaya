@@ -115,6 +115,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
+                .havaleYapEkranGeldigiGorulur()
                 .havaleYapKullaniciListesiSecmeyeDene("TS1590")
                 .kisiListesiSecilenGuncelle()
                 .kisiListesiSecilenGrupDetaySeciliGeldigiGorme()
@@ -150,6 +151,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
+                .havaleYapEkranGeldigiGorulur()
                 .havaleYapBirimDoldur(birim)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -161,7 +163,11 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .iadeEt()
                 .iadeEtNotDoldur(not)
-                .iadeEtIadeEt();
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .evrakNoGelmedigiGorme(konuKoduRandomTS1597);
 
         login(usernameZTEKIN, passwordZTEKIN);
 
