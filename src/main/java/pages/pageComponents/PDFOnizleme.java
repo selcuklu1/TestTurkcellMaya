@@ -45,7 +45,8 @@ public class PDFOnizleme extends MainPage{
 
     @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
-        scaleSelect(scaleSelect.shouldBe(Condition.visible).toWebElement(), "1");
+        scaleSelect.waitUntil(Condition.visible, 40000);
+        scaleSelectJS(scaleSelect.toWebElement(), "1");
         //scaleSelect.selectOptionByValue("1");
         //scaleSelect.selectOptionByValue("page-actual");
         //scaleSelect.selectOption("100%");
@@ -129,8 +130,8 @@ public class PDFOnizleme extends MainPage{
 
 
     //Firefox scroll error yüzünden kullanılıyor 6.03.2018
-    public void scaleSelect(WebElement element, String value) {
-        List<WebElement> options = element.findElements(By.xpath(
+    public void scaleSelectJS(WebElement element, String value) {
+        WebElement option = element.findElement(By.xpath(
                 ".//option[@value = " + Quotes.escape(value) + "]"));
         clickJs(element);
     }

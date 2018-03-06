@@ -92,8 +92,8 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
 
-        if (WebDriverRunner.hasWebDriverStarted())
-            takeScreenshot();
+        /*if (WebDriverRunner.hasWebDriverStarted())
+            takeScreenshot();*/
     }
 
     @Override
@@ -112,7 +112,6 @@ public class ResultListener extends BaseLibrary implements IResultListener2 {
     }
 
     @Override
-    @Attachment(value = "Error screenshot", type = "image/png")
     public void onTestFailure(ITestResult result) {
             try {
                 takeScreenshotOnFail();
