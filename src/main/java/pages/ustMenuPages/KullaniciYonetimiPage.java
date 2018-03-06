@@ -56,6 +56,8 @@ public class KullaniciYonetimiPage extends MainPage {
 //    SelenideElement btnGorevliOlduguBirimlerGuncelle = $("[id$='updateKullaniciBirimButton']");
 
     SelenideElement btnGorevliOlduguBirimlerGuncelle = $(By.id("kullaniciYonetimiEditorForm:kullaniciBirimDataTable:0:updateKullaniciBirimButton"));
+    ElementsCollection tblRolListesi = $$("[id='kullaniciYonetimiEditorForm:kullaniciRolBirimDataTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
+    ElementsCollection tblGorevliOlduguBirimListesi = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
 
 
     //Görevli Olduğu Birimler alanı güncelle popup
@@ -527,6 +529,38 @@ public class KullaniciYonetimiPage extends MainPage {
     @Step("Kaydet")
     public KullaniciYonetimiPage kullaniciGuncelleKaydet() {
         btnKullaniciGuncelleKaydet.click();
+        return this;
+    }
+
+    @Step("Rol Sil")
+    public KullaniciYonetimiPage rolSil(String birimAdi) {
+
+        tblRolListesi
+                .filterBy(Condition.text(birimAdi))
+                .get(0)
+                .$(By.cssSelector("[id$='deleteKullaniciRolBirimButton']"))
+                .scrollTo()
+                .pressEnter()
+                .click();
+
+        islemOnayi("Evet");
+
+        return this;
+    }
+
+    @Step("Görevli olduğu birimi pasif yap")
+    public KullaniciYonetimiPage gorevliOlduguBirimSil(String birimAdi) {
+
+        tblGorevliOlduguBirimListesi
+                .filterBy(Condition.text(birimAdi))
+                .get(0)
+                .$(By.cssSelector("[id$='deleteKullaniciBirimButton']"))
+                .scrollTo().pressEnter()
+                .click();
+
+
+        islemOnayi("Evet");
+
         return this;
     }
 }
