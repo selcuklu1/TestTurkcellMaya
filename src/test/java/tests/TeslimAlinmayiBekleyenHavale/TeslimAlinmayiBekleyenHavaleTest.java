@@ -123,23 +123,12 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+        String birim = "Yazılım Geliştirme Direktörlüğ";
         String not = createRandomText(15);
         login(usernameZTEKIN, passwordZTEKIN);
 
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
         gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandom)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
-        //TODO
+                .gelenEvrakKayitBirimHavaleEt(konuKoduRandom,kurum,birim);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()

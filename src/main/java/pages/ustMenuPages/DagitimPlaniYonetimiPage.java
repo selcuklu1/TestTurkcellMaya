@@ -61,7 +61,8 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
     @Step("Sorgulama ve Filtrelemeyi genişlet")
     public DagitimPlaniYonetimiPage sorgulamayiGenislet(boolean... genislet) {
-        SelenideElement element = listingForm.$("h3[role=tab]");
+        SelenideElement element = listingForm.$("h3[role=tab]").shouldBe(visible);
+
         if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length > 0 ? genislet[0] : "true")))
             element.find("a").click();
         return this;
@@ -115,26 +116,30 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Guncelle butona tıklanır")
-    public DagitimPlaniYonetimiPage sorgulamaDataTableGuncelleButonaTikla() {
+    @Step("Guncelle")
+    public DagitimPlaniYonetimiPage guncelle() {
         sorgulamaDataTable.getFoundRow().$(updteButtonLocator).click();
         return this;
     }
 
-    @Step("Kopyala butona tıklanır")
-    public DagitimPlaniYonetimiPage sorgulamaDataTableKopyalaButonaTikla() {
+    @Step("Kopyala")
+    public DagitimPlaniYonetimiPage kopyala() {
         sorgulamaDataTable.getFoundRow().$(copyButtonLocator).click();
         return this;
     }
 
-    @Step("Pasif Yap butona tıklanır")
-    public DagitimPlaniYonetimiPage sorgulamaDataTablePasifYapButonaTikla() {
+    public boolean aktifMi(){
+        return sorgulamaDataTable.getFoundRow().$(toPassiveButtonLocator).exists();
+    }
+
+    @Step("Pasif Yap")
+    public DagitimPlaniYonetimiPage pasifYap() {
         sorgulamaDataTable.getFoundRow().$(toPassiveButtonLocator).click();
         return this;
     }
 
-    @Step("Aktif Yap butona tıklanır")
-    public DagitimPlaniYonetimiPage sorgulamaDataTableAktifYapButonaTikla() {
+    @Step("Aktif Yap")
+    public DagitimPlaniYonetimiPage aktifYap() {
         sorgulamaDataTable.getFoundRow().$(toActiveButtonLocator).click();
         return this;
     }
@@ -338,7 +343,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
                 .sorgulamadaAdGir(adi)
                 .ara()
                 .sorgulamaDataTable.findRows(text(adi)).shouldHave(sizeGreaterThan(0));
-        sorgulamaDataTableGuncelleButonaTikla()
+        guncelle()
                 .getAdi().shouldHave(exactValue(adi));
         return this;
     }

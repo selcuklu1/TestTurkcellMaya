@@ -48,6 +48,7 @@ public class HavaleYetkisiTest extends BaseTest {
     public void TS2253 () throws InterruptedException {
         String yeniRolad = "TS2253" + getSysDate();
         String yeniAksiyon = "Havale İşlemleri Tüm Birimleri Görebilme";
+        login("hgner", "123");
         preTS2253 (yeniRolad,yeniAksiyon);
     }
 }

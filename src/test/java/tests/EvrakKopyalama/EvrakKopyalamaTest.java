@@ -8,6 +8,7 @@ package tests.EvrakKopyalama;
 
 import common.BaseTest;
 import common.ReusableSteps;
+import data.User;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -55,6 +56,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
+    User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS2233: Beklemeye alınanlar listesinden evrak kopyalanması ve imzalanması")
@@ -89,7 +91,7 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         String konuKoduTS2196 = "TS2196-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullanici = "Zübeyde Tekin";
+        String kullanici = "Mehmet Bozdemir";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
@@ -97,6 +99,8 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         evrakOlusturPage
                 .evrakOlusturParafla(konuKoduTS2196,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama");
+
+        login(usernameYAKYOL,passwordYAKYOL);
 
         parafladiklarimPage
                 .openPage()
@@ -179,7 +183,7 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         String konuKodu = "TS2175-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullanici = "Zübeyde Tekin";
+        String kullanici = "Ömer ÖZÜLKÜ";
         String kaldirilacakKlasor = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
@@ -188,6 +192,8 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         evrakOlusturPage
                 .evrakOlusturBirimIcerikKullanParafla(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",sablonAdi1082);
+
+        login(user1);
 
         parafladiklarimPage
                 .openPage()

@@ -149,7 +149,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
     public void TS2124(String bilgiSecimTipi, String bilgi) {
 
         String ek, hitap, evraktaGorunecekHitap;
-        String adres = "My Adress";
+        String adres = "GÖLBAŞI / ANKARA";
 
         EvrakOlusturPage page = new EvrakOlusturPage();
         DagitimHitapDuzenle hitapDuzenle = new DagitimHitapDuzenle();
