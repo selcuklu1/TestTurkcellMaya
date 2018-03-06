@@ -317,7 +317,7 @@ public class BirimYonetimiTest extends BaseTest {
              .birimSec(Condition.text("Optiim Birim"));
 
 
-        testStatus("TS1461", "Rol Silme ve Birimi pasife alma");
+        testStatus("TS1461", "Data Resetleme: Rol Silme ve Birimi pasife alma");
 
         kullaniciYonetimiPage
                 .openPage()
