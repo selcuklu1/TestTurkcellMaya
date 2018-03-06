@@ -470,4 +470,54 @@ public class BirimYonetimiTest extends BaseTest {
                 .altBirimleriAcma()
                 .birimKayitKontrolu(altBirim);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1499: Kep adres bilgileri alanından 2 tane kep hesabı tanımlaması")
+    public void TS1499() {
+
+        String birimAdi = "TS1499 Birim";
+        String kepAdresi1 = "turksat@testkep.pttkep.gov.tr";
+        String kepAdresi2 = "turksat.2@testkep.pttkep.gov.tr";
+        String kepHizmetSaglayici = "PTT KEP Servisi";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimKayitKontrolu(birimAdi)
+                .aktiflerIlkBirimGuncelle()
+                .kepAdresiKullaniyorSec(true)
+
+                .kepAdresBilgileriDataResetleme(kepAdresi1, kepAdresi2)
+                .yeniKepAdresBilgileriEkle()
+                .popupKepAdresiDoldur(kepAdresi1)
+                .popupKepHizmetSaglayicisiSec(kepHizmetSaglayici)
+                .popupKepAdresBilgileriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .yeniKepAdresBilgileriEkle()
+                .popupKepAdresiDoldur(kepAdresi2)
+                .popupKepHizmetSaglayicisiSec(kepHizmetSaglayici)
+                .popupKepAdresBilgileriKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .kepAdresiVarsayilanYap(kepAdresi2)
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .aktiflerIlkBirimGuncelle()
+                .kepAdresBilgileriKontrolu(kepAdresi1)
+                .kepAdresBilgileriKontrolu(kepAdresi2)
+
+                .kepAdresBilgileriDataResetleme(kepAdresi1, kepAdresi2);
+
+
+
+    }
 }

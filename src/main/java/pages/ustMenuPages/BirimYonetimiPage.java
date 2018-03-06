@@ -53,7 +53,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement chkGenelEvrak = $(By.id("birimYonetimiEditorForm:genelEvrakCheckbox_input"));
     SelenideElement txtOlurMetni = $(By.id("birimYonetimiEditorForm:olurMetniText"));
     SelenideElement txtAciklama = $(By.id("birimYonetimiEditorForm:aciklamaMetniText"));
-    SelenideElement chkKepAdresiKullaniyor = $(By.id("birimYonetimiEditorForm:kepAdresiKullanimCheckbox_input"));
+    SelenideElement chkKepAdresiKullaniyor = $(By.id("birimYonetimiEditorForm:kepAdresiKullanimCheckbox"));
     SelenideElement chkSDPnaGoreBirimKlasorleriniOlustur = $(By.id("birimYonetimiEditorForm:birimStandartDosyaPlaninaGore_input"));
     SelenideElement chkYetkiDevriVar = $(By.id("birimYonetimiEditorForm:yetkiDevriCheckbox_input"));
     SelenideElement btnSolUstLogoEkle = $(By.id("birimYonetimiEditorForm:solUstMenuLogoEkle"));
@@ -74,7 +74,7 @@ public class BirimYonetimiPage extends MainPage {
 
     SelenideElement txtPopupKepAdresi = $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
-    SelenideElement btnPopupKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
+    SelenideElement btnPopupKepAdresBilgileriKaydet = $(By.id("kepAdresBilgiEditorForm:saveKepAdresiButton"));
     SelenideElement btnKaydet = $(By.id("birimYonetimiEditorForm:saveBirimButton"));
 
     BelgenetElement cmbPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
@@ -98,6 +98,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement dteBirimAmiriAtamaBitisTarihiInput = $(By.id("birimAmiriEditorForm:gorevBitisTarihiCalendar_input"));
 
     SelenideElement cmbBirimAmiriAtamaBagTipi = $(By.id("birimAmiriEditorForm:birimBagTipiSelect"));
+    ElementsCollection tblKepAdresBilgileriListesi = $$("[id='birimYonetimiEditorForm:kepBilgileriDataTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
 
     // Hüseyin TÜMER
 
@@ -126,14 +127,14 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Popup kaydet")
-    public BirimYonetimiPage popupKaydet() {
-        btnPopupKaydet.click();
+    public BirimYonetimiPage popupKepAdresBilgileriKaydet() {
+        btnPopupKepAdresBilgileriKaydet.click();
         return this;
     }
 
-    @Step("Popup hizmet sağlayıcısı seç")
-    public BirimYonetimiPage popupHizmetSaglayicisiSec(String value) {
-        cmbPopupHizmetSaglayicisi.selectOption(value);
+    @Step("KEP hizmet sağlayıcısı seç")
+    public BirimYonetimiPage popupKepHizmetSaglayicisiSec(String kepHizmetSaglayici) {
+        cmbPopupHizmetSaglayicisi.selectOption(kepHizmetSaglayici);
         return this;
     }
 
@@ -145,7 +146,7 @@ public class BirimYonetimiPage extends MainPage {
 
     @Step("Kep adresi bilgileri ekle")
     public BirimYonetimiPage yeniKepAdresBilgileriEkle() {
-        btnYeniKepAdresBilgileriEkle.pressEnter();
+        clickJs(btnYeniKepAdresBilgileriEkle);
         return this;
     }
 
@@ -765,4 +766,52 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kep adresi varsayılan yap")
+    public BirimYonetimiPage kepAdresiVarsayilanYap(String kepAdresi) {
+
+        tblKepAdresBilgileriListesi
+                .filterBy(Condition.text(kepAdresi))
+                .first()
+                .$("[id$='changeVarsayilanButton']")
+                .scrollTo().pressEnter()
+                .click();
+
+        return this;
+    }
+
+    @Step("Kep Adres Bilgileri kontrolu")
+    public BirimYonetimiPage kepAdresBilgileriKontrolu(String kepAdresi) {
+
+        tblKepAdresBilgileriListesi
+                .filterBy(Condition.text(kepAdresi))
+                .shouldHaveSize(1);
+
+        return this;
+    }
+
+    @Step("Kep Adresi Silme")
+    public BirimYonetimiPage kepAdresBilgileriSil(String kepAdresi) {
+
+        if(tblKepAdresBilgileriListesi.filterBy(Condition.text(kepAdresi)).size() == 1)
+        {
+            tblKepAdresBilgileriListesi
+                    .filterBy(Condition.text(kepAdresi))
+                    .first()
+                    .$("[id$='deleteKepAdresiButton']")
+                    .pressEnter();
+
+            islemOnayi("Evet");
+        }
+
+        return this;
+    }
+
+    @Step("Data Resetleme")
+    public BirimYonetimiPage kepAdresBilgileriDataResetleme(String kepAdresi1, String kepAdresi2) {
+
+        kepAdresBilgileriSil(kepAdresi1);
+        kepAdresBilgileriSil(kepAdresi2);
+
+        return this;
+    }
 }
