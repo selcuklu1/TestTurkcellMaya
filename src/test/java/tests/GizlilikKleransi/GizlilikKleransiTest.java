@@ -685,7 +685,7 @@ login(TestData.gsahin);
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj);
 
         evrakAramaPage
                 .evrakinAranacagiYerSec(aranacagiYer)
@@ -709,7 +709,7 @@ login(TestData.gsahin);
                 .ekleriTabAc()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj);
 
     }
 
@@ -734,12 +734,12 @@ login(TestData.gsahin);
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , dependsOnMethods = {"TS1938"}
-            , description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+            , description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)")
     public void TS2140() throws InterruptedException {
 
 //        login("gsahin", "123");
 //9261
-        login(TestData.gsahin);
+        login(TestData.username23t,TestData.passwor23t);
 
         String aranacagiYer = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrakın Kayıt Sayısı";
