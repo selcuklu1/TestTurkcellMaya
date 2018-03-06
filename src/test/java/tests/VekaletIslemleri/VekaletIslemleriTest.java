@@ -154,7 +154,6 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,priority = 1
             , dependsOnMethods = {"TS0025a"}
             , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
@@ -475,7 +474,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            , dependsOnMethods = {"TS2208"}
+            , dependsOnMethods = {"TS2208"}
             , description = "TS2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TS2212() throws InterruptedException {
 
