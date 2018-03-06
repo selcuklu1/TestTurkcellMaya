@@ -50,10 +50,15 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement btnKuralEklemeKaydet = $(By.id("havaleKuralYonetimiEditorForm:saveHavaleKuralButton"));
     SelenideElement sonTable = $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']");
     SelenideElement txtFiltreleKuralAdi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:adFilterInput"));
+    BelgenetElement txtFiltreleGeldigiYerBirim = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerBirimLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerGercekKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerGercekKisiLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTuzelKisiLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerKurum = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerKurumLov:LovText"));
+
     BelgenetElement txtGeldigiYerBirim = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerBirimLov:LovText"));
     BelgenetElement txtGeldigiYerKullanici = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerKullaniciLov:LovText"));
     BelgenetElement txtGeldigiYerGercekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerGercekKisiLov:LovText"));
-    BelgenetElement txtGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTuzelKisiLov:LovText"));
+    BelgenetElement txtGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerTuzelKisiLov:LovText"));
     BelgenetElement txtGeldigiYerKurum = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerKurumLov:LovText"));
 
     //TODO Kime havale edilicek
@@ -227,9 +232,44 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği yer tipi seçiniz")
+    @Step("Geldiği yer tipi {geldigiYer} seçilir")
     public EvrakHavaleKurallariYonetimiPage geldigiYerTipiSec(String geldigiYer) {
         cmbGeldigiYerTipi.selectOption(geldigiYer);
+        return this;
+    }
+
+    @Step("Birim doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerBirimDoldur(String birim) {
+        txtFiltreleGeldigiYerBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Gerçek Kişi doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerGercekKisiDoldur(String gercekKisi) {
+        txtFiltreleGeldigiYerGercekKisi.selectLov(gercekKisi);
+        return this;
+    }
+
+    @Step("Kullanıcı doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerKullaniciDoldur(String kullanici) {
+
+        //İlk selectLov seçemiyor, sebeb araştırdık tek çözüm aşağıdaki gibi
+        txtGeldigiYerKullanici.type(kullanici).getSelectableItems().first().click();
+        txtGeldigiYerKullanici.closeTreePanel();
+        if (!txtGeldigiYerKullanici.isLovSelected())
+            txtGeldigiYerKullanici.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Tüzel Kişi doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerTuzelKisiDoldur(String tuzelKisi) {
+        txtFiltreleGeldigiYerTuzelKisi.selectLov(tuzelKisi);
+        return this;
+    }
+
+    @Step("Kurum doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerKurumDoldur(String kurum) {
+        txtFiltreleGeldigiYerKurum.selectLov(kurum);
         return this;
     }
 
@@ -277,6 +317,11 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     @Step("Kural adı doldur")
     public EvrakHavaleKurallariYonetimiPage kuralAdiDoldur(String kuralAdi) {
         txtKuralAdi.setValue(kuralAdi);
+        return this;
+    }
+    @Step("Kural adı doldur")
+    public EvrakHavaleKurallariYonetimiPage filtrelemeKuralAdiDoldur(String kuralAdi) {
+        txtFiltreleKuralAdi.setValue(kuralAdi);
         return this;
     }
 

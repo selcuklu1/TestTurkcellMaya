@@ -65,7 +65,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
 
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
-    SelenideElement evrakTeslimAl = $("[id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton']");
+    SelenideElement evrakTeslimAl = $("[class='ui-button-icon-left ui-icon teslimAl']");
 
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement teslimAlGönder = $("[id='mainPreviewForm:btnTeslimAlGonder']");
@@ -74,6 +74,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
     ElementsCollection lblIadeEdilecekKullanici = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    ElementsCollection lblIadeEdilecekBirim = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
@@ -125,7 +126,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Teslim al ve kapat")
     public TeslimAlinmayiBekleyenlerPage teslimAlveKapatTeslimAlVeKapat() {
-        btnTeslimAlVeKapatTeslimAlVeKapat.click();
+        btnTeslimAlVeKapatTeslimAlVeKapat.pressEnter();
         return this;
     }
 
@@ -161,9 +162,9 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("")
+    @Step("Teslim Al Gönder")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeGonder() {
-        $(By.id("mainPreviewForm:btnTeslimAlGonder")).click();
+        $(By.id("mainPreviewForm:btnTeslimAlGonder")).pressEnter();
         return this;
     }
 
@@ -260,6 +261,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
     public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi) {
         txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi);
+        return this;
+    }
+
+    @Step("Onaylayacak Kişi alanını doldur: {onaylayacakKisi}")
+    public TeslimAlinmayiBekleyenlerPage secilenOnaylayacakKisiDoldur(String onaylayacakKisi,String birim) {
+        txtSecilenlerOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
         return this;
     }
 
@@ -441,6 +448,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geçmiş Tab Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage evrakGecmisTabKontrolu() {
+        boolean durum = $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab Kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tabı gelmektedir.","");
+        return this;
+    }
+
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinmayiBekleyenlerPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
@@ -453,7 +468,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
+    }
 
+    @Step("Evrak Geçmişi Kontrol")
+    public TeslimAlinmayiBekleyenlerPage evrakGecmisi(String teslimAlinan, String islemSureci, String evrakTarihSaat) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() >= 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
     }
 
     @Step("Filtrele alanını aç")
@@ -727,6 +749,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage onizlemeIadeEdilecekBirimKontrolu(String birim) {
+        boolean durum = lblIadeEdilecekBirim.filterBy(Condition.text(birim)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Birim Kontrolü","");
+        return this;
+    }
+
     @Step("Not alanını doldur: {not}")
     public TeslimAlinmayiBekleyenlerPage iadeEtNotDoldur(String not) {
         txtNot.setValue(not);
@@ -757,6 +787,50 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" \"{kayitTarihi}\" \"{sayiSag}\" \"{digerKontrol}\"")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo,String kayitTarihi,String sayiSag,String digerKontrol) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .filterBy(Condition.text(digerKontrol))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("KayıtTarihi", kayitTarihi);
+        Allure.addAttachment("Sayı", sayiSag);
+        Allure.addAttachment("Diger Kontrolü", digerKontrol);
+        return this;
+    }
+
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" \"{kayitTarihi}\" \"{sayiSag}\" \"{digerKontrol}\"")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanVeAdetKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo,String kayitTarihi,String sayiSag,String digerKontrol,int adet) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .filterBy(Condition.text(digerKontrol))
+                .shouldHaveSize(adet);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("KayıtTarihi", kayitTarihi);
+        Allure.addAttachment("Sayı", sayiSag);
+        Allure.addAttachment("Diger Kontrolü", digerKontrol);
+        return this;
+    }
+
     @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo) {
         System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
@@ -773,6 +847,17 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda (B) kontrolü")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanKontrolleri(String konu,String b) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(b))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Tabloda (B) kontrolü", b);
+
+        return this;
+    }
+
     @Step("Teslim Alınmayı Bekleyenler Evrak Ekleri Kontrol : {description}")
     public TeslimAlinmayiBekleyenlerPage teslimEvrakEkleriKontrol(String ek, String description) {
 
@@ -783,4 +868,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç teslim al")
+    public TeslimAlinmayiBekleyenlerPage secilenEvrakTeslimAl(String konuKodu){
+        openPage()
+                .evrakNoIleEvrakSec(konuKodu)
+                .teslimAlGonder()
+                .evrakTeslimAlPopUpEvet();
+        return this;
+    }
+    
 }

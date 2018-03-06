@@ -100,7 +100,7 @@ public class PulYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
+    @Test(enabled = false, description = "TS1732: Pul Yönetimi ekranından yeni tanımlama yapma")
     public void TSDemo() {
 
     }

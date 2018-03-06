@@ -113,8 +113,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleAlanKontrolleri()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikKisiKontrolu(onaylayacakKisi)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -159,8 +159,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         testStatus(testid, "Test Başladı");
         birimHavaleEdilenlerPage
@@ -170,11 +170,16 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .onizlemeHavaleGeriAlKontrol()
                 .onizlemeHavaleGeriAl()
                 .onizlemeNotAlanınıDoldur(konu)
-                .onizlemeGeriAl()
-                .islemMesaji().basariliOlmali();
+                .onizlemeGeriAl();
+//                .islemMesaji().basariliOlmali();
 
-        // TODO: 4 nolu step cevap bekliyor : "Destek Gerektiren Senaryolar"
 
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        gelenEvraklarPage
+                .openPage()
+                .evrakNoGelmedigiGorme(konu);
+
+        login(TestData.usernameZTEKIN,TestData.passwordMBOZDEMIR);
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
@@ -236,16 +241,16 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
                 .onizlemeHavaleGeriAl()
                 .onizlemeNotAlanınıDoldur(konu)
-                .onizlemeGeriAl()
-                .islemMesaji().basariliOlmali();
+                .onizlemeGeriAl();
+//                .islemMesaji().basariliOlmali();
 
         testStatus(testid, "Test Başladı");
 
@@ -254,11 +259,13 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu)
                 .ekranKontrolEvrakDetayi()
                 .icerikHavaleYap()
+                .ekranKontrolEvrakDetayi()
                 .icerikHavaleAlanKontrolleri()
-                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .eklenenIcerikBirimKontrolu(birim)
                 .icerikHavaleIslemleriKisiDoldur(kisi)
                 .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenIcerikBirimKontrolu(birim)
+                .eklenenIcerikBirimOpsiyonKontrolu(gerek)
                 .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
                 .kaydet()
@@ -331,8 +338,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu1)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -368,8 +375,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu2)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -629,6 +636,11 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 //Bu hali ile fail ediyor.
                 .tabloEvrakNoileEvrakKontrolu(konu1)
                 .tabloEvrakNoileEvrakKontrolu(konu2);
+
+//        gelenEvraklarPage
+//                .openPage()
+//                .tabloEvrakNoSec(konu1)
+//                .tabloEvrakNoSec(konu2);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -661,16 +673,16 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .tabloEvrakNoileIcerikSec(konu)
                 .icerikHavaleYap()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
-                .icerikHavaleOnayinaGonder()
-                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
                 .onizlemeHavaleGeriAl()
                 .onizlemeNotAlanınıDoldur(konu)
-                .onizlemeGeriAl()
-                .islemMesaji().basariliOlmali();
+                .onizlemeGeriAl();
+//                .islemMesaji().basariliOlmali();
 
         kaydedilenGelenEvraklarPage
                 .openPage()
@@ -678,10 +690,10 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
-                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .eklenenIcerikBirimKontrolu(birim)
                 .icerikHavaleIslemleriKisiDoldur(kisi)
                 .eklenenIcerikKisiKontrolu(kisi)
+                .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenIcerikBirimKontrolu(birim)
                 .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
                 .kaydet()
@@ -707,7 +719,6 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
                 .rapordaEvraklarıListele(konu)
-
                 .rapordaEvraklarıListeleDetayTikla(konu)
                 .ekranKontrolEvrakDetayi();
 
@@ -736,6 +747,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         String fileName ="test.txt";
         String personel = "Ali Osman TOPRAK";
         String dikkatMesaj = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
+        String ustBirimKullanici = "alkanseker";
 
         logger.info(testid + " nolu test başladı:");
 
@@ -766,9 +778,9 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleAlanKontrolleri()
                 .ekranKontrolEvrakDetayi()
                 .havaleIslemleriKisiKontrol(disKullanici)
+                .havaleIslemleriKisiKontrol(ustBirimKullanici)
                 .havaleIslemleriBirimKontrol(kurum)
                 .havaleIslemleriBirimKontrol(ustBirim)
-                //TODO: ust birim kullanicisi
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi,onayKisiDetails)
 
                 .icerikDosyaEkle()

@@ -89,17 +89,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         login(mbozdemir);
 
-//        gelenEvrakKayitPage
-//                .openPage()
-//                .ekBilgiFiltreAc()
-//                .evrakEkleriDosyaEkleme(pathToFileExcel)
-//                .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
-//                .evrakEkTabViewEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-1")
-//                .ekBilgiFizikselEkEkle()
-//                .evrakEkTabFizikselEkMetniDoldur(ekMetni)
-//                .fizikselEkTabViewAciklamaEkle()
-//                .dosyaEkleTabTabloKontrolu("Ek-2");
 
         gelenEvrakKayitPage
                 .openPage()
@@ -119,13 +108,6 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .ivedilikSec(ivedilik);
-
-//        gelenEvrakKayitPage
-//                .ekBilgiFiltreAc()
-//                .evrakEkleriDosyaEkleme(pathToFileExcel);
-//        waitForLoadingJS(WebDriverRunner.getWebDriver(),1000000000);
-
-
 
         gelenEvrakKayitPage
                 .ekBilgiFiltreAc()
@@ -374,11 +356,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ustYaziDegistirilmisPopUpKontrol(false)
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkleriDosyaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-3") //Webservise  baglanılamadı hatası alnıyor.
+                .dosyaEkleTabTabloKontrolu("Ek-1") //Webservise  baglanılamadı hatası alnıyor.
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-4")
+                .dosyaEkleTabTabloKontrolu("Ek-2")
                 .kaydet();
 
         String evrakNo = gelenEvrakKayitPage.popUps();
@@ -409,10 +391,12 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String bigPdfPath = getUploadPath() + "emresencan.pdf";
 
         login(optiim);
+
         gelenEvrakKayitPage
                 .openPage()
                 .evrakBilgileriUstYaziEkle(bigPdfPath)
                 .islemMesaji().uyariOlmali(uyariMesajı);
+
         gelenEvrakKayitPage.alanKontrolleri()
                 .kisiKurumSec(kisiGercek)
                 .evrakTuruKontrol(evrakTuru)

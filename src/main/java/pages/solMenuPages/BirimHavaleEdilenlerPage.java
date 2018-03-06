@@ -8,10 +8,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -40,7 +42,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement notAlanıDoldur = $(By.id("inboxItemInfoForm:evrakGeriAlInputTextareaId"));
     SelenideElement onizlemeNotAlanıDoldur = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     //    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
-    SelenideElement btnGeriAl = $("button[id^='inboxItemInfoForm:j_idt']");
+    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
     SelenideElement onizlemeGeriAl = $("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
@@ -55,6 +57,22 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement frmInboxItemInfoForm = $("form[id='inboxItemInfoForm']");
 
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
+
+    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+
+    //havale alan kontrolleri
+    BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+    BelgenetElement txtComboLovBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtComboLovOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    SelenideElement txtOnizlemeKullanıcıListeKontrol = $(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
+    SelenideElement btnOnizlemeDosyaEkleKontrol = $(By.id("mainPreviewForm:fileUploadHavaleEk"));
+    SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
+    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu']");
+    SelenideElement txtEklenenBirim = $("div[id^='mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
+    SelenideElement txtEklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
+    ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -176,6 +194,19 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Yap button kontrol")
+    public BirimHavaleEdilenlerPage havaleYapKontrol() {
+        Assert.assertEquals(btnHavaleYap.isDisplayed(), true, "Havale Yap Button Kontrol");
+        Allure.addAttachment("Havale Yap Button Kontrol", "");
+        return this;
+    }
+
+    @Step("Havale Yap button tıkla")
+    public BirimHavaleEdilenlerPage havaleYap() {
+        btnHavaleYap.click();
+        return this;
+    }
+
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
@@ -275,4 +306,79 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         Allure.addAttachment("Evrak Içeriği sayfası", "açılmaktadır");
         return this;
     }
+
+    @Step("Havale İşlemleri Alanındaki Kontroller")
+    public BirimHavaleEdilenlerPage havaleAlanKontrolleri() {
+
+        Assert.assertEquals(txtComboLovBirim.isDisplayed(),true,"Birim Alanı ");
+        Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ","");
+
+        Assert.assertEquals(txtComboLovKisi.isDisplayed(), true, "Kisi Alanı ");
+        Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtOnizlemeKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı ");
+        Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtComboLovOnaylayacakKisi.isDisplayed(), true, "Onaylayacak Kişi Alanı ");
+        Allure.addAttachment("Onaylayacak Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHavaleYapAciklama.isDisplayed(), true, "Aciklama Alanı ");
+        Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(btnOnizlemeDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı ");
+        Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtHavaleYapIslemSuresi.isDisplayed(), true, "İşlem Süre Alanı ");
+        Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public BirimHavaleEdilenlerPage dagitimBilgileriBirimDoldurWithDetails(String birim, String details) {
+        txtComboLovBirim.selectLov(birim, details);
+        txtComboLovBirim.closeTreePanel();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
+    public BirimHavaleEdilenlerPage eklenenBirimKontrolu(String birim) {
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:", birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
+    public BirimHavaleEdilenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında \"{kisi}\" seç")
+    public BirimHavaleEdilenlerPage havaleIslemleriKisiSec(String kisi, String details) {
+        txtComboLovKisi.selectLov(kisi, details);
+        txtComboLovKisi.closeTreePanel();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kisi alanında eklenen \"{kisi}\" kontrolü")
+    public BirimHavaleEdilenlerPage eklenenKisiKontrolu(String kisi) {
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
+        Allure.addAttachment("Kisi Eklendi:", kisi);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Kişi alanında eklenen \"{opsiyon}\" kontrolü")
+    public BirimHavaleEdilenlerPage eklenenKisiOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(txtEklenenKisiOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Gönder buton tıklama")
+    public BirimHavaleEdilenlerPage gonder() {
+        btnGonder.filterBy(Condition.text("Gönder")).get(0).click();
+        return this;
+    }
+
 }

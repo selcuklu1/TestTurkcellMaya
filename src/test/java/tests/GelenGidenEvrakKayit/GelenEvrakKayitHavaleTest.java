@@ -543,7 +543,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
                 .geldigiKurumKontrol(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .evrakSayiSagDoldur(evrakSayiSag)
                 .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
                 .evrakGelisTipiKontrol(evrakGelisTipi)
@@ -566,7 +566,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .popUpsv2();
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
+//                .islemMesaji().basariliOlmali()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         havaleOnayinaSunduklarimPage
@@ -634,53 +635,90 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
-        String islemSureci = "Evrak havale edildi";
+        String islemSureci1 = "Evrak havale edildi (gereği için)";
+        String islemSureci2 = "Evrak havale edildi (bilgi için)";
+        String sayfa = "Gelen Evraklar";
+        String evrakSayiSag = createRandomNumber(5);
 
         testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
                 .openPage()
+                .sayfaKontrol(sayfa)
                 .evrakBilgileriUstYaziEkle(pathToFilePdf)
                 .ustYaziPdfAdiKontrol(pdfName)
                 .islemMesaji().basariliOlmali();
 
         gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
                 .konuDoldur(konu)
+                .konuKontrol(konu)
                 .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
                 .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
                 .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .geldigiKurumKontrol(geldigiKurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
 
-                .havaleIslemleriKisiDoldur(kisi)
-                .havaleAlanKontrolleri()
                 .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+                .eklenenOnaylayanKontrolu(onaylayacakKisi)
+
+                .havaleIslemleriKisiDoldur(onaylayacakKisi)
+
+                .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
 
+        gelenEvrakKayitPage
+                .islemMesaji().basariliOlmali();
+
         login(mbozdemir);
 
+          //19. adım Evrak Onayla Butonuna basılır ise 24. adımdan devam:
+//        havaleOnayınaGelenlerPage
+//                .openPage()
+//                .evrakNoIleEvrakSec(konu)
+//                .evrakSecEvrakOnayla(konu, true)
+//                .islemMesaji().basariliOlmali();
+
+         //20.adım Havale Onay ikonu tıklanır ise 21. adımdan devam ediyor
         havaleOnayınaGelenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                //Gelen Evrak Kayıt Havale-1582 de hata gözüküyor. Adım 19 ve 20 birbiri ile çelişiyor.
-                //19. adım doğru ise 23. adımdan devam ediyor. 20. adım doğru ise 21. adımdan devam ediyor ama 19. adım iptal oluyor.
-                //19. adım baz alınarak test implemente edildi.
-                .evrakSecCheckBox(konu, true)
+                .havaleOnay()
+                .eklenenKisiKontrolu(onaylayacakKisi)
+                .havaleOnayiBirimDoldur(birim)
+                .eklenenBirimKontrolu(birim)
+                .dagitimBilgileriBirimOpsiyon(bilgi)
+                .eklenenBirimOpsiyonKontrolu(bilgi)
+                .onizlemeOnayla()
+                .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
+                .onayıOnaylaEvet()
                 .islemMesaji().basariliOlmali();
 
         havaleOnayiVerdiklerim
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .secilenEvrakEvrakGecmisi()
-                .evrakGecmisi(birim, islemSureci);
+                .evrakGecmisi(onaylayacakKisi, islemSureci1)
+                .evrakGecmisi(birim, islemSureci2);
 
         login(ztekin);
 
@@ -692,7 +730,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakNoIleEvrakSec(konu);
+                .evrakNoIleEvrakSec(konu)
+                .evrakAlanKontrolleri(konu,"(B)");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -705,6 +744,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         String pdfName = "Otomasyon.pdf";
         String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
+        String evrakNo = "";
+        String mesaj = "Havale işleminin eki bulunmaktadır.";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
@@ -733,8 +774,9 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
-                .kaydet()
-                .popUps();
+                .kaydet();
+
+        evrakNo = gelenEvrakKayitPage.popUps();
 
 
         login(ztekin);
@@ -744,19 +786,25 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .evrakSecIcerikGoster(konu, true)
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu)
-                .geriAl()
-                .islemMesaji().basariliOlmali();
+                .geriAl();
+//                .islemMesaji().basariliOlmali();
 
         testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
+                .onizlemeHavaleButtonKontrol()
                 .onizlemeHavaleYap()
                 .havaleAlanKontrolleri()
-//                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+
                 .havaleIslemleriKisiDoldur(kisi)
+                .eklenenKisiKontrolu(kisi)
+                .eklenenKisiOpsiyonKontrolu(gerek)
                 .dagitimBilgileriKisiOpsiyon(bilgi)
+                .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .aciklamaAlaniKontrolu()
                 .aciklamaAlaniDoldur(konu)
                 .dosyaEkle()
                 .havaleDosyaEkle(pathToFileText)
@@ -764,10 +812,12 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .buttonGonder()
                 .islemMesaji().basariliOlmali();
 
-        login(ztekin);
         gelenEvraklarPage
                 .openPage()
-                .tabloEvrakNoSec(konu);
+                .tabloEvrakNoSec(konu)
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo)
+                .genelNotPopupKontrol()
+                .genelNotPopupMesajKontrol(mesaj);
 
     }
 

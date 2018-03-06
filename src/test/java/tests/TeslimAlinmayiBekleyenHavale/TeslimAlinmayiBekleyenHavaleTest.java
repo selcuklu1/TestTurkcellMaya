@@ -43,7 +43,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     String evrakSayiSag = createRandomNumber(10);
     String evrakTarihi = getSysDateForKis();
     String kurum = "BÜYÜK HARFLERLE KURUM";
-    String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+    String birim = "Yazılım Geliştirme Direktörlüğ";
     String not = createRandomText(15);
     String konuKoduRandomTS2294 = "TC-2294_" + createRandomNumber(15);
     String konuKoduRandomTS2300 = "TC-2300_" + createRandomNumber(15);
@@ -75,16 +75,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
         gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandom)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur()
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+                .gelenEvrakKayitBirimHavaleEt(konuKoduRandom,kurum,kullaniciAdi);
         //TODO
 
         teslimAlinmayiBekleyenlerPage
@@ -191,7 +182,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .havaleIslemleriBirimDoldur(birim)
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
@@ -203,7 +194,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .havaleIslemleriBirimDoldur(birim)
                 .kaydet()
                 .evetDugmesi()
                 .benzerKaydet()
@@ -220,7 +211,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakNoIleEvrakCheckboxSec(konuKoduRandomTS2285)
                 .evrakNoIleEvrakCheckboxSec(randomKonuKodu2TS2285)
                 .secilenTeslimAlVeHavaleEt()
-                .secilenOnaylayacakKisiDoldur("Can Şeker")
+                .secilenOnaylayacakKisiDoldur("Mehmet BOZDEMİR","BHUPGMY")
                 .secilenHavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -231,31 +222,14 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .birimVeKisiBilgilerinBosOlarakGeldigiGorme();
     }
 
-    @Step("Teslim alınmayı bekleyenler alanına evrak düşürmekte")
-    public void TS2294PreCondition() {
-
-        login(usernameZTEKIN, passwordZTEKIN);
-
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
-        //1.Teslim Alınmayı Bekleyenler
-        gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS2294)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
-    }
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2294: Havale yeri Birim, Kişi, Kullanıcı Listesi seçilerek evrakın havale edilmesi")
     public void TS2294() {
 
-        TS2294PreCondition();
+        login(usernameZTEKIN, passwordZTEKIN);
+
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS2294,kurum, birim);
+
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2294)
@@ -295,20 +269,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     public void TS2300PreCondition() {
 
         login(usernameZTEKIN, passwordZTEKIN);
-
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
-        //1.Teslim Alınmayı Bekleyenler
-        gelenEvrakKayitPage
-                .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS2300)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS2300,kurum,birim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2300)

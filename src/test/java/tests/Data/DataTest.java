@@ -181,8 +181,8 @@ public class DataTest extends BaseTest {
                 .popUps();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
         teslimAlinmayiBekleyenlerPage

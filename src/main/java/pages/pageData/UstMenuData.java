@@ -105,10 +105,13 @@ public class UstMenuData {
     }
 
     public enum KullaniciIslemleri implements UstMenuDataInterface {
+        KullaniciIcerikSablonlari("Kullanıcı İçerik Şablonları"),
         YonetimHavuzuYonetimi("Yönetim Havuzu Yönetimi"),
         KullaniciYonetimi("Kullanıcı Yönetimi"),
         KullaniciListesiYonetimi("Kullanıcı Listesi Yönetimi"),
         RolYonetimi("Rol Yönetimi");
+
+
 
         private String name;
         private String groupName = UstMenuGroup.KullaniciIslemleri.getName();

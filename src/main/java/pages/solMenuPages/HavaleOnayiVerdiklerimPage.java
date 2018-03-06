@@ -62,11 +62,13 @@ public class HavaleOnayiVerdiklerimPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Geçmişi Kontrol")
+    @Step("Evrak Geçmişi Kontrolü:  \"{teslimAlinan}\"  \"{islemSureci}\"")
     public HavaleOnayiVerdiklerimPage evrakGecmisi(String teslimAlinan, String islemSureci) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() > 0;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
+
+
     }
 }
