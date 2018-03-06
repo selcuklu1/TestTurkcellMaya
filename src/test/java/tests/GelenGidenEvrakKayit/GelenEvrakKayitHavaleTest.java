@@ -568,7 +568,6 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali();
 
-
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
@@ -683,10 +682,12 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
-                .popUpsv2();
+                .popUps();
+//                .popUpsv2();
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+//                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
 
@@ -704,9 +705,11 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .havaleOnay()
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .havaleOnayiBirimDoldur(birim)
-                .eklenenBirimKontrolu(birim)
+//                .eklenenBirimKontrolu(birim)
+                .eklenenOnizlemeBirimKontrolu(birim)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .eklenenBirimOpsiyonKontrolu(bilgi)
+//                .eklenenBirimOpsiyonKontrolu(bilgi)
+                .eklenenBirimOnizlemeOpsiyonKontrolu(bilgi)
                 .onizlemeOnayla()
                 .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
                 .onayıOnaylaEvet()
@@ -778,7 +781,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         evrakNo = gelenEvrakKayitPage.popUps();
 
 
-        login(ztekin);
+        login(mbozdemir);
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)

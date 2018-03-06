@@ -3,7 +3,13 @@ package pages.pageComponents;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Quotes;
 import pages.MainPage;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -29,6 +35,7 @@ public class PDFOnizleme extends MainPage{
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
+        setScale100();
     }
 
     public PDFOnizleme(String title) {
@@ -38,7 +45,11 @@ public class PDFOnizleme extends MainPage{
 
     @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
-        scaleSelect.selectOption("100%");
+        scaleSelect.waitUntil(Condition.visible, 40000);
+        scaleSelectJS(scaleSelect.toWebElement(), "1");
+        //scaleSelect.selectOptionByValue("1");
+        //scaleSelect.selectOptionByValue("page-actual");
+        //scaleSelect.selectOption("100%");
         //byvalue: page-actual
         //byvalue: 1
         return this;
@@ -71,7 +82,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme {pageNumber} sayfada tekst kontrolü")
     public PDFOnizleme checkText(int pageNumber, Condition... conditions) {
         SelenideElement page = getPage(pageNumber).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page = page.$(".textLayer").shouldHave(condition);
             //page = page.waitUntil(condition, 30000);
@@ -83,7 +94,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme tekst kontrolü {conditions}")
     public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page.$(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);
@@ -95,7 +106,7 @@ public class PDFOnizleme extends MainPage{
     @Step("PDF Önizleme tekst kontrolü")
     public PDFOnizleme checkTextAndCloseWindow(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
-        setScale100();
+        //setScale100();
         for (Condition condition : conditions) {
             page.$(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);
@@ -115,5 +126,13 @@ public class PDFOnizleme extends MainPage{
             takeScreenshot();
         }
         return this;
+    }
+
+
+    //Firefox scroll error yüzünden kullanılıyor 6.03.2018
+    public void scaleSelectJS(WebElement element, String value) {
+        WebElement option = element.findElement(By.xpath(
+                ".//option[@value = " + Quotes.escape(value) + "]"));
+        clickJs(element);
     }
 }

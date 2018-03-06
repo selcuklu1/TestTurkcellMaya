@@ -25,12 +25,16 @@ import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.TuzelKisiYonetimiPage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.switchTo;
-import static pages.pageData.alanlar.DagitimElemanlariTipi.*;
+import static pages.pageData.alanlar.DagitimElemanlariTipi.BIRIM;
+import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -101,7 +105,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
         page = new DagitimPlaniYonetimiPage().openPage();
-        dagitimPlanElemanlari.forEach((k,v) -> page.dagitimPlaniOlustur(planAdi + getSysDate(), k,user.getBirimAdi(),true, k,v));
+        dagitimPlanElemanlari.forEach((k, v) -> page.dagitimPlaniOlustur(planAdi + getSysDate(), k, user.getBirimAdi(), true, k, v));
     }
 
     @Test(description = "TS1476: Adı Alanının Güncellenmesi", enabled = true)
@@ -119,7 +123,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .sorgulamadaAdGir(ad)
                 .ara()
                 .sorgulamaDataTable.findRows(text(ad)).shouldHave(sizeGreaterThan(0));
-        page.sorgulamaDataTableGuncelleButonaTikla();
+        page.guncelle();
 
         /*String oldAd = page.getAdi().getValue();
         String oldAciklama = page.getAciklama().text();
@@ -169,7 +173,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.sorgulamadaAdGir(adi)
                 .ara()
                 .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
-        page.sorgulamaDataTableKopyalaButonaTikla();
+        page.kopyala();
         checkFields(adi, aciklama, kullanildigiBirim, altBirimlerGorsun, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
                 .kaydet().islemMesaji().basariliOlmali();
@@ -181,31 +185,34 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     @Test(description = "TS1279: Pasif / Aktif Yapma", enabled = true)
     public void TS1279() {
         String adi = "TS1279";
-        boolean pasif = false;
+        boolean aktif = false;
 
         User user = optiim;
         login(user);
-        page = new DagitimPlaniYonetimiPage().openPage();
-        page.sorgulamadaAdGir(adi).sorgulamadaDurumSec("Sadece Aktifler").ara();
-        int size = page.sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).getFoundRows().size();
 
-        if (size == 1) {
-            pasif = true;
-            pasifYap(adi);
+        page = new DagitimPlaniYonetimiPage().openPage();
+
+        page.sorgulamadaAdGir(adi)
+                .sorgulamadaDurumSec("Tümü")
+                .ara()
+                .sorgulamaDataTable.findRows(text(adi)).shouldHaveSize(1);
+
+        aktif = page.aktifMi();
+
+        if (aktif) {
+            aktifPasifYap(adi, false);
             evrakOlusturSayfadaPasifKontrolu(adi);
-        } else {
-            Assert.assertEquals(0, size, adi + " Pasif ise Sadece Aktifler aramada 0 kayıt gelmeli");
-            aktifYap(adi);
+
+            page.openPage();
+            aktifPasifYap(adi, true);
             evrakOlusturSayfadaAktifKontrolu(adi);
         }
-
-        login(user);
-        page = new DagitimPlaniYonetimiPage().openPage();
-        if (pasif) {
-            aktifYap(adi);
+        else {
+            aktifPasifYap(adi, true);
             evrakOlusturSayfadaAktifKontrolu(adi);
-        } else {
-            pasifYap(adi);
+
+            page.openPage();
+            aktifPasifYap(adi, false);
             evrakOlusturSayfadaPasifKontrolu(adi);
         }
     }
@@ -221,23 +228,26 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page = new DagitimPlaniYonetimiPage().openPage();
 
         step("STEP: Durum \"Sadece Pasifler\"", "Pasifler bulunmalı, aktifler bulunmamalı");
-        page.sorgulamadaDurumSec("Sadece Pasifler").ara().sorgulamaDataTable
-                .searchInAllPages(true)
+        page.sorgulamadaDurumSec("Sadece Pasifler")
+                .ara()
+                .sorgulamaDataTable.searchInAllPages(true)
                 .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
                 .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Sadece Aktifler\"", "Aktifler bulunmalı, pasifler bulunmamalı");
-        page.sorgulamadaDurumSec("Sadece Aktifler").ara().sorgulamaDataTable
-                .searchInAllPages(true)
+        page.sorgulamadaDurumSec("Sadece Aktifler")
+                .ara()
+                .sorgulamaDataTable.searchInAllPages(true)
                 .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
                 .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(0);
 
         step("STEP: Durum \"Tümü\"", "Aktifler ve pasifler bulunmalı");
-        page.sorgulamadaDurumSec("Tümü").ara().sorgulamaDataTable
-                .searchInAllPages(true)
-                .findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
+        page.sorgulamadaDurumSec("Tümü")
+                .ara()
+                .sorgulamaDataTable
+                .searchInAllPages(true).findRows(text(pasifDagitimPlanIsmi)).shouldHaveSize(1)
                 .goToFirstPage()
                 .findRows(text(aktifDagitimPlanIsmi)).shouldHaveSize(1);
 
@@ -414,7 +424,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Test(description = "TS2271: Hitabın oluşturulan evrak üzerinde kontrolü", enabled = true
-        , dependsOnMethods = "TS2270"
+            , dependsOnMethods = "TS2270"
     )
     public void TS2271() {
         useFirefox();
@@ -448,8 +458,9 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         evrakOlusturPage.pageButtons().evrakImzala().islemMesaji().basariliOlmali();
 
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage().openPage();
-        clickJs(imzaladiklarimPage.searchTable().findRows(text(konu)).getFoundRow());
+        //clickJs(imzaladiklarimPage.searchTable().findRows(text(konu)).getFoundRow());
         //imzaladiklarimPage.searchTable().findRows(text(konu)).getFoundRow().click();
+        imzaladiklarimPage.searchTable().findRowAndSelect(text(konu));
 
         EvrakOnizleme.EvrakDetaylari evrakDetaylari = new EvrakOnizleme().new PostaDetayi().tabiAc()
                 .postalananYerlerindeAra(text(yeniPlanAdi2270 + "E"))
@@ -480,14 +491,14 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         System.out.println("Dağınım Planı: " + planAdi);
 
         //TS1280 tanımlanıyor
-//        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
-//        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
-//        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
-//        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
-//        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
-//        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
+        dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
-        page = new DagitimPlaniYonetimiPage().openPage();
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
 
         page.yeni();
 
@@ -563,7 +574,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .ekle();
 
         page.getDagitimHitapDuzenlemeSilButton(tuzelKisi, "bulunur").shouldBe(visible);
-        page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi,"bulunur").shouldBe(visible);
+        page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi, "bulunur").shouldBe(visible);
         page.ekle(text(tuzelKisi));
     }
 
@@ -612,8 +623,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         String[][] dagitimElemanlari = new String[][]{
                 {KULLANICI.getOptionText(), parafci.getFullname(), ""}
-                ,{KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
-                ,{BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}
+                , {KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
+                , {BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}
 
                 //,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname(), ""}
                 //,{KULLANICI.getOptionText(), user.getFullname()}
@@ -622,9 +633,9 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         login(parafci);
         DagitimPlaniYonetimiPage dagitimPlaniYonetimiPage = new DagitimPlaniYonetimiPage()
                 .openPage()
-                .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(),true, dagitimElemanlari);
+                .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(), true, dagitimElemanlari);
 
-        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci,imzaci);
+        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci, imzaci);
 
 
         dagitimPlaniYonetimiPage.openPage()
@@ -658,7 +669,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String planAdi = "TS1280_20180206164745";
         System.out.println("Dağınım Planı: " + planAdi);
 
-        Map<String,String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        Map<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
         dagitimPlanElemanlari.put("Kullanıcı", "Sayın User1 TEST");
         dagitimPlanElemanlari.put("Birim", "AnaBirim1E");
         dagitimPlanElemanlari.put("Kurum", "BAŞBAKANLIĞA");
@@ -679,7 +690,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
 
-
     //region Steps
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void evrakOlusturSayfadaPasifKontrolu(String adi) {
@@ -688,8 +698,30 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiDegerSecilemez(adi);
     }
 
+
+    @Step("Dağıtım Planı Aktif/Pasif yapılır")
+    private void aktifPasifYap(String adi, boolean aktif) {
+
+        String sorgulamaDurum = aktif ? "Sadece Pasifler": "Sadece Aktifler";
+
+        page.sorgulamayiGenislet()
+                .sorgulamadaAdGir(adi)
+                .sorgulamadaDurumSec(sorgulamaDurum)
+                .ara()
+                .sorgulamaDataTable.findRows(text(adi)).shouldHaveSize(1);
+        if (aktif)
+            page.aktifYap();
+        else
+            page.pasifYap();
+
+        page.confirmDialog()
+                .onayMesajKontrolu(text("Dağıtım planının durumunu değiştirmek istediğinize emin misiniz?"))
+                .confirmEvetTikla()
+                .islemMesaji().basariliOlmali();
+    }
+
     @Step("Dağıtım Planı Pasif yapılır")
-    private void pasifYap(String adi) {
+    private void pasifYap_o(String adi) {
         page.sorgulamadaAdGir(adi)
                 .sorgulamadaDurumSec("Sadece Aktifler")
                 .ara()
@@ -697,7 +729,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .searchByColumnName("Dağıtım Planı Ad")
                 .findRows(exactText(adi))
                 .shouldHaveSize(1);
-        page.sorgulamaDataTablePasifYapButonaTikla()
+        page.pasifYap()
                 .confirmDialog()
                 .onayMesajKontrolu(text("Dağıtım planının durumunu değiştirmek istediğinize emin misiniz?"))
                 .confirmEvetTikla();
@@ -705,7 +737,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Step("Dağıtım Planı Aktif yapılır")
-    private void aktifYap(String adi) {
+    private void aktifYap_o(String adi) {
         page.sorgulamadaAdGir(adi)
                 .sorgulamadaDurumSec("Sadece Pasifler")
                 .ara()
@@ -713,7 +745,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .searchByColumnName("Dağıtım Planı Ad")
                 .findRows(exactText(adi))
                 .shouldHaveSize(1);
-        page.sorgulamaDataTableAktifYapButonaTikla()
+        page.aktifYap()
                 .confirmDialog()
                 .onayMesajKontrolu(text("Dağıtım planının durumunu değiştirmek istediğinize emin misiniz?"))
                 .confirmEvetTikla();

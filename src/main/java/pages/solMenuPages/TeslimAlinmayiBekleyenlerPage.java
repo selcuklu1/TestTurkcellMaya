@@ -448,6 +448,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geçmiş Tab Kontrolü")
+    public TeslimAlinmayiBekleyenlerPage evrakGecmisTabKontrolu() {
+        boolean durum = $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab Kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tabı gelmektedir.","");
+        return this;
+    }
+
     @Step("Evrak geçmişi alanına tıklanır")
     public TeslimAlinmayiBekleyenlerPage secilenEvrakEvrakGecmisi() {
         $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
@@ -460,7 +468,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
+    }
 
+    @Step("Evrak Geçmişi Kontrol")
+    public TeslimAlinmayiBekleyenlerPage evrakGecmisi(String teslimAlinan, String islemSureci, String evrakTarihSaat) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() >= 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
     }
 
     @Step("Filtrele alanını aç")
@@ -784,6 +799,28 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .filterBy(Condition.text(sayiSag))
                 .filterBy(Condition.text(digerKontrol))
                 .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        Allure.addAttachment("EvrakNo", evrakNo);
+        Allure.addAttachment("KayıtTarihi", kayitTarihi);
+        Allure.addAttachment("Sayı", sayiSag);
+        Allure.addAttachment("Diger Kontrolü", digerKontrol);
+        return this;
+    }
+
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" \"{evrakNo}\" \"{kayitTarihi}\" \"{sayiSag}\" \"{digerKontrol}\"")
+    public TeslimAlinmayiBekleyenlerPage evrakAlanVeAdetKontrolleri(String konu, String geldigiKurum, String evrakTarihi, String evrakNo,String kayitTarihi,String sayiSag,String digerKontrol,int adet) {
+        System.out.println("evrakNo:" + konu + " geldigiKurum" + geldigiKurum + " evrakTarihi" + evrakTarihi + " evrakkayitno" + evrakNo);
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(kayitTarihi))
+                .filterBy(Condition.text(sayiSag))
+                .filterBy(Condition.text(digerKontrol))
+                .shouldHaveSize(adet);
         Allure.addAttachment("Konu", konu);
         Allure.addAttachment("EvrakTarihi", evrakTarihi);
         Allure.addAttachment("GeldigiKurum", geldigiKurum);
