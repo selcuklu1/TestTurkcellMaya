@@ -216,12 +216,27 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenOnizlemeBirimKontrolu(String birim) {
+        Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");
+        Allure.addAttachment("Birim Eklendi:", birim);
+        return this;
+    }
+
     @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenBirimOpsiyonKontrolu(String opsiyon) {
         Assert.assertEquals(dagitimBirimOpsiyon.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
         Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
         return this;
     }
+
+    @Step("Havale İşlemleri Birim alanında eklenen \"{opsiyon}\" kontrolü")
+    public HavaleOnayınaGelenlerPage eklenenBirimOnizlemeOpsiyonKontrolu(String opsiyon) {
+        Assert.assertEquals(birimSeç.getSelectedOption().text().equals(opsiyon), true, "Opsiyon Seçildi");
+        Allure.addAttachment("Opsiyon Seçildi:", opsiyon);
+        return this;
+    }
+
 //    SelenideElement txtEklenenBirimOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
     @Step("Dağıtım Bilgileri Birim alanında \"{opsiyon}\" seçilir")
     public HavaleOnayınaGelenlerPage havaleIslemleriBirimOpsiyonSec(String opsiyon) {
