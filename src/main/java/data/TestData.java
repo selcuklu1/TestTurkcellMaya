@@ -17,6 +17,9 @@ public class TestData extends BaseLibrary {
 
     public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
     public static final User gsahin = new User("gsahin", "123", "Gökçe ŞAHİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+    public static final User username27 = new User("un27","123","Username27 TEST","TS2200 Alt Birim");
+
     //Default usernameOPTIIM
     public static final String usernameOPTIIM = "optiim";
     public static final String passwordOPTIIM = "123";
@@ -50,6 +53,7 @@ public class TestData extends BaseLibrary {
 
     public static final String username21g = "username21g";
     public static final String passwor21g = "123";
+
 
 
 
