@@ -178,7 +178,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
         testStatus(testid, "PreCondition Evrak Iade Et");
         teslimAlinmayiBekleyenlerPage
