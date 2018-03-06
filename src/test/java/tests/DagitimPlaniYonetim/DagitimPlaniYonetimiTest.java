@@ -498,7 +498,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 //        dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
 //        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
 
-        page = new DagitimPlaniYonetimiPage().openPage();
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
 
         page.yeni();
 
