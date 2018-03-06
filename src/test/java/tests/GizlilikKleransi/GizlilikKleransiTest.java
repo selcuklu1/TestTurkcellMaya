@@ -664,8 +664,8 @@ login(TestData.gsahin);
             , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2139() throws InterruptedException {
 
-        login("username22n", "123");
-        login(TestData.username22n,passwor22n);
+//        login("username22n", "123");
+        login(TestData.username22n,TestData.passwor22n);
 
 //        String evrakNo = "10180";
         String aranacagiYer = "Birim Evrakları Ara";
