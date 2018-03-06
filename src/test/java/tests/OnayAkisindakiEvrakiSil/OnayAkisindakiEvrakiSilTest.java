@@ -149,7 +149,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String kurum = "Başbakanlık";
         String kurumEditor = "BAŞBAKANLIĞA";
         String onayAkisiDefaultKullanici = "Optiim TEST";
-        String kullanici2 = "Zübeyde TEKİN";
+        String kullanici2 = "Sezai ÇELİK";
         String kullanici3 = "Mehmet BOZDEMİR";
         String basariMesaji = "İşlem başarılıdır!";
         String uyariMesaji = "Zorunlu alanları doldurunuz";
@@ -170,9 +170,9 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .secilenOnayAkisiSil()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciEkle(kullanici2, "BHUPGMY")
+                .onayAkisiKullaniciEkle(kullanici2, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici2, "Paraflama")
-                .onayAkisiKullaniciEkle(kullanici3)
+                .onayAkisiKullaniciEkle(kullanici3, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici3, "İmzalama")
                 .kullan()
                 .onayAkisiDoluGeldigiKontrolu();
@@ -198,7 +198,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
 
         Selenide.sleep(3000);
 
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //sezaiceik
+        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
 
         parafBekleyenlerPage
                 .openPage()
@@ -266,7 +266,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
                 .onayAkisiKullaniciEkle(kullanici2, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici2, "Paraflama")
-                .onayAkisiKullaniciEkle(kullanici3)
+                .onayAkisiKullaniciEkle(kullanici3, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici3, "İmzalama")
                 .kullan()
                 .onayAkisiDoluGeldigiKontrolu();
