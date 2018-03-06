@@ -686,7 +686,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 //                .popUpsv2();
 
         gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali("İşlem Başarılıdır!");
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 //                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
