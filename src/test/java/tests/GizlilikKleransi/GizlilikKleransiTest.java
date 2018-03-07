@@ -662,14 +662,14 @@ login(TestData.gsahin);
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1938"}
+//            , dependsOnMethods = {"TS1938"}
             , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2139() throws InterruptedException {
 
 //        login("username22n", "123");
         login(TestData.username22n,TestData.passwor22n);
 
-//        String evrakNo = "10180";
+        String evrakNo = "13364";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -694,7 +694,7 @@ login(TestData.gsahin);
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().dikkatOlmali(mesaj);
+                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakOlusturPage
                 .openPage()
