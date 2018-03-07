@@ -2768,8 +2768,12 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Tabloda Evrak no kontrolü")
         public EkleriTab tabloEvrakNoKontrol(String evrakNo) {
-            tblSistemdeKayitliEvrakListe
-                    .filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+            SelenideElement table=$(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable"));
+
+            boolean displayed = findElementOnTableByColumnInputInAllPages(table,1,evrakNo).isDisplayed();
+            Assert.assertEquals(displayed,true,"evrakno eşit");
+//            tblSistemdeKayitliEvrakListe
+//                    .filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
             return this;
         }
 

@@ -524,7 +524,9 @@ public class GizlilikKleransiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 0, description = "TS1471: Kullanıcı gizlilik derecesi değiştirme")
+    @Test(enabled = true
+            , priority = 0
+            , description = "TS1471: Kullanıcı gizlilik derecesi değiştirme")
     public void TS1471() throws InterruptedException {
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -631,7 +633,7 @@ login(TestData.gsahin);
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            , dependsOnMethods = {"TS1938"}
+            , dependsOnMethods = {"TS1938"}
             , description = "TS2138 : Genel evrak raporunda gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2138() throws InterruptedException {
 //9267
@@ -660,14 +662,14 @@ login(TestData.gsahin);
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , dependsOnMethods = {"TS1938"}
+//            , dependsOnMethods = {"TS1938"}
             , description = "TS2139 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olmayan kullanıcı ile)")
     public void TS2139() throws InterruptedException {
 
 //        login("username22n", "123");
         login(TestData.username22n,TestData.passwor22n);
 
-//        String evrakNo = "10180";
+        String evrakNo = "13364";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -683,7 +685,7 @@ login(TestData.gsahin);
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj);
 
         evrakAramaPage
                 .evrakinAranacagiYerSec(aranacagiYer)
@@ -692,7 +694,7 @@ login(TestData.gsahin);
                 .ara()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().dikkatOlmali(mesaj);
+                .islemMesaji().beklenenMesaj(mesaj);
 
         evrakOlusturPage
                 .openPage()
@@ -700,14 +702,14 @@ login(TestData.gsahin);
                 .sistemdeKayitliEvrakEkleTabAc()
                 .evrakinAranacagiYerSec(aranacagiYer)
                 .evrakAramaDoldur(evrakNo)
-                .dokumanAra()
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .dokumanAra();
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .ekleriTabAc()
                 .tabloEvrakNoKontrol(evrakNo)
                 .tablodaDetayTikla(evrakNo)
-                .islemMesaji().beklenenMesaj(mesaj);
+                .islemMesaji().dikkatOlmali(mesaj);
 
     }
 
@@ -732,12 +734,12 @@ login(TestData.gsahin);
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , dependsOnMethods = {"TS1938"}
-            , description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)\n")
+            , description = "TS2140 : Evrak aramada gizlilik kleransı kontrolü (evrakta izi olan kullanıcı ile)")
     public void TS2140() throws InterruptedException {
 
 //        login("gsahin", "123");
 //9261
-        login(TestData.gsahin);
+        login(TestData.username23t,TestData.passwor23t);
 
         String aranacagiYer = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrakın Kayıt Sayısı";
@@ -905,9 +907,9 @@ login(TestData.gsahin);
                 .iadeEt()
                 .kullaniciListesiKontrol("Mehmet BOZDEMİR")
                 .notDoldur("iade")
-                .iadeEt2()
+                .iadeEt2();
 //                .popUpEvraktaDegisiklik()
-                .islemMesaji().beklenenMesaj(basariMesaji);
+//                .islemMesaji().beklenenMesaj(basariMesaji);
 
 //        logout();
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
@@ -1022,7 +1024,7 @@ login(TestData.gsahin);
                 .dagitimBilgileriKisiSec("Mehmet Bozdemir")
                 .kaydet();
         String evrakNO2190 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         gelenEvraklarPage
                 .openPage()
@@ -1108,7 +1110,7 @@ login(TestData.gsahin);
                 .dagitimBilgileriKisiSec("Mehmet Bozdemir")
                 .kaydet();
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         gelenEvraklarPage
                 .openPage()
@@ -1179,7 +1181,7 @@ login(TestData.gsahin);
                 .dagitimBilgileriKisiSec("username21g")
                 .kaydet();
         String evrakNO2189 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         kullaniciEvrakDevretPage
                 .openPage()
