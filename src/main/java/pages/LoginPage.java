@@ -33,7 +33,6 @@ public class LoginPage extends MainPage {
     @Step("Giriş yap")
     public LoginPage login() {
         open();
-        Selenide.sleep(5000);
         txtUsername.sendKeys(usernameOPTIIM);
         txtPassword.sendKeys(passwordOPTIIM);
         btnLogin.shouldBe(Condition.visible).click();
