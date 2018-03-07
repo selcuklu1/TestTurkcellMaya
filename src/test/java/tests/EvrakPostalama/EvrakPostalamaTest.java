@@ -917,7 +917,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException, IOException {
 
-        login("mbozdemir", "123");
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         postalananEvrakRaporuPage
                 .openPage()
