@@ -7,12 +7,12 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.TestData;
 import data.User;
-import galen.GalenControl;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -527,17 +527,19 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalananlarPage
                 .openPage()
-                .tabloEvrakGeldigiGorme()
-                .icDisEvrakIkonuKontrolu()
-                .btnKurdele()
+                .tabloEvrakGeldigiGorme();
+        postalananlarPage.openPage().filter().findRowsWith(Condition.text("TS1685")).first().click();
+        postalananlarPage
+               // .icDisEvrakIkonuKontrolu()
+                .btnKurdele2("1685")
                 .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
-                .btnTamEkran()
+                .btnTamEkran2("1685")
                 .icDisSuretKtrl()
                 .sagTabKontrol()
                 .btnTamEkranKapat()
-                .btnIcerikGoster();
+                .btnIcerikGoster2("1685");
 
         postalananlarPage
                 .btnIcerikIlgileriTab()
@@ -917,7 +919,8 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException, IOException {
-        login("mbozdemir", "123");
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         postalananEvrakRaporuPage
                 .openPage()
