@@ -57,6 +57,4 @@ documents/*
 
 /test-result/*
 
-/debug.log
 debug.log
-debug.log*
