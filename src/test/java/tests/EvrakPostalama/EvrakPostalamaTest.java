@@ -13,7 +13,6 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.TestData;
 import data.User;
-import galen.GalenControl;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -920,7 +919,8 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException, IOException {
-        login("mbozdemir", "123");
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         postalananEvrakRaporuPage
                 .openPage()
