@@ -7,6 +7,7 @@ package tests.EvrakPostalama;
  * Class: "Evrak Postalama" konulu senaryoları içerir
  ****************************************************/
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
@@ -526,17 +527,19 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalananlarPage
                 .openPage()
-                .tabloEvrakGeldigiGorme()
-                .icDisEvrakIkonuKontrolu()
-                .btnKurdele()
+                .tabloEvrakGeldigiGorme();
+        postalananlarPage.openPage().filter().findRowsWith(Condition.text("TS1685")).first().click();
+        postalananlarPage
+               // .icDisEvrakIkonuKontrolu()
+                .btnKurdele2("1685")
                 .tekImzaciKontrol(imzaci)
                 .mngImzaDialog()
                 .btnImzaciPopupKapat()
-                .btnTamEkran()
+                .btnTamEkran2("1685")
                 .icDisSuretKtrl()
                 .sagTabKontrol()
                 .btnTamEkranKapat()
-                .btnIcerikGoster();
+                .btnIcerikGoster2("1685");
 
         postalananlarPage
                 .btnIcerikIlgileriTab()
