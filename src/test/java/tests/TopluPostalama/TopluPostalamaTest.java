@@ -1270,7 +1270,7 @@ public class TopluPostalamaTest extends BaseTest {
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
-        login("mbozdemir", "123");
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         //region Parameters
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
@@ -1338,11 +1338,15 @@ public class TopluPostalamaTest extends BaseTest {
                     .editorIcerikDoldur(konu[i]);
             mainPage
                     .evrakImzala();
+
+            login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
             imzaladiklarimPage
                     .openPage();
             evrakNo1675[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
         }
 
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         topluPostalanacakEvraklarPage
                 .openPage()
@@ -2004,7 +2008,7 @@ public class TopluPostalamaTest extends BaseTest {
         };
         //endregion
 
-        topluPostalanacakEvraklar(konu,geregi,geregiTipi);
+        topluPostalanacakEvraklar(konu, geregi, geregiTipi);
 
         postaListesiPage
                 .openPage()
@@ -2058,6 +2062,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
                 .postaListesiPostala()
+                .adresDoldur(adres)
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
@@ -2192,6 +2197,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
                 .postaListesiPostala()
+                .adresDoldur(adres)
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
