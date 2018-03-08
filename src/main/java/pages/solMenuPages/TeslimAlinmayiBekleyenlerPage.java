@@ -876,5 +876,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .evrakTeslimAlPopUpEvet();
         return this;
     }
-    
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldur(String birim) {
+        txtTeslimAlVeHavaleEtBirim.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
 }

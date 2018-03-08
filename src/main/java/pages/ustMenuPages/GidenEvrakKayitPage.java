@@ -165,12 +165,22 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Bilgi doldur")
-    public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
+    public GidenEvrakKayitPage bilgiDoldur(String bilgiAdSoyad) {
 
-        cmbBilgi.selectLov(geregiAdSoyad);
+        cmbBilgi.selectLov(bilgiAdSoyad);
         /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
+        return this;
+    }
+
+    @Step("Bilgi {description} doldur: | {bilgi}")
+    public GidenEvrakKayitPage bilgiDoldur(String bilgi, String description) {
+
+        cmbGeregi.selectLov(bilgi);
+
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
         return this;
     }
 

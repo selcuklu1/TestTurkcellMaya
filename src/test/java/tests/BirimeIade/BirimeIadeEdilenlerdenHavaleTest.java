@@ -13,7 +13,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
@@ -29,7 +29,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         login(ztekin);
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
@@ -97,7 +97,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true)
                 .ekranIcerikKontrol()
@@ -189,7 +189,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
                 .evrakOnizlemeKontrol()
@@ -396,7 +396,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
@@ -520,7 +520,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
                 .evrakTeslimAlHavaletEt()

@@ -1083,11 +1083,20 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
+
+        @Step("Bilgi alanında {description} doldur: | {bilgi}")
+        public BilgilerTab bilgiDoldur(String bilgi, String description) {
+            cmbBilgi.selectLov(bilgi);
+            //shouldHave(Condition.text(geregi));
+            return this;
+        }
+
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
         public BilgilerTab geregiSecimTipiEskiEvrak(String geregiSecimTipi) {
             txtGeregiSecimTipiEskiEvrak.selectOption(geregiSecimTipi);
             return this;
         }
+
 
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {

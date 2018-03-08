@@ -18,7 +18,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.*;
 
-//import pages.solMenuPages.BirimIadeEdilenlerPage;
+//import pages.solMenuPages.BirimeIadeEdilenlerPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -34,14 +34,14 @@ public class DataTest extends BaseTest {
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1");
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
         login("ztekin", "123");
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -213,7 +213,7 @@ public class DataTest extends BaseTest {
                 .birimDegistirme(birim);
 
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
     }

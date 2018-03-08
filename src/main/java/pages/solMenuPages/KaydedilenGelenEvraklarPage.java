@@ -6,6 +6,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -17,8 +19,6 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement f = $(By.xpath("//div[@id='mainInboxForm:inboxDataTable:filtersAccordion']//a[text()='Filtreler']/parent::h3"));
@@ -151,6 +151,9 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikDosyaDeleteIcon = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-icon-left ui-icon delete-icon']");
     BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
+
+    SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
@@ -778,6 +781,25 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     @Step("Evrak Detayı ekranında eklenen dosyayı iptal etme\n")
     public KaydedilenGelenEvraklarPage icerikDosyaDeleteIcon() {
         btnIcerikDosyaDeleteIcon.click();
+        return this;
+    }
+
+    @Step("Evrak seç")
+    public KaydedilenGelenEvraklarPage evrakSec() {
+        tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Havale yap")
+    public KaydedilenGelenEvraklarPage havaleYap() {
+        btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public KaydedilenGelenEvraklarPage birimeHavaleDoldur(String birim) {
+        cmbBirimeHavale.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }
 

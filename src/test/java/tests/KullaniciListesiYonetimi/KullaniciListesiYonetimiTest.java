@@ -26,7 +26,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
     String ad = "TS1005 " + createRandomNumber(8);
     String aciklama = "TS1005 " + getSysDate();
@@ -59,7 +59,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
 
     }
 
@@ -284,7 +284,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .iadeEt();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true);
 
@@ -441,7 +441,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .iadeEt();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true);
 
@@ -568,7 +568,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .iadeEt();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true);
 
@@ -673,7 +673,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
                 .iadeEt();
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSecIcerikGoster(konu, true);
 

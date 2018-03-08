@@ -33,7 +33,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
     HaveleOnayinaSunduklarimPage haveleOnayinaSunduklarimPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerimPage;
     String basariMesaji = "İşlem başarılıdır!";
@@ -55,7 +55,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         haveleOnayinaSunduklarimPage = new HaveleOnayinaSunduklarimPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         havaleOnayiVerdiklerimPage = new HavaleOnayiVerdiklerimPage();
     }
@@ -264,7 +264,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konuKoduRandomTS2300)
                 .iadeEt()
                 .iadeEtIadeEt();
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konuKoduRandomTS2300)
                 .teslimAlVeHavaleEt()
