@@ -513,6 +513,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Bilgi alani geldiği kontrolü")
         public BilgilerTab bilgiAlaniktrol() {
             Assert.assertEquals(true , txtBilgi.exists() );
@@ -1240,6 +1241,8 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
             return this;
         }
+
+
 
         @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ad}\"")
         public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi, String ad) {

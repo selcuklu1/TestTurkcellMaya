@@ -1270,7 +1270,7 @@ public class TopluPostalamaTest extends BaseTest {
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
 
-        login("mbozdemir", "123");
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         //region Parameters
         String konuKodu = "010.01";
         String kaldiralacakKlasor = "Diğer";
@@ -1287,7 +1287,7 @@ public class TopluPostalamaTest extends BaseTest {
         String[] evrakNo1675 = new String[2];
 
         String[] konu2 = new String[]{
-                "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(9)
+                "TC1675 " + getSysDate(), "TC1675 " + createRandomNumber(9)
         };
 
 
@@ -1310,53 +1310,58 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
 //        //endregion
-        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
-//        region Test Datası
-        for (int i = 0; i < 2; i++) {
-            evrakOlusturPage
-                    .openPage()
-                    .bilgilerTabiAc()
-                    .konuKoduSec(konuKodu)
-                    .konuDoldur(konu[i])
-                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
-                    .evrakTuruSec(evrakTuru)
-                    .evrakDiliSec(evrakDili)
-                    .gizlilikDerecesiSec(gizlilikDerecesi)
-                    .ivedilikSec(ivedilik)
-                    .geregiSecimTipiSecByText(geregiTipi)
-                    .geregiSec(geregi)
-                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
-                    .aciklamaDoldur(konu[i])
-                    .onayAkisiEkle()
-                    .onayAkisiEkleIlkSelectSec(tur)
-                    .kullan();
 
-            Selenide.sleep(1000);
-
-            evrakOlusturPage
-                    .editorTabAc()
-                    .editorIcerikDoldur(konu[i]);
-            mainPage
-                    .evrakImzala();
-            imzaladiklarimPage
-                    .openPage();
-            evrakNo1675[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
-        }
-
-
-        topluPostalanacakEvraklarPage
-                .openPage()
-                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
-                .postaTipiSec(postaTipleri)
-                .sorgula()
-                .evrakSec(konu[0], true)
-                .evrakSec(konu[1], true)
-//                .evrakTumunuSec(true)
-                .postaListesineAktar()
-                .listeAdiDoldur(konu[0])
-                .listeOlustur()
-                .postaListesiSec(konu[0])
-                .listeyeEkle();
+        topluPostalanacakEvraklar(konu,geregi,geregiTipi);
+//        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
+////        region Test Datası
+//        for (int i = 0; i < 2; i++) {
+//            evrakOlusturPage
+//                    .openPage()
+//                    .bilgilerTabiAc()
+//                    .konuKoduSec(konuKodu)
+//                    .konuDoldur(konu[i])
+//                    .kaldiralacakKlasorlerSec(kaldiralacakKlasor)
+//                    .evrakTuruSec(evrakTuru)
+//                    .evrakDiliSec(evrakDili)
+//                    .gizlilikDerecesiSec(gizlilikDerecesi)
+//                    .ivedilikSec(ivedilik)
+//                    .geregiSecimTipiSecByText(geregiTipi)
+//                    .geregiSec(geregi)
+//                    .gercekKisiGeregiAlaniPostaTipiSec(gidisSekli)
+//                    .aciklamaDoldur(konu[i])
+//                    .onayAkisiEkle()
+//                    .onayAkisiEkleIlkSelectSec(tur)
+//                    .kullan();
+//
+//            Selenide.sleep(1000);
+//
+//            evrakOlusturPage
+//                    .editorTabAc()
+//                    .editorIcerikDoldur(konu[i]);
+//            mainPage
+//                    .evrakImzala();
+//
+//            login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+//
+//            imzaladiklarimPage
+//                    .openPage();
+//            evrakNo1675[i] = imzaladiklarimPage.evrakIcerikKontroluveEvrakNoAl(konu[i]);
+//        }
+//
+//
+//        topluPostalanacakEvraklarPage
+//                .openPage()
+//                .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
+//                .postaTipiSec(gidisSekli)
+//                .sorgula()
+//                .evrakSec(konu[0], true)
+//                .evrakSec(konu[1], true)
+////                .evrakTumunuSec(true)
+//                .postaListesineAktar()
+//                .listeAdiDoldur(konu[0])
+//                .listeOlustur()
+//                .postaListesiSec(konu[0])
+//                .listeyeEkle();
 
         postaListesiPage
                 .openPage()
@@ -2004,7 +2009,7 @@ public class TopluPostalamaTest extends BaseTest {
         };
         //endregion
 
-        topluPostalanacakEvraklar(konu,geregi,geregiTipi);
+        topluPostalanacakEvraklar(konu, geregi, geregiTipi);
 
         postaListesiPage
                 .openPage()
@@ -2058,6 +2063,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
                 .postaListesiPostala()
+                .adresDoldur(adres)
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
@@ -2192,6 +2198,7 @@ public class TopluPostalamaTest extends BaseTest {
 //                .postaListesiDoldur(postaListesi)
                 .evrakSec(konu[0])
                 .postaListesiPostala()
+                .adresDoldur(adres)
                 .etiketBastir()
                 .etiketBastirEkraniKontrolü(adres, geregi)
                 .etiketBastirEkraniKapat()
