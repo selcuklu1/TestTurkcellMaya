@@ -95,7 +95,7 @@ public class EvrakDevretTest extends BaseTest {
                 .devredecekKisiSec(devredecekKisi)
                 .listele();
 
-        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 12000);
 
         kullaniciEvrakDevretPage
                 .tabloAlanKontrolleri()
@@ -106,7 +106,7 @@ public class EvrakDevretTest extends BaseTest {
                 .aciklamaDoldur(icerik)
                 .devretTamam();
 
-        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 12000);
 
 //                .islemMesaji().basariliOlmali(basariMesaji);
         kullaniciEvrakDevretPage

@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -10,6 +11,9 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -470,6 +474,10 @@ public class EvrakOlusturPage extends MainPage {
         //endregion
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
 
+        //Genelge seçim
+        SelenideElement txtBirOncekiGenelge = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoPanelGrid']/tbody/tr/td[8]/label");
+        SelenideElement txtGenelgeNo = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoId']");
+
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 clickJs(tabBilgiler);
@@ -505,6 +513,7 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(true , cmbIvedik.exists() );
             return this;
         }
+
 
         @Step("Bilgi alani geldiği kontrolü")
         public BilgilerTab bilgiAlaniktrol() {
@@ -666,7 +675,37 @@ public class EvrakOlusturPage extends MainPage {
             cmbEvrakTuru.selectOption(evrakTuru);
             return this;
         }
+        @Step("Evrak Türü alanında icerik kontrolü")
+        public BilgilerTab evrakTuruIcerikKontrol() {
+//            if (!cmbEvrakTuru.getSelectedOption().equals(text))
+            Allure.addAttachment("Evrak Turu Icerik", cmbEvrakTuru.innerText());
+            return this;
+        }
 
+        @Step("Bir önceki genelge sayısını alma")
+        public String birOncekiGenelgeSayisi () {
+            Allure.addAttachment("Bir önceki Genelge Sayisi", txtBirOncekiGenelge.innerText());
+            return txtBirOncekiGenelge.innerText();
+        }
+
+        @Step("Genelge Sayisi girme : \"{genelgeSayi}\" ")
+        public BilgilerTab inputGenelgeSayisi (String genelgeSayi) {
+            txtGenelgeNo.setValue(genelgeSayi);
+            return this;
+        }
+        @Step("Genelge Sayisini bir arttırma")
+        public String genelgeSayisiArttirma (String genelge) {
+            int lenght = genelge.length();
+            String genelge1 = genelge.substring(0,4);
+            String genelge2 = genelge.substring(4,lenght);
+            String genelgeno = null;
+
+                int x = Integer.valueOf(genelge2);
+                x = x + 1;
+                genelgeno = genelge1 + String.valueOf(x);
+                return genelgeno;
+
+        }
         @Step("Kayıt Tarih alanında \"{dateText}\" seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
@@ -983,6 +1022,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet ve Onaya Sun buton kontrolü ")
+        public BilgilerTab kaydetVeOnayaSunKontrol() {
+            btnKaydetveOnayaSun.exists();
+            Allure.addAttachment("Kaydet ve Onaya sun butonu" , "Kaydet ve Onaya sun butonu geldiği görülür");
+            return this;
+        }
+
         public BilgilerTab konuKapsamTipiSec() {
             btnKonuKoduTree.click();
             return this;
@@ -1212,6 +1258,8 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
             return this;
         }
+
+
 
         @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ad}\"")
         public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi, String ad) {
@@ -1731,6 +1779,14 @@ public class EvrakOlusturPage extends MainPage {
                     .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
         }
+        @Step("Onay akışı otomatik olarak ilk gelen kullanici kontrol et : \"{kullaniciAdi}\" ")
+        public BilgilerTab onayAkisiotomatikilkgelenKullaniciKontrolEt2(String kullaniciAdi) {
+           SelenideElement kullanicion = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td[2]/div/table/tbody/tr/td[1]/div");
+            System.out.println(kullanicion.innerText());
+            kullanicion.innerText().contains(kullaniciAdi);
+            return this;
+        }
+
 
 //TODO: Burası hatalı, düzeltilecek.
 /*        public BilgilerTab onayAkisiKullaniciSec(String _kullaniciAdi) {
