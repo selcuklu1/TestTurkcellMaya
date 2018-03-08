@@ -59,7 +59,7 @@ public class ConfirmDialog extends MainPage {
 
     @Step("Evet butona tikla")
     public ConfirmDialog confirmEvetTikla() {
-        getConfirmButton("Evet").shouldBe(visible).click();
+        getConfirmButton("Evet").shouldBe(visible).pressEnter();
         return this;
     }
 

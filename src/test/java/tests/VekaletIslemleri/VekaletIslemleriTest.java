@@ -192,7 +192,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
 //            ,priority = 2
-//            , dependsOnMethods = {"TS0025b"}
+            , dependsOnMethods = {"TS0025b"}
             , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");

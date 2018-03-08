@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.poi.hssf.record.pivottable.StreamIDRecord;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.pageComponents.*;
@@ -214,6 +215,7 @@ public class MainPage extends BaseLibrary {
         return this;
 
     }
+
     @Step("Cevap yaz sayfasında Ekranı kapat.")
     public MainPage cevapYazSayfaKapat(String cevap) {
         $("[id='windowCevapEvrakDialog'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
@@ -222,9 +224,7 @@ public class MainPage extends BaseLibrary {
 
         else if (cevap == "Hayır") {
             $("[id='kapatKaydetHayirButton']").click();
-        }
-        else if (cevap == "İptal")
-        {
+        } else if (cevap == "İptal") {
 
             $(By.id("kapatKaydetIptalButton")).click();
         }
@@ -265,8 +265,8 @@ public class MainPage extends BaseLibrary {
 
     @Step("Evrak Guncellendi Imzalanamaz Uyarı Kontrolü ve Tamam")
     public MainPage evrakGuncellendiImzalanamazUyariKontrol(String uyari) {
-        Assert.assertEquals(switchTo().alert().getText().equals(uyari),true,"Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
-        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü","");
+        Assert.assertEquals(switchTo().alert().getText().equals(uyari), true, "Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
+        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü", "");
         switchTo().alert().accept();
         return this;
     }
@@ -314,11 +314,12 @@ public class MainPage extends BaseLibrary {
         new EvrakPageButtons().evrakSecmeliDegistiEvet();
         return this;
     }
+
     @Step("Menülerin geldiği görülür")
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
 
         Assert.assertEquals($(By.id("topMenuForm2:ust:0:ustMenuEleman")).isDisplayed(), true);
-        Assert.assertEquals(  $(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
+        Assert.assertEquals($(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
 
         takeScreenshot();
 
@@ -326,7 +327,36 @@ public class MainPage extends BaseLibrary {
     }
 
 
+    @Step("Ekranın sağ üstünde bulunan isim soyisim alanına tıklanır.")
+    public MainPage userMenuAc() {
+        $(By.id("topMenuForm:userMenuButton_button")).click();
+        return this;
+    }
 
+    @Step("User Menu listesinde \"{menuNAme}\" menusu bulunur.")
+    public MainPage userMenuKontrol(String menuName) {
 
+        ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
+
+        boolean status = elementList
+                .filterBy(Condition.text(menuName))
+                .first().isDisplayed();
+
+        Assert.assertEquals(status,true,"Listede menu ismi mevcut.");
+
+        return this;
+    }
+
+    @Step("User Menu listesinde \"{menuNAme}\" tıklanır.")
+    public MainPage userMenuMenuSec(String menuName) {
+
+        ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
+
+        elementList
+                .filterBy(Condition.text(menuName))
+                .first().click();
+
+        return this;
+    }
 
 }
