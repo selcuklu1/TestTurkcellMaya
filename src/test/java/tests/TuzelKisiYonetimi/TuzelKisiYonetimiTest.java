@@ -493,7 +493,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(ad);
 

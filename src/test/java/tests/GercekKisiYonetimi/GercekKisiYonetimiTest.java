@@ -478,7 +478,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
                 .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);

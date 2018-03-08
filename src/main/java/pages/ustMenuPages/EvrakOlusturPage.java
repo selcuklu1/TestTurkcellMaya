@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -11,9 +10,6 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -1237,12 +1233,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu")
-        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
+       // @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu: {description}")
+        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
-            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
+            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
 
             return this;
         }
