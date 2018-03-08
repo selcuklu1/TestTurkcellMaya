@@ -24,6 +24,7 @@ public class EvrakOlusturmaTest  extends BaseTest{
     @Test(enabled = true , description = "TS2248 : Genelge tipinde evrak oluşturmada hitap ve genelge no kontrolü")
     public void TS2248() throws InterruptedException {
         login("Mbozdemir", "123");
+        String konu = "TS2248" + getSysDate();
         evrakOlusturPage.openPage();
         evrakOlusturPage.bilgilerTabiAc()
                 .konuAlaniGeldigiGorme()
@@ -42,7 +43,21 @@ public class EvrakOlusturmaTest  extends BaseTest{
         String genelgeno = genel.trim();
         Thread.sleep(500);
                 evrakOlusturPage.bilgilerTabiAc()
-                        .inputGenelgeSayisi(genelgeno);
+                        .konuKoduDoldur("YAZILIM GELİŞTİRME")
+                        .konuDoldur(konu)
+                        .kaldirilacakKlasorler("Diğer")
+                        .inputGenelgeSayisi(genelgeno)
+                        .geregiSecimTipiSec("Gerçek Kişi")
+                        .geregiSec("OptiimTest")
+                        .onayAkisiEkle()
+                        .onayAkisiotomatikilkgelenKullaniciKontrolEt2("Mehmet Bozdemir")
+                        .onayAkisiParaflamaGeldigiGorme()
+                        .onayAkisiEkleIlkSelectSec("İmzalama")
+                        .onayAkisiTemizle()
+                        .onayAkisiKullan()
+                        .kaydetVeOnayaSunKontrol();
+                evrakOlusturPage.editorTabAc()
+                        .editorHitapKontrol("GENELGE");
 
 
 

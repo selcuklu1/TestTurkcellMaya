@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -1021,6 +1022,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet ve Onaya Sun buton kontrolü ")
+        public BilgilerTab kaydetVeOnayaSunKontrol() {
+            btnKaydetveOnayaSun.exists();
+            Allure.addAttachment("Kaydet ve Onaya sun butonu" , "Kaydet ve Onaya sun butonu geldiği görülür");
+            return this;
+        }
+
         public BilgilerTab konuKapsamTipiSec() {
             btnKonuKoduTree.click();
             return this;
@@ -1762,6 +1770,14 @@ public class EvrakOlusturPage extends MainPage {
                     .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
         }
+        @Step("Onay akışı otomatik olarak ilk gelen kullanici kontrol et : \"{kullaniciAdi}\" ")
+        public BilgilerTab onayAkisiotomatikilkgelenKullaniciKontrolEt2(String kullaniciAdi) {
+           SelenideElement kullanicion = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td[2]/div/table/tbody/tr/td[1]/div");
+            System.out.println(kullanicion.innerText());
+            kullanicion.innerText().contains(kullaniciAdi);
+            return this;
+        }
+
 
 //TODO: Burası hatalı, düzeltilecek.
 /*        public BilgilerTab onayAkisiKullaniciSec(String _kullaniciAdi) {
