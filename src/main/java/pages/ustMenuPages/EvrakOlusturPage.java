@@ -11,6 +11,9 @@ import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -470,6 +473,10 @@ public class EvrakOlusturPage extends MainPage {
         //endregion
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
 
+        //Genelge seçim
+        SelenideElement txtBirOncekiGenelge = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoPanelGrid']/tbody/tr/td[8]/label");
+        SelenideElement txtGenelgeNo = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoId']");
+
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 clickJs(tabBilgiler);
@@ -666,7 +673,37 @@ public class EvrakOlusturPage extends MainPage {
             cmbEvrakTuru.selectOption(evrakTuru);
             return this;
         }
+        @Step("Evrak Türü alanında icerik kontrolü")
+        public BilgilerTab evrakTuruIcerikKontrol() {
+//            if (!cmbEvrakTuru.getSelectedOption().equals(text))
+            Allure.addAttachment("Evrak Turu Icerik", cmbEvrakTuru.innerText());
+            return this;
+        }
 
+        @Step("Bir önceki genelge sayısını alma")
+        public String birOncekiGenelgeSayisi () {
+            Allure.addAttachment("Bir önceki Genelge Sayisi", txtBirOncekiGenelge.innerText());
+            return txtBirOncekiGenelge.innerText();
+        }
+
+        @Step("Genelge Sayisi girme : \"{genelgeSayi}\" ")
+        public BilgilerTab inputGenelgeSayisi (String genelgeSayi) {
+            txtGenelgeNo.setValue(genelgeSayi);
+            return this;
+        }
+        @Step("Genelge Sayisini bir arttırma")
+        public String genelgeSayisiArttirma (String genelge) {
+            int lenght = genelge.length();
+            String genelge1 = genelge.substring(0,4);
+            String genelge2 = genelge.substring(4,lenght);
+            String genelgeno = null;
+
+                int x = Integer.valueOf(genelge2);
+                x = x + 1;
+                genelgeno = genelge1 + String.valueOf(x);
+                return genelgeno;
+
+        }
         @Step("Kayıt Tarih alanında \"{dateText}\" seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
