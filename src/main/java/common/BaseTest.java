@@ -127,20 +127,21 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite
     public void beforeTest(ITestContext context) {
-        System.out.println("buildName: " + System.getProperty("buildName"));
+        //System.out.println("buildName: " + System.getProperty("buildName"));
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
 
         System.out.println("ITestContext xml: ");
         System.out.println(context.getSuite().getXmlSuite().toXml());
         ((TestRunner) context).setTestName("Tests");
+        ((TestRunner) context).getTest().setName("AAAAAAAAA");
     }
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(Method test, XmlTest xml) {
-        System.out.println("ITestNGMethod xml: ");
-        System.out.println(xml.toXml(""));
-        xml.setName("Tests1111111");
+       /* System.out.println("ITestNGMethod xml: ");
+        System.out.println(xml.toXml(""));*/
+        //xml.setName("Tests1111111");
         /*
         , ITestContext context
         if (System.getProperty("buildName")!=null)
