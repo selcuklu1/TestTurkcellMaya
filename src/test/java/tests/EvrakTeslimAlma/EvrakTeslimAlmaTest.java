@@ -569,8 +569,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-2320-" + getSysDate();
 
@@ -595,8 +595,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "PreCondition 1. Evrak Iade Et");
