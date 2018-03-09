@@ -131,18 +131,16 @@ public class BaseTest extends BaseLibrary {
             context.getSuite().getXmlSuite().setName("Suite");
 
         //((TestRunner) context).getTest().setName("Tests");
+        context.getSuite().getXmlSuite().setName("");
+        ((TestRunner) context).getTest().setName("");
     }
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(ITestContext context, Method test) {
-
-        //context.getCurrentXmlTest().setName(test.getClass().getSimpleName());
-
-        if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
+        /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
         else
-            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getSimpleName());
-
+            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getSimpleName());*/
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
