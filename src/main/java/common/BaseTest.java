@@ -53,7 +53,7 @@ public class BaseTest extends BaseLibrary {
     public Locale turkishLocal;
 
     @BeforeClass(alwaysRun = true)
-    public void driverSetUp(Class<?> testClass) {
+    public void driverSetUp() {
 
         log.info("Setup started");
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
@@ -62,7 +62,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
         System.out.println("locale default: " + Locale.getDefault());
 
-        turkishLocal = new Locale("tr-TR");//("tr", "TR");
+        turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
         System.out.println("locale: " + Locale.getDefault());
 
