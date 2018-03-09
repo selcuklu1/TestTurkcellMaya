@@ -388,6 +388,14 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .evrakGeldigiGorme(konu)
                 .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
 
+        login(yakyol);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGeldigiGorme(konu)
+                .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)

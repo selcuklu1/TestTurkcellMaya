@@ -106,6 +106,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .teslimAlIkonKontrol(konu)
                 .evrakSecNoTeslimAl(konu, true)
+                .evrakNoGelmedigiGorme(konu)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -757,11 +758,11 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakGecmisiKontrolu(konu1, kullanici, islemSureci)
                 .popupKapatma()
                 .evrakDetayButtonTıklama(konu1)
-                .evrakDetayKontrolu(evrakNo1,konuKodu,konu1,evrakTuru,evrakTarihi,evrakDili,gizlilikDerecesi,kisiKurum,geldigiKurum,ivedilik);
-//                .evrakKapatma()
-//
-//                .evrakEtiketButtonTıklama(konu1)
-//                .evrakEtiketKontrolu();
+                .evrakDetayKontrolu(evrakNo1,konuKodu,konu1,evrakTuru,evrakTarihi,evrakDili,gizlilikDerecesi,kisiKurum,geldigiKurum,ivedilik)
+                .evrakKapatma()
+
+                .evrakEtiketButtonTıklama(konu1)
+                .evrakEtiketKontrolu();
 
     }
 }
