@@ -359,4 +359,27 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Profil ekranında guncel birimin \"{guncelBirim}\" olanların Rol adları alınır.")
+    public String[] profildenRolAdiAlma(String guncelBirim) {
+
+        ElementsCollection tblRolListesi = $$("div[class='ui-datatable-scrollable-body'] tbody[id$='data'] tr[data-ri]");
+
+        String [] rolAdi = new String[tblRolListesi.size()];
+
+        for (int i = 0; i < tblRolListesi.size(); i++) {
+            String birim = tblRolListesi.get(i).$("td:nth-child(2)").text();
+            if (birim.equals(guncelBirim))
+                rolAdi[i] = tblRolListesi.get(i).$("td:nth-child(1)").text();
+            Allure.addAttachment("Rol Adı : ", rolAdi[i]);
+        }
+
+//        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+
+        return rolAdi;
+    }
+
+    @Step("Profil ekranı kapatılır.")
+    public void profilEkraniKapat() {
+        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+    }
 }

@@ -81,7 +81,7 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Step("PreContion : Havale işlemleri Tüm birimleri görebilme aksiyonlu rol oluşturma")
-    public void preconTümBirimleriGorebilme(String[] rolAdi, String eklenecekAksiyon) throws InterruptedException {
+    public void preconTümBirimleriGorebilmeEkle(String[] rolAdi, String eklenecekAksiyon) throws InterruptedException {
 
         String kullaniciAdi = "username21g";
 
@@ -98,9 +98,7 @@ public class HavaleYetkisiTest extends BaseTest {
                     .yeniAksiyonİliskilendirmeSorgulamaveFiltrelemeTabAc()
                     .txtDialogAksiyonad(eklenecekAksiyon)
                     .btnDialogAksiyonAra()
-                    .btnDialogselectAction(eklenecekAksiyon)
-                    .btnDialogAksiyonEkle()
-                    .islemMesaji().isBasarili();
+                    .btnDialogselectAction(eklenecekAksiyon);
         }
     }
 
@@ -124,10 +122,10 @@ public class HavaleYetkisiTest extends BaseTest {
                 .userMenuKontrol(menuName)
                 .userMenuMenuSec(menuName);
 
-        profildenRolAdıAlma(guncelBirim);
-        profilEkraniKapat();
+        rolAdi=mainPage.profildenRolAdiAlma(guncelBirim);
+        mainPage.profilEkraniKapat();
 
-        preconTümBirimleriGorebilme(rolAdi,yeniAksiyon);
+        preconTümBirimleriGorebilmeEkle(rolAdi,yeniAksiyon);
 
         login(TestData.user21g);
         rolYonetimiPage
@@ -148,33 +146,5 @@ public class HavaleYetkisiTest extends BaseTest {
                     .islemOnayPopupKapat(mesaj)
                     .islemMesaji().isBasarili();
         }
-
-
-//        login("hgner", "123");
-
-    }
-
-    @Step("Profil ekranında Rol Listesi tablosundan Rol adları alınır.")
-    private String[] profildenRolAdıAlma(String guncelBirim) {
-
-        ElementsCollection tblRolListesi = $$("div[class='ui-datatable-scrollable-body'] tbody[id$='data'] tr[data-ri]");
-
-        rolAdi = new String[tblRolListesi.size()];
-
-        for (int i = 0; i < tblRolListesi.size(); i++) {
-            String birim = tblRolListesi.get(i).$("td:nth-child(2)").text();
-            if (birim.equals(guncelBirim))
-                rolAdi[i] = tblRolListesi.get(i).$("td:nth-child(1)").text();
-            Allure.addAttachment("Rol Adı : ", rolAdi[i]);
-        }
-
-//        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
-
-        return rolAdi;
-    }
-
-    @Step("Profil ekranı kapatılır.")
-    private void profilEkraniKapat() {
-        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
     }
 }

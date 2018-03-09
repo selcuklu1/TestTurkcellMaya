@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -194,15 +195,22 @@ public class RolYonetimiPage extends MainPage {
                 .filterBy(Condition.text(ad))
                 .first();
 
-        SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+        if (tblEklenecekAksiyonList.filterBy(Condition.text(ad)).first().isDisplayed()) {
+            SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
 
-        if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
-            isSelected = true;
+            if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+                isSelected = true;
 
-        if (isSelected == false) {
-            chkBox.click();
+            if (isSelected == false) {
+                chkBox.click();
+            }
+            btnDialogAksiyonEkle();
+            islemMesaji().isBasarili();
         }
-
+        else {
+            Allure.addAttachment("Tablo Seçim", "Tabloda seçilecek kayıt bulunamadı.");
+            $x("//div[@id='rolAksiyonUpdateDialog']//span[@class='ui-icon ui-icon-closethick']").click();
+        }
         return this;
     }
 
