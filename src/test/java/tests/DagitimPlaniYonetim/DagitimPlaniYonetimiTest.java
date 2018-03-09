@@ -42,7 +42,7 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  * Açıklama:
  */
 @Feature("Dağıtım Planı Yönetimi")
-@Test(suiteName = "SuitName")
+//@Test(suiteName = "Dağıtım Plan Yönetimi")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
