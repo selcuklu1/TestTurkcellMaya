@@ -31,6 +31,9 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtHavaleYapOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement txtHavaleYapAciklama = comboLov(By.id("mainPreviewForm:havaleAciklama"));
+    ElementsCollection txtHavaleYapDosyaEkle = $$(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
+    ElementsCollection txtHavaleYapIslemSuresi = $$(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
     BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
@@ -182,6 +185,13 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Default gereği için gönder ifadesinin geldiği görülür.")
+    public TeslimAlinanlarPage secilenBirimDefaultGeregiIcinGonderGorme(){
+        boolean durum = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu")).getSelectedText().equals("GEREĞİ İÇİN GÖNDER");
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
     @Step("Teslim Alınanlar sayfasında evrakın geldiği kontrolu ve seçme")
     public TeslimAlinanlarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
@@ -239,6 +249,25 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Birim, kişi, kullanıcı listesi, onaylayacak kişi ,açıklama alanları ile dosya ekle butonunun, işlem süresi alanının geldiği görülür.")
+    public TeslimAlinanlarPage havaleYapAlanlarGeldigiGorme(){
+        boolean durum1 = txtHavaleYapBirim.isDisplayed()==true;
+        boolean durum2 = txtHavaleYapKisi.isDisplayed()==true;
+        boolean durum3 = txtHavaleYapKullaniciListesi.isDisplayed()==true;
+        boolean durum4 = txtHavaleYapOnaylanacakKisi.isDisplayed()==true;
+        boolean durum5 = txtHavaleYapAciklama.isDisplayed()==true;
+        boolean durum6 = txtHavaleYapDosyaEkle.size()==1;
+        boolean durum7 = txtHavaleYapIslemSuresi.size()==1;
+        Assert.assertEquals(durum1,true);
+        Assert.assertEquals(durum2,true);
+        Assert.assertEquals(durum3,true);
+        Assert.assertEquals(durum4,true);
+        Assert.assertEquals(durum5,true);
+        Assert.assertEquals(durum6,true);
+        Assert.assertEquals(durum7,true);
+        return this;
+    }
+    
     @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
     public TeslimAlinanlarPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar
