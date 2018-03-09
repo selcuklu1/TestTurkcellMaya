@@ -127,27 +127,16 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite
     public void beforeTest(ITestContext context) {
-        //System.out.println("buildName: " + System.getProperty("buildName"));
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
+        else
+            context.getSuite().getXmlSuite().setName("Suite");
 
-        System.out.println("ITestContext xml: ");
-        System.out.println(context.getSuite().getXmlSuite().toXml());
-        ((TestRunner) context).setTestName("Tests");
-        ((TestRunner) context).getTest().setName("AAAAAAAAA");
+        ((TestRunner) context).getTest().setName("Tests");
     }
 
     @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method test, XmlTest xml) {
-       /* System.out.println("ITestNGMethod xml: ");
-        System.out.println(xml.toXml(""));*/
-        //xml.setName("Tests1111111");
-        /*
-        , ITestContext context
-        if (System.getProperty("buildName")!=null)
-            context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
-
-        ((TestRunner) context).setTestName(test.getName());*/
+    public void beforeMethod(Method test) {
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
