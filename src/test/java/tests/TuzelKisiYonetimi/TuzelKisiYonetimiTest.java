@@ -512,10 +512,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
 
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
         sikKullanilanlarPage
                 .openPage()
