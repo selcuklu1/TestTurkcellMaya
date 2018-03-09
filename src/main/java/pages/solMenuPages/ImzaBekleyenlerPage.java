@@ -31,7 +31,8 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
     SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
-    SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement evrakOnIzlemeEkranKontrol = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement evrakIcerikEkranKontrol = $("div[id='windowItemInfoDialog']");
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
     SelenideElement btnBeklemeyeAl = $("[class='ui-button-icon-left ui-icon evrakBeklemeyeAl']");
     SelenideElement btnBeklemeyeAlUyariEvet = $(By.id("mainInboxForm:beklemeyeAlEvetButton"));
@@ -322,11 +323,16 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Evrak önizleme ekranı kontrolu")
     public ImzaBekleyenlerPage evrakOnizlemeKontrol() {
-
-        Assert.assertEquals(evrakOnIzleme.isDisplayed(), true);
-
+        Assert.assertEquals(evrakOnIzlemeEkranKontrol.isDisplayed(), true);
         return this;
     }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public ImzaBekleyenlerPage evrakIcerikKontrol() {
+        Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
+        return this;
+    }
+
 
     @Step("Sil butonunun gelmediği kontrolu")
     public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {

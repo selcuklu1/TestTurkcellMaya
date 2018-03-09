@@ -65,6 +65,8 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnGeregiIptal = $("button[id*='geregiLov'] [class$='delete-icon']");
     SelenideElement btnEkranKapat = $("[id='window1Dialog'] [class*='ui-dialog-titlebar-close']");
 
+    ElementsCollection lblSayfa = $$("div[id='window1Dialog'] span[class='ui-dialog-title']");
+    ElementsCollection lblSayfa2 = $$("div[id='inboxItemInfo']  span[class='ui-dialog-title']");
 
 
     //endregion
@@ -85,11 +87,17 @@ public class EvrakOlusturPage extends MainPage {
     }
 
 
-    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
 
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public EvrakOlusturPage sayfaKontrol(String sayfa) {
-        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Assert.assertEquals(lblSayfa.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
+        return this;
+    }
+
+    @Step(" \"{sayfa}\" ekranı açılır\n")
+    public EvrakOlusturPage sayfaKontrol2(String sayfa) {
+        Assert.assertEquals(lblSayfa2.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
@@ -1140,6 +1148,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği Seçim Tipi alanında Kontrol \"{geregiSecimTipi}\" ")
+        public BilgilerTab geregiSecimTipiEskiKontrol(String geregiSecimTipi) {
+            Assert.assertEquals(txtGeregiSecimTipiEskiEvrak.getSelectedText().contains(geregiSecimTipi),true,"Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
+            Allure.addAttachment("Gereği Seçim Tipi alanında Kontrol:", geregiSecimTipi);
+            return this;
+        }
+
 
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
@@ -1149,7 +1164,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği kontrol: | {geregi}")
         public BilgilerTab geregiKontrol(String geregi) {
-            System.out.println(cmbGeregiKontrol.getText());
             Assert.assertEquals(cmbGeregiKontrol.getText().contains(geregi),true,"Gereği kontrol:" + geregi);
             Allure.addAttachment("Gereği kontrol:", geregi);
             return this;
