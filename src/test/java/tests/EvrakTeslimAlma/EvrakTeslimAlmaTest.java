@@ -176,6 +176,10 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .içeriktenEvrakEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoGelmedigiGorme(konu);
+
         teslimAlinanlarPage
                 .openPage()
                 .evrakAdediKontrolu(konu)
