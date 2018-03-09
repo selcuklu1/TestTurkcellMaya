@@ -125,9 +125,10 @@ public class BaseTest extends BaseLibrary {
         AllureEnvironmentUtils.create();
     }
 
-    @BeforeTest
+    @BeforeSuite
     public void beforeTest(ITestContext context) {
-        if (System.getProperty("buildName")!=null)
+        System.out.println("buildName: " + System.getProperty("buildName"));
+        if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
 
         ((TestRunner) context).setTestName("Tests");
