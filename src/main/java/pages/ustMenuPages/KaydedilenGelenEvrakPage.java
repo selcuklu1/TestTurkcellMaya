@@ -37,7 +37,6 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     BelgenetElement txtGeldigiBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiBirimLov_id:LovText"));
     BelgenetElement txtGeldigiKurum = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiKurumLov_idTeblig:LovText"));
 
-
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
         ustMenu(UstMenuData.Raporlar.KaydedilenGelenEvrak);
@@ -235,5 +234,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
+
+
 
 }

@@ -13,6 +13,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -30,13 +31,18 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtHavaleYapOnaylanacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
+    BelgenetElement txtHavaleYapAciklama = comboLov(By.id("mainPreviewForm:havaleAciklama"));
+    ElementsCollection txtHavaleYapDosyaEkle = $$(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
+    ElementsCollection txtHavaleYapIslemSuresi = $$(By.id("mainPreviewForm:fileUploadHavaleEk_input"));
     BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
     BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtTebligEtKullniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
-
+    SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
+    BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
@@ -181,6 +187,13 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Default gereği için gönder ifadesinin geldiği görülür.")
+    public TeslimAlinanlarPage secilenBirimDefaultGeregiIcinGonderGorme(){
+        boolean durum = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu")).getSelectedText().equals("GEREĞİ İÇİN GÖNDER");
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
     @Step("Teslim Alınanlar sayfasında evrakın geldiği kontrolu ve seçme")
     public TeslimAlinanlarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
@@ -225,12 +238,38 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale yap butonana bas")
+    @Step("Havale yap")
     public TeslimAlinanlarPage havaleYap() {
         btnHavaleYap.click();
         return this;
     }
 
+    @Step("Havale yap ekranın gelidiği görülür")
+    public TeslimAlinanlarPage havaleYapEkranGeldigiGorulur(){
+        boolean durum = $$(By.id("mainPreviewForm:havaleDagitimLovPanel")).size() ==1;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
+    @Step("Birim, kişi, kullanıcı listesi, onaylayacak kişi ,açıklama alanları ile dosya ekle butonunun, işlem süresi alanının geldiği görülür.")
+    public TeslimAlinanlarPage havaleYapAlanlarGeldigiGorme(){
+        boolean durum1 = txtHavaleYapBirim.isDisplayed()==true;
+        boolean durum2 = txtHavaleYapKisi.isDisplayed()==true;
+        boolean durum3 = txtHavaleYapKullaniciListesi.isDisplayed()==true;
+        boolean durum4 = txtHavaleYapOnaylanacakKisi.isDisplayed()==true;
+        boolean durum5 = txtHavaleYapAciklama.isDisplayed()==true;
+        boolean durum6 = txtHavaleYapDosyaEkle.size()==1;
+        boolean durum7 = txtHavaleYapIslemSuresi.size()==1;
+        Assert.assertEquals(durum1,true);
+        Assert.assertEquals(durum2,true);
+        Assert.assertEquals(durum3,true);
+        Assert.assertEquals(durum4,true);
+        Assert.assertEquals(durum5,true);
+        Assert.assertEquals(durum6,true);
+        Assert.assertEquals(durum7,true);
+        return this;
+    }
+    
     @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
     public TeslimAlinanlarPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar
@@ -288,6 +327,29 @@ public class TeslimAlinanlarPage extends MainPage {
         Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
         Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak seç")
+    public TeslimAlinanlarPage evrakSec() {
+        tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinanlarPage birimeHavaleDoldur(String birim) {
+        cmbBirimeHavale.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
+    @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
+    public TeslimAlinanlarPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {
+
+        boolean selectable = comboLov(cmbBirimeHavaleBy).isLovValueSelectable(birim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.", "");
         return this;
     }
 }

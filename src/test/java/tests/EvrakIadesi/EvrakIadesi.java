@@ -1,9 +1,7 @@
 package tests.EvrakIadesi;
 
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
 import data.TestData;
-import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -11,16 +9,9 @@ import org.testng.annotations.Test;
 import pages.pageComponents.TextEditor;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.ustMenuPages.EvrakOlusturPage;
-import pages.pageComponents.tabs.AltTabs;
-import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
-import pages.pageData.alanlar.OnayKullaniciTipi;
-import pages.solMenuPages.BirimIadeEdilenlerPage;
-import pages.solMenuPages.TeslimAlinmayiBekleyenlerPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 
 /****************************************************
  * Tarih: 2018-01-30
@@ -36,7 +27,7 @@ public class EvrakIadesi extends BaseTest {
     ImzaBekleyenlerPage imzaBekleyenlerPage;
 //    GelenEvrakKayitPage gelenEvrakKayitPage;
 //    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-//    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+//    BirimeIadeEdilenlerPage birimIadeEdilenlerPage;
 
 
     @BeforeMethod
@@ -47,7 +38,7 @@ public class EvrakIadesi extends BaseTest {
         imzaBekleyenlerPage = new ImzaBekleyenlerPage();
 //        gelenEvrakKayitPage = new GelenEvrakKayitPage();
 //        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-//        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+//        birimIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2017: Akıştaki Evrağın Değiştirilip İmzala Butonuna Basılması - Güncellemeye Devam Et")
@@ -78,7 +69,8 @@ public class EvrakIadesi extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
-                .sayfaKontrol(sayfa1)
+//                .sayfaKontrol(sayfa1)
+                //TODO Evrak Oluştur kontrolü
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
                 .konuKoduDoldur(konuKodu)

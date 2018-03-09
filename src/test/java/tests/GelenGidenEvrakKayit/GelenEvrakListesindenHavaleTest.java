@@ -2,7 +2,6 @@ package tests.GelenGidenEvrakKayit;
 
 import common.BaseTest;
 import data.TestData;
-import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -32,7 +31,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
     static final Logger logger = LogManager.getLogger("GelenEvrakListesindenHavale");
 
@@ -71,7 +70,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleEttiklerimPage = new HavaleEttiklerimPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
 
@@ -847,7 +846,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu);
 

@@ -354,8 +354,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .dagitimBilgileriKisiOpsiyon(bilgi)
                 .eklenenKisiOpsiyonKontrolu(bilgi)
 
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
-                .eklenenKullaniciListesiKontrolu("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
+                .eklenenKullaniciListesiKontrolu("TS2994")
                 .dagitimBilgileriKullaniciListesiOpsiyon(gerek)
                 .eklenenKullaniciListesiOpsiyonKontrolu(gerek)
                 .dagitimBilgileriKullaniciListesiOpsiyon(koordinasyon)
@@ -365,8 +365,6 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
         evrakNo = gelenEvrakKayitPage.popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -387,6 +385,14 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .openPage()
                 .evrakGeldigiGorme(konu)
                 .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
+
+        login(yakyol);
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakGeldigiGorme(konu)
+                .evrakAlanKontrolleri(konu, geldigiKurum, evrakTarihi, evrakSayiSag);
+
 
     }
 

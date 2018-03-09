@@ -6,7 +6,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
@@ -14,9 +13,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -45,6 +42,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtComboLovBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    By cmbComboLovBirimBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
     BelgenetElement txtComboLovOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
 
     SelenideElement treeHavaleYapKisi = $(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -1636,7 +1634,21 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public GelenEvraklarPage birimeHavaleDoldur(String birim) {
+        txtComboLovBirim.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
 
 
+    @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
+    public GelenEvraklarPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {
 
+        boolean selectable = comboLov(cmbComboLovBirimBy).isLovValueSelectable(birim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.", "");
+        return this;
+    }
 }

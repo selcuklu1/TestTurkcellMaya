@@ -566,13 +566,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişinin geldiği alanında \" {kisi}\" görüntülenmeme kontrolu")
-    public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmemeKontrolu(String kisi) {
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigi}")
+    public GelenEvrakKayitPage geldigiAlanindaGoruntulenmemeKontrolu(String geldigi, String description) {
 
-        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
-
+        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(geldigi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigi + ": görüntülenmediği görülür.", "");
         return this;
     }
 
@@ -1347,6 +1347,11 @@ public class GelenEvrakKayitPage extends MainPage {
             clickJs(mukerrerPopUpEvet);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
+        String basariMesaji = "İşlem başarılıdır!";
+
+        if (islemMesaji().isBasarili())
+            Allure.addAttachment("İşlem başarılı ","mesajı gelmektedir.");
+
         basariliPopUp.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
@@ -1354,8 +1359,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
         String evrakNo = getNumberFromText(vEvrakBasarili.getText());
+        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir. Evrakınız" , evrakNo + " numarasıyla kaydedilmiştir.");
         clickJs(basariliPopUpKapat);
-        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir" , evrakNo);
+        Allure.addAttachment("Kapat butonu tıklanır. ","Uyarı pop up kapatıldığı görülmüştür");
         return evrakNo;
     }
 
