@@ -20,8 +20,10 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.ITestResult;
+import org.testng.*;
 import org.testng.annotations.*;
+import org.testng.internal.annotations.ITest;
+import org.testng.xml.XmlTest;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetFramework;
@@ -123,8 +125,23 @@ public class BaseTest extends BaseLibrary {
         AllureEnvironmentUtils.create();
     }
 
+    @BeforeTest
+    public void beforeTest(ITestContext context) {
+        if (System.getProperty("buildName")!=null)
+            context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
+
+        ((TestRunner) context).setTestName("Tests");
+    }
+
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(Method test) {
+
+        /*
+        , ITestContext context
+        if (System.getProperty("buildName")!=null)
+            context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
+
+        ((TestRunner) context).setTestName(test.getName());*/
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
