@@ -214,7 +214,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
 
     @Step("Kapatma tipi, Konu kodu, Kaldırılacak klasörler, Not ve Onay akışı alanlarının geldiği görülür.")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeKapatAlanGeldigiGorme() {
-        boolean durum = $$("[id='mainPreviewForm:evrakKapatPanelGrid']").size() == 1;
+        boolean durum = $$("[id='mainPreviewForm:evrakOnizlemeTab']").size() == 1;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
@@ -876,5 +876,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
                 .evrakTeslimAlPopUpEvet();
         return this;
     }
-    
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldur(String birim) {
+        txtTeslimAlVeHavaleEtBirim.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
 }
