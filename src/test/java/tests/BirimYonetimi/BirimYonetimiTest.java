@@ -673,7 +673,7 @@ public class BirimYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Birim")
-                .geldigiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+                .geldigiAlanindaBirimGoruntulenmemeKontrolu(birimAdi, "Birim");
 
         gidenEvrakKayitPage
                 .openPage()
