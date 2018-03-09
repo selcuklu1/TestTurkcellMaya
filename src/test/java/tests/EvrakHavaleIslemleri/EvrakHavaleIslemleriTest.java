@@ -40,7 +40,12 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         String birim = "Yazılım Geliştirme Direktörlüğü";
 
         login(usernameZTEKIN,passwordZTEKIN);
-        gelenEvrakKayitPage.gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitBirimHavaleEt(konuKodu,kurum,birim);
+
+
+
         login(usernameZTEKIN,passwordZTEKIN);
         gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
         login(usernameYAKYOL,passwordYAKYOL);

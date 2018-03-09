@@ -68,6 +68,19 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS1597,kurum,birim);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSecNoTeslimAl(konuKoduRandomTS1597, true);
+    }
+
+    @Step("Teslim Alınanlar sayfasına evrak düşürmektedir.")
+    public void TS446PreCondition() {
+
+        login(usernameZTEKIN, passwordZTEKIN);
+
+        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS1597,kurum,birim);
+
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakSecNoTeslimAl(konuKoduRandomTS1597, true);
@@ -83,8 +96,10 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
+                .havaleYapAlanlarGeldigiGorme()
                 .havaleYapKullaniciListesiSecmeyeDene("TS1590")
                 .havaleYapBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
+                .secilenBirimDefaultGeregiIcinGonderGorme()
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -109,12 +124,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS1590: Kullanıcı listesinden hariç tutarak evrak havale etme (önizleme ekranından)")
     public void TS1590() {
 
-        TS1597PreCondition();
+        TS446PreCondition();
 
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
+                .havaleYapEkranGeldigiGorulur()
                 .havaleYapKullaniciListesiSecmeyeDene("TS1590")
                 .kisiListesiSecilenGuncelle()
                 .kisiListesiSecilenGrupDetaySeciliGeldigiGorme()
@@ -144,12 +160,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS0446: Birime Evrak Havale ve Havaleyi İade Etme")
     public void TS0446() {
 
-        TS1597PreCondition();
+        TS446PreCondition();
 
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .havaleYap()
+                .havaleYapEkranGeldigiGorulur()
                 .havaleYapBirimDoldur(birim)
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -161,7 +178,11 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .iadeEt()
                 .iadeEtNotDoldur(not)
-                .iadeEtIadeEt();
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .evrakNoGelmedigiGorme(konuKoduRandomTS1597);
 
         login(usernameZTEKIN, passwordZTEKIN);
 
@@ -174,7 +195,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS0448: Evrakı havale onayına sunma")
     public void TS0448() {
 
-        TS1597PreCondition();
+        TS446PreCondition();
 
         teslimAlinanlarPage
                 .openPage()

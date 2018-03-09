@@ -63,13 +63,13 @@ public class EvrakKopyalamaTest extends BaseTest {
     public void TS2233() {
         String konuKoduTS2233 = "TS2233-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullanici = "Zübeyde Tekin";
+        String kullanici = "Mehmet Bozdemir";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
 
         login(usernameYAKYOL,passwordYAKYOL);
 
         reusableSteps
-                .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameZTEKIN,passwordZTEKIN);
+                .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
 
         beklemeyeAlinanlarPage
                 .openPage()
@@ -77,6 +77,10 @@ public class EvrakKopyalamaTest extends BaseTest {
                 .evrakKopyala()
                 .evrakKopyalaEvet()
                 .islemMesaji().basariliOlmali(basariMesaji2);
+
+        taslakEvraklarPage
+                .openPage()
+                .evrakGeldigiGorme(konuKoduTS2233);
 
         beklemeyeAlinanlarPage
                 .evrakSecKonuyaGoreIcerikGoster(konuKoduTS2233);
@@ -183,7 +187,7 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         String konuKodu = "TS2175-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullanici = "Ömer ÖZÜLKÜ";
+        String kullanici = "Mehmet Bozdemir";
         String kaldirilacakKlasor = "Diğer";
         String basariMesaji = "İşlem başarılıdır!";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
