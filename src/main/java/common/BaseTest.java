@@ -136,7 +136,8 @@ public class BaseTest extends BaseLibrary {
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(ITestContext context, Method test) {
 
-        context.getCurrentXmlTest().setName(test.getClass().getSimpleName());
+        //context.getCurrentXmlTest().setName(test.getClass().getSimpleName());
+        ((TestRunner) context).getTest().setName(test.getClass().getSimpleName());
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
