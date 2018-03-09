@@ -40,6 +40,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
+    By cmbGeldiğiBirimBy = By.cssSelector("[id$='geldigiBirimLov:LovText']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -566,13 +567,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigi}")
-    public GelenEvrakKayitPage geldigiAlanindaGoruntulenmemeKontrolu(String geldigi, String description) {
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigiTuzelKisi}")
+    public GelenEvrakKayitPage geldigiAlanindaTuzelKisiGoruntulenmemeKontrolu(String geldigiTuzelKisi, String description) {
 
-        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(geldigi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür.");
-        Allure.addAttachment("MyCombolov alanında " + geldigi + ": görüntülenmediği görülür.", "");
+        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(geldigiTuzelKisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiTuzelKisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigiTuzelKisi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigiTuzelKisi + ": görüntülenmediği görülür.", "");
+        return this;
+    }
+
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigiBirim}")
+    public GelenEvrakKayitPage geldigiAlanindaBirimGoruntulenmemeKontrolu(String geldigiBirim, String description) {
+
+        boolean selectable = comboLov(cmbGeldiğiBirimBy).isLovValueSelectable(geldigiBirim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiBirim + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigiBirim + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigiBirim + ": görüntülenmediği görülür.", "");
         return this;
     }
 
