@@ -8,7 +8,6 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
@@ -26,7 +25,8 @@ public class SikKullanilanlarPage extends MainPage {
     SelenideElement cmbDagitimlarTip = $(By.xpath("//form[@id='sikKullanilanForm']//label[normalize-space(text())='Tip']/ancestor::tr/td[4]/div/label"));
     By cmbDagitimlarTipBy = By.xpath("//form[@id='sikKullanilanForm']//label[normalize-space(text())='Tip']/ancestor::tr/td[4]/div/label");
     By txtDagitimlarDagitimlarBy = By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText");
-    BelgenetElement txtDagitimlarDagitimlar = comboLov(By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovText"));
+    BelgenetElement txtDagitimlarDagitimlar = comboLov("[id$='sikKullanilanDagitimLov_id:LovText']");
+    BelgenetElement txtDagitimlarDagitimlarPanel = comboLov(By.id("sikKullanilanForm:sikKullanilanDagitimLov_id:LovSecilenTable"));
     SelenideElement btnDagitimlarKaydet = $(By.id("sikKullanilanForm:sikKullanilanDagitimButton"));
     SelenideElement btnDagitimlarKaldir = $(By.id("sikKullanilanForm:sikKullanilanDagitimKaldirButton"));
     SelenideElement btnEkranKapat = $(By.cssSelector("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']"));
@@ -54,19 +54,24 @@ public class SikKullanilanlarPage extends MainPage {
     }
 
     @Step("Sık Kullanılan Dağıtımlar - Dağıtım Doldur")
-    public SikKullanilanlarPage dagitimdaVarIseKaldir(String dagitim) {
-
-        // txtDagitimlarDagitimlar.clearAllSelectedLov().selectLov(dagitim);
-        //comboLov("").titleItems().contains(exactText("Türksat Optiim"))
-        //comboLov("").titleItems().filterBy(exactText("Türksat Optiim")).size() > 0
+    public SikKullanilanlarPage dagitimdaVarIseKaldir() {
 
         txtDagitimlarDagitimlar.shouldBe(visible);
-        if (txtDagitimlarDagitimlar.getSelectedTitles().filterBy(exactText(dagitim)).size() > 0) {
+
+        if (txtDagitimlarDagitimlar.isLovSelected()) {
             dagitimlarKaldir();
+            txtDagitimlarDagitimlar.clearAllSelectedItems();
             ekraniKapat();
             openPage();
             System.out.println("Comboda daha önce seçildiği için kaldırıldı.");
         }
+
+/*        if (txtDagitimlarDagitimlar.getSelectedTitles().filterBy(exactText(dagitim)).size() > 0) {
+            dagitimlarKaldir();
+            ekraniKapat();
+            openPage();
+            System.out.println("Comboda daha önce seçildiği için kaldırıldı.");
+        }*/
         return this;
     }
 

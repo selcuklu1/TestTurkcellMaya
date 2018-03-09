@@ -1,4 +1,4 @@
-package tests;
+package tests.EvrakDogrulama;
 
 import common.BaseTest;
 import io.qameta.allure.Severity;

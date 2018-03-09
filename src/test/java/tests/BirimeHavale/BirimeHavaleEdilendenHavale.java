@@ -2,7 +2,6 @@ package tests.BirimeHavale;
 
 import common.BaseTest;
 import data.TestData;
-import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +13,7 @@ import pages.ustMenuPages.SistemLoglariPage;
 public class BirimeHavaleEdilendenHavale extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
@@ -27,7 +26,7 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();

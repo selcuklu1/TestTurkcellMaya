@@ -470,6 +470,10 @@ public class EvrakOlusturPage extends MainPage {
         //endregion
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
 
+        //Genelge seçim
+        SelenideElement txtBirOncekiGenelge = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoPanelGrid']/tbody/tr/td[8]/label");
+        SelenideElement txtGenelgeNo = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoId']");
+
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
                 clickJs(tabBilgiler);
@@ -505,6 +509,7 @@ public class EvrakOlusturPage extends MainPage {
             Assert.assertEquals(true , cmbIvedik.exists() );
             return this;
         }
+
 
         @Step("Bilgi alani geldiği kontrolü")
         public BilgilerTab bilgiAlaniktrol() {
@@ -666,7 +671,37 @@ public class EvrakOlusturPage extends MainPage {
             cmbEvrakTuru.selectOption(evrakTuru);
             return this;
         }
+        @Step("Evrak Türü alanında icerik kontrolü")
+        public BilgilerTab evrakTuruIcerikKontrol() {
+//            if (!cmbEvrakTuru.getSelectedOption().equals(text))
+            Allure.addAttachment("Evrak Turu Icerik", cmbEvrakTuru.innerText());
+            return this;
+        }
 
+        @Step("Bir önceki genelge sayısını alma")
+        public String birOncekiGenelgeSayisi () {
+            Allure.addAttachment("Bir önceki Genelge Sayisi", txtBirOncekiGenelge.innerText());
+            return txtBirOncekiGenelge.innerText();
+        }
+
+        @Step("Genelge Sayisi girme : \"{genelgeSayi}\" ")
+        public BilgilerTab inputGenelgeSayisi (String genelgeSayi) {
+            txtGenelgeNo.setValue(genelgeSayi);
+            return this;
+        }
+        @Step("Genelge Sayisini bir arttırma")
+        public String genelgeSayisiArttirma (String genelge) {
+            int lenght = genelge.length();
+            String genelge1 = genelge.substring(0,4);
+            String genelge2 = genelge.substring(4,lenght);
+            String genelgeno = null;
+
+                int x = Integer.valueOf(genelge2);
+                x = x + 1;
+                genelgeno = genelge1 + String.valueOf(x);
+                return genelgeno;
+
+        }
         @Step("Kayıt Tarih alanında \"{dateText}\" seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
@@ -983,6 +1018,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet ve Onaya Sun buton kontrolü ")
+        public BilgilerTab kaydetVeOnayaSunKontrol() {
+            btnKaydetveOnayaSun.exists();
+            Allure.addAttachment("Kaydet ve Onaya sun butonu" , "Kaydet ve Onaya sun butonu geldiği görülür");
+            return this;
+        }
+
         public BilgilerTab konuKapsamTipiSec() {
             btnKonuKoduTree.click();
             return this;
@@ -1032,12 +1074,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin bilgi alanında görüntülenmeme kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında bilgi alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {bilgi}")
+        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String bilgi, String description) {
 
-            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+            Allure.addAttachment("MyCombolov alanında " + bilgi + ": görüntülenmediği görülür.", "");
             return this;
         }
 
@@ -1083,11 +1126,20 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
+
+        @Step("Bilgi alanında {description} doldur: | {bilgi}")
+        public BilgilerTab bilgiDoldur(String bilgi, String description) {
+            cmbBilgi.selectLov(bilgi);
+            //shouldHave(Condition.text(geregi));
+            return this;
+        }
+
         @Step("Gereği Seçim Tipi alanında \"{geregiSecimTipi}\" seç")
         public BilgilerTab geregiSecimTipiEskiEvrak(String geregiSecimTipi) {
             txtGeregiSecimTipiEskiEvrak.selectOption(geregiSecimTipi);
             return this;
         }
+
 
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
@@ -1182,13 +1234,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu")
-        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
+       // @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu: {description}")
+        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
-            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
-
+            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
+            Allure.addAttachment("MyCombolov alanında " + geregi + ": görüntülenmediği görülür.", "");
             return this;
         }
 
@@ -1203,6 +1256,8 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
             return this;
         }
+
+
 
         @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ad}\"")
         public BilgilerTab otomatikOnayAkisiGeldigiGorme(String ekranAdi, String ad) {
@@ -1722,6 +1777,14 @@ public class EvrakOlusturPage extends MainPage {
                     .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
         }
+        @Step("Onay akışı otomatik olarak ilk gelen kullanici kontrol et : \"{kullaniciAdi}\" ")
+        public BilgilerTab onayAkisiotomatikilkgelenKullaniciKontrolEt2(String kullaniciAdi) {
+           SelenideElement kullanicion = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td[2]/div/table/tbody/tr/td[1]/div");
+            System.out.println(kullanicion.innerText());
+            kullanicion.innerText().contains(kullaniciAdi);
+            return this;
+        }
+
 
 //TODO: Burası hatalı, düzeltilecek.
 /*        public BilgilerTab onayAkisiKullaniciSec(String _kullaniciAdi) {
@@ -2768,8 +2831,12 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Tabloda Evrak no kontrolü")
         public EkleriTab tabloEvrakNoKontrol(String evrakNo) {
-            tblSistemdeKayitliEvrakListe
-                    .filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
+            SelenideElement table=$(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable"));
+
+            boolean displayed = findElementOnTableByColumnInputInAllPages(table,1,evrakNo).isDisplayed();
+            Assert.assertEquals(displayed,true,"evrakno eşit");
+//            tblSistemdeKayitliEvrakListe
+//                    .filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
             return this;
         }
 

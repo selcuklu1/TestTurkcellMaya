@@ -455,7 +455,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         sikKullanilanlarPage
                 .openPage()
-                .dagitimdaVarIseKaldir(ad) //Seçili geldiği durumlarda seçili kişiyi kaldırır.
+                .dagitimdaVarIseKaldir() //Seçili geldiği durumlarda seçili kişiyi kaldırır.
                 .datigimlarTipSec(tip)
                 .dagitimlarDoldur(ad)
                 .dagitimlarKaydet()
@@ -493,28 +493,29 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
-        evrakOlusturPage
+        //Upgrade sonrası burası kaldırıldı.
+/*        evrakOlusturPage
                 .editorTabAc()
                 .geregiAlanindaGoruntulenmemeKontrolu(ad)
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);*/
 
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
+                .geldigiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi Ad")
+                .geldigiAlanindaGoruntulenmemeKontrolu(vergiNo,"Tüzel Kişi Vergi No");
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
 
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
         sikKullanilanlarPage
                 .openPage()
@@ -581,12 +582,13 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
-        evrakOlusturPage
+        //Upgrade sonrası burası kaldırıldı.
+/*        evrakOlusturPage
                 .editorTabAc()
                 .bilgiDoldur(tamAd, "Ad")
                 .secilenBilgiSil()
                 .geregVeBilgiAlanindanSil()
-                .geregiDoldur(tamAd, "Ad");
+                .geregiDoldur(tamAd, "Ad");*/
 
         gelenEvrakKayitPage
                 .openPage()

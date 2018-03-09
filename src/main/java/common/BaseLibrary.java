@@ -498,6 +498,7 @@ public class BaseLibrary extends ElementsContainer {
         return sysDate;
     }
 
+
     //dd.MM.yyyy HH formatına göre sysdate alır.
     public String getSysDateForTarihSaat() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
@@ -529,11 +530,12 @@ public class BaseLibrary extends ElementsContainer {
 
     }
 
+
     //Günün tarihinden sonraki bir tarihi alır.
     public String getAfterSysDate(int i) throws ParseException {
         String untildate = getSysDateForKis();// can take any date in current
         // format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateFormat.parse(untildate));
         cal.add(Calendar.DATE, i);

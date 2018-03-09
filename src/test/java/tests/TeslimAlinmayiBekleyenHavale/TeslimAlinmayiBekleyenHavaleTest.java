@@ -33,7 +33,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
     HaveleOnayinaSunduklarimPage haveleOnayinaSunduklarimPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerimPage;
     String basariMesaji = "İşlem başarılıdır!";
@@ -55,7 +55,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
         haveleOnayinaSunduklarimPage = new HaveleOnayinaSunduklarimPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         havaleOnayiVerdiklerimPage = new HavaleOnayiVerdiklerimPage();
     }
@@ -73,15 +73,14 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         String not = createRandomText(15);
         login(usernameZTEKIN, passwordZTEKIN);
 
-        //TODO Bu alanda Pre Condition alanı olan teslim alınmayı bekleyenler alanına data oluşturmakta
         gelenEvrakKayitPage
                 .gelenEvrakKayitBirimHavaleEt(konuKoduRandom,kurum,kullaniciAdi);
-        //TODO
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandom)
                 .teslimAlVeHavaleEt()
+                .teslimAlVeKapatAlanGeldigiGorme()
                 .teslimAlVeHavaleEtBirimDoldur("Optiim Birim", "YGD")
                 .teslimAlveHavaleEtTeslimAlGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -264,7 +263,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konuKoduRandomTS2300)
                 .iadeEt()
                 .iadeEtIadeEt();
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konuKoduRandomTS2300)
                 .teslimAlVeHavaleEt()

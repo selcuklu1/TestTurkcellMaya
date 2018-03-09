@@ -10,6 +10,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class BirimYonetimiTest extends BaseTest {
     OlurYazisiOlusturPage olurYazisiOlusturPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
     MainPage mainPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    TeslimAlinanlarPage teslimAlinanlarPage;
+    KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -40,6 +46,11 @@ public class BirimYonetimiTest extends BaseTest {
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
         mainPage = new MainPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        teslimAlinanlarPage = new TeslimAlinanlarPage();
+        kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -422,7 +433,8 @@ public class BirimYonetimiTest extends BaseTest {
         String gelenEvrakNumaratoru = "Türksat AŞ_numarator - Gelen Evrak";
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
-
+        String kepAdresi = "turksat@testkep.pttkep.gov.tr";
+        String kepHizmetSaglayici = "PTT KEP Servisi";
         String amirAdi = "Sezai ÇELİK";
         String gorev = "Uzman Test Mühendisi";
 
@@ -459,6 +471,12 @@ public class BirimYonetimiTest extends BaseTest {
                 .cmbBirimAmiriAtamaBagTipiSec("Amir")
                 .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
                 .birimAmiriAtamaKaydet()
+
+                .yeniKepAdresBilgileriEkle()
+                .popupKepAdresiDoldur(kepAdresi)
+                .popupKepHizmetSaglayicisiSec(kepHizmetSaglayici)
+                .popupKepAdresBilgileriKaydet()
+
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -516,8 +534,187 @@ public class BirimYonetimiTest extends BaseTest {
                 .kepAdresBilgileriKontrolu(kepAdresi2)
 
                 .kepAdresBilgileriDataResetleme(kepAdresi1, kepAdresi2);
+    }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1123: Pasif yapılan birimin aktif edilmesi ve evrak işlemleriden kontrolü")
+    public void TS1123() throws InterruptedException {
 
+        String birimAdi = "TS1123 Birim";
+        String soru = "Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz?";
+        String aciklama = "TS2113 Birim aktif yapma";
+        String basariMesaji = "İşlem başarılıdır!";
 
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimAktifIsePasifYap(birimAdi)
+                .birimFiltreDoldur(birimAdi)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .pasifBirimKayitKontrolu(birimAdi)
+                .birimAktifYap(birimAdi)
+                .islemOnayiPopupSorusu(soru)
+                .popupIslemOnayiAciklamaDoldur(aciklama)
+                .popupIslemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(birimAdi)
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .birimKayitKontrolu(birimAdi)
+
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .aktifYapilanKaydinGelmedigiKontrolu();
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("Birim")
+                .geregiDoldur(birimAdi, "Birim")
+                .secilenGeregiSil()
+                .bilgiSecimTipiSec("Birim")
+                .bilgiDoldur(birimAdi, "Birim");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText("Birim")
+                .geldigiBirimDoldur(birimAdi);
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiDoldur(birimAdi, "Birim")
+                .secilenGeregiSil()
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiDoldur(birimAdi, "Birim");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleDoldur(birimAdi);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeHavaleEt()
+                .birimeHavaleDoldur(birimAdi);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleDoldur(birimAdi);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleDoldur(birimAdi);
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleDoldur(birimAdi);
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimAktifIsePasifYap(birimAdi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1114: Birimin pasif yapılması ve evrak işlemlerinden kontrolü")
+    public void TS1114() throws InterruptedException {
+
+        String birimAdi = "TS1114 Birim";
+        String soru = "Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz?";
+        String aciklama = "TS1114 Birim pasif yapma";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimPasifIseAktifYap(birimAdi)
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimKayitKontrolu(birimAdi)
+
+                .birimPasifYap(birimAdi)
+                .islemOnayiPopupSorusu(soru)
+                .popupIslemOnayiAciklamaDoldur(aciklama)
+                .popupIslemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(birimAdi)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .pasifBirimKayitKontrolu(birimAdi)
+
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .pasifKaydinAktifteGelmedigiKontrolu(birimAdi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
+
+                .bilgiSecimTipiSec("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText("Birim")
+                .geldigiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeHavaleEt()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimPasifIseAktifYap(birimAdi);
     }
 }

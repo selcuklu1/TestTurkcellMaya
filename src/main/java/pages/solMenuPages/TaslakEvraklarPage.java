@@ -82,6 +82,13 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geldiği görülür")
+    public TaslakEvraklarPage evrakGeldigiGorme(String konuKodu){
+        boolean durum = tableEvraklar.filterBy(Condition.text(konuKodu)).size()>0;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
     @Step("Evrak seçilir")
     public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu){
         tableEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();

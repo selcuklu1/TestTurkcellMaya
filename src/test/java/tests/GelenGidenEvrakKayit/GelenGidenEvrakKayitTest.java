@@ -79,7 +79,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 0, description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
+    @Test(enabled = true
+            , priority = 0
+            , description = "TS0321: Üstyazı ek ve ilgi eklenerek gelen evrak kaydı")
     public void TS0321() throws InterruptedException {
 
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
@@ -135,8 +137,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 1, description = "TS2163 : Kaydedilen gelen evrakın güncellenmesi"
-            , dependsOnMethods = {"TS0321"})
+    @Test(enabled = true
+            , dependsOnMethods = {"TS0321"}
+            , description = "TS2163 : Kaydedilen gelen evrakın güncellenmesi")
     public void TS2163() throws InterruptedException {
 
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
@@ -183,7 +186,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, dependsOnMethods = {"TS0321"}, description = "TS0328 : Gelen evrak kayıt ekranından havale")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS0321"}
+            , description = "TS0328 : Gelen evrak kayıt ekranından havale")
     public void TS0328() throws InterruptedException {
 
         String birim = "OPTİİM BİRİM";
@@ -226,7 +231,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, priority = 7, description = "TS1401 : Kaydedilen Gelen Evrak raporu")
+    @Test(enabled = true
+            , dependsOnMethods = {"TS0321","TS0328"}
+            , description = "TS1401 : Kaydedilen Gelen Evrak raporu")
     public void TS1401() throws InterruptedException, IOException, ParseException {
 //
 //        String evrakNO321 = "6692";
@@ -372,7 +379,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0322 : Gelen evrak kayıtta alan kontrolleri")
+    @Test(enabled = true
+            ,priority = 1
+            , description = "TS0322 : Gelen evrak kayıtta alan kontrolleri")
     public void TS0322() throws InterruptedException {
 
         String kisiKurum1 = "Kurum";

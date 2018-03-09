@@ -10,6 +10,7 @@ import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.assertNoJavascriptErrors;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class VekaletVerPage extends MainPage {
@@ -21,7 +22,7 @@ public class VekaletVerPage extends MainPage {
     SelenideElement txtBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBasTarihi_input"));
     SelenideElement txtBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBitTarihi_input"));
     SelenideElement chkEvraktaVelaketeSonEkiGorunsun = $(By.id("vekaletVerForm:vekaletLayout:j_idt5317_input"));
-    SelenideElement chkOzelUnvanKullan = $(By.id("vekaletVerForm:vekaletLayout:j_idt5320_input"));
+//    SelenideElement chkOzelUnvanKullan = $(By.id("vekaletVerForm:vekaletLayout:j_idt5320_input"));
     SelenideElement txtAciklama = $(By.id("vekaletVerForm:vekaletLayout:aciklamaTextArea"));
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
@@ -53,6 +54,7 @@ public class VekaletVerPage extends MainPage {
 //    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
+    SelenideElement chkOzelUnvanKullan = $("table[id='vekaletVerForm:vekaletLayout:vekaletOzelUnvanPanelGrid'] div:nth-child(2)");
 
     @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
@@ -73,6 +75,12 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
+    @Step("Vekalet Alan alanı seçilebilirlik kontrolü. \"{secilebilmeli}\" ")
+    public VekaletVerPage vekaletAlanAlanKontrolu(Boolean secilebilmeli) {
+        Assert.assertEquals(txtVekaletAlanCombolov.isEnabled(),true,"Vekalet Alan alanı enable");
+        return this;
+    }
+
     @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
         btnVekalelVerenTemizle.click();
@@ -86,18 +94,61 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
+
+    @Step("Onay verecek kişi alanı seçilebilirlik kontrolü. \"{shouldBeSelectable}\" ")
+    public VekaletVerPage onayVerecekAlanKontrolu(boolean shouldBeSelectable) {
+        Assert.assertEquals(txtOnaylayacakKisi.isEnabled(),true,"Onayalacak Kişi alanı enable");
+        return this;
+    }
+
     @Step("Vekalet veren alanını doldur : \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenDoldur(String vekaletVeren) {
         txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
 
+
+    @Step("Vekalet veren alanını silinir.")
+    public VekaletVerPage vekaletVerenSil() {
+        txtVekaletVerenCombolov.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
     public VekaletVerPage vekaletVerenKontrolu(String vekaletVeren, boolean shouldBeExist) {
-        if (shouldBeExist)
-            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
-        else
-            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+
+        if (shouldBeExist){
+            txtVekaletVerenCombolov.type(vekaletVeren).getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+            txtVekaletVerenCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+
+        }
+        else{
+            txtVekaletVerenCombolov.type(vekaletVeren).getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+            txtVekaletVerenCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+
+        }
+        txtVekaletVerenCombolov.clear();
+        return this;
+    }
+
+    @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
+    public VekaletVerPage vekaletAlanKontrolu(String vekaletAlan, boolean shouldBeExist) {
+
+        if (shouldBeExist){
+            txtVekaletAlanCombolov.type(vekaletAlan).getSelectableItems().filterBy(Condition.text(vekaletAlan)).shouldHaveSize(1);
+            txtVekaletAlanCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+
+        }
+        else{
+            txtVekaletAlanCombolov.type(vekaletAlan).getSelectableItems().filterBy(Condition.text(vekaletAlan)).shouldHaveSize(0);
+            txtVekaletAlanCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+
+        }
+        txtVekaletAlanCombolov.clear();
         return this;
     }
 
@@ -137,6 +188,11 @@ public class VekaletVerPage extends MainPage {
 
     public VekaletVerPage baslangicTarihDoldur(String text) {
         txtBaslangicTarihi.setValue(text);
+        return this;
+    }
+
+    public VekaletVerPage ozelUnvanSec() {
+        chkOzelUnvanKullan.click();
         return this;
     }
 

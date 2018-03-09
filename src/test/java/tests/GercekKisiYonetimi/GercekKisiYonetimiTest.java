@@ -469,19 +469,19 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi");
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi");
     }
 
     @Severity(SeverityLevel.CRITICAL)
