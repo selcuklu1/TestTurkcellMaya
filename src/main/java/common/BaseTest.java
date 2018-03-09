@@ -20,7 +20,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.ITestResult;
+import org.testng.*;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -123,8 +123,22 @@ public class BaseTest extends BaseLibrary {
         AllureEnvironmentUtils.create();
     }
 
+    @BeforeSuite
+    public void beforeTest(ITestContext context) {
+        if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
+            context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
+        else
+            context.getSuite().getXmlSuite().setName("Suite");
+
+        //((TestRunner) context).getTest().setName("Tests");
+    }
+
     @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method test) {
+    public void beforeMethod(ITestContext context, Method test) {
+        if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
+            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
+        else
+            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getSimpleName());
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
@@ -144,6 +158,31 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
     }
+
+    /*@BeforeMethod(alwaysRun = true)
+    public void beforeMethod(Method test) {
+
+
+        test.getDeclaredAnnotation(org.testng.annotations.Test.class)
+
+        String testName = firstNonEmpty(
+                test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
+                test.getName())
+                .orElse("Unknown");
+
+        final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
+        Allure.addAttachment("Annotations", desc);
+
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testName);
+        System.out.println("");
+        System.out.println("STATUS: Started");
+        System.out.println("");
+        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");
+    }*/
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult testResult) {

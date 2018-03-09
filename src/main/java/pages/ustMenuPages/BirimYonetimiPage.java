@@ -854,6 +854,7 @@ public class BirimYonetimiPage extends MainPage {
             btnBirimPasifYap.click();
             popupIslemOnayiAciklamaDoldur("Birim pasif yapılacak.");
             popupIslemOnayiEvet();
+            islemMesaji().basariliOlmali("İşlem başarılıdır!");
             Allure.addAttachment("Birim aktif olduğu için pasif yapıldı.", "");
         }
         else
@@ -873,6 +874,7 @@ public class BirimYonetimiPage extends MainPage {
             btnBirimAktifYap.click();
             popupIslemOnayiAciklamaDoldur("Birim aktif yapılacak.");
             popupIslemOnayiEvet();
+            islemMesaji().basariliOlmali("İşlem başarılıdır!");
             Allure.addAttachment("Birim pasif olduğu için aktif yapıldı.", "");
         }
         else

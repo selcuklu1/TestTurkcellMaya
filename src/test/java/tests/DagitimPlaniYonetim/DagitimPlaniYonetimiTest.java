@@ -6,6 +6,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import common.ReusableSteps;
 import data.User;
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.testng.Assert;
@@ -42,7 +43,7 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  * Açıklama:
  */
 @Feature("Dağıtım Planı Yönetimi")
-@Test(suiteName = "SuitName")
+//@Test(suiteName = "Dağıtım Plan Yönetimi")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -478,7 +479,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         switchTo().window(0);
     }
 
-    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true, priority = 3)
+    @Test(testName = "TS2296", description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true, priority = 3)
     public void TS2296() {
         User user = user1;
         login(user);
@@ -688,7 +689,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
     }
-
 
     //region Steps
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")

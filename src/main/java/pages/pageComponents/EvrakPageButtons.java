@@ -5,15 +5,20 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
+import com.codeborne.selenide.*;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -122,6 +127,14 @@ public class EvrakPageButtons extends MainPage {
         evrakImzaOnay();
         return this;
     }
+
+    @Step("Güncellenen evrağı imzalama denemesi. Dialog kontrolü - \"Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir\"")
+    public EvrakPageButtons evrakGuncellenenEvraginImzalaTiklaDialogKontrol() {
+        imzalaButonaTikla();
+        Selenide.prompt( "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.",null);
+        return this;
+    }
+
     //endregion
 
     //region Parafla
@@ -165,22 +178,54 @@ public class EvrakPageButtons extends MainPage {
 
     //endregion
 
+    //region İade Et
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt() {
+        getButton("İade Et").click();
+        //$("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
     @Step("Iade et")
     public EvrakPageButtons evrakIadeEt(String iadeNotu) {
         getButton("İade Et").click();
         //getContainer().$x("descendant::td[@class='buttonMenuContainerDefault' and descendant::span[.='İade Et']]//button").click();
         //getContainer().$("button .iadeEt").click();
-        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
         return this;
     }
 
     @Step("Iade et")
-    public EvrakPageButtons evrakIadeEt() {
+    public EvrakPageButtons evrakIadeEt(User user, String iadeNotu) {
         getButton("İade Et").click();
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(user.getFullname());
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
         return this;
     }
+
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt(String userText, String iadeNotu) {
+        getButton("İade Et").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(userText);
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt(String userText, String uploadFile, String iadeNotu) {
+        getButton("İade Et").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(userText);
+        $(By.id("mainPreviewForm:fileUploadIadeEk_input")).uploadFile(new File(uploadFile));
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
+    //endregion
 
     @Step("Kaydet")
     public EvrakPageButtons evrakKaydet() {
@@ -346,6 +391,12 @@ public class EvrakPageButtons extends MainPage {
     @Step("Evrak Göster butonu tıklanır")
     public EvrakPageButtons evrakGoster() {
         getButton("Evrak Göster").click();
+        return this;
+    }
+
+    @Step("Kontrol Et")
+    public EvrakPageButtons kontrolEt() {
+        getButton("Kontrol Et").click();
         return this;
     }
 

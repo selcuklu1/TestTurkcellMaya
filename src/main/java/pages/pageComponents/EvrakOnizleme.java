@@ -903,4 +903,21 @@ public class EvrakOnizleme extends MainPage {
         }
     }
 
+    public class KontrolEt extends MainPage {
+        SelenideElement kontolEtContainer = $(By.id("mainPreviewForm:kontrolBekleyenKontrolEtPanel"));
+        //div[@id='mainPreviewForm:kontrolBekleyenKontrolEtPanel']//tr[@class='ui-widget-content' and descendant::label[normalize-space(.)='1. Paraflama']]
+        SelenideElement onaylaButton = $(By.id("mainPreviewForm:imzalaButton"));
+
+        @Step("Kontrol Et ekrani {conditions}")
+        public KontrolEt kontolEtEkrani(Condition... conditions){
+            kontolEtContainer.should(conditions);
+            return this;
+        }
+
+        @Step("Onayla")
+        public KontrolEt onayla(){
+            onaylaButton.pressEnter();
+            return this;
+        }
+    }
 }
