@@ -67,7 +67,7 @@ public class RolYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Rol Yönetimi Sayfas kontrolu.")
+    @Step("Rol Yönetimi Sayfası kontrolu.")
     public RolYonetimiPage rolYonetimiSayfaKontrolu() {
 
         Assert.assertEquals($x("//div[@id='window1Dialog']//span[text()='Rol Yönetimi']").isDisplayed(), true, "Sayfa açıldı.");

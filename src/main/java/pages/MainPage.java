@@ -333,7 +333,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("User Menu listesinde \"{menuNAme}\" menusu bulunur.")
+    @Step("User Menu listesinde \"{menuName}\" menusu bulunur.")
     public MainPage userMenuKontrol(String menuName) {
 
         ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
@@ -347,7 +347,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("User Menu listesinde \"{menuNAme}\" tıklanır.")
+    @Step("User Menu listesinde \"{menuName}\" tıklanır.")
     public MainPage userMenuMenuSec(String menuName) {
 
         ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
