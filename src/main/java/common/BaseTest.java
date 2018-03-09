@@ -131,6 +131,8 @@ public class BaseTest extends BaseLibrary {
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
 
+        System.out.println("xml: ");
+        System.out.println(context.getSuite().getXmlSuite().toXml());
         ((TestRunner) context).setTestName("Tests");
     }
 
