@@ -8,6 +8,7 @@ import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import listeners.AlterSuiteNameListener;
 import listeners.DriverEventListener;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
@@ -52,7 +53,7 @@ public class BaseTest extends BaseLibrary {
     public Locale turkishLocal;
 
     @BeforeClass(alwaysRun = true)
-    public void driverSetUp() {
+    public void driverSetUp(Class<?> testClass) {
 
         log.info("Setup started");
         System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
@@ -132,11 +133,13 @@ public class BaseTest extends BaseLibrary {
         else
             context.getSuite().getXmlSuite().setName("Suite");
 
-        ((TestRunner) context).getTest().setName("Tests");
+        //((TestRunner) context).getTest().setName("Tests");
     }
 
     @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method test) {
+    public void beforeMethod(ITestContext context, Method test) {
+
+        context.getCurrentXmlTest().setName(test.getClass().getSimpleName());
 
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
@@ -156,6 +159,31 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
     }
+
+    /*@BeforeMethod(alwaysRun = true)
+    public void beforeMethod(Method test) {
+
+
+        test.getDeclaredAnnotation(org.testng.annotations.Test.class)
+
+        String testName = firstNonEmpty(
+                test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
+                test.getName())
+                .orElse("Unknown");
+
+        final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
+        Allure.addAttachment("Annotations", desc);
+
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST: " + testName);
+        System.out.println("");
+        System.out.println("STATUS: Started");
+        System.out.println("");
+        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
+        System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("///////////////////////////////////////////////////////");
+    }*/
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult testResult) {
