@@ -69,7 +69,8 @@ public class EvrakIadesi extends BaseTest {
 
         evrakOlusturPage
                 .openPage()
-                .sayfaKontrol(sayfa1)
+//                .sayfaKontrol(sayfa1)
+                //TODO Evrak Oluştur kontrolü
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
                 .konuKoduDoldur(konuKodu)

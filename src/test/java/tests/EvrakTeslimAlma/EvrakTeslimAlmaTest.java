@@ -102,6 +102,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .openPage()
                 .teslimAlIkonKontrol(konu)
                 .evrakSecNoTeslimAl(konu, true)
+                .evrakNoGelmedigiGorme(konu)
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinanlarPage
@@ -174,6 +175,10 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .içeriktenEvrakTeslimAl()
                 .içeriktenEvrakEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakNoGelmedigiGorme(konu);
 
         teslimAlinanlarPage
                 .openPage()
@@ -564,8 +569,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-2320-" + getSysDate();
 
@@ -590,8 +595,8 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "PreCondition 1. Evrak Iade Et");
@@ -753,11 +758,11 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .evrakGecmisiKontrolu(konu1, kullanici, islemSureci)
                 .popupKapatma()
                 .evrakDetayButtonTıklama(konu1)
-                .evrakDetayKontrolu(evrakNo1,konuKodu,konu1,evrakTuru,evrakTarihi,evrakDili,gizlilikDerecesi,kisiKurum,geldigiKurum,ivedilik);
-//                .evrakKapatma()
-//
-//                .evrakEtiketButtonTıklama(konu1)
-//                .evrakEtiketKontrolu();
+                .evrakDetayKontrolu(evrakNo1,konuKodu,konu1,evrakTuru,evrakTarihi,evrakDili,gizlilikDerecesi,kisiKurum,geldigiKurum,ivedilik)
+                .evrakKapatma()
+
+                .evrakEtiketButtonTıklama(konu1)
+                .evrakEtiketKontrolu();
 
     }
 }

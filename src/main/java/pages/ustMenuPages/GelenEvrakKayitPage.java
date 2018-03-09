@@ -1358,6 +1358,11 @@ public class GelenEvrakKayitPage extends MainPage {
             clickJs(mukerrerPopUpEvet);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
+        String basariMesaji = "İşlem başarılıdır!";
+
+        if (islemMesaji().isBasarili())
+            Allure.addAttachment("İşlem başarılı ","mesajı gelmektedir.");
+
         basariliPopUp.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
@@ -1365,8 +1370,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
         String evrakNo = getNumberFromText(vEvrakBasarili.getText());
+        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir. Evrakınız" , evrakNo + " numarasıyla kaydedilmiştir.");
         clickJs(basariliPopUpKapat);
-        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir" , evrakNo);
+        Allure.addAttachment("Kapat butonu tıklanır. ","Uyarı pop up kapatıldığı görülmüştür");
         return evrakNo;
     }
 
