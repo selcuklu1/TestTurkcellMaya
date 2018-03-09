@@ -1074,12 +1074,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin bilgi alanında görüntülenmeme kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında bilgi alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {bilgi}")
+        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String bilgi, String description) {
 
-            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+            Allure.addAttachment("MyCombolov alanında " + bilgi + ": görüntülenmediği görülür.", "");
             return this;
         }
 
@@ -1240,7 +1241,7 @@ public class EvrakOlusturPage extends MainPage {
             boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
             Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
             System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
-
+            Allure.addAttachment("MyCombolov alanında " + geregi + ": görüntülenmediği görülür.", "");
             return this;
         }
 

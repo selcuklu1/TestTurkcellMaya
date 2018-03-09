@@ -481,7 +481,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi");
     }
 
     @Severity(SeverityLevel.CRITICAL)

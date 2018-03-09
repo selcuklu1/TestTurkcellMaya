@@ -495,7 +495,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .geregiSecimTipiSecByText("Tüzel Kişi")
                 .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
         //Upgrade sonrası burası kaldırıldı.
 /*        evrakOlusturPage
@@ -506,8 +506,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
+                .geldigiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi Ad")
+                .geldigiAlanindaGoruntulenmemeKontrolu(vergiNo,"Tüzel Kişi Vergi No");
 
         gidenEvrakKayitPage
                 .openPage()

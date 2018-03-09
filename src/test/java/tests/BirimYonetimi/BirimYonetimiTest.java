@@ -664,7 +664,57 @@ public class BirimYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+                .geregiSecimTipiSec("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
 
+                .bilgiSecimTipiSec("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText("Birim")
+                .geldigiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeHavaleEt()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimPasifIseAktifYap(birimAdi);
     }
 }

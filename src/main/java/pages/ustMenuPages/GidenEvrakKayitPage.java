@@ -124,12 +124,13 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişinin Geregi alanında görüntülenmeme kontrolu")
-    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String kisi) {
+    @Step("Gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
-        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geregi + ": görüntülenmediği görülür.", "");
         return this;
     }
 
@@ -206,12 +207,12 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Kişinin Bilgi alanında görüntülenmeme kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
+    @Step("Bilgi alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {bilgi}")
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String bilgi, String description) {
 
-        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + bilgi + ": görüntülenmediği görülür.");
 
         return this;
     }

@@ -566,13 +566,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişinin geldiği alanında \" {kisi}\" görüntülenmeme kontrolu")
-    public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmemeKontrolu(String kisi) {
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigi}")
+    public GelenEvrakKayitPage geldigiAlanindaGoruntulenmemeKontrolu(String geldigi, String description) {
 
-        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
-
+        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(geldigi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigi + ": görüntülenmediği görülür.", "");
         return this;
     }
 
