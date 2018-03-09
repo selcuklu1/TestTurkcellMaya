@@ -507,6 +507,14 @@ public class PostalananlarPage extends MainPage {
     }
 
     @Step("Kurdele Butonuna Tıkla")
+    public PostalananlarPage btnKurdele2(String konu) {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnKurdele2 = $(By.id("mainInboxForm:inboxDataTable:"+ data + ":btnImzasiz"));
+
+        btnKurdele2.click();
+        return this;
+    }
+    @Step("Kurdele Butonuna Tıkla")
     public PostalananlarPage btnKurdele() {
 
         btnKurdele.click();
@@ -526,7 +534,14 @@ public class PostalananlarPage extends MainPage {
         btnTamEkran.click();
         return this;
     }
+    @Step("Tam Ekran görünüme tıkla")
+    public PostalananlarPage btnTamEkran2(String konu) {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnTamEkran2 = $(By.id("mainInboxForm:inboxDataTable:"+ data+":tamEkranModuButton"));
 
+        btnTamEkran2.click();
+        return this;
+    }
     @Step("Tam Ekran görünümü kapat")
     public PostalananlarPage btnTamEkranKapat() {
         btnTamEkranKapat.click();
@@ -535,10 +550,22 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Icerik Goster butonuna tıkla")
     public PostalananlarPage btnIcerikGoster() throws InterruptedException {
+
         btnIcerikGoster.click();
         Thread.sleep(1000);
         return this;
     }
+
+    @Step("Icerik Goster butonuna tıkla")
+    public PostalananlarPage btnIcerikGoster2(String konu) throws InterruptedException {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnIcerikGoster2 = $(By.id("mainInboxForm:inboxDataTable:"+data+":detayGosterButton"));
+
+        btnIcerikGoster2.click();
+        Thread.sleep(1000);
+        return this;
+    }
+
 
     @Step("Tablodan evrak seçimi \"{konu}\"")
     public PostalananlarPage filtretablodankonuileEvrakSeç(String konu) {

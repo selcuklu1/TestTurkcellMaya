@@ -1,7 +1,6 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
-import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -12,9 +11,6 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GelenEvrakZimmetRaporuPage;
 import pages.ustMenuPages.SistemLoglariPage;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /****************************************************
  * Tarih: 2018-01-23
@@ -29,7 +25,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     GelenEvrakZimmetRaporuPage gelenEvrakZimmetRaporu;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     SistemLoglariPage sistemLoglariPage;
@@ -41,7 +37,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         sistemLoglariPage = new SistemLoglariPage();
         gelenEvrakZimmetRaporu = new GelenEvrakZimmetRaporuPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
@@ -433,7 +429,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakTeslimAlButtonKontrol()
                 .evrakSecNoTeslimAl(konu, true)
@@ -507,7 +503,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
                 .ekranOnizlemeKontrol()
@@ -616,7 +612,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)
@@ -728,7 +724,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu1)
                 .evrakSec(konu2)

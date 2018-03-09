@@ -6,7 +6,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
@@ -14,9 +13,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -1636,7 +1633,10 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-
-
-
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public GelenEvraklarPage birimeHavaleDoldur(String birim) {
+        txtComboLovBirim.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
 }

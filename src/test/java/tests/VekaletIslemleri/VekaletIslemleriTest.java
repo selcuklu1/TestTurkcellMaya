@@ -19,6 +19,10 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.VekaletVerPage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -150,12 +154,11 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,priority = 1
             , dependsOnMethods = {"TS0025a"}
             , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
 
-        login(TestData.username22n,TestData.passwor22n);
+        login(TestData.username22n, TestData.passwor22n);
 
 //        String aciklama = "onay 20171206220943 evrak";
 
@@ -189,14 +192,14 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
 //            ,priority = 2
-            ,dependsOnMethods = {"TS0025b"}
-            ,description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
+//            , dependsOnMethods = {"TS0025b"}
+            , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         vekaletVer();
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //emre
-        login(TestData.username22n,TestData.passwor22n);
+        login(TestData.username22n, TestData.passwor22n);
 
 //        String aciklama = "onay 20180109134612 evrak";
         vekaletOnaylariPage
@@ -254,7 +257,6 @@ public class VekaletIslemleriTest extends BaseTest {
                 .tabloEvrakNoKontrol(evrakNo1, true)
                 .tabloEvrakNoKontrol(evrakNo2, false);
     }
-
 
 
     @Severity(SeverityLevel.CRITICAL)
@@ -472,7 +474,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            , dependsOnMethods = {"TS2208"}
+            , dependsOnMethods = {"TS2208"}
             , description = "TS2212 : Vekalet veren kullanıcının bulunduğu kullanıcı listesine evrak havalesi ve kontrolü")
     public void TS2212() throws InterruptedException {
 
@@ -699,22 +701,44 @@ public class VekaletIslemleriTest extends BaseTest {
                 .popUpKullaniciSecimi(nameVA)
                 .evrakKapamaKullanicilarAlaniKontrolü(nameVA, title, nameVV);
     }
-//
-//
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Test(enabled = false, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
-//    public void TS2200() throws InterruptedException{
-//
-//        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
-//
-//        vekaletVerPage
-//                .openPage()
-//                .vekaletVerenKontrolu("Username26 TEST",false) //Güncel birim YGD Personel alt birim TS2200 Alt Birim Personel
-//                .vekaletVerenKontrolu("Optiim TEST10",false)    //Güncel birim Optiim Amir alt birim Optiim Alt Birim1 Personel
-//                .vekaletVerenKontrolu("Username29 TEST",false) //Güncel birim YGB Personel alt birim TS2200 Alt Birim Amir Yardımcısı
-//                .vekaletVerenKontrolu("UsernemaVV TEST",true)  //
-//                .vekaletVerenKontrolu("Username27 TEST",true) ;//Güncel birim YGD Amir yardımcısı alt birim TS2200 Alt Birim Personel.
-//
-//
-//    }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
+    public void TS2200() throws InterruptedException, ParseException {
+
+        login(TestData.username27);
+        int afterDay = 2;
+        String onayVerecekKullanici = "Username22N TEST";
+        String baslangicTarihi = getAfterSysDate(afterDay);
+        String bitisTarihi = getSysDateForKis();
+        System.out.println(baslangicTarihi);
+        String dikkatMesaj = "Bitiş tarihi başlangıç tarihinden önce olamaz!";
+
+        vekaletVerPage
+                .openPage()
+                .vekaletVerenKontrolu("Username26 TEST", false)//Güncel birim TS2200 Alt Birim Personel Username26 üst birim YGD Personel
+                .vekaletVerenKontrolu("Kıvanç KASIMOĞLU ", false)//Güncel birim TS2200 Alt Birim Personel Kıvanc üst birim YGD Amir
+                .vekaletVerenKontrolu("Username29 TEST", true)//Güncel birim TS2200 Alt Birim Personel Username29 TS2200 2. Alt Birim Amir
+                .vekaletVerenDoldur("Username28 TEST")//Güncel birim TS2200 Alt Birim Personel Username28 güncel birim TS2200 Alt Birim Amir
+                .vekaletAlanAlanKontrolu(true)
+//                .onayVerecekAlanKontrolu(true)  //Onay verecek kişi alanı pasif kalıyor
+//                .vekaletVerenSil()
+                .vekaletAlanKontrolu("UsernemaVV TEST", false)  //Güncel birim TS2200 Alt Birim Personel Usernamevv üst birim Amir Yardımcısı
+                .vekaletAlanKontrolu("Username30 TEST", true)//Güncel birim TS2200 Alt Birim Personel Username29 TS2200 2. Alt Birim Amir
+                .vekaletAlanDoldur("Username27 TEST")//Güncel birim TS2200 Alt Birim Personel
+                .onayVerecekDoldur(onayVerecekKullanici)
+                .baslangicTarihDoldur(baslangicTarihi)
+                .bitisTarihiDoldur(bitisTarihi)
+                .uygula()
+                .islemMesaji().dikkatOlmali(dikkatMesaj);
+
+        vekaletVerPage
+                .bitisTarihiDoldur(getAfterSysDate(afterDay + 5))
+                .ozelUnvanSec()
+                .aciklamaDoldur(aciklama)
+                .uygula();
+
+
+    }
 }

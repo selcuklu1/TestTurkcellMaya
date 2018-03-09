@@ -2,7 +2,6 @@ package tests.EvrakDevret;
 
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
-import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -33,7 +32,7 @@ public class EvrakDevretTest extends BaseTest {
     TaslakEvraklarPage taslakEvraklarPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
@@ -73,7 +72,7 @@ public class EvrakDevretTest extends BaseTest {
         taslakEvraklarPage = new TaslakEvraklarPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -96,7 +95,7 @@ public class EvrakDevretTest extends BaseTest {
                 .devredecekKisiSec(devredecekKisi)
                 .listele();
 
-        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 12000);
 
         kullaniciEvrakDevretPage
                 .tabloAlanKontrolleri()
@@ -107,7 +106,7 @@ public class EvrakDevretTest extends BaseTest {
                 .aciklamaDoldur(icerik)
                 .devretTamam();
 
-        waitForLoadingJS(WebDriverRunner.getWebDriver(),12000);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 12000);
 
 //                .islemMesaji().basariliOlmali(basariMesaji);
         kullaniciEvrakDevretPage
@@ -378,7 +377,7 @@ public class EvrakDevretTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .iadeEt()
                 .iadeEtIadeEt();
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
                 .teslimAlVeHavaleEt()

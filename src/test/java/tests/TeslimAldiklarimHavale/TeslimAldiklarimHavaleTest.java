@@ -34,7 +34,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     TeslimAlinanlarPage teslimAlinanlarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
-    BirimIadeEdilenlerPage birimIadeEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
@@ -56,7 +56,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
         gelenEvraklarPage = new GelenEvraklarPage();
-        birimIadeEdilenlerPage = new BirimIadeEdilenlerPage();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
@@ -186,7 +186,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         login(usernameZTEKIN, passwordZTEKIN);
 
-        birimIadeEdilenlerPage
+        birimeIadeEdilenlerPage
                 .openPage()
                 .evrakNoGeldigiGorme(konuKoduRandomTS1597);
     }

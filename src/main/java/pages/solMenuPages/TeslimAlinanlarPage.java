@@ -39,8 +39,9 @@ public class TeslimAlinanlarPage extends MainPage {
     SelenideElement tabHavale = $("[id='mainPreviewForm:topluHavaleOnizlemeTab']");
     BelgenetElement txtHavaleYapKullniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtTebligEtKullniciListesi = comboLov(By.id("inboxItemInfoForm:kullaniciGrubuLov_id:LovText"));
-
+    SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
+    BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
@@ -236,7 +237,7 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Havale yap butonana bas")
+    @Step("Havale yap")
     public TeslimAlinanlarPage havaleYap() {
         btnHavaleYap.click();
         return this;
@@ -327,4 +328,18 @@ public class TeslimAlinanlarPage extends MainPage {
         takeScreenshot();
         return this;
     }
+
+    @Step("Evrak seç")
+    public TeslimAlinanlarPage evrakSec() {
+        tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinanlarPage birimeHavaleDoldur(String birim) {
+        cmbBirimeHavale.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
 }
