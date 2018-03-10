@@ -291,9 +291,15 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Icerik Degisti Iptal")
+    @Step("Icerik Degisti Iptal Tıklanır")
     public MainPage icerikDegistiIptal() {
         new EvrakPageButtons().icerikDegistiIptal();
+        return this;
+    }
+
+    @Step("Icerik Degisti Uyarı Kontrol")
+    public MainPage icerikDegistiUyarıKontrol(String uyari,String secenek1,String secenek2) {
+        new EvrakPageButtons().icerikDegistiUyarıKontrol(uyari,secenek1,secenek2);
         return this;
     }
 
@@ -309,11 +315,24 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Evrak Icerik Degisti Evet")
+    @Step("Evrak içeriğini değiştirdiğiniz için evrak üzerindeki değişiklikler kaydedilecektir ve bu aşamadan sonra evrakınızı yalnızca iade edebilir veya güncellemeye devam edebilirsiniz. İşleminize devam etmek istiyor musunuz?")
     public MainPage evrakSecmeliDegistiEvet() {
         new EvrakPageButtons().evrakSecmeliDegistiEvet();
         return this;
     }
+
+    @Step("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ")
+    public MainPage imzalanamazButtonKontrol() {
+        new EvrakPageButtons().imzalanamazButtonKontrol();
+        return this;
+    }
+
+    @Step("Evrak İmzala Uyarı Kontrol")
+    public MainPage evrakImzalaUyariKontrol(String uyari) {
+        new EvrakPageButtons().evrakImzalaUyariKontrol(uyari);
+        return this;
+    }
+
     @Step("Menülerin geldiği görülür")
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
 

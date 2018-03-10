@@ -1,9 +1,15 @@
 package pages.pageComponents;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import com.codeborne.selenide.*;
 import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 
 import java.io.File;
@@ -294,6 +300,21 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    SelenideElement dialogIcerikDegistiUyarıKontrol = $("div[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemDialog']");
+    @Step("Onay Ekranı: \"{uyari}\"  \"{secenek1}\"  \"{secenek2}\" ")
+    public MainPage icerikDegistiUyarıKontrol(String uyari,String secenek1,String secenek2) {
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(uyari), true, uyari);
+        Allure.addAttachment(uyari, "");
+
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(secenek1), true, secenek1);
+        Allure.addAttachment(secenek1, "");
+
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(secenek2), true, secenek2);
+        Allure.addAttachment(secenek2, "");
+        return this;
+    }
+
+
     ElementsCollection radioEvrakIcerikDegistiImzalaveDevamEt = $$("table[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:secenekTipi'] tr");
     @Step("Evrak Içerik değişti ve sonrasında gelen uyarı ekranında, İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)")
     public MainPage evrakIcerikDegistiImzalaveDevamEt() {
@@ -309,9 +330,26 @@ public class EvrakPageButtons extends MainPage {
     }
 
     SelenideElement btnEvrakIcerikDegistiEvet = $("button[id$='evrakDegistiKaydetButton']");
-    @Step("Evrak Içerik değişti ve Kaydet)")
+    @Step("Evrak Içerik değişti ve Kaydet")
     public MainPage evrakSecmeliDegistiEvet() {
         btnEvrakIcerikDegistiEvet.click();
+        return this;
+    }
+
+    SelenideElement btnImzalanamaz = $("span[class='ui-button-icon-left ui-icon imzalanamaz']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage imzalanamazButtonKontrol() {
+        Assert.assertEquals(btnImzalanamaz.isDisplayed(),true,"İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ");
+        Allure.addAttachment("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ","");
+        takeScreenshot();
+        return this;
+    }
+
+    SelenideElement txtEvrakImzalaUyari = $("div[id='imzalaForm:imzaPanel_header']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage evrakImzalaUyariKontrol(String uyari) {
+        Assert.assertEquals(txtEvrakImzalaUyari.getText().contains(uyari), true, "Evrak İmza Uyari Kontrol");
+        Allure.addAttachment("Evrak İmza Uyari Kontrol", " gelmektedir.");
         return this;
     }
 

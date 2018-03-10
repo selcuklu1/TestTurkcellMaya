@@ -64,13 +64,16 @@ public class EvrakIadesi extends BaseTest {
         String user2 = "Zübeyde TEKİN";
         String user3 = "Yasemin Çakıl AKYOL";
         String details = "BHUPGMY";
-        String sayfa1 = "Gelen Evraklar";
+        String sayfa1 = "Evrak Oluştur";
         String evrakGuncellendiImzalanamazUyari = "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.";
+        String evrakİmzaUyari = "Sayısal imza ile imzaladığınız belge 5070 sayılı kanun kapsamına girmemektedir.";
+        String evrakIcerikDegistiUyari = "Evrak içeriğini değiştirdiğiniz için aşağıdakilerden uygun olanı seçerek işleminize devam edebilirsiniz.";
+        String secenek1 = "İade Et";
+        String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
 
         evrakOlusturPage
                 .openPage()
-//                .sayfaKontrol(sayfa1)
-                //TODO Evrak Oluştur kontrolü
+                .sayfaKontrol(sayfa1)
                 .bilgilerTabiAc()
                 .bilgilerTabAlanKontrolleri()
                 .konuKoduDoldur(konuKodu)
@@ -124,54 +127,57 @@ public class EvrakIadesi extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonusunaGoreIcerikTiklama(konu);
+                .evrakKonusunaGoreIcerikTiklama(konu)
+                .evrakIcerikKontrol();
 
-        evrakOlusturPage
-                .editorTabKontrolInbox();
 
         editor
                 .type(editorIcerik);
 
         evrakOlusturPage
                 .imzalaButonaTikla()
+                .icerikDegistiUyarıKontrol(evrakIcerikDegistiUyari,secenek1,secenek2)
                 .icerikDegistiIptal();
 
         evrakOlusturPage
-                .editorTabKontrolInbox();
-
-        evrakOlusturPage
+                .sayfaKontrol2("Evrak Detayı")
                 .bilgilerTabiAc()
                 .geregiIptal()
                 .geregiSecimTipiEskiEvrak("Kurum")
+                .geregiSecimTipiEskiKontrol("Kurum")
                 .geregiDoldurEski(geregiKurum2,"Kurum")
-                .gizlilikDerecesiSec("Normal")
-                .konuDoldur(konu)
-                .gizlilikDerecesiKontrol("Normal")
                 .geregiKontrolInbox(geregiKurum2)
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .konuDoldur(konu)
                 .konuDoldurKontrol(konu)
                 .geregiIptal()
                 .geregiSecimTipiEskiEvrak("Kurum")
                 .geregiDoldurEski(geregiKurum3,"Kurum")
+                .geregiKontrolInbox(geregiKurum3)
                 .imzalaButonaTikla();
 
 
         evrakOlusturPage
+                .icerikDegistiUyarıKontrol(evrakIcerikDegistiUyari,secenek1,secenek2)
                 .evrakIcerikDegistiImzalaveDevamEt()
                 .evrakSecmeliDegistiKaydet()
+                .evrakImzalaUyariKontrol(evrakİmzaUyari)
                 .evrakImzala()
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
 
         imzaBekleyenlerPage
                 .openPage()
+                .evrakNoKontrolu(konu)
                 .evrakKonusunaGoreIcerikTiklama(konu);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
-                .gizlilikDerecesiKontrol("Normal")
                 .geregiKontrolInbox(geregiKurum3)
-                .konuDoldurKontrol(konu);
+                .konuDoldurKontrol(konu)
+                .ivedilikKontrol("Normal");
 
         evrakOlusturPage
                 .editorTabAc();
@@ -181,7 +187,8 @@ public class EvrakIadesi extends BaseTest {
 
         evrakOlusturPage
                 .imzalaButonaTikla()
-                .evrakSecmeliDegistiEvet();
+                .evrakSecmeliDegistiEvet()
+                .imzalanamazButtonKontrol();
 
         evrakOlusturPage
                 .bilgilerTabiAc()
