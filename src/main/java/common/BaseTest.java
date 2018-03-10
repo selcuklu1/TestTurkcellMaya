@@ -49,7 +49,7 @@ public class BaseTest extends BaseLibrary {
 
     public Locale turkishLocal;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeSuite(alwaysRun = true)
     public void driverSetUp() {
 
         log.info("Setup started");
@@ -124,7 +124,7 @@ public class BaseTest extends BaseLibrary {
     }
 
     @BeforeSuite
-    public void beforeTest(ITestContext context) {
+    public void beforeSuite(ITestContext context) {
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
         else
@@ -158,31 +158,6 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
         System.out.println("///////////////////////////////////////////////////////");
     }
-
-    /*@BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method test) {
-
-
-        test.getDeclaredAnnotation(org.testng.annotations.Test.class)
-
-        String testName = firstNonEmpty(
-                test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
-                test.getName())
-                .orElse("Unknown");
-
-        final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
-        Allure.addAttachment("Annotations", desc);
-
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST: " + testName);
-        System.out.println("");
-        System.out.println("STATUS: Started");
-        System.out.println("");
-        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
-    }*/
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult testResult) {
@@ -239,34 +214,6 @@ public class BaseTest extends BaseLibrary {
     public void afterClass() {
         Selenide.close();
         log.info("Browser has been closed.");
-    }
-
-    @Step("Login")
-    public void login(User user) {
-        LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
-        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
-            loginPage.birimSec(Condition.text(user.getBirimAdi()));
-    }
-
-    @Step("Test Numarası : {testid} {status} ")
-    public void testStatus(String testid, String status) { }
-
-    @Step("{name} : {description}")
-    public void step(String name, String description) { }
-
-    @Step("Login")
-    public void login() {
-        new LoginPage().login();
-    }
-
-    @Step("Login")
-    public void login(String username, String password) {
-        new LoginPage().login(username, password);
-    }
-
-    @Step("Logout")
-    public void logout() {
-        new MainPage().logout();
     }
 
 
@@ -370,5 +317,37 @@ public class BaseTest extends BaseLibrary {
         }
         return downloadPath;
     }
+
+
+
+
+    @Step("Login")
+    public void login(User user) {
+        LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
+        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
+            loginPage.birimSec(Condition.text(user.getBirimAdi()));
+    }
+
+    @Step("Test Numarası : {testid} {status} ")
+    public void testStatus(String testid, String status) { }
+
+    @Step("{name} : {description}")
+    public void step(String name, String description) { }
+
+    @Step("Login")
+    public void login() {
+        new LoginPage().login();
+    }
+
+    @Step("Login")
+    public void login(String username, String password) {
+        new LoginPage().login(username, password);
+    }
+
+    @Step("Logout")
+    public void logout() {
+        new MainPage().logout();
+    }
+
 
 }
