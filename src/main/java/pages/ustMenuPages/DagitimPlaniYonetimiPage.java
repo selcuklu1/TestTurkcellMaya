@@ -368,7 +368,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitiminElemaniEkleVeAdresSec(String dagitimElemanlariTipi, String dagitimElemanlari, String adres, String evraktaGorunecekHitap) {
         dagitimElemanlariEkle(dagitimElemanlariTipi, dagitimElemanlari);
         DagitimHitapDuzenle dagitimHitapDuzenle = guncelleTikla();
-        dagitimHitapDuzenle.adresHitaptaGorunsunSec(true).adresSec(adres, evraktaGorunecekHitap).kaydet();;
+        dagitimHitapDuzenle.adresHitaptaGorunsunSec(true).adresGirilir(adres, evraktaGorunecekHitap).kaydet();;
         return this;
     }
 

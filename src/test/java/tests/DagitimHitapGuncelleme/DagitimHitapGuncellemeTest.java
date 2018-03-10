@@ -1,13 +1,10 @@
 package tests.DagitimHitapGuncelleme;
 
-import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Epic;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
@@ -177,7 +174,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         hitapDuzenle
                 .adresHitaptaGorunsunSec(true)
-                .adresSec(adres, evraktaGorunecekHitap)
+                .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
 
         page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(hitap));
@@ -218,7 +215,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSec(bilgi)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(bilgi));
         hitapDuzenle
-                .adresSec(bilgiAdres)
+                .adresGirilir(bilgiAdres)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
 
@@ -227,7 +224,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSec(geregi)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(geregi));
         hitapDuzenle
-                .adresSec(geregiAdres)
+                .adresGirilir(geregiAdres)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
 
@@ -441,7 +438,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.GERCEK_KISI)
                 .geregiSec(gercekKisi1)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(gercekKisi1))
-                .adresSec(adres1)
+                .adresGirilir(adres1)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
         //page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap1));
@@ -450,7 +447,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSecimTipiSec(BilgiSecimTipi.GERCEK_KISI)
                 .bilgiSec(gercekKisi2)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(gercekKisi2))
-                .adresSec(adres2)
+                .adresGirilir(adres2)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
         //page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap2));
@@ -480,7 +477,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.BIRIM)
                 .geregiSec(birim1)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(birim1))
-                .adresSec(adres1)
+                .adresGirilir(adres1)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
         //page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap1));
@@ -489,7 +486,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSecimTipiSec(BilgiSecimTipi.BIRIM)
                 .bilgiSec(birim2)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(birim2))
-                .adresSec(adres2)
+                .adresGirilir(adres2)
                 .adresDagitimdaGorunsunSec(true)
                 .kaydet();
         //page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap2));
@@ -516,7 +513,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSec(gercekKisi)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(gercekKisi))
                 .adresHitaptaGorunsunSec(true)
-                .adresSec(adres, evraktaGorunecekHitap)
+                .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(hitap));
 
@@ -575,7 +572,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .ozelHitapSec(true)
                 .ozelHitapGirilir(ozelHitap)
                 .adresHitaptaGorunsunSec(true)
-                .adresSec(adres, evraktaGorunecekHitap)
+                .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(ozelHitap));
 
@@ -636,7 +633,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .ozelHitapSec(true)
                 .ozelHitapGirilir(ozelHitap)
                 .adresHitaptaGorunsunSec(true)
-                .adresSec(adres, evraktaGorunecekHitap)
+                .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(ozelHitap));
         page.bilgileriTab()
