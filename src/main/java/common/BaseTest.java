@@ -145,8 +145,6 @@ public class BaseTest extends BaseLibrary {
                 test.getName())
                 .orElse("Unknown");
 
-
-
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
         System.out.println("///////////////////////////////////////////////////////");

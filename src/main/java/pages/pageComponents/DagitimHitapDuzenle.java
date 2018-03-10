@@ -327,11 +327,11 @@ public class DagitimHitapDuzenle extends MainPage {
 
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres) {
-        getAdresTextarea().shouldBe(visible).setValue(adres);
-        if (!getAdresTextarea().has(exactText(adres)))
-            getAdresTextarea().shouldBe(visible).setValue(adres);
-
-        getAdresTextarea().shouldHave(exactText(adres));
+        getAdresTextarea().shouldBe(visible).clear();
+        getAdresTextarea().sendKeys(adres);
+        /*if (!getAdresTextarea().has(exactText(adres)))
+            getAdresTextarea().shouldBe(visible).setValue(adres);*/
+        //getAdresTextarea().shouldHave(exactText(adres));
         return this;
     }
 
