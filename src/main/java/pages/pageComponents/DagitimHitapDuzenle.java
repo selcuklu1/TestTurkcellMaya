@@ -176,7 +176,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("\"Adres\" alanı aranır")
+    //@Step("\"Adres\" alanı aranır")
     public SelenideElement getAdresTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres']]//textarea");
@@ -317,7 +317,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
 
-    @Step("Adres seçilir")
+    @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
         adresGirilir(adres);
         //adresHitaptaGorunsunSec(true);
@@ -328,6 +328,9 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres) {
         getAdresTextarea().shouldBe(visible).setValue(adres);
+        if (!getAdresTextarea().has(exactText(adres)))
+            getAdresTextarea().shouldBe(visible).setValue(adres);
+
         getAdresTextarea().shouldHave(exactText(adres));
         return this;
     }
