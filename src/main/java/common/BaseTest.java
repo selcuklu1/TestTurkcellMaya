@@ -147,9 +147,17 @@ public class BaseTest extends BaseLibrary {
 
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
-
+        //((TestRunner) context).getTestClasses().size()
         System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("");
+        System.out.println("All Tests Size: " + context.getAllTestMethods().length);
+        System.out.println("Failed Tests Size: " + context.getFailedTests().size());
+        System.out.println("Failed Tests Size: " + context.getFailedTests().size());
+        System.out.println("Left Tests Size: " + Integer.valueOf(context.getAllTestMethods().length - context.getPassedTests().getAllResults().size()).toString());
+        System.out.println("");
         System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST CLASS: " + test.getDeclaringClass().getSimpleName());
+        System.out.println("");
         System.out.println("TEST: " + testName);
         System.out.println("");
         System.out.println("STATUS: Started");

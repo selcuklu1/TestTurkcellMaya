@@ -217,7 +217,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return dagitimElemanlariCombolov;
     }
 
-    @Step("\"Dağıtım Elemanları\"da \"{text}\" seçilir")
+    @Step("\"Dağıtım Elemanları\"da \"{dagitimElemani}\" seçilir")
     public DagitimPlaniYonetimiPage dagitimElemanlariSec(String... dagitimElemani) {
         getDagitimElemanlariCombolov().selectLov(dagitimElemani);
         /*getSecilenDagitimElemaniSilButton(dagitimElemani, "bulunur").shouldBe(visible);
