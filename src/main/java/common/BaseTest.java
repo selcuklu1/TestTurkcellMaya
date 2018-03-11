@@ -291,11 +291,17 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion(Configuration.browserVersion);*/
             /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
-            */
-            WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
+
+            WebDriver driver = System.getProperty("hub") == null ?
+                    new FirefoxDriver()
+                    : new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions);
+
+            WebDriverRunner.setWebDriver(driver);
+            /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
-            Configuration.remote = System.getProperty("hub");
+            Configuration.remote = System.getProperty("hub");*/
+
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
