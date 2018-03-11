@@ -295,7 +295,7 @@ public class BaseTest extends BaseLibrary {
 
             WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
-                    : new RemoteWebDriver(new URL("http://10.101.20.151:4444"), firefoxOptions);
+                    : new RemoteWebDriver(new URL("http://10.101.20.151:4444/wd/hub"), firefoxOptions);
             /*WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
