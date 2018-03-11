@@ -260,8 +260,8 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
     @Test(description = "TS2126: Dağıtım metni kullanma ve hariç tutma", enabled = true)
     public void TS2126() {
-        useFirefox();
-
+//        useFirefox();
+        useChromeWindows151("");
         String konu = "TS2126_" + getSysDate();
 
         //Yaratılmış 2 dağıtım planı olmalı:
