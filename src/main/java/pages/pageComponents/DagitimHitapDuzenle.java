@@ -176,7 +176,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("\"Adres\" alanı aranır")
+    //@Step("\"Adres\" alanı aranır")
     public SelenideElement getAdresTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres']]//textarea");
@@ -317,17 +317,21 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
 
-    @Step("Adres seçilir")
-    public DagitimHitapDuzenle adresSec(String adres, String evraktaGorunecekHitap) {
-        getAdresTextarea().setValue(adres);
+    @Step("Adres girilir")
+    public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
+        adresGirilir(adres);
         //adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
     }
 
-    @Step("Adres seçilir")
-    public DagitimHitapDuzenle adresSec(String adres) {
-        getAdresTextarea().setValue(adres);
+    @Step("Adres girilir")
+    public DagitimHitapDuzenle adresGirilir(String adres) {
+        getAdresTextarea().shouldBe(visible).clear();
+        getAdresTextarea().sendKeys(adres);
+        /*if (!getAdresTextarea().has(exactText(adres)))
+            getAdresTextarea().shouldBe(visible).setValue(adres);*/
+        //getAdresTextarea().shouldHave(exactText(adres));
         return this;
     }
 
