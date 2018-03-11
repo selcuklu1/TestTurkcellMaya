@@ -293,10 +293,13 @@ public class BaseTest extends BaseLibrary {
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
 
+            /*WebDriver driver = System.getProperty("hub") == null ?
+                    new FirefoxDriver()
+                    : new RemoteWebDriver(new URL(System.getProperty("hub")), firefoxOptions);*/
             WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
-                    : new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions);
-
+                    : new RemoteWebDriver(firefoxOptions);
+            //C:\drivers
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
@@ -331,12 +334,11 @@ public class BaseTest extends BaseLibrary {
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            /*WebDriver driver = Configuration.remote == null ?
-                    new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+            WebDriver driver = Configuration.remote == null ?
+                    new ChromeDriver(options)
+                    : new RemoteWebDriver(new URL(Configuration.remote), options);
 
-            WebDriverRunner.setWebDriver(driver);*/
-            WebDriverRunner.setWebDriver(new ChromeDriver(options));
+            WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
