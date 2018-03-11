@@ -512,7 +512,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.GERCEK_KISI)
                 .geregiSec(gercekKisi)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(gercekKisi))
-                .adresGirilir(adres, evraktaGorunecekHitap)
+                .adresGirilir(adres)
                 .adresHitaptaGorunsunSec(true)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(hitap));
