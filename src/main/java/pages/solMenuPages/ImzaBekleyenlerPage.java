@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -38,6 +39,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
     SelenideElement btnBeklemeyeAl = $("[class='ui-button-icon-left ui-icon evrakBeklemeyeAl']");
     SelenideElement btnBeklemeyeAlUyariEvet = $(By.id("mainInboxForm:beklemeyeAlEvetButton"));
+    SelenideElement btnBeklemeyeAlUyariKontrol = $("div[id='mainInboxForm:beklemeyeAlConfirmDialog']");
     ElementsCollection tblEvrakOnizlemeEkler = $$("[id$='ekListesiOnizlemeDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
     SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
     SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
@@ -299,6 +301,13 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Uyarı ekranından Evet tıklanır")
     public ImzaBekleyenlerPage beklemeyeAlUyariEvet(){
         btnBeklemeyeAlUyariEvet.pressEnter();
+        return this;
+    }
+
+    @Step("Evrakı beklemeye almak istediğinize emin misiniz?")
+    public ImzaBekleyenlerPage beklemeyeAlUyariKontrol(){
+        Assert.assertEquals(btnBeklemeyeAlUyariKontrol.isDisplayed(),true,"Beklemeye Al Uyari Kontrol");
+        Allure.addAttachment("Evrakı beklemeye almak istediğinize emin misiniz?","");
         return this;
     }
 
