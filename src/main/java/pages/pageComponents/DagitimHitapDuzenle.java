@@ -14,6 +14,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 
 /**
@@ -30,14 +31,14 @@ public class DagitimHitapDuzenle extends MainPage {
 
     public DagitimHitapDuzenle(SelenideElement page) {
         this.page = page;
-        this.container = page.$("div[id$='hitapDuzenlemeDialog']");
+        this.container = page.$("div[id$='hitapDuzenlemeDialog']").shouldBe(visible);
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
 
     public DagitimHitapDuzenle() {
         //this.container = $("html").$("div[id$='dagitimHitapDuzenlePanel']");
         page = $("html");
-        this.container = page.$("div[id$='hitapDuzenlemeDialog']");
+        this.container = page.$("div[id$='hitapDuzenlemeDialog']").shouldBe(visible);
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
 
@@ -335,7 +336,6 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
         adresGirilir(adres);
-        getAdresTextarea().pressTab();
         //adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
@@ -344,7 +344,11 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres) {
         getAdresTextarea().shouldBe(visible).clear();
+        getAdresTextarea().pressTab();
+        sleep(3000);
         getAdresTextarea().sendKeys(adres);
+        getAdresTextarea().pressTab();
+        sleep(3000);
         /*if (!getAdresTextarea().has(exactText(adres)))
             getAdresTextarea().shouldBe(visible).setValue(adres);*/
         //getAdresTextarea().shouldHave(exactText(adres));
