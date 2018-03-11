@@ -173,7 +173,6 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         }
 
         hitapDuzenle
-                .adresHitaptaGorunsunSec(true)
                 .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
 
@@ -232,7 +231,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         new PDFOnizleme(1)
                 .checkText(textCaseSensitive(geregiPDFGorunecekHitap))
                 .checkText(textCaseSensitive(bilgiPDFGorunecekHitap))
-                .checkText(not(text(bilgiAdres)));
+                .checkNoText(text(bilgiAdres));
 
         /*
         SelenideElement bilgiLabelElement = $(Selectors.byText("Bilgi:"));
@@ -512,7 +511,6 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.GERCEK_KISI)
                 .geregiSec(gercekKisi)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(gercekKisi))
-                .adresHitaptaGorunsunSec(true)
                 .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(hitap));
@@ -571,7 +569,6 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiDagitimHitapDuzenlemeTiklanir(text(gercekKisi))
                 .ozelHitapSec(true)
                 .ozelHitapGirilir(ozelHitap)
-                .adresHitaptaGorunsunSec(true)
                 .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(ozelHitap));
@@ -632,7 +629,6 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiDagitimHitapDuzenlemeTiklanir(text(birim))
                 .ozelHitapSec(true)
                 .ozelHitapGirilir(ozelHitap)
-                .adresHitaptaGorunsunSec(true)
                 .adresGirilir(adres, evraktaGorunecekHitap)
                 .kaydet();
         page.bilgileriTab().secilenGeregiAlanKotrolu(exactTextCaseSensitive(ozelHitap));

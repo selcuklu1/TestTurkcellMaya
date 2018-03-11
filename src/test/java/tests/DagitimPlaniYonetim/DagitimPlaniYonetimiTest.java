@@ -72,7 +72,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         yeniPlanAdi1280 = "TS1280a_" + getSysDate();
         System.out.println("Dağınım Planı: " + yeniPlanAdi1280);
 
-        dagitimPlanElemanlari = new LinkedHashMap<String, String>();
+        dagitimPlanElemanlari = new LinkedHashMap<>();
         dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
         dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
         dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
@@ -268,13 +268,21 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         login(user);
 
+
+        /*LinkedHashMap<String, String[]> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", new String[]{user.getFullname(), "Sayın " + user.getFullname()});
+        dagitimPlanElemanlari.put("Birim", new String[]{user.getBirimAdi(), user.getBirimAdi().toUpperCase() + "E"});
+        dagitimPlanElemanlari.put("Kurum", new String[]{"Başbakanlık", "BAŞBAKANLIĞINA"});
+        dagitimPlanElemanlari.put("Gerçek Kişi", new String[]{"Zübeyde TEKİN", "Sayın Zübeyde TEKİN"});
+        dagitimPlanElemanlari.put("Tüzel Kişi", new String[]{"Türksat Optiim", "TÜRKSAT OPTIIME"});*/
+
         //yeniPlanAdi1280 = "TS1280_20180205102433";
-        dagitimPlanElemanlari = new LinkedHashMap<String, String>();
+        /*LinkedHashMap dagitimPlanElemanlari = new LinkedHashMap<String, String>();
         dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
         dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
         dagitimPlanElemanlari.put("Kurum", "Başbakanlık");
         dagitimPlanElemanlari.put("Gerçek Kişi", "ZÜBEYDE");
-        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");*/
 
         /*System.out.println("Dağınım Planı: " + yeniPlanAdi1280);
         page = new DagitimPlaniYonetimiPage().openPage();
@@ -323,7 +331,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         Selenide.switchTo().window(0);
         evrakOlusturPage.editorTab().getEditor().type("editör teksti");
 
-        String konu = "TS1280_" + getSysDate();
+        String konu = "TS2323 - " + getDateTime();
         System.out.println("Konu: " + konu);
         evrakOlusturPage.bilgileriTab().openTab()
                 .bilgiTemizle()
@@ -355,7 +363,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         u = page.getKullanildigiBirim().getSelectedTitles().last().has(text(u1.getBirimAdi())) ? u2 : u1;
 
-        page.kullanildigiBirimSec(u.getBirimAdi(), u.getBirimKisaAdi()).kaydet().islemMesaji().basariliOlmali();
+        page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
+                .kaydet().islemMesaji().basariliOlmali();
 
         evrakOlusturSayfadaPasifKontrolu(adi);
 

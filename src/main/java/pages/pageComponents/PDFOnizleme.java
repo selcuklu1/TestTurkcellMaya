@@ -91,11 +91,12 @@ public class PDFOnizleme extends MainPage{
         return this;
     }
 
-    @Step("PDF Önizleme tekst kontrolü {conditions}")
+    @Step("PDF Önizleme {conditions} bulunmalı")
     public PDFOnizleme checkText(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
         //setScale100();
         for (Condition condition : conditions) {
+            Allure.addAttachment(condition.toString(), condition.toString());
             page.$(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);
         }
@@ -103,7 +104,20 @@ public class PDFOnizleme extends MainPage{
         return this;
     }
 
-    @Step("PDF Önizleme tekst kontrolü")
+    @Step("PDF Önizleme {conditions} bulunMAmalı")
+    public PDFOnizleme checkNoText(Condition... conditions) {
+        SelenideElement page = getPage(0).scrollIntoView(true);
+        //setScale100();
+        for (Condition condition : conditions) {
+            Allure.addAttachment(condition.toString(), condition.toString());
+            page.$(".textLayer").shouldNotHave(condition);
+            //page.waitUntil(condition, 30000);
+        }
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF Önizleme {conditions} bulunmalı")
     public PDFOnizleme checkTextAndCloseWindow(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
         //setScale100();
@@ -118,7 +132,7 @@ public class PDFOnizleme extends MainPage{
         return this;
     }
 
-    @Step("PDF Önizleme tekst kontrolü")
+    @Step("PDF Önizleme {conditions} bulunmalı")
     public PDFOnizleme checkTextInAllPages(Condition... conditions) {
         pages.last().$(".textLayer").shouldBe(Condition.visible);
         for (Condition condition : conditions) {

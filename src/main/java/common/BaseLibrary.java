@@ -285,6 +285,12 @@ public class BaseLibrary extends ElementsContainer {
         waitForLoadingJS(driver, timeout);
     }
 
+    public void waitForLoadingJS() {
+//        long timeout = Configuration.timeout / 1000;
+        long timeout = getWaitForLoading();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), Configuration.timeout);
+    }
+
     public void maximazeBrowser() {
         try {
             if (Configuration.browserSize != null) {

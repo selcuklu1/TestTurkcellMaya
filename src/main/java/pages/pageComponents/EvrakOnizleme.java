@@ -58,6 +58,8 @@ public class EvrakOnizleme extends MainPage {
         return this;
     }
 
+    public EvrakGecmisi evrakGecmisi = new EvrakGecmisi();
+    public KontrolEt kontrolEt = new KontrolEt();
 
     public class DagitimPlaniIcerigi extends MainPage {
         SelenideElement dagitimPlaniDetayViewDialog = $(By.id("mainPreviewForm:dagitimPlaniDetayViewDialog"));

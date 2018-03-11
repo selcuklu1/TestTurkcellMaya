@@ -10,6 +10,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
 import listeners.ResultListener;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,6 +34,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.codeborne.selenide.Configuration.browserBinary;
+import static com.codeborne.selenide.Configuration.headless;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -265,11 +268,12 @@ public class BaseTest extends BaseLibrary {
             options.merge(capabilities);*/
             //caps.merge(options);
 
-            WebDriver driver = Configuration.remote == null ?
+           /* WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
-            WebDriverRunner.setWebDriver(driver);
+            WebDriverRunner.setWebDriver(driver);*/
+            WebDriverRunner.setWebDriver(new FirefoxDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
@@ -278,14 +282,20 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
+            //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
+            //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);
-            WebDriver driver = Configuration.remote == null ?
+            capabilities.setVersion(Configuration.browserVersion);*/
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
-
-            WebDriverRunner.setWebDriver(driver);
+            */
+            WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
+            System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
+            Configuration.remote = System.getProperty("hub");
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
@@ -315,18 +325,17 @@ public class BaseTest extends BaseLibrary {
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            WebDriver driver = Configuration.remote == null ?
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
-            WebDriverRunner.setWebDriver(driver);
+            WebDriverRunner.setWebDriver(driver);*/
+            WebDriverRunner.setWebDriver(new ChromeDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
         return downloadPath;
     }
-
-
 
 
     @Step("Login")
