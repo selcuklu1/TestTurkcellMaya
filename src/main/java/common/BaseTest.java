@@ -293,6 +293,7 @@ public class BaseTest extends BaseLibrary {
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
 
+            System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
             WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
                     : new RemoteWebDriver(new URL("http://10.101.20.151:4444/wd/hub"), firefoxOptions);
