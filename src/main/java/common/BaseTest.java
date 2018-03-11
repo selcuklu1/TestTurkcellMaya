@@ -287,16 +287,16 @@ public class BaseTest extends BaseLibrary {
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            //capabilities.setAcceptInsecureCerts(true);
+            capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);
-            /*WebDriver driver = Configuration.remote == null ?
+            WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
-            WebDriver driver = System.getProperty("hub") == null ?
+            /*WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
-                    : new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+                    : new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);*/
             /*WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/

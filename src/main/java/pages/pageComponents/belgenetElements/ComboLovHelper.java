@@ -428,9 +428,9 @@ public class ComboLovHelper extends BaseLibrary {
     @Step("Close tree panel")
     public void closeTreePanel() {
         if ($$(lovTreePanelKapat).last().is(visible)) {
-            clickJs($$(lovTreePanelKapat).last());
+            //clickJs($$(lovTreePanelKapat).last());
             //$$(lovTreePanelKapat).last().click();
-            //$$(lovTreePanelKapat).last().pressEnter();
+            $$(lovTreePanelKapat).last().pressEnter();
         }
     }
     //endregion
