@@ -284,6 +284,7 @@ public class BaseTest extends BaseLibrary {
         try {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
+            firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);*/
