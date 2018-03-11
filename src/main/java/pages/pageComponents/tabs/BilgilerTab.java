@@ -88,7 +88,7 @@ public class BilgilerTab extends MainPage {
     @Step("Konu Kodu seçilir")
     public BilgilerTab konuKoduSec(String text) {
         getKonuKodu().selectLov(text);
-        getKonuKodu().closeTreePanel();
+        //getKonuKodu().closeTreePanel();
         return this;
     }
 

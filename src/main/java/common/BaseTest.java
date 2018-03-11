@@ -283,7 +283,7 @@ public class BaseTest extends BaseLibrary {
     public void useFirefox() {
         try {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
-            //firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
