@@ -293,12 +293,12 @@ public class BaseTest extends BaseLibrary {
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
 
-            /*WebDriver driver = System.getProperty("hub") == null ?
-                    new FirefoxDriver()
-                    : new RemoteWebDriver(new URL(System.getProperty("hub")), firefoxOptions);*/
             WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
-                    : new RemoteWebDriver(firefoxOptions);
+                    : new RemoteWebDriver(new URL("http://10.101.20.151:4444"), firefoxOptions);
+            /*WebDriver driver = System.getProperty("hub") == null ?
+                    new FirefoxDriver()
+                    : new RemoteWebDriver(firefoxOptions);*/
             //C:\drivers
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
