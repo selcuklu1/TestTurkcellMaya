@@ -15,6 +15,7 @@ import pages.MainPage;
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -372,6 +373,50 @@ public class EvrakPageButtons extends MainPage {
     public MainPage evrakImzalaUyariKontrol(String uyari) {
         Assert.assertEquals(txtEvrakImzalaUyari.getText().contains(uyari), true, "Evrak İmza Uyari Kontrol");
         Allure.addAttachment("Evrak İmza Uyari Kontrol", " gelmektedir.");
+        return this;
+    }
+
+    @Step("Iade Et Butonu Bul")
+    public SelenideElement getIadeEt() {
+        return getButton("İade Et");
+    }
+
+    @Step("Iade Et buton tıklama")
+    public EvrakPageButtons iadeEt() {
+        getIadeEt().click();
+        return this;
+    }
+
+    @Step("Parafcı Kontrol: {user}")
+    public EvrakPageButtons parafciKontrol(String user) {
+        comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id")).selectComboBox(user);
+        return this;
+    }
+    SelenideElement btnDosyaEkle = $("[id='inboxItemInfoForm:fileUploadIadeEk']");
+    @Step("Dosya ekle")
+    public EvrakPageButtons dosyaEkle(String path,String dosyaAdi) throws InterruptedException{
+        btnDosyaEkle.click();
+        havaleDosyaEkle(path);
+        havaleDosyaEkleDosyaAdiKontrol(dosyaAdi);
+        return this;
+    }
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public EvrakPageButtons havaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public EvrakPageButtons havaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public EvrakPageButtons notAlaniDoldur(String not) {
+        container.$("textarea[id$='notTextArea_id'").setValue(not);
         return this;
     }
 

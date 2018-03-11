@@ -351,6 +351,31 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Iade Et")
+    public MainPage iadeEt() {
+        new EvrakPageButtons().iadeEt();
+        return this;
+    }
+
+    @Step("Iade Et")
+    public MainPage parafciKontrol(String user) {
+        new EvrakPageButtons().parafciKontrol(user);
+        return this;
+    }
+
+    @Step("Dosya Ekle")
+    public MainPage dosyaEkle(String path,String file) throws InterruptedException{
+        new EvrakPageButtons().dosyaEkle(path,file);
+        return this;
+    }
+
+    @Step("Iade Et")
+    public MainPage notAlaniDoldur(String konu) {
+        new EvrakPageButtons().notAlaniDoldur(konu);
+        return this;
+    }
+
+
     @Step("Menülerin geldiği görülür")
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
 
