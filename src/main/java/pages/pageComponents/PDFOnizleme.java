@@ -34,7 +34,8 @@ public class PDFOnizleme extends MainPage{
 
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
-        waitForLoadingJS(WebDriverRunner.getWebDriver());
+        WebDriverRunner.getWebDriver().manage().window().maximize();
+        waitForLoadingJS();
         setScale100();
     }
 
