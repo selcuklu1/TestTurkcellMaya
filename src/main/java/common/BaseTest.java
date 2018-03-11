@@ -10,6 +10,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import listeners.DriverEventListener;
 import listeners.ResultListener;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,6 +34,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.codeborne.selenide.Configuration.browserBinary;
+import static com.codeborne.selenide.Configuration.headless;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -278,13 +281,16 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.VERSION, Configuration.browserVersion);
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);
-            WebDriver driver = Configuration.remote == null ?
+            capabilities.setVersion(Configuration.browserVersion);*/
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
-
+            */
+            WebDriver driver = new FirefoxDriver(firefoxOptions);
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
@@ -325,6 +331,24 @@ public class BaseTest extends BaseLibrary {
         }
         return downloadPath;
     }
+
+
+    public void useFirefox1(){
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setHeadless(headless);
+        if (!browserBinary.isEmpty()) {
+            firefoxOptions.setBinary(browserBinary);
+        }
+        firefoxOptions.addPreference("network.automatic-ntlm-auth.trusted-uris", "http://,https://");
+        firefoxOptions.addPreference("network.automatic-ntlm-auth.allow-non-fqdn", true);
+        firefoxOptions.addPreference("network.negotiate-auth.delegation-uris", "http://,https://");
+        firefoxOptions.addPreference("network.negotiate-auth.trusted-uris", "http://,https://");
+        firefoxOptions.addPreference("network.http.phishy-userpass-length", 255);
+        firefoxOptions.addPreference("security.csp.enable", false);
+
+        WebDriver driver = new FirefoxDriver(firefoxOptions);
+    }
+
 
 
 
