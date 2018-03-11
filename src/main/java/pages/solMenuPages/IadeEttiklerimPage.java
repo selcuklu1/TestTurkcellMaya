@@ -3,8 +3,10 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -14,13 +16,53 @@ import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class IadeEttiklerimPage extends MainPage {
-    ElementsCollection tblEvrak = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
     SelenideElement btnTakipListesiKapat = $("[id^='evrakTakibimeEkleDialogForm:takipDialog'] span[class='ui-icon ui-icon-closethick']");
+    SelenideElement btnIadeEdilmistir = $("button[id^='mainInboxForm:inboxDataTable:0:j_idt']");
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
 
     @Step("İade ettiklerim sayfası aç")
     public IadeEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.IadeEttiklerim);
+        return this;
+    }
+
+    @Step("Evrakın listelendiği görülür: {konu}")
+    public IadeEttiklerimPage evrakSec(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrakın listelendiği görülür: {konu}, {yer}, {tarih}")
+    public IadeEttiklerimPage evrakGeldigiGorme(String konu, String yer, String tarih) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Iade Edilmiştir Ikon Kontrolü")
+    public IadeEttiklerimPage iadeEdilmistirIkonKontrolu(String konu) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(konu)).get(0).$("button[id^='mainInboxForm:inboxDataTable:0:j_idt']").isDisplayed();
+        return this;
+    }
+    @Step("Evrak geçmişi alanına tıklanır")
+    public IadeEttiklerimPage secilenEvrakEvrakGecmisi() {
+        tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{islemSureci}\" \"{tarih}\"")
+    public IadeEttiklerimPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
+                .filterBy(Condition.text(tarih)).size() > 1;
+        Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
+        Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
+        takeScreenshot();
         return this;
     }
 

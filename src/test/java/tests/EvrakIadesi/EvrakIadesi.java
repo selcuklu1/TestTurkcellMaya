@@ -7,10 +7,7 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.TextEditor;
-import pages.solMenuPages.BeklemeyeAlinanlarPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.ImzaladiklarimPage;
-import pages.solMenuPages.ParafBekleyenlerPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.pageData.alanlar.GizlilikDerecesi;
 
@@ -31,6 +28,7 @@ public class EvrakIadesi extends BaseTest {
     ParafBekleyenlerPage parafBekleyenlerPage;
     ImzaladiklarimPage imzaladiklarimPage;
     BeklemeyeAlinanlarPage beklemeyeAlinanlarPage;
+    IadeEttiklerimPage iadeEttiklerimPage;
 
 
 
@@ -43,6 +41,7 @@ public class EvrakIadesi extends BaseTest {
         parafBekleyenlerPage = new ParafBekleyenlerPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
         beklemeyeAlinanlarPage = new BeklemeyeAlinanlarPage();
+        iadeEttiklerimPage = new IadeEttiklerimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -615,6 +614,10 @@ public class EvrakIadesi extends BaseTest {
         String evrakIcerikDegistiUyari = "Evrak içeriğini değiştirdiğiniz için aşağıdakilerden uygun olanı seçerek işleminize devam edebilirsiniz.";
         String secenek1 = "İade Et";
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
+        String evrakTarihiSaat = getSysDateForTarihSaat();
+        String islemSureci = "Evrak paraf bekliyor";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
 
         evrakOlusturPage
                 .openPage()
@@ -684,7 +687,157 @@ public class EvrakIadesi extends BaseTest {
                 .openPage()
                 .evrakSecKonuyaGoreIcerikGoster(konu);
 
+        evrakOlusturPage
+                .editorTabKontrolInbox();
+
+        evrakOlusturPage
+                .iadeEt()
+                .parafciKontrol(user1)
+                //TODO burasi calismiyor fix it
+//                .dosyaEkle(pathToFileText,fileName)
+                .notAlaniDoldur(konu)
+                .kullaniciyaIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakOlmadigiGorme(konu);
+
+        iadeEttiklerimPage
+                .openPage()
+                .evrakGeldigiGorme(konu,geregiKurum,evrakTarihiSaat)
+                .evrakSec(konu)
+                .iadeEdilmistirIkonKontrolu(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS170: Evrak detay ekranından evrakın iade edilmesi ve kontrolü")
+    public void TS170() throws InterruptedException {
+
+        String konu = "TS170-" + getSysDate();
+        String konuKodu = "Kanunlar";
+        String kaldirilacakKlasorler = "KURUL KARARLARI";
+        String evrakDerecesi = GizlilikDerecesi.GIZLI.getOptionText();
+        String geregiSecimKurum = "Kurum";
+        String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String geregiKurum2 = "BÜYÜK HARFLERLE KURUM";
+        String geregiKurum3 = "TS1493 Kurumu";
+        String geregiSecimBirim = "Birim";
+        String geregiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String bilgiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String geregiSecimKullanici = "Kullanıcı";
+        String geregiKullanici = "Ahmet SAVAŞ";
+        String akisAdim = "İmzalama";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+        String basariMesaji = "İşlem başarılıdır!";
+        String user1 = "Mehmet BOZDEMİR";
+        String user2 = "Zübeyde TEKİN";
+        String user3 = "Yasemin Çakıl AKYOL";
+        String details = "BHUPGMY";
+        String sayfa1 = "Evrak Oluştur";
+        String evrakGuncellendiImzalanamazUyari = "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.";
+        String evrakİmzaUyari = "Sayısal imza ile imzaladığınız belge 5070 sayılı kanun kapsamına girmemektedir.";
+        String evrakIcerikDegistiUyari = "Evrak içeriğini değiştirdiğiniz için aşağıdakilerden uygun olanı seçerek işleminize devam edebilirsiniz.";
+        String secenek1 = "İade Et";
+        String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
+        String evrakTarihiSaat = getSysDateForTarihSaat();
+        String islemSureci = "Evrak paraf bekliyor";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
+
+        evrakOlusturPage
+                .openPage()
+                .sayfaKontrol(sayfa1)
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuKoduDoldurKontrol(konuKodu)
+                .konuDoldur(konu)
+                //Bug: text alani "Kanunlar" olarak kalıyor yeni değer html domda set edilmiyor. Deger olarak TS2017-20180224165929 set ediliyor bizim tarafımızdan.
+//                .konuDoldurKontrol(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec("Normal")
+                .gizlilikDerecesiKontrol("Normal")
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .geregiSecimTipiYeniEvrak("Kurum")
+                .geregiSecimTipiKontrol("Kurum")
+                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiKontrol(geregiKurum)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrolu(user1 , "Paraflama")
+                .onayAkisiKullaniciEkle(user2,details)
+                .onayAkisiKullaniciTipiSec(user2,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user2 , "İmzalama")
+                .onayAkisiKullaniciEkle(user3,details)
+                .onayAkisiKullaniciTipiSec(user3,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user3 , "İmzalama")
+                .kullan()
+                .paraflaKontrol();
+
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .editorTabKontrol()
+                .editorKonuKontrol(konu)
+                .editorHitapKontrol(geregiKurum.toUpperCase())
+                .editorImzaciKontrol(user2)
+                .editorImzaciKontrol(user3)
+                .editorDagitimKontrol(geregiKurum);
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakNoKontrolu(konu);
+//                .konuyaGoreEvrakOnizlemedeAc(konu)
+//                .evrakSecBeklemeyeAl()
+//                .beklemeyeAlUyariKontrol()
+//                .beklemeyeAlUyariEvet()
+//                .islemMesaji().basariliOlmali(basariMesaji);
+
+
+//        beklemeyeAlinanlarPage
+//                .openPage()
+//                .evrakSecKonuyaGoreIcerikGoster(konu);
+//
+//        evrakOlusturPage
+//                .editorTabKontrolInbox();
+//
+//        evrakOlusturPage
+//                .iadeEt()
+//                .parafciKontrol(user1)
+//                //TODO burasi calismiyor fix it
+////                .dosyaEkle(pathToFileText,fileName)
+//                .notAlaniDoldur(konu)
+//                .kullaniciyaIadeEt()
+//                .islemMesaji().basariliOlmali(basariMesaji);
+//
+//        imzaBekleyenlerPage
+//                .openPage()
+//                .evrakOlmadigiGorme(konu);
+//
+//        iadeEttiklerimPage
+//                .openPage()
+//                .evrakGeldigiGorme(konu,geregiKurum,evrakTarihiSaat)
+//                .evrakSec(konu)
+//                .iadeEdilmistirIkonKontrolu(konu)
+//                .secilenEvrakEvrakGecmisi()
+//                .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
+    }
 
 }
