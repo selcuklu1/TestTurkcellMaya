@@ -284,7 +284,8 @@ public class BaseTest extends BaseLibrary {
         try {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
-            firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
+            //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
+            //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);*/
@@ -293,6 +294,8 @@ public class BaseTest extends BaseLibrary {
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
             */
             WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
+            System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
+            Configuration.remote = System.getProperty("hub");
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
