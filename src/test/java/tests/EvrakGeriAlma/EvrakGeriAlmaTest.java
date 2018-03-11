@@ -729,7 +729,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(kontolcu);
         kontrolBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
-        evrakOnizleme.new KontrolEt().kontolEtEkrani(
+        evrakOnizleme.kontrolEt.kontolEtEkrani(
                 text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
                 ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
                 ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
@@ -738,7 +738,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
         login(imzaci);
         new ImzaBekleyenlerPage().openPage().searchTable().findRowAndSelect(text(konu));
-        evrakOnizleme.new EvrakGecmisi().tabiAc()
+        evrakOnizleme.evrakGecmisi.tabiAc()
                 .kayitBulunmali(text("İmza bekliyor"))
                 .bulunanKayittaKontrol(text(imzaci.getFullname()))
                 .evrakPageButtons().evrakIadeEt(kontolcu, geriAlNotu)

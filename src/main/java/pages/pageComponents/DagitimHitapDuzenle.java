@@ -243,6 +243,21 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Planı eleman listesinin sırası kontrolü")
+    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu2(Map<String, String[]> dagitimPlanElemanlari) {
+        //ElementsCollection rows = getDagitimPlaniDetayRows();
+        ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
+
+        Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
+        List<String[]> values = new ArrayList<>(dagitimPlanElemanlari.values());
+        for (int i = 0; i < rows.size(); i++) {
+            Assert.assertTrue(rows.get(i).has(text(values.get(i)[1])));
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
+        }
+
+        return this;
+    }
+
     @Step("Dağıtım Planı eleman görülür ve checkbox seçili kontrollü")
     public DagitimHitapDuzenle dagitimPlaniDetayListesiKontrolu(Map<String, String> dagitimPlanElemanlari) {
         ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
@@ -320,6 +335,7 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
         adresGirilir(adres);
+        getAdresTextarea().pressTab();
         //adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
