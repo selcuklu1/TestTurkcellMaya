@@ -1714,6 +1714,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Otomatik Onay AKışı Kullan")
         public BilgilerTab otomatikOnayAkisiKullan() {
             clickJs(btnOtomatikAkisKullan);
@@ -1980,6 +1981,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Koordineli seç")
         public BilgilerTab koordineliSec(boolean secim) {
             chkKoordineli.setSelected(secim);
+            return this;
+        }
+
+        @Step("Koordineli seç")
+        public BilgilerTab koordineliTikla() {
+            chkKoordineli.click();
             return this;
         }
 

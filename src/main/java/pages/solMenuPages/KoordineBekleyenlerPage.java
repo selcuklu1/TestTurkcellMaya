@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.testng.Assert;
 import pages.MainPage;
@@ -20,7 +21,8 @@ import static com.codeborne.selenide.Selenide.$$;
 public class KoordineBekleyenlerPage extends MainPage {
 
     ElementsCollection tblKoordineBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
-
+    ElementsCollection tblImzaBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement evrakIcerikEkranKontrol = $("div[id='windowItemInfoDialog']");
 
     @Step("Koordine Bekleyenler sayfası aç")
     public KoordineBekleyenlerPage openPage() {
@@ -41,6 +43,19 @@ public class KoordineBekleyenlerPage extends MainPage {
 
         Assert.assertEquals(durum, true);
 
+        return this;
+    }
+
+    @Step("Evrak konusuna göre İçerik tıklama : {konu} ")
+    public KoordineBekleyenlerPage evrakKonusunaGoreIcerikTiklama(String konu) {
+        tblImzaBekleyenEvraklar.filterBy(Condition.text(konu)).first()
+                .$("[id^='mainInboxForm:inboxDataTable'][id$='detayGosterButton']").click();
+        return this;
+    }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public KoordineBekleyenlerPage evrakIcerikKontrol() {
+        Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
         return this;
     }
 
