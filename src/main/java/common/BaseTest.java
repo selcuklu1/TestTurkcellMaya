@@ -268,11 +268,12 @@ public class BaseTest extends BaseLibrary {
             options.merge(capabilities);*/
             //caps.merge(options);
 
-            WebDriver driver = Configuration.remote == null ?
+           /* WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
-            WebDriverRunner.setWebDriver(driver);
+            WebDriverRunner.setWebDriver(driver);*/
+            WebDriverRunner.setWebDriver(new FirefoxDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
@@ -282,7 +283,7 @@ public class BaseTest extends BaseLibrary {
     public void useFirefox() {
         try {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.VERSION, Configuration.browserVersion);
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);*/
@@ -290,8 +291,7 @@ public class BaseTest extends BaseLibrary {
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
             */
-            WebDriver driver = new FirefoxDriver(firefoxOptions);
-            WebDriverRunner.setWebDriver(driver);
+            WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
@@ -321,36 +321,17 @@ public class BaseTest extends BaseLibrary {
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            WebDriver driver = Configuration.remote == null ?
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
-            WebDriverRunner.setWebDriver(driver);
+            WebDriverRunner.setWebDriver(driver);*/
+            WebDriverRunner.setWebDriver(new ChromeDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
         return downloadPath;
     }
-
-
-    public void useFirefox1(){
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setHeadless(headless);
-        if (!browserBinary.isEmpty()) {
-            firefoxOptions.setBinary(browserBinary);
-        }
-        firefoxOptions.addPreference("network.automatic-ntlm-auth.trusted-uris", "http://,https://");
-        firefoxOptions.addPreference("network.automatic-ntlm-auth.allow-non-fqdn", true);
-        firefoxOptions.addPreference("network.negotiate-auth.delegation-uris", "http://,https://");
-        firefoxOptions.addPreference("network.negotiate-auth.trusted-uris", "http://,https://");
-        firefoxOptions.addPreference("network.http.phishy-userpass-length", 255);
-        firefoxOptions.addPreference("security.csp.enable", false);
-
-        WebDriver driver = new FirefoxDriver(firefoxOptions);
-    }
-
-
-
 
 
     @Step("Login")
