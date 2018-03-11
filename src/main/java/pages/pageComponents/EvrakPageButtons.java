@@ -48,12 +48,12 @@ public class EvrakPageButtons extends MainPage {
     }
 
 
-    @Step("s-İmzla radio butonu bul")
+    @Step("s-İmza radio butonu bul")
     public SelenideElement getSImzalaRadio() {
         return getEvrakImzalaDialog().$("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
     }
 
-    @Step("s-İmzla seç")
+    @Step("s-İmza seç")
     public EvrakPageButtons sImzalaRadioSec() {
 /*        if (islemMesaji().getMessageTitles().size() > 0)
             if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
@@ -300,6 +300,7 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+
     SelenideElement dialogIcerikDegistiUyarıKontrol = $("div[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemDialog']");
     @Step("Onay Ekranı: \"{uyari}\"  \"{secenek1}\"  \"{secenek2}\" ")
     public MainPage icerikDegistiUyarıKontrol(String uyari,String secenek1,String secenek2) {
@@ -322,10 +323,31 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    ElementsCollection radioEvrakIcerikDegistiIadeEt = $$("table[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:secenekTipi'] tr");
+    @Step("Evrak Içerik değişti Iade Et")
+    public MainPage evrakIcerikDegistiIadeEt() {
+        radioEvrakIcerikDegistiIadeEt.filterBy(Condition.text("İade Et")).get(0).click();
+        return this;
+    }
+
     SelenideElement btnEvrakIcerikDegistiKaydet = $("button[id$='evrakSecmeliDegistiKaydetButton']");
     @Step("Evrak Içerik değişti ve Kaydet)")
     public MainPage evrakSecmeliDegistiKaydet() {
         btnEvrakIcerikDegistiKaydet.click();
+        return this;
+    }
+
+    SelenideElement btnKullaniciyaIadeEt = $("button[id='inboxItemInfoForm:iadeEtButton_id']");
+    @Step("Kullanıcıya Iade Et butonu tıklanır)")
+    public MainPage kullaniciyaIadeEt() {
+        btnKullaniciyaIadeEt.click();
+        return this;
+    }
+
+    SelenideElement btnEvrakIcerikDegistiKaydetEvet = $("button[id^='inboxItemInfoForm:j_idt'][onclick*='iadeKaydetEtDogrulaDialog']");
+    @Step("Evrakta değişiklik var, kaydetmek ister misiniz?)")
+    public MainPage evrakIcerikDegistiKaydetEvet() {
+        btnEvrakIcerikDegistiKaydetEvet.click();
         return this;
     }
 

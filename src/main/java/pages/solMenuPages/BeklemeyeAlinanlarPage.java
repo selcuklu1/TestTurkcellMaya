@@ -57,6 +57,7 @@ public class BeklemeyeAlinanlarPage extends MainPage {
         return this;
     }
 
+
     @Step("Evrak kopyala tıklanır")
     public BeklemeyeAlinanlarPage evrakKopyala(){
         btnEvrakKopyala.click();

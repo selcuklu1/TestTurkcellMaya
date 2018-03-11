@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -25,6 +26,7 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement btnPaylas = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:7:cmdbutton"));
     SelenideElement btnTreeKapat = $(By.id("mainPreviewForm:evrakPaylasKisiLov:lovTreePanelKapat"));
     SelenideElement btnParafla = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
+    SelenideElement btnImzala = $("button[id='imzalaForm:imzalaButton']");
 
     SelenideElement btnPaylasimdanGeriAl = $(By.xpath("//span[contains(@class, 'evrakGeriAl')]/.."));
     ElementsCollection tablePaylasimdanGeriAl = $$("div[id='mainPreviewForm:geriAlPaylasimDatatable'] tbody > tr[role='row']");
@@ -328,6 +330,14 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Imzala")
+    public ParafBekleyenlerPage imzala() {
+        btnImzala.click();
+        return this;
+    }
+
+
+
     @Step("Paraf Bekleyenler listesinde evrak kontrolu")
     public ParafBekleyenlerPage konuyaGoreEvrakKontrol(String konu) {
 
@@ -336,6 +346,21 @@ public class ParafBekleyenlerPage extends MainPage {
                 .size() > 0;
 
         Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    public ParafBekleyenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
+
+        boolean durum = tblParafBekleyenEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[class$='document-typeIade']").isDisplayed();
+
+
+        Assert.assertEquals(durum, true, "Iade Et Button kontrolü:");
+        Allure.addAttachment("Iade Et Button Kontrolü", "");
 
         return this;
     }
