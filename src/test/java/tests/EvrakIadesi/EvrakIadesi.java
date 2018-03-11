@@ -803,41 +803,32 @@ public class EvrakIadesi extends BaseTest {
 
         imzaBekleyenlerPage
                 .openPage()
-                .evrakNoKontrolu(konu);
-//                .konuyaGoreEvrakOnizlemedeAc(konu)
-//                .evrakSecBeklemeyeAl()
-//                .beklemeyeAlUyariKontrol()
-//                .beklemeyeAlUyariEvet()
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .evrakNoKontrolu(konu)
+                .evrakKonusunaGoreIcerikTiklama(konu);
 
+        evrakOlusturPage
+                .editorTabKontrolInbox();
 
-//        beklemeyeAlinanlarPage
-//                .openPage()
-//                .evrakSecKonuyaGoreIcerikGoster(konu);
-//
-//        evrakOlusturPage
-//                .editorTabKontrolInbox();
-//
-//        evrakOlusturPage
-//                .iadeEt()
-//                .parafciKontrol(user1)
-//                //TODO burasi calismiyor fix it
-////                .dosyaEkle(pathToFileText,fileName)
-//                .notAlaniDoldur(konu)
-//                .kullaniciyaIadeEt()
-//                .islemMesaji().basariliOlmali(basariMesaji);
-//
-//        imzaBekleyenlerPage
-//                .openPage()
-//                .evrakOlmadigiGorme(konu);
-//
-//        iadeEttiklerimPage
-//                .openPage()
-//                .evrakGeldigiGorme(konu,geregiKurum,evrakTarihiSaat)
-//                .evrakSec(konu)
-//                .iadeEdilmistirIkonKontrolu(konu)
-//                .secilenEvrakEvrakGecmisi()
-//                .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
+        evrakOlusturPage
+                .iadeEt()
+                .parafciKontrol(user1)
+                //TODO burasi calismiyor fix it
+//                .dosyaEkle(pathToFileText,fileName)
+                .notAlaniDoldur(konu)
+                .kullaniciyaIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakOlmadigiGorme(konu);
+
+        iadeEttiklerimPage
+                .openPage()
+                .evrakGeldigiGorme(konu,geregiKurum,evrakTarihiSaat)
+                .evrakSec(konu)
+                .iadeEdilmistirIkonKontrolu(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
     }
 
 }
