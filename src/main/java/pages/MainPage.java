@@ -309,11 +309,29 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak Icerik Degisti Iade Et")
+    public MainPage evrakIcerikDegistiIadeEt() {
+        new EvrakPageButtons().evrakIcerikDegistiIadeEt();
+        return this;
+    }
+
     @Step("Evrak Icerik Degisti Kaydet")
     public MainPage evrakSecmeliDegistiKaydet() {
         new EvrakPageButtons().evrakSecmeliDegistiKaydet();
         return this;
     }
+
+    @Step("Kullanıcıya Iade Et")
+    public MainPage kullaniciyaIadeEt() {
+        new EvrakPageButtons().kullaniciyaIadeEt();
+        return this;
+    }
+
+    public MainPage evrakIcerikDegistiKaydetEvet() {
+        new EvrakPageButtons().evrakIcerikDegistiKaydetEvet();
+        return this;
+    }
+
 
     @Step("Evrak içeriğini değiştirdiğiniz için evrak üzerindeki değişiklikler kaydedilecektir ve bu aşamadan sonra evrakınızı yalnızca iade edebilir veya güncellemeye devam edebilirsiniz. İşleminize devam etmek istiyor musunuz?")
     public MainPage evrakSecmeliDegistiEvet() {

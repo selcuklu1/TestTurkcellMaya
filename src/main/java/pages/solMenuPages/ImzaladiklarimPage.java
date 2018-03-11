@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -32,6 +33,7 @@ public class ImzaladiklarimPage extends MainPage {
     SelenideElement txtBaslangicTarihi = $x("//label[normalize-space(text())='Başlangıç Tarihi :']/../../following-sibling::td//input");
     SelenideElement txtBitisTarihi = $x("//label[normalize-space(text())='Bitiş Tarihi :']/../../following-sibling::td//input");
     ElementsCollection tblImzaladiklarimEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblParafImzacilarListesi = $$("tbody[id='mainInboxForm:imzaListesiDataTable_data'] > tr[role='row']");
     SelenideElement btnGeriAl = $x("//span[contains(@class, 'evrakGeriAl')]/..");
     SelenideElement txtGeriAlAciklama = $(By.id("mainPreviewForm:evrakGeriAlInputTextareaId"));
     SelenideElement btnGeriAlOnay = $x("//div[@class='form-buttons']//span[. = 'Geri Al']/..");
@@ -238,7 +240,7 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("İmzaladıklarım listesinde evrak kontrolu")
+    @Step("İmzaladıklarım listesinde evrak kontrolu: {konu}")
     public ImzaladiklarimPage konuyaGoreEvrakKontrol(String konu) {
 
         boolean durum = tblImzaladiklarimEvraklar
@@ -259,6 +261,37 @@ public class ImzaladiklarimPage extends MainPage {
                 .$("[id^='detayGosterButton']").click();
 
 
+        return this;
+    }
+
+    @Step("Versiyon Sorgula Ikon Kontrolü : {konu}")
+    public ImzaladiklarimPage versiyonSorgulaIkonKontrolü(String konu) {
+        boolean durum = tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='versiyonlariSorgulaButton']").isDisplayed();
+        Assert.assertEquals(durum,true,"Versiyon Sorgula Ikon Kontrolü");
+        Allure.addAttachment("Versiyon Sorgula Ikon Kontrolü",konu);
+        return this;
+    }
+
+    @Step("Imzacıları Kontrolü ve Tıklama - Kurdele Ikon Kontrolü : {konu}")
+    public ImzaladiklarimPage imzacilari(String konu) {
+        boolean durum = tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='btnImzasiz']").isDisplayed();
+        Assert.assertEquals(durum,true,"Imzacıları Kontrolü ve Tıklama - Kurdele Ikon Kontrolü");
+        Allure.addAttachment("Imzacıları Kontrolü ve Tıklama - Kurdele Ikon Kontrolü",konu);
+        return this;
+    }
+
+    @Step("Paraf/Imzacılar Listesi Kontrol: {user}")
+    public ImzaladiklarimPage parafImzacilarListesiKontrol(String user,boolean status) {
+        boolean durum = tblParafImzacilarListesi
+                .filterBy(Condition.text(user)).size() > 0;
+        Assert.assertEquals(durum,status,"Paraf/Imzacılar Listesi Kontrol:");
+        Allure.addAttachment("Paraf/Imzacılar Listesi Kontrol:" + status,user);
         return this;
     }
 
