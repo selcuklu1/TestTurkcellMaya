@@ -282,13 +282,13 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
+           /* FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);*/
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
-            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             //capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);*/
+            capabilities.setVersion(Configuration.browserVersion);
             /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), firefoxOptions)).register(new DriverEventListener());*/
@@ -296,7 +296,7 @@ public class BaseTest extends BaseLibrary {
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
             WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
-                    : new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), firefoxOptions);
+                    : new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
             /*WebDriver driver = System.getProperty("hub") == null ?
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
