@@ -31,14 +31,14 @@ public class DagitimHitapDuzenle extends MainPage {
 
     public DagitimHitapDuzenle(SelenideElement page) {
         this.page = page;
-        this.container = page.$("div[id$='hitapDuzenlemeDialog']").shouldBe(visible);
+        this.container = page.$("div[id$='hitapDuzenlemeDialog']");
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
 
     public DagitimHitapDuzenle() {
         //this.container = $("html").$("div[id$='dagitimHitapDuzenlePanel']");
         page = $("html");
-        this.container = page.$("div[id$='hitapDuzenlemeDialog']").shouldBe(visible);
+        this.container = page.$("div[id$='hitapDuzenlemeDialog']");
         dagitimPlaniDetayDataTable = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']"));
     }
 
