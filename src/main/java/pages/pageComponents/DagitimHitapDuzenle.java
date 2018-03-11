@@ -336,7 +336,7 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Adres girilir")
     public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
         adresGirilir(adres);
-        //adresHitaptaGorunsunSec(true);
+        adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
     }

@@ -96,7 +96,21 @@ public class PDFOnizleme extends MainPage{
         SelenideElement page = getPage(0).scrollIntoView(true);
         //setScale100();
         for (Condition condition : conditions) {
+            Allure.addAttachment(condition.toString(), condition.toString());
             page.$(".textLayer").shouldHave(condition);
+            //page.waitUntil(condition, 30000);
+        }
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF Önizleme tekst kontrolü {conditions}")
+    public PDFOnizleme checkNoText(Condition... conditions) {
+        SelenideElement page = getPage(0).scrollIntoView(true);
+        //setScale100();
+        for (Condition condition : conditions) {
+            Allure.addAttachment(condition.toString(), condition.toString());
+            page.$(".textLayer").shouldNotHave(condition);
             //page.waitUntil(condition, 30000);
         }
         takeScreenshot();
