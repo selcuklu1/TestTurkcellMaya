@@ -554,6 +554,14 @@ public class BilgilerTab extends MainPage {
         return collection.shouldHave(sizeGreaterThan(0)).first().$("select").shouldBe(visible);
     }
 
+    @Step("Seçilen Geregi posta tipi {posta} kontolü")
+    public BilgilerTab geregiPostaTipiKontrolu(String postaTipi) {
+        //getGeregiCombolov().getSelectedItems().last().$("select").getSelectedOption().shouldHave(text(postaTipi));
+        Assert.assertEquals(getGeregiCombolov().getSelectedItems().last().$("select").getSelectedOption().text(), postaTipi
+        , "Posta tipinin default " + postaTipi + " olarak geldiği görülür");
+        return this;
+    }
+
     @Step("Geregi posta tipi {posta} seçilir")
     public BilgilerTab geregiPostaTipiSec(String postaTipi) {
         getGeregiCombolov().getSelectedItems().last().$("select").selectOption(postaTipi);
