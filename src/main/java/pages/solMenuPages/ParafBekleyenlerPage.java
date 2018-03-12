@@ -64,7 +64,8 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
     SelenideElement btnEvrakOnizlemdeSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
     SelenideElement txtEvrakOnizlemdeSilNotu = $("[id^='mainPreviewForm:j_idt'][class^='ui-inputfield ui-inputtextarea']");
-
+    SelenideElement btnOnizlemeIadeEt = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td[class='buttonMenuContainerDefault'] span[class='ui-button-icon-left ui-icon iadeEt']");
+    SelenideElement btnOnizlemeIadeEtIadeEt = $("[id='mainPreviewForm:iadeEtButton_id']");
 
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
@@ -338,7 +339,7 @@ public class ParafBekleyenlerPage extends MainPage {
 
 
 
-    @Step("Paraf Bekleyenler listesinde evrak kontrolu")
+    @Step("Paraf Bekleyenler listesinde evrak kontrolu {konu}")
     public ParafBekleyenlerPage konuyaGoreEvrakKontrol(String konu) {
 
         boolean durum = tblParafBekleyenEvraklar
@@ -373,6 +374,25 @@ public class ParafBekleyenlerPage extends MainPage {
                 .get(0)
                 .$("[id$='evrakTable']").click();
 
+        return this;
+    }
+
+    @Step("Önizleme Iade Et Kontrolü")
+    public ParafBekleyenlerPage onizlemeIadeEtKontrolu() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Önizleme Iade Et Kontrol");
+        Allure.addAttachment("Önizleme Iade Et Kontrol", "");
+        return this;
+    }
+
+    @Step("Önizleme Iade Et")
+    public ParafBekleyenlerPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Önizleme Iade Et Iade Et Butonu")
+    public ParafBekleyenlerPage onizlemeIadeEtIadeEt() {
+        btnOnizlemeIadeEtIadeEt.click();
         return this;
     }
 
@@ -468,5 +488,9 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-
+    @Step("Not alanını doldur: {not}")
+    public ParafBekleyenlerPage notAlaniDoldur(String not) {
+        $("textarea[id$='notTextArea_id'").setValue(not);
+        return this;
+    }
 }
