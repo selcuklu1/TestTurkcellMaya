@@ -5,7 +5,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.pageComponents.tabs.AltTabs;
 import pages.ustMenuPages.EvrakOlusturPage;
 

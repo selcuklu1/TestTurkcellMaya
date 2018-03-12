@@ -12,9 +12,7 @@ import pages.pageData.UstMenuData;
 import java.io.File;
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -270,8 +268,6 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement evrakGelisTipiKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakGelisTipi"));
     SelenideElement ivedilikKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:12:ivedilik"));
 
-
-
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GelenEvrakKayit);
@@ -284,6 +280,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
+
 
     @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec() {

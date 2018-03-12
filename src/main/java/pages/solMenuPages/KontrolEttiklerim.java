@@ -1,7 +1,6 @@
 package pages.solMenuPages;
 
 import io.qameta.allure.Step;
-import pages.MainPage;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageData.SolMenuData;
 

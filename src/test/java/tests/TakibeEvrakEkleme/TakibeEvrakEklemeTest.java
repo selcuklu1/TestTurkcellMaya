@@ -5,7 +5,6 @@ import common.BaseTest;
 import io.qameta.allure.Allure;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;

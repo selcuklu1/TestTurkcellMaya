@@ -4,14 +4,14 @@ import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.TopluEvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 /****************************************************
  * Tarih: 2018-02-22
  * Proje: Türksat Functional Test Automation

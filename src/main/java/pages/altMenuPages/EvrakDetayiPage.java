@@ -9,9 +9,6 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.EkleriTab;
-import pages.pageComponents.tabs.IlgileriTab;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;

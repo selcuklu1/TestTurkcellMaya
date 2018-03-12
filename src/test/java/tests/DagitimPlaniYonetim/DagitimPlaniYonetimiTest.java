@@ -6,7 +6,6 @@ import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import common.ReusableSteps;
 import data.User;
-import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.testng.Assert;
@@ -42,8 +41,8 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  * Tarih: 1.02.2018
  * Açıklama:
  */
-@Feature("Dağıtım Planı Yönetimi")
 //@Test(suiteName = "Dağıtım Plan Yönetimi")
+@Feature("Dağıtım Planı Yönetimi")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -697,6 +696,42 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .$(Selectors.byText("DAĞITIM YERLERİNE")).getTagName(), "span", "evrakta görünecek hitap span olmalı");
 
         dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
+    }
+
+
+    @Test(description = "TS2243: KEP li Dağıtım Planı Oluşturma ve Evrak Üzerinden Kontrolü", enabled = true)
+    public void TS2243() {
+        /*Cumhurbaşkanlığı
+                AnaBirim1, YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ
+                tüzel - hepsi küçük harflerle tüzel kişi
+        TS2243*/
+
+        User user = user1;
+        login(user);
+
+        String planAdi = "TS2243 " + getDateTime();
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        LinkedHashMap<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Birim", "AnaBirim1");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "TS2243 Kepli");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "hepsi küçük harflerle tüzel kişi");
+
+        page = new DagitimPlaniYonetimiPage().openPage();
+        page.yeni()
+                .adiGir(planAdi)
+                .aciklamaGir("TS2243 açıklama")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true);
+
+        dagitimPlanElemanlari.forEach((k, v) -> page.dagitimElemanlariEkle(k, v));
+        page.kaydet().islemMesaji().basariliOlmali();
+
+        new EvrakOlusturPage().openPage().bilgileriTab()
+                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
+                .geregiSec(planAdi)
+                .geregiPostaTipiKontrolu("KEP");
     }
 
     //region Steps

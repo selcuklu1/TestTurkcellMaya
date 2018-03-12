@@ -20,8 +20,6 @@ import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.VekaletVerPage;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;

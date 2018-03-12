@@ -634,6 +634,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Alınmayı Bekleyenler Evraklar Listesinden Evrak Üzerinden Teslim Alma")
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreTeslimAl(String konu) {
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='teslimAlButton']").click();
+        return this;
+    }
+
 
     @Step("\"{text}\" butonu tıklanır.")
     public TeslimAlinmayiBekleyenlerPage btnTikla(String text) {
@@ -642,7 +651,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Teslim Al popupı kapatılır. ")
+    @Step("Evrak Teslim Al Evet popupı kapatılır. Evrakı teslim almak istediğinize emin misiniz? ")
     public TeslimAlinmayiBekleyenlerPage evrakTeslimAlPopUpEvet(){
         btnTeslimAlPopup.click();
         return this;
@@ -788,7 +797,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    @Step("Iade Edilecek Birim Kontrolü")
     public TeslimAlinmayiBekleyenlerPage onizlemeIadeEdilecekBirimKontrolu(String birim) {
         boolean durum = lblIadeEdilecekBirim.filterBy(Condition.text(birim)).size() == 1;
         Assert.assertEquals(durum,true,"Iade Edilecek Birim Kontrolü");

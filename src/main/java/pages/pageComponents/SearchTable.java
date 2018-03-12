@@ -2,7 +2,6 @@ package pages.pageComponents;
 
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.impl.WebElementsCollectionWrapper;
-import common.BaseLibrary;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;

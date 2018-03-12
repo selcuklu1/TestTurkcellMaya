@@ -1616,11 +1616,15 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Iade Edilecek Kullanıcı Kontrolü")
+    @Step("Iade Edilecek Kullanıcı/Birim Kontrolü")
     public GelenEvraklarPage onizlemeIadeEdilecekKullaniciKontrolu(String kisi) {
         boolean durum = lblIadeEdilecekKullanici.filterBy(Condition.text(kisi)).size() == 1;
+
         Assert.assertEquals(durum, true, "Iade Edilecek Kullanıcı Kontrolü");
         Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü", "");
+
+        Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı/Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü","");
         return this;
     }
 
