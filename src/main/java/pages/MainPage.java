@@ -244,6 +244,12 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Parafla butona tıkla")
+    public MainPage paraflaButonaTikla() {
+        new EvrakPageButtons().paraflaButonaTikla();
+        return this;
+    }
+
     @Step("Koordine Parafla")
     public MainPage koordineParafla() {
         new EvrakPageButtons().evrakKoordineParafla();
@@ -344,6 +350,12 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Paraflama butonun üzerine Üçgen içerisinde Ünlem(!) ")
+    public MainPage paraflanamazButtonKontrol() {
+        new EvrakPageButtons().paraflanamazButtonKontrol();
+        return this;
+    }
+
     @Step("Evrak İmzala Uyarı Kontrol")
     public MainPage evrakImzalaUyariKontrol(String uyari) {
         new EvrakPageButtons().evrakImzalaUyariKontrol(uyari);
@@ -356,9 +368,15 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Iade Et")
+    @Step("Parafci Kontrol")
     public MainPage parafciKontrol(String user) {
         new EvrakPageButtons().parafciKontrol(user);
+        return this;
+    }
+
+    @Step("Parafci Kontrol")
+    public MainPage kontrolEdenKontrol(String user) {
+        new EvrakPageButtons().kontrolEdenKontrol(user);
         return this;
     }
 

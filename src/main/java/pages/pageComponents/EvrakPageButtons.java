@@ -354,13 +354,24 @@ public class EvrakPageButtons extends MainPage {
     }
 
     SelenideElement btnImzalanamaz = $("span[class='ui-button-icon-left ui-icon imzalanamaz']");
-    @Step("Evrak Içerik değişti ve Kaydet)")
+    @Step("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!)")
     public MainPage imzalanamazButtonKontrol() {
         Assert.assertEquals(btnImzalanamaz.isDisplayed(),true,"İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ");
         Allure.addAttachment("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ","");
         takeScreenshot();
         return this;
     }
+
+    SelenideElement btnParaflanamaz = $("span[class='ui-button-icon-left ui-icon paraflanamaz']");
+    @Step("Paraflama butonun üzerine Üçgen içerisinde Ünlem(!)")
+    public MainPage paraflanamazButtonKontrol() {
+        Assert.assertEquals(btnParaflanamaz.isDisplayed(),true,"Paraflama butonun üzerine Üçgen içerisinde Ünlem(!) ");
+        Allure.addAttachment("Paraflama butonun üzerine Üçgen içerisinde Ünlem(!) ","");
+        takeScreenshot();
+        return this;
+    }
+
+
 
     SelenideElement txtEvrakImzalaUyari = $("div[id='imzalaForm:imzaPanel_header']");
     @Step("Evrak Içerik değişti ve Kaydet)")
@@ -386,6 +397,13 @@ public class EvrakPageButtons extends MainPage {
         comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id")).selectComboBox(user);
         return this;
     }
+
+    @Step("Kontrol Eden Kontrol: {user}")
+    public EvrakPageButtons kontrolEdenKontrol(String user) {
+        comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id")).selectComboBox(user);
+        return this;
+    }
+
     SelenideElement btnDosyaEkle = $("[id='inboxItemInfoForm:fileUploadIadeEk']");
     @Step("Dosya ekle")
     public EvrakPageButtons dosyaEkle(String path,String dosyaAdi) throws InterruptedException{
