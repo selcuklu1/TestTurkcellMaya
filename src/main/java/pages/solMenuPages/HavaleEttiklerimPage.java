@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -35,6 +36,11 @@ public class HavaleEttiklerimPage extends MainPage {
     BelgenetElement txtIcerikGosterHavaleYapKullaniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtIcerikGosterHavaleYapOnaylayacakKisi = comboLov(By.id("inboxItemInfoForm:onaylayacakKisiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
+    SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
+
 
     @Step("Havale Ettiklerim sayfası aç")
     public HavaleEttiklerimPage openPage() {
@@ -48,9 +54,71 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("{konu} adlı evrakın içerik göster tıklanır")
+    public HavaleEttiklerimPage konuyaGoreEvrakIcerikGoster(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
+        return this;
+    }
+
     @Step("{evrakNo} adlı evrak tıklanır")
     public HavaleEttiklerimPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar.filterBy(Condition.text(evrakNo)).first().click();
+        return this;
+    }
+
+    @Step("{konu} adlı evrak tıklanır")
+    public HavaleEttiklerimPage konuyaGoreEvrakSec(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).first().click();
+        return this;
+    }
+
+
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public HavaleEttiklerimPage evrakOnizlemeKontrolu() {
+        evrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public HavaleEttiklerimPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public HavaleEttiklerimPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public HavaleEttiklerimPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Birim alanına \"{birim}\" doldurulur.")
+    public HavaleEttiklerimPage havaleYapBirimDoldur(String birim) {
+        txtHavaleYapBirim.type(birim).getTitleItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Açıklama alanı doldurulur.")
+    public HavaleEttiklerimPage havaleYapAciklamaDoldur(String text) {
+        txtHavaleYapAciklama.setValue(text);
+        return this;
+    }
+
+    @Step("Havele Yap Gönder butonu")
+    public HavaleEttiklerimPage havaleYapGonder() {
+        btnHavaleYapGonder.click();
         return this;
     }
 
