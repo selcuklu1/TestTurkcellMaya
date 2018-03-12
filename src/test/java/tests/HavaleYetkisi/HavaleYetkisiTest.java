@@ -188,7 +188,7 @@ public class HavaleYetkisiTest extends BaseTest {
         }
     }
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü.")
+    @Test(enabled = true, description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
     public void TS0597() throws InterruptedException{
 
     }
