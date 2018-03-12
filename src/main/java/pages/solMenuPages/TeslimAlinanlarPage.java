@@ -42,6 +42,8 @@ public class TeslimAlinanlarPage extends MainPage {
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
+    SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+
 
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
     SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
@@ -283,9 +285,49 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Konuya göre evrak seçilir : \"{konu}\" ")
+    public TeslimAlinanlarPage konuyaGoreEvrakSec(String konu) {
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public TeslimAlinanlarPage evrakOnizlemeKontrolu() {
+        formEvrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public TeslimAlinanlarPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public TeslimAlinanlarPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public TeslimAlinanlarPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
     @Step("Evrak Onizleme Kontrolu")
     public TeslimAlinanlarPage evrakOnizlemeKontrol() {
-        if (evrakOnizlemeKontrol.isDisplayed())
+        if (formEvrakOnizleme.isDisplayed())
             Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
         return this;
     }

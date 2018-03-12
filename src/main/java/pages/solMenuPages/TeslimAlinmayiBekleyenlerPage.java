@@ -41,7 +41,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     BelgenetElement txtKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     BelgenetElement txtKonuKodu = comboLov(By.id("mainPreviewForm:konuKoduLov:LovText"));
     SelenideElement btnTeslimAlVeKapatTeslimAlVeKapat = $("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='form-buttons kapatButtonDirekt'] button");
-    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[data-ri]");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     ElementsCollection btnTeslimAl = $$("[id^='mainInboxForm:inboxDataTable:j_idt'] > [class$='document-delivery']");
@@ -61,6 +61,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement accordionIlgiBilgileriOpen1 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(1)");
     SelenideElement accordionIlgiBilgileri2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-accordion-header']:nth-child(3)");
     SelenideElement accordionIlgiBilgileriOpen2 = $("[id^='mainPreviewForm:j_idt'] [id$='accpnlI'] [class*='ui-state-active']:nth-child(3)");
+
+
 
     ElementsCollection tblOnIzlemeEkler = $$("[id*='ekListesiOnizlemeDataTable'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
@@ -122,6 +124,42 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Konu kodu doldur")
     public TeslimAlinmayiBekleyenlerPage konuKoduDoldur(String konuKodu) {
         txtKonuKodu.selectLov(konuKodu);
+        return this;
+    }
+
+    @Step("{konu} adlı evrak tıklanır")
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreEvrakSec(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).first().click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeKontrolu() {
+        formEvrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
         return this;
     }
 

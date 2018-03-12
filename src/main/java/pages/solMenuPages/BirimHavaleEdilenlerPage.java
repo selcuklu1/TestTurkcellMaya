@@ -74,6 +74,9 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement txtEklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
     ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
 
+    SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+
+
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.BirimHavaleEdilenler);
@@ -166,6 +169,46 @@ public class BirimHavaleEdilenlerPage extends MainPage {
                 .click();
         return this;
     }
+
+    @Step("Tabloda evrak no ile evrak seçme. \"{konu}\" ")
+    public BirimHavaleEdilenlerPage konuyaGoreTablodanEvrakSecme(String konu) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeKontrolu() {
+        formEvrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
 
     @Step("Evrak no ile teslim al")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
