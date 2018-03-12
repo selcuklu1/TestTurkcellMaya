@@ -37,6 +37,7 @@ public class EvrakIadesi extends BaseTest {
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
+    ParafladiklarimPage parafladiklarimPage;
 
 
     @BeforeMethod
@@ -56,6 +57,7 @@ public class EvrakIadesi extends BaseTest {
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
+        parafladiklarimPage = new ParafladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1898,5 +1900,126 @@ public class EvrakIadesi extends BaseTest {
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS108: Paraflanan evrakın geri çekilerek iade edilmesi")
+    public void TS108() throws InterruptedException {
+        String testid = "TS108";
+        String konu = "TS108-" + getSysDate();
+        String konuKodu = "Kanunlar";
+        String kaldirilacakKlasorler = "KURUL KARARLARI";
+        String evrakDerecesi = GizlilikDerecesi.GIZLI.getOptionText();
+        String geregiSecimKurum = "Kurum";
+        String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String geregiKurum2 = "BÜYÜK HARFLERLE KURUM";
+        String geregiKurum3 = "TS1493 Kurumu";
+        String geregiSecimBirim = "Birim";
+        String geregiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String bilgiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String geregiSecimKullanici = "Kullanıcı";
+        String geregiKullanici = "Ahmet SAVAŞ";
+        String akisAdim = "İmzalama";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+        String basariMesaji = "İşlem başarılıdır!";
+        String user1 = "Mehmet BOZDEMİR";
+        String user2 = "Zübeyde TEKİN";
+        String user3 = "Yasemin Çakıl AKYOL";
+        String details = "BHUPGMY";
+        String sayfa1 = "Evrak Oluştur";
+        String evrakGuncellendiImzalanamazUyari = "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.";
+        String evrakİmzaUyari = "Sayısal imza ile imzaladığınız belge 5070 sayılı kanun kapsamına girmemektedir.";
+        String evrakIcerikDegistiUyari = "Evrak içeriğini değiştirdiğiniz için aşağıdakilerden uygun olanı seçerek işleminize devam edebilirsiniz.";
+
+        String secenek1 = "İade Et";
+        String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
+        String evrakTarihiSaat = getSysDateForTarihSaat();
+        String islemSureci = "Evrak iade edildi";
+
+        testStatus(testid, "PreCondition Evrak Oluşturma");
+        evrakOlusturPage
+                .openPage()
+                .sayfaKontrol(sayfa1)
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuKoduDoldurKontrol(konuKodu)
+                .konuDoldur(konu)
+                //Bug: text alani "Kanunlar" olarak kalıyor yeni değer html domda set edilmiyor. Deger olarak TS2017-20180224165929 set ediliyor bizim tarafımızdan.
+//                .konuDoldurKontrol(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec("Normal")
+                .gizlilikDerecesiKontrol("Normal")
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .geregiSecimTipiYeniEvrak("Kurum")
+                .geregiSecimTipiKontrol("Kurum")
+                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiKontrol(geregiKurum)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciTipiSec(user1,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
+                .onayAkisiKullaniciEkle(user2,details)
+                .onayAkisiKullaniciTipiSec(user2,"Paraflama")
+                .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
+                .onayAkisiKullaniciEkle(user3,details)
+                .onayAkisiKullaniciTipiSec(user3,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user3 , "İmzalama")
+                .kullan()
+                .paraflaKontrol();
+
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .evrakImzala()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakOnizlemedeAc(konu);
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        testStatus(testid, "Test Başladı");
+        parafladiklarimPage
+                .openPage()
+                .evrakNoGoreEvrakSec(konu)
+                .evrakOnizlemeKontrolu()
+                .geriAl()
+                .geriAlGeriAl()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz");
+
+        parafladiklarimPage
+                .notAlaniDoldur(konu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakDetayGoster(konu);
+
+        evrakOlusturPage
+                .editorTabKontrolInbox()
+                .iadeEt()
+                .notAlaniDoldur(konu)
+                .kullaniciyaIadeEt();
+
+        iadeEttiklerimPage
+                .openPage()
+                .evrakSec(konu)
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
+    }
+
 
 }

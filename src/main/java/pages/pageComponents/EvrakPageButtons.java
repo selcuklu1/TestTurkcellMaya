@@ -428,7 +428,7 @@ public class EvrakPageButtons extends MainPage {
 
     @Step("Not alanını doldur: {not}")
     public EvrakPageButtons notAlaniDoldur(String not) {
-        container.$("textarea[id$='notTextArea_id'").setValue(not);
+        container.$("textarea[id$='notTextArea_id']").setValue(not);
         return this;
     }
 

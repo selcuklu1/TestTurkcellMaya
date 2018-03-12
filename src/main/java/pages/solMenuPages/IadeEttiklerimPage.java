@@ -99,7 +99,7 @@ public class IadeEttiklerimPage extends MainPage {
     @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{islemSureci}\" \"{tarih}\"")
     public IadeEttiklerimPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
-                .filterBy(Condition.text(tarih)).size() > 1;
+                .filterBy(Condition.text(tarih)).size() > 0;
         Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
         Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();
