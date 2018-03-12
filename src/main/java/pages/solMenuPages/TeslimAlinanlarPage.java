@@ -43,6 +43,11 @@ public class TeslimAlinanlarPage extends MainPage {
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
 
+    SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
+    ElementsCollection lblIadeEdilecekBirim = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinanlar);
@@ -275,6 +280,40 @@ public class TeslimAlinanlarPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrak Onizleme Kontrolu")
+    public TeslimAlinanlarPage evrakOnizlemeKontrol() {
+        if (evrakOnizlemeKontrol.isDisplayed())
+            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    @Step("Iade Et buton kontrolü")
+    public TeslimAlinanlarPage onizlemeIadeEtKontrol() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Iade et buton kontrolü");
+        Allure.addAttachment("Iade et buton kontrolü","");
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi")
+    public TeslimAlinanlarPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Iade Edilecek Birim Kontrolü")
+    public TeslimAlinanlarPage onizlemeIadeEdilecekBirimKontrolu(String birim) {
+        boolean durum = lblIadeEdilecekBirim.filterBy(Condition.text(birim)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Birim Kontrolü","");
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
+    public TeslimAlinanlarPage iadeEtIadeEt() {
+        btnIadeEtIadeEt.click();
         return this;
     }
 

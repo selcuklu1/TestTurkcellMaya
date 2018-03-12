@@ -36,6 +36,7 @@ public class EvrakIadesi extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    TeslimAlinanlarPage teslimAlinanlarPage;
 
 
     @BeforeMethod
@@ -54,6 +55,7 @@ public class EvrakIadesi extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        teslimAlinanlarPage = new TeslimAlinanlarPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -1520,6 +1522,115 @@ public class EvrakIadesi extends BaseTest {
                 .notAlaniDoldur(konu);
 
         teslimAlinmayiBekleyenlerPage
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakGeldigiGorme(konu,geldigiKurum,evrakTarihiSaat)
+                .konuyaGoreEvrakNotuKontrolu(konu)
+                .evrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(birim,birim,islemSureci,evrakTarihiSaat);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS962: Teslim alınanlar listesine yer alan evrakın iade edilmesi")
+    public void TS962() throws InterruptedException {
+        String testid = "TS-962";
+        String konu = "TS-962-" + getSysDate();
+        String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
+        String pdfName = "Otomasyon.pdf";
+        String pathToFileExcel = getUploadPath() + "test.xlsx";
+        String excelName = "test.xlsx";
+        String sayfa = "Gelen Evraklar";
+        String evrakSayiSag = createRandomNumber(5);
+        String gerek = "GEREĞİ İÇİN GÖNDER";
+        String bilgi = "BİLGİ İÇİN GÖNDER";
+        String koordinasyon = "KOORDİNASYON İÇİN GÖNDER";
+        String konuKodu = "010.01";
+        String evrakTuru = "Resmi Yazışma";
+        String evrakDili = "Türkçe";
+        String evrakTarihi = getSysDateForKis();
+        String evrakTarihiSaat = getSysDateForTarihSaat();
+        String gizlilikDerecesi = "Normal";
+        String kisiKurum = "Kurum";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String evrakGelisTipi = "Posta";
+        String ivedilik = "Normal";
+        String kisi = "Zübeyde TEKİN";
+        String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String details = "BHUPGMY";
+        String onaylayacakKisi = "Mehmet BOZDEMİR";
+        String onayKisiDetails = "BHUPGMY";
+        String basariMesaji = "İşlem başarılıdır!";
+        String islemSureci = "Evrak iade edildi";
+
+        testStatus(testid, "PreCondition");
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        gelenEvrakKayitPage
+                .openPage()
+                .sayfaKontrol(sayfa)
+                .evrakBilgileriUstYaziEkle(pathToFilePdf)
+                .ustYaziPdfAdiKontrol(pdfName)
+                .islemMesaji().basariliOlmali();
+
+        gelenEvrakKayitPage
+                .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
+                .konuDoldur(konu)
+                .konuKontrol(konu)
+                .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
+                .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
+                .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
+                .geldigiKurumDoldurLovText(geldigiKurum)
+                .geldigiKurumKontrol(geldigiKurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .evrakSayiSagKontrol(evrakSayiSag)
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
+
+                .havaleIslemleriKisiDoldur(kisi)
+                .havaleAlanKontrolleri()
+//                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+//                .eklenenOnaylayanKontrolu(onaylayacakKisi)
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
+                .kaydet()
+//                .gelenEvrakKayitKaydetEvet2()
+                .popUpsv2();
+
+        testStatus(testid, "Test Başladı");
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(konu)
+                .konuyaGoreTeslimAl(konu)
+                .evrakTeslimAlPopUpEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakNoIleEvrakSec(konu)
+                .evrakOnizlemeKontrol()
+                .onizlemeIadeEtKontrol()
+                .onizlemeIadeEt()
+                .onizlemeIadeEdilecekBirimKontrolu(birim)
+                .notAlaniDoldur(konu);
+
+        teslimAlinanlarPage
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
