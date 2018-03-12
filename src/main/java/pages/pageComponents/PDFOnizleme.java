@@ -34,19 +34,28 @@ public class PDFOnizleme extends MainPage{
 
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
-        waitForLoadingJS(WebDriverRunner.getWebDriver());
+        WebDriverRunner.getWebDriver().manage().window().maximize();
+        waitForLoadingJS();
         setScale100();
     }
 
     public PDFOnizleme(String title) {
         switchTo().window(title);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
+        setScale100();
     }
 
     @Step("Set 100% scale")
     public PDFOnizleme setScale100() {
-        scaleSelect.waitUntil(Condition.visible, 40000);
-        scaleSelectJS(scaleSelect.toWebElement(), "1");
+        scaleSelect.shouldBe(Condition.visible);
+                //.waitUntil(Condition.visible, 40000);
+        for (int i = 0; i <= Configuration.timeout/1000; i++) {
+            if (!$(".textLayer").innerHtml().isEmpty())
+                break;
+            sleep(1000);
+        }
+        scaleSelect.findElement(By.xpath(".//option[@value = 1]")).click();
+        //scaleSelectJS(scaleSelect.toWebElement(), "1");
         //scaleSelect.selectOptionByValue("1");
         //scaleSelect.selectOptionByValue("page-actual");
         //scaleSelect.selectOption("100%");
@@ -84,7 +93,7 @@ public class PDFOnizleme extends MainPage{
         SelenideElement page = getPage(pageNumber).scrollIntoView(true);
         //setScale100();
         for (Condition condition : conditions) {
-            page = page.$(".textLayer").shouldHave(condition);
+            page.$(".textLayer").shouldHave(condition);
             //page = page.waitUntil(condition, 30000);
             takeScreenshot();
         }

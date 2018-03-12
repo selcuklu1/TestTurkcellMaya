@@ -268,12 +268,12 @@ public class BaseTest extends BaseLibrary {
             options.merge(capabilities);*/
             //caps.merge(options);
 
-           /* WebDriver driver = Configuration.remote == null ?
+            WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver(options)).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
-            WebDriverRunner.setWebDriver(driver);*/
-            WebDriverRunner.setWebDriver(new FirefoxDriver(options));
+            WebDriverRunner.setWebDriver(driver);
+            //WebDriverRunner.setWebDriver(new FirefoxDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
@@ -335,9 +335,12 @@ public class BaseTest extends BaseLibrary {
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
-            WebDriver driver = Configuration.remote == null ?
+            /*WebDriver driver = Configuration.remote == null ?
                     new ChromeDriver(options)
-                    : new RemoteWebDriver(new URL(Configuration.remote), options);
+                    : new RemoteWebDriver(new URL(Configuration.remote), options);*/
+            WebDriver driver = Configuration.remote == null ?
+                    new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
