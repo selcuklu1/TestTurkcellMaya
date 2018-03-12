@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
@@ -167,6 +168,16 @@ public class EvrakOlusturPage extends MainPage {
             btnKaydetEvet.shouldBe(visible).click();
         else
             btnKaydetHayir.shouldBe(visible).click();
+        return this;
+    }
+
+    @Step("\"{text}\" butonu kontrolu. Ekranda görünüyor mu : {shoulBeExist} ")
+    public EvrakOlusturPage butonKontrolu(String text,boolean shoulBeExist) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        if(shoulBeExist)
+            Assert.assertEquals(btn.isDisplayed(),true);
+        else
+            Assert.assertEquals(btn.isDisplayed(),false);
         return this;
     }
 
@@ -481,6 +492,7 @@ public class EvrakOlusturPage extends MainPage {
         //Genelge seçim
         SelenideElement txtBirOncekiGenelge = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoPanelGrid']/tbody/tr/td[8]/label");
         SelenideElement txtGenelgeNo = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:6:genelgeNoId']");
+        SelenideElement lblBirOnceki = $x("//label[normalize-space(text())='Bir Önceki :']");
 
         private BilgilerTab open() {
             if (divContainer.is(not(visible)))
@@ -679,10 +691,31 @@ public class EvrakOlusturPage extends MainPage {
             cmbEvrakTuru.selectOption(evrakTuru);
             return this;
         }
+
+        @Step("Genelge alanı kontrol edilir.")
+        public BilgilerTab genelgeAlaniKontrolu(){
+            Assert.assertEquals(txtGenelgeNo.isDisplayed(),true,"Genelge no textboxı görülür.");
+            Assert.assertEquals(txtBirOncekiGenelge.isDisplayed(),true,"Bir önceki genelge no görülür.");
+            Assert.assertEquals(lblBirOnceki.isDisplayed(),true,"Bir Önceki labelı görülür.");
+            Allure.addAttachment("Genelge No alanı kontrolü","Genelge no alanının ve \n" +
+                    "Bir önceki : sayı/sayı şeklinde bilginin geldiği görülür.");
+            return this;
+        }
+
         @Step("Evrak Türü alanında icerik kontrolü")
         public BilgilerTab evrakTuruIcerikKontrol() {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
-            Allure.addAttachment("Evrak Turu Icerik", cmbEvrakTuru.innerText());
+            String text = cmbEvrakTuru.innerText();
+            Assert.assertEquals(text.contains("Resmi Yazışma"),true);
+            Assert.assertEquals(text.contains("Form"),true);
+            Assert.assertEquals(text.contains("Genelge"),true);
+            Assert.assertEquals(text.contains("Beyanname"),true);
+            Assert.assertEquals(text.contains("Diğer"),true);
+            Allure.addAttachment("Evrak Turu Icerik", "Resmi yazışma\n" +
+                    "Form \n" +
+                    "Genelge\n" +
+                    "Beyanname\n" +
+                    "Diğer seçeneklerinin geldiği görülür.\"\n");
             return this;
         }
 
@@ -1457,6 +1490,15 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kontrolu.")
+        public BilgilerTab onayAkisiKontrolu() {
+            BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisLov:LovSecilen']");
+            boolean deger = txtOnayAkisi.getSelectedItems().isEmpty();
+            Assert.assertEquals(deger,false,"Onay Akısı dolu.");
+
+            return this;
+        }
+
         @Step("Onay akışı temizle")
         public BilgilerTab onayAkisiTemizle() {
             cmbOnayAkisi.click();
@@ -2196,6 +2238,10 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement editorKonuKontrol = $(By.id("yeniGidenEvrakForm:editorTarihKonuSayi"));
         SelenideElement lblDagitimKontrol = $(By.id("yeniGidenEvrakForm:editorDagitimPanel"));
         SelenideElement lblImzaciKontrol = $(By.id("yeniGidenEvrakForm:imzacilarPanel"));
+        SelenideElement txtPopupHitapHitap = $(By.id("yeniGidenEvrakForm:hitapEkInplaceTextId"));
+        SelenideElement btnPdfGoster = $x("//*[@class='cke_button cke_button__pdf_goster cke_button_off']");
+        SelenideElement btnTamam = $x("//input[@id='yeniGidenEvrakForm:hitapEkInplaceTextId']//..//..//td[2]//button");
+
 
         private TextEditor editor = new TextEditor();
 
@@ -2435,9 +2481,41 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
+            String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/button/span")).getText();
             System.out.println(editorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
+            return this;
+        }
+
+        @Step("Editör ekranında GENELGE hitap tıklanır.")
+        public EditorTab hitapTikla() {
+            SelenideElement btnHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']//span[normalize-space(text())='GENELGE']//..//..//button"));
+            btnHitap.click();
+            return this;
+        }
+
+        @Step("Editör ekranında Hitap popup kontrolu")
+        public EditorTab hitapPopupKontrol() {
+            Assert.assertEquals(txtPopupHitapHitap.isDisplayed(),true,"Hitap popup açıldı.");
+            return this;
+        }
+
+        @Step("Editör ekranında Hitap popupında hitap \"{hitap}\" yazılır.")
+        public EditorTab hitapGuncellePopup(String hitap) {
+            txtPopupHitapHitap.clear();
+            txtPopupHitapHitap.sendKeys(hitap);
+            return this;
+        }
+
+        @Step("Hitap Popup kapatılır.")
+        public EditorTab hitapGuncellePopupKapat() {
+            btnTamam.click();
+            return this;
+        }
+
+        @Step("PDF Göster ikonuna tıklanır.")
+        public EditorTab pdfGoster() {
+            clickJs(btnPdfGoster);
             return this;
         }
 
