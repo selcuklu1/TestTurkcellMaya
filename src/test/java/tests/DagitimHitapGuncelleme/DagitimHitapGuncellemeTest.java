@@ -20,8 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.textCaseSensitive;
-import static com.codeborne.selenide.Selenide.$;
 
 /****************************************************
  * Tarih: 2018-02-05

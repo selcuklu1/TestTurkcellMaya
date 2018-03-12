@@ -13,7 +13,8 @@ import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
-import static data.TestData.*;
+import static data.TestData.passwordYAKYOL;
+import static data.TestData.passwordZTEKIN;
 
 /****************************************************
  * Tarih: 2017-12-22

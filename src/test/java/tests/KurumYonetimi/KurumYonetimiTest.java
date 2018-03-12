@@ -10,8 +10,6 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.GidenEvrakKayitPage;
 import pages.ustMenuPages.KurumYonetimiPage;
 
-import java.util.Random;
-
 
 public class KurumYonetimiTest extends BaseTest {
 

@@ -1,26 +1,15 @@
 package tests.HavaleYetkisi;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import com.sun.activation.registries.MailcapTokenizer;
 import common.BaseTest;
 import data.TestData;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
-import pages.pageComponents.IslemMesajlari;
-import pages.pageComponents.tabs.AltTabs;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.RolYonetimiPage;
-
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class HavaleYetkisiTest extends BaseTest {
 
