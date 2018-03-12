@@ -12,6 +12,7 @@ import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 public class ImzaBekleyenlerPage extends MainPage {
     ElementsCollection tblImzaBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
@@ -160,6 +161,19 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("İade et")
     public ImzaBekleyenlerPage iadeEt() {
         btnIadeEt.click();
+        return this;
+    }
+
+    @Step("İade et button kontrol")
+    public ImzaBekleyenlerPage iadeEtKontrol() {
+        Assert.assertEquals(btnIadeEt.isDisplayed(),true,"Iade et button kontrol");
+        Allure.addAttachment("Iade et button kontrol" , "");
+        return this;
+    }
+
+    @Step("Parafcı Kontrol: {user}")
+    public ImzaBekleyenlerPage parafciKontrol(String user) {
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(user);
         return this;
     }
 

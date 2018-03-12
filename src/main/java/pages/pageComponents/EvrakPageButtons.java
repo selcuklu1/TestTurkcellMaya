@@ -332,7 +332,7 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
-    SelenideElement btnKullaniciyaIadeEt = $("button[id='inboxItemInfoForm:iadeEtButton_id']");
+    SelenideElement btnKullaniciyaIadeEt = $("button[id$='iadeEtButton_id']");
     @Step("Kullanıcıya Iade Et butonu tıklanır)")
     public MainPage kullaniciyaIadeEt() {
         btnKullaniciyaIadeEt.click();
