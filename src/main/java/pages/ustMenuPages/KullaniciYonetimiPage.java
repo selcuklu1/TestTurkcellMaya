@@ -501,7 +501,8 @@ public class KullaniciYonetimiPage extends MainPage {
 
     @Step("Rol listesi ekle")
     public KullaniciYonetimiPage rolListeriEkle() {
-        btnRolEkle.click();
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnRolEkle);
+        clickJs(btnRolEkle);
         return this;
 
     }
