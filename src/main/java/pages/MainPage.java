@@ -291,9 +291,15 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Icerik Degisti Iptal")
+    @Step("Icerik Degisti Iptal Tıklanır")
     public MainPage icerikDegistiIptal() {
         new EvrakPageButtons().icerikDegistiIptal();
+        return this;
+    }
+
+    @Step("Icerik Degisti Uyarı Kontrol")
+    public MainPage icerikDegistiUyarıKontrol(String uyari,String secenek1,String secenek2) {
+        new EvrakPageButtons().icerikDegistiUyarıKontrol(uyari,secenek1,secenek2);
         return this;
     }
 
@@ -303,17 +309,73 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+    @Step("Evrak Icerik Degisti Iade Et")
+    public MainPage evrakIcerikDegistiIadeEt() {
+        new EvrakPageButtons().evrakIcerikDegistiIadeEt();
+        return this;
+    }
+
     @Step("Evrak Icerik Degisti Kaydet")
     public MainPage evrakSecmeliDegistiKaydet() {
         new EvrakPageButtons().evrakSecmeliDegistiKaydet();
         return this;
     }
 
-    @Step("Evrak Icerik Degisti Evet")
+    @Step("Kullanıcıya Iade Et")
+    public MainPage kullaniciyaIadeEt() {
+        new EvrakPageButtons().kullaniciyaIadeEt();
+        return this;
+    }
+
+    public MainPage evrakIcerikDegistiKaydetEvet() {
+        new EvrakPageButtons().evrakIcerikDegistiKaydetEvet();
+        return this;
+    }
+
+
+    @Step("Evrak içeriğini değiştirdiğiniz için evrak üzerindeki değişiklikler kaydedilecektir ve bu aşamadan sonra evrakınızı yalnızca iade edebilir veya güncellemeye devam edebilirsiniz. İşleminize devam etmek istiyor musunuz?")
     public MainPage evrakSecmeliDegistiEvet() {
         new EvrakPageButtons().evrakSecmeliDegistiEvet();
         return this;
     }
+
+
+    @Step("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ")
+    public MainPage imzalanamazButtonKontrol() {
+        new EvrakPageButtons().imzalanamazButtonKontrol();
+        return this;
+    }
+
+    @Step("Evrak İmzala Uyarı Kontrol")
+    public MainPage evrakImzalaUyariKontrol(String uyari) {
+        new EvrakPageButtons().evrakImzalaUyariKontrol(uyari);
+        return this;
+    }
+
+    @Step("Iade Et")
+    public MainPage iadeEt() {
+        new EvrakPageButtons().iadeEt();
+        return this;
+    }
+
+    @Step("Iade Et")
+    public MainPage parafciKontrol(String user) {
+        new EvrakPageButtons().parafciKontrol(user);
+        return this;
+    }
+
+    @Step("Dosya Ekle")
+    public MainPage dosyaEkle(String path,String file) throws InterruptedException{
+        new EvrakPageButtons().dosyaEkle(path,file);
+        return this;
+    }
+
+    @Step("Iade Et")
+    public MainPage notAlaniDoldur(String konu) {
+        new EvrakPageButtons().notAlaniDoldur(konu);
+        return this;
+    }
+
 
     @Step("Menülerin geldiği görülür")
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {

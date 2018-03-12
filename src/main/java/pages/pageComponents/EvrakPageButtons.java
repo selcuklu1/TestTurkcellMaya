@@ -4,14 +4,22 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
+import com.codeborne.selenide.*;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.sleep;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -41,12 +49,12 @@ public class EvrakPageButtons extends MainPage {
     }
 
 
-    @Step("s-İmzla radio butonu bul")
+    @Step("s-İmza radio butonu bul")
     public SelenideElement getSImzalaRadio() {
         return getEvrakImzalaDialog().$("#imzalaForm\\:imzalaRadio .ui-radiobutton-box");
     }
 
-    @Step("s-İmzla seç")
+    @Step("s-İmza seç")
     public EvrakPageButtons sImzalaRadioSec() {
 /*        if (islemMesaji().getMessageTitles().size() > 0)
             if (islemMesaji().isUyari("Servise ulaşılamıyor!"))
@@ -120,6 +128,14 @@ public class EvrakPageButtons extends MainPage {
         evrakImzaOnay();
         return this;
     }
+
+    @Step("Güncellenen evrağı imzalama denemesi. Dialog kontrolü - \"Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir\"")
+    public EvrakPageButtons evrakGuncellenenEvraginImzalaTiklaDialogKontrol() {
+        imzalaButonaTikla();
+        Selenide.prompt( "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.",null);
+        return this;
+    }
+
     //endregion
 
     //region Parafla
@@ -163,22 +179,54 @@ public class EvrakPageButtons extends MainPage {
 
     //endregion
 
+    //region İade Et
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt() {
+        getButton("İade Et").click();
+        //$("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
     @Step("Iade et")
     public EvrakPageButtons evrakIadeEt(String iadeNotu) {
         getButton("İade Et").click();
         //getContainer().$x("descendant::td[@class='buttonMenuContainerDefault' and descendant::span[.='İade Et']]//button").click();
         //getContainer().$("button .iadeEt").click();
-        $("#inboxItemInfoForm\\:notTextArea_id").setValue("İade notu");
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
         return this;
     }
 
     @Step("Iade et")
-    public EvrakPageButtons evrakIadeEt() {
+    public EvrakPageButtons evrakIadeEt(User user, String iadeNotu) {
         getButton("İade Et").click();
-        $("#inboxItemInfoForm\\:iadeEtButton_id").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(user.getFullname());
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
         return this;
     }
+
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt(String userText, String iadeNotu) {
+        getButton("İade Et").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(userText);
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
+    @Step("Iade et")
+    public EvrakPageButtons evrakIadeEt(String userText, String uploadFile, String iadeNotu) {
+        getButton("İade Et").click();
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(userText);
+        $(By.id("mainPreviewForm:fileUploadIadeEk_input")).uploadFile(new File(uploadFile));
+        container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
+        container.$("button[id$='iadeEtButton_id'").click();
+        return this;
+    }
+
+    //endregion
 
     @Step("Kaydet")
     public EvrakPageButtons evrakKaydet() {
@@ -253,10 +301,33 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+
+    SelenideElement dialogIcerikDegistiUyarıKontrol = $("div[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemDialog']");
+    @Step("Onay Ekranı: \"{uyari}\"  \"{secenek1}\"  \"{secenek2}\" ")
+    public MainPage icerikDegistiUyarıKontrol(String uyari,String secenek1,String secenek2) {
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(uyari), true, uyari);
+        Allure.addAttachment(uyari, "");
+
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(secenek1), true, secenek1);
+        Allure.addAttachment(secenek1, "");
+
+        Assert.assertEquals(dialogIcerikDegistiUyarıKontrol.getText().contains(secenek2), true, secenek2);
+        Allure.addAttachment(secenek2, "");
+        return this;
+    }
+
+
     ElementsCollection radioEvrakIcerikDegistiImzalaveDevamEt = $$("table[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:secenekTipi'] tr");
     @Step("Evrak Içerik değişti ve sonrasında gelen uyarı ekranında, İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)")
     public MainPage evrakIcerikDegistiImzalaveDevamEt() {
         radioEvrakIcerikDegistiImzalaveDevamEt.filterBy(Condition.text("İmzala ve devam et")).get(0).click();
+        return this;
+    }
+
+    ElementsCollection radioEvrakIcerikDegistiIadeEt = $$("table[id='ilkIzBirakacakKullanicidanSonraGuncellenenEvrakIslemForm:secenekTipi'] tr");
+    @Step("Evrak Içerik değişti Iade Et")
+    public MainPage evrakIcerikDegistiIadeEt() {
+        radioEvrakIcerikDegistiIadeEt.filterBy(Condition.text("İade Et")).get(0).click();
         return this;
     }
 
@@ -267,10 +338,85 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    SelenideElement btnKullaniciyaIadeEt = $("button[id='inboxItemInfoForm:iadeEtButton_id']");
+    @Step("Kullanıcıya Iade Et butonu tıklanır)")
+    public MainPage kullaniciyaIadeEt() {
+        btnKullaniciyaIadeEt.click();
+        return this;
+    }
+
+    SelenideElement btnEvrakIcerikDegistiKaydetEvet = $("button[id^='inboxItemInfoForm:j_idt'][onclick*='iadeKaydetEtDogrulaDialog']");
+    @Step("Evrakta değişiklik var, kaydetmek ister misiniz?)")
+    public MainPage evrakIcerikDegistiKaydetEvet() {
+        btnEvrakIcerikDegistiKaydetEvet.click();
+        return this;
+    }
+
     SelenideElement btnEvrakIcerikDegistiEvet = $("button[id$='evrakDegistiKaydetButton']");
-    @Step("Evrak Içerik değişti ve Kaydet)")
+    @Step("Evrak Içerik değişti ve Kaydet")
     public MainPage evrakSecmeliDegistiEvet() {
         btnEvrakIcerikDegistiEvet.click();
+        return this;
+    }
+
+    SelenideElement btnImzalanamaz = $("span[class='ui-button-icon-left ui-icon imzalanamaz']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage imzalanamazButtonKontrol() {
+        Assert.assertEquals(btnImzalanamaz.isDisplayed(),true,"İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ");
+        Allure.addAttachment("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ","");
+        takeScreenshot();
+        return this;
+    }
+
+    SelenideElement txtEvrakImzalaUyari = $("div[id='imzalaForm:imzaPanel_header']");
+    @Step("Evrak Içerik değişti ve Kaydet)")
+    public MainPage evrakImzalaUyariKontrol(String uyari) {
+        Assert.assertEquals(txtEvrakImzalaUyari.getText().contains(uyari), true, "Evrak İmza Uyari Kontrol");
+        Allure.addAttachment("Evrak İmza Uyari Kontrol", " gelmektedir.");
+        return this;
+    }
+
+    @Step("Iade Et Butonu Bul")
+    public SelenideElement getIadeEt() {
+        return getButton("İade Et");
+    }
+
+    @Step("Iade Et buton tıklama")
+    public EvrakPageButtons iadeEt() {
+        getIadeEt().click();
+        return this;
+    }
+
+    @Step("Parafcı Kontrol: {user}")
+    public EvrakPageButtons parafciKontrol(String user) {
+        comboBox(By.id("inboxItemInfoForm:kullaniciListOneMenu_id")).selectComboBox(user);
+        return this;
+    }
+    SelenideElement btnDosyaEkle = $("[id='inboxItemInfoForm:fileUploadIadeEk']");
+    @Step("Dosya ekle")
+    public EvrakPageButtons dosyaEkle(String path,String dosyaAdi) throws InterruptedException{
+        btnDosyaEkle.click();
+        havaleDosyaEkle(path);
+        havaleDosyaEkleDosyaAdiKontrol(dosyaAdi);
+        return this;
+    }
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
+    @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
+    public EvrakPageButtons havaleDosyaEkle(String pathToFile) throws InterruptedException {
+        uploadFile(dosyaPath, pathToFile);
+        Thread.sleep(4000);
+        return this;
+    }
+
+    @Step("Havale dosya ekleme adi kontrol : \"{dosyaAdi}\" ")
+    public EvrakPageButtons havaleDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public EvrakPageButtons notAlaniDoldur(String not) {
+        container.$("textarea[id$='notTextArea_id'").setValue(not);
         return this;
     }
 
@@ -312,6 +458,12 @@ public class EvrakPageButtons extends MainPage {
     @Step("Evrak Göster butonu tıklanır")
     public EvrakPageButtons evrakGoster() {
         getButton("Evrak Göster").click();
+        return this;
+    }
+
+    @Step("Kontrol Et")
+    public EvrakPageButtons kontrolEt() {
+        getButton("Kontrol Et").click();
         return this;
     }
 

@@ -14,6 +14,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 
 /**
@@ -176,7 +177,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("\"Adres\" alanı aranır")
+    //@Step("\"Adres\" alanı aranır")
     public SelenideElement getAdresTextarea() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres']]//textarea");
@@ -237,6 +238,21 @@ public class DagitimHitapDuzenle extends MainPage {
         List<String> values = new ArrayList<>(dagitimPlanElemanlari.values());
         for (int i = 0; i < rows.size(); i++) {
             Assert.assertTrue(rows.get(i).has(text(values.get(i))));
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
+        }
+
+        return this;
+    }
+
+    @Step("Dağıtım Planı eleman listesinin sırası kontrolü")
+    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu2(Map<String, String[]> dagitimPlanElemanlari) {
+        //ElementsCollection rows = getDagitimPlaniDetayRows();
+        ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
+
+        Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
+        List<String[]> values = new ArrayList<>(dagitimPlanElemanlari.values());
+        for (int i = 0; i < rows.size(); i++) {
+            Assert.assertTrue(rows.get(i).has(text(values.get(i)[1])));
             Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
         }
 
@@ -317,17 +333,25 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::span[.='Kayıtlı Hitap']/ancestor::table[1]");
     }
 
-    @Step("Adres seçilir")
-    public DagitimHitapDuzenle adresSec(String adres, String evraktaGorunecekHitap) {
-        getAdresTextarea().setValue(adres);
-        //adresHitaptaGorunsunSec(true);
+    @Step("Adres girilir")
+    public DagitimHitapDuzenle adresGirilir(String adres, String evraktaGorunecekHitap) {
+        adresGirilir(adres);
+        adresHitaptaGorunsunSec(true);
         getEvraktaGorunecekHitap("Görünecek Hitap \"" + evraktaGorunecekHitap + "\" olmalı").shouldHave(text(evraktaGorunecekHitap));
         return this;
     }
 
-    @Step("Adres seçilir")
-    public DagitimHitapDuzenle adresSec(String adres) {
-        getAdresTextarea().setValue(adres);
+    @Step("Adres girilir")
+    public DagitimHitapDuzenle adresGirilir(String adres) {
+        getAdresTextarea().shouldBe(visible).clear();
+        getAdresTextarea().pressTab();
+        sleep(3000);
+        getAdresTextarea().sendKeys(adres);
+        getAdresTextarea().pressTab();
+        sleep(3000);
+        /*if (!getAdresTextarea().has(exactText(adres)))
+            getAdresTextarea().shouldBe(visible).setValue(adres);*/
+        //getAdresTextarea().shouldHave(exactText(adres));
         return this;
     }
 

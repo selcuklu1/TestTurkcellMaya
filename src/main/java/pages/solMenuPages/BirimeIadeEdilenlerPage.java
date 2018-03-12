@@ -81,6 +81,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlVeHavaleEt = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='teslimAlHavale']");
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
 
     @Step("Birime İade Edilenler sayfası aç")
     public BirimeIadeEdilenlerPage openPage() {
@@ -463,4 +464,13 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
+    public BirimeIadeEdilenlerPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {
+
+        boolean selectable = comboLov(cmbBirimeHavaleBy).isLovValueSelectable(birim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.", "");
+        return this;
+    }
 }

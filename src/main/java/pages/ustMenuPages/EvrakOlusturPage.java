@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -11,9 +10,6 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -69,6 +65,8 @@ public class EvrakOlusturPage extends MainPage {
     SelenideElement btnGeregiIptal = $("button[id*='geregiLov'] [class$='delete-icon']");
     SelenideElement btnEkranKapat = $("[id='window1Dialog'] [class*='ui-dialog-titlebar-close']");
 
+    ElementsCollection lblSayfa = $$("div[id='window1Dialog'] span[class='ui-dialog-title']");
+    ElementsCollection lblSayfa2 = $$("div[id='inboxItemInfo']  span[class='ui-dialog-title']");
 
 
     //endregion
@@ -89,11 +87,17 @@ public class EvrakOlusturPage extends MainPage {
     }
 
 
-    SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
 
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public EvrakOlusturPage sayfaKontrol(String sayfa) {
-        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
+        Assert.assertEquals(lblSayfa.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
+        Allure.addAttachment(sayfa,"açılmaktadır");
+        return this;
+    }
+
+    @Step(" \"{sayfa}\" ekranı açılır\n")
+    public EvrakOlusturPage sayfaKontrol2(String sayfa) {
+        Assert.assertEquals(lblSayfa2.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
@@ -1078,12 +1082,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin bilgi alanında görüntülenmeme kontrolu")
-        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında bilgi alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {bilgi}")
+        public BilgilerTab bilgiAlanindaGoruntulenmemeKontrolu(String bilgi, String description) {
 
-            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Gerçek kişinin görüntülenmediği görülür.");
+            boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + bilgi + ": Gerçek kişinin görüntülenmediği görülür.");
+            Allure.addAttachment("MyCombolov alanında " + bilgi + ": görüntülenmediği görülür.", "");
             return this;
         }
 
@@ -1143,6 +1148,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği Seçim Tipi alanında Kontrol \"{geregiSecimTipi}\" ")
+        public BilgilerTab geregiSecimTipiEskiKontrol(String geregiSecimTipi) {
+            Assert.assertEquals(txtGeregiSecimTipiEskiEvrak.getSelectedText().contains(geregiSecimTipi),true,"Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
+            Allure.addAttachment("Gereği Seçim Tipi alanında Kontrol:", geregiSecimTipi);
+            return this;
+        }
+
 
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
@@ -1152,7 +1164,6 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği kontrol: | {geregi}")
         public BilgilerTab geregiKontrol(String geregi) {
-            System.out.println(cmbGeregiKontrol.getText());
             Assert.assertEquals(cmbGeregiKontrol.getText().contains(geregi),true,"Gereği kontrol:" + geregi);
             Allure.addAttachment("Gereği kontrol:", geregi);
             return this;
@@ -1237,13 +1248,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu")
-        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String adSoyad) {
+        @Step("Bilgileri tabında gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
+       // @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu: {description}")
+        public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
-            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(adSoyad);
-            Assert.assertEquals(selectable, false, "MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür");
-            System.out.println("MyCombolov alanında " + adSoyad + ": Kişinin görüntülenmediği görülür.");
-
+            boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+            Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
+            System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
+            Allure.addAttachment("MyCombolov alanında " + geregi + ": görüntülenmediği görülür.", "");
             return this;
         }
 
@@ -1702,6 +1714,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+
         @Step("Otomatik Onay AKışı Kullan")
         public BilgilerTab otomatikOnayAkisiKullan() {
             clickJs(btnOtomatikAkisKullan);
@@ -1968,6 +1981,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Koordineli seç")
         public BilgilerTab koordineliSec(boolean secim) {
             chkKoordineli.setSelected(secim);
+            return this;
+        }
+
+        @Step("Koordineli seç")
+        public BilgilerTab koordineliTikla() {
+            chkKoordineli.click();
             return this;
         }
 

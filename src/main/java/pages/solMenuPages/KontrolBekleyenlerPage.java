@@ -1,8 +1,10 @@
 package pages.solMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -15,7 +17,8 @@ public class KontrolBekleyenlerPage extends MainPage {
     ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement bntKontrolEt = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td[class='buttonMenuContainerDefault'] span[class='ui-button-icon-left ui-icon kontrol']");
     SelenideElement txtKontrolEtNot = $("[id$='paraflaPanelGrid'] textarea");
-    SelenideElement btnKontrolEtGonder = $("[id$='imzalaButton']");
+    SelenideElement btnKontrolEtGonder = $(By.id("mainPreviewForm:imzalaButton"));
+//    ElementsCollection tblParafBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
 
     @Step("Kontrol bekleyenler sayfası aç")
     public KontrolBekleyenlerPage openPage() {
@@ -23,6 +26,16 @@ public class KontrolBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Parafladıklarım listesinden evrak detay göster")
+    public KontrolBekleyenlerPage konuyaGoreEvrakDetayGoster(String konu) {
+
+        tableEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[id$='detayGosterButton']").click();
+
+        return this;
+    }
     @Step("Evrak seç")
     public KontrolBekleyenlerPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi) {
         tableEvraklar

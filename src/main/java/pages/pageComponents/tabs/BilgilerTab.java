@@ -88,7 +88,7 @@ public class BilgilerTab extends MainPage {
     @Step("Konu Kodu seçilir")
     public BilgilerTab konuKoduSec(String text) {
         getKonuKodu().selectLov(text);
-        getKonuKodu().closeTreePanel();
+        //getKonuKodu().closeTreePanel();
         return this;
     }
 
@@ -416,6 +416,13 @@ public class BilgilerTab extends MainPage {
     @Step("Bilgi seçilir")
     public BilgilerTab bilgiSec(String text) {
         getBilgiCombolov().selectLov(text);
+        return this;
+    }
+
+    @Step("{bilgiSecimTipi.optionText}/{bilgi} bilgi seçilir")
+    public BilgilerTab bilgiSec(BilgiSecimTipi bilgiSecimTipi, String bilgi) {
+        bilgiSecimTipiSec(bilgiSecimTipi.getOptionText());
+        getBilgiCombolov().selectLov(bilgi);
         return this;
     }
 
@@ -930,8 +937,11 @@ public class BilgilerTab extends MainPage {
         koodreneliSec(true);
         anlikOnayAkisKullaniciSec(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last().scrollIntoView(true)
-                .shouldHave(text("Koordine"));
+                .shouldHave(text(kullanici.getFullname()), text("Koordine"));
         koodreneliSec(false);
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici.getFullname()), text("Koordine"));
         return this;
     }
 
@@ -940,9 +950,12 @@ public class BilgilerTab extends MainPage {
         //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
-                .shouldBe(exist)
+                .shouldBe(exist).shouldHave(text(kullanici))
                 .$("select[id*='selectOneMenu']")
                 .selectOptionContainingText(tipi);
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici), text(tipi));
         return this;
     }
 
@@ -951,9 +964,12 @@ public class BilgilerTab extends MainPage {
         //anlikOnayAkisKullanicilarAlaninBirimTumuSec(true);
         getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
-                .shouldBe(exist)
+                .shouldBe(exist).shouldHave(text(kullanici))
                 .$("select[id*='selectOneMenu']")
                 .selectOptionContainingText(tipi.getOptionText());
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici), text(tipi.getOptionText()));
         return this;
     }
 
@@ -966,20 +982,25 @@ public class BilgilerTab extends MainPage {
         , kullanici.getGorev()
         , kullanici.getBirimKisaAdi().isEmpty()?kullanici.getBirimAdi():kullanici.getBirimKisaAdi());*/
 
-        getAnlikOnayAkisKullanicilarCombolov()
+        ElementsCollection collection = getAnlikOnayAkisKullanicilarCombolov()
                 .type(kullanici.getFullname())
                 .getSelectableItems()
                 .filterBy(text(kullanici.getFullname()))
                 .filterBy(text(kullanici.getGorev()))
-                .filterBy(text(kullanici.getBirimKisaAdi().isEmpty() ? kullanici.getBirimAdi() : kullanici.getBirimKisaAdi()))
-                .first().click();
+                .filterBy(text(kullanici.getBirimKisaAdi().isEmpty() ? kullanici.getBirimAdi() : kullanici.getBirimKisaAdi()));
+
+        Assert.assertTrue(collection.size()>0, "filtrelenen Lov items > 0");
+        collection.first().click();
         getAnlikOnayAkisKullanicilarCombolov().closeTreePanel();
 
         //getAnlikOnayAkisKullanicilarCombolov().selectLov(kullanici);
         getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
-                .shouldBe(exist)
-                .$("select[id*='selectOneMenu']")
-                .selectOptionContainingText(tipi.getOptionText());
+                .shouldBe(exist).shouldHave(text(kullanici.getFullname()))
+                .$("select[id*='selectOneMenu']").selectOptionContainingText(tipi.getOptionText());
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici.getFullname()), text(tipi.getOptionText()));
+
         return this;
     }
 
@@ -999,6 +1020,10 @@ public class BilgilerTab extends MainPage {
                 .shouldBe(exist)
                 .$("select[id*='selectOneMenu']")
                 .selectOptionContainingText(kullaniciTipi);
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullaniciAdi), text(kullaniciTipi));
+
         return this;
     }
 
@@ -1012,6 +1037,9 @@ public class BilgilerTab extends MainPage {
                 .shouldBe(exist)
                 .$("select[id*='selectOneMenu']")
                 .selectOptionContainingText(tipi.getOptionText());
+
+        getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().last()
+                .shouldHave(text(kullanici.getFullname()), text(tipi.getOptionText()));
         return this;
     }
 
@@ -1042,7 +1070,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay akiş Kullan butona tıklanır")
     public BilgilerTab kullan() {
-        getKullanButton().pressEnter();
+        getKullanButton().scrollIntoView(true).click();
         return this;
     }
 

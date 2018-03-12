@@ -45,6 +45,7 @@ public class SolMenuData {
         HavaleEttiklerim("Havale Ettiklerim"),
         Klasorekaldirdiklarim("Klasöre Kaldırdıklarım"),
         YanParafladiklarim("Yan Parafladıklarım"),
+        KonrolEttiklerim("Kontrol Ettiklerim"),
         KoordineParafladiklarim("Koordine Parafladıklarım"),
         TebligEttiklerim("Tebliğ Ettiklerim"),
         TebellugEttiklerim("Tebellüğ Ettiklerim"),

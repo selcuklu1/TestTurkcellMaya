@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -19,6 +20,8 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement txtNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
     SelenideElement btnImzala = $(By.xpath("//span[contains(@class, 'imzala')]/.."));
+    SelenideElement btnIadeSonrasiImzala = $("button[id='imzalaForm:imzalaButton']");
+
     SelenideElement btnEvrakOnizlemeImzala = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
     SelenideElement rdbSImaza = $("div[id='imzalaForm:imzalaRadio'] > div[class*='ui-radiobutton-box']");
     SelenideElement btnSImzaImzala = $(By.id("imzalaForm:sayisalImzaConfirmDialogOpener"));
@@ -31,10 +34,12 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
     SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
-    SelenideElement evrakOnIzleme = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement evrakOnIzlemeEkranKontrol = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement evrakIcerikEkranKontrol = $("div[id='windowItemInfoDialog']");
     SelenideElement tabEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
     SelenideElement btnBeklemeyeAl = $("[class='ui-button-icon-left ui-icon evrakBeklemeyeAl']");
     SelenideElement btnBeklemeyeAlUyariEvet = $(By.id("mainInboxForm:beklemeyeAlEvetButton"));
+    SelenideElement btnBeklemeyeAlUyariKontrol = $("div[id='mainInboxForm:beklemeyeAlConfirmDialog']");
     ElementsCollection tblEvrakOnizlemeEkler = $$("[id$='ekListesiOnizlemeDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
     SelenideElement btnKapatmaImzala = $x("//span[text()= 'Kapatma İmzala']/../../..//button");
     SelenideElement btnKapatmayiIptalEt = $(By.id("mainPreviewForm:kapatmayiIptalEtButton"));
@@ -43,6 +48,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     SelenideElement dagitimYerleriRow1 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:0:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
     SelenideElement dagitimYerleriRow2 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:1:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
     SelenideElement dagitimYerleriRow3 = $("[id^='mainPreviewForm:j_idt'] [id*='ekListesiOnizlemeDataTable:2:j_idt'] [class='ui-selectcheckboxmenu-label ui-corner-all']");
+    SelenideElement btnIadeSonrasiEvrakOnizlemeImzala = $("button[id='mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton']");
 
 
     @Step("İmza bekleyenler sayfası aç")
@@ -61,9 +67,22 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Sonrası Imzala")
+    public ImzaBekleyenlerPage iadeSonrasiImzala() {
+        btnIadeSonrasiImzala.click();
+        return this;
+    }
+
+
     @Step("İmzala")
     public ImzaBekleyenlerPage evrakOnizlemeImzala() {
         btnEvrakOnizlemeImzala.click();
+        return this;
+    }
+
+    @Step("Iade Sonrası Evrak Onizleme Imzala Butonu Tıklama")
+    public ImzaBekleyenlerPage iadeSonrasiEvrakOnizlemeImzala() {
+        btnIadeSonrasiEvrakOnizlemeImzala.click();
         return this;
     }
 
@@ -285,6 +304,13 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakı beklemeye almak istediğinize emin misiniz?")
+    public ImzaBekleyenlerPage beklemeyeAlUyariKontrol(){
+        Assert.assertEquals(btnBeklemeyeAlUyariKontrol.isDisplayed(),true,"Beklemeye Al Uyari Kontrol");
+        Allure.addAttachment("Evrakı beklemeye almak istediğinize emin misiniz?","");
+        return this;
+    }
+
     @Step("Evrak Seç")
     public ImzaBekleyenlerPage evrakSec(String konu, String gidecegiYer, String gonderen) {
         tblImzaBekleyenler
@@ -322,11 +348,16 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Evrak önizleme ekranı kontrolu")
     public ImzaBekleyenlerPage evrakOnizlemeKontrol() {
-
-        Assert.assertEquals(evrakOnIzleme.isDisplayed(), true);
-
+        Assert.assertEquals(evrakOnIzlemeEkranKontrol.isDisplayed(), true);
         return this;
     }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public ImzaBekleyenlerPage evrakIcerikKontrol() {
+        Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
+        return this;
+    }
+
 
     @Step("Sil butonunun gelmediği kontrolu")
     public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {
