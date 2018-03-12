@@ -1,6 +1,5 @@
 package tests.EvrakGeriAlma;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;
 import org.testng.annotations.Test;
@@ -9,20 +8,15 @@ import pages.newPages.EvrakOlusturPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.SearchTable;
-import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.Ivedilik;
-import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.solMenuPages.*;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static pages.pageData.alanlar.BilgiSecimTipi.*;
+import static pages.pageData.alanlar.BilgiSecimTipi.BIRIM;
+import static pages.pageData.alanlar.BilgiSecimTipi.KULLANICI;
 import static pages.pageData.alanlar.OnayKullaniciTipi.*;
-import static pages.pageData.alanlar.OnayKullaniciTipi.IMZALAMA;
-import static pages.pageData.alanlar.OnayKullaniciTipi.PARAFLAMA;
 
 /**
  * Yazan: Ilyas Bayraktar

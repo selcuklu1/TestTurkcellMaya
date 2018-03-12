@@ -9,7 +9,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.pageComponents.*;
-import pages.ustMenuPages.EvrakOlusturPage;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.matchText;
@@ -214,6 +213,7 @@ public class MainPage extends BaseLibrary {
         return this;
 
     }
+
     @Step("Cevap yaz sayfasında Ekranı kapat.")
     public MainPage cevapYazSayfaKapat(String cevap) {
         $("[id='windowCevapEvrakDialog'] [class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
@@ -222,9 +222,7 @@ public class MainPage extends BaseLibrary {
 
         else if (cevap == "Hayır") {
             $("[id='kapatKaydetHayirButton']").click();
-        }
-        else if (cevap == "İptal")
-        {
+        } else if (cevap == "İptal") {
 
             $(By.id("kapatKaydetIptalButton")).click();
         }
@@ -265,8 +263,8 @@ public class MainPage extends BaseLibrary {
 
     @Step("Evrak Guncellendi Imzalanamaz Uyarı Kontrolü ve Tamam")
     public MainPage evrakGuncellendiImzalanamazUyariKontrol(String uyari) {
-        Assert.assertEquals(switchTo().alert().getText().equals(uyari),true,"Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
-        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü","");
+        Assert.assertEquals(switchTo().alert().getText().equals(uyari), true, "Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü");
+        Allure.addAttachment("Evrak Guncellendi ve Imzalanamaz Uyarı Kontrolü", "");
         switchTo().alert().accept();
         return this;
     }
@@ -339,6 +337,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
+
     @Step("İmzalama butonun üzerine Üçgen içerisinde Ünlem(!) ")
     public MainPage imzalanamazButtonKontrol() {
         new EvrakPageButtons().imzalanamazButtonKontrol();
@@ -380,7 +379,7 @@ public class MainPage extends BaseLibrary {
     public MainPage evrakIslemleriIslemYaptiklarimMenuKontrol() {
 
         Assert.assertEquals($(By.id("topMenuForm2:ust:0:ustMenuEleman")).isDisplayed(), true);
-        Assert.assertEquals(  $(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
+        Assert.assertEquals($(By.id("leftMenuForm:leftMenuIslemBekleyenEvraklar")).isDisplayed(), true);
 
         takeScreenshot();
 
@@ -388,7 +387,59 @@ public class MainPage extends BaseLibrary {
     }
 
 
+    @Step("Ekranın sağ üstünde bulunan isim soyisim alanına tıklanır.")
+    public MainPage userMenuAc() {
+        $(By.id("topMenuForm:userMenuButton_button")).click();
+        return this;
+    }
 
+    @Step("User Menu listesinde \"{menuName}\" menusu bulunur.")
+    public MainPage userMenuKontrol(String menuName) {
 
+        ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
 
+        boolean status = elementList
+                .filterBy(Condition.text(menuName))
+                .first().isDisplayed();
+
+        Assert.assertEquals(status,true,"Listede menu ismi mevcut.");
+
+        return this;
+    }
+
+    @Step("User Menu listesinde \"{menuName}\" tıklanır.")
+    public MainPage userMenuMenuSec(String menuName) {
+
+        ElementsCollection elementList = $$(By.id("topMenuForm:userMenuButton_menu")).last().$$("li");
+
+        elementList
+                .filterBy(Condition.text(menuName))
+                .first().click();
+
+        return this;
+    }
+
+    @Step("Profil ekranında guncel birimin \"{guncelBirim}\" olanların Rol adları alınır.")
+    public String[] profildenRolAdiAlma(String guncelBirim) {
+
+        ElementsCollection tblRolListesi = $$("div[class='ui-datatable-scrollable-body'] tbody[id$='data'] tr[data-ri]");
+
+        String [] rolAdi = new String[tblRolListesi.size()];
+
+        for (int i = 0; i < tblRolListesi.size(); i++) {
+            String birim = tblRolListesi.get(i).$("td:nth-child(2)").text();
+            if (birim.equals(guncelBirim))
+                rolAdi[i] = tblRolListesi.get(i).$("td:nth-child(1)").text();
+            Allure.addAttachment("Rol Adı : ", rolAdi[i]);
+        }
+
+//        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+
+        return rolAdi;
+    }
+
+    @Step("Profil ekranı kapatılır.")
+    public void profilEkraniKapat() {
+        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();
+    }
 }

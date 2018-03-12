@@ -1,7 +1,6 @@
 package tests.BirimIcerikSablonu;
 
 import com.codeborne.selenide.SelenideElement;
-import com.google.gson.internal.LinkedTreeMap;
 import common.BaseLibrary;
 import common.BaseTest;
 import data.User;
@@ -10,7 +9,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
-import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
@@ -20,9 +18,6 @@ import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
 

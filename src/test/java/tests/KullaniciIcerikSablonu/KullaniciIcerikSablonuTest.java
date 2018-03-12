@@ -4,15 +4,11 @@ import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.solMenuPages.*;
-import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciIcerikSablonuPage;
-import pages.ustMenuPages.KullaniciListesiYonetimiPage;
 
 /****************************************************
  * Tarih: 2017-12-22

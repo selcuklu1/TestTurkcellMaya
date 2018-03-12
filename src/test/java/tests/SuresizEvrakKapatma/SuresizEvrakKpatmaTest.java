@@ -1,12 +1,9 @@
 package tests.SuresizEvrakKapatma;
 
-import com.codeborne.selenide.Condition;
 import common.BaseTest;
-import io.qameta.allure.Allure;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
-import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KlasorEvrakIslemleriPage;
 import pages.ustMenuPages.PersonelVeAcikEvrakIstatigiPage;

@@ -7,9 +7,9 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.TextEditor;
+import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
-import pages.pageData.alanlar.GizlilikDerecesi;
 
 import static com.codeborne.selenide.Condition.text;
 
