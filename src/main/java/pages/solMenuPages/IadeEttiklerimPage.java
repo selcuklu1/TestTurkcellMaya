@@ -22,10 +22,17 @@ public class IadeEttiklerimPage extends MainPage {
     SelenideElement btnIadeEdilmistir = $("button[id^='mainInboxForm:inboxDataTable:0:j_idt']");
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
-
+    SelenideElement tabOnizlemeKontrol = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
     @Step("İade ettiklerim sayfası aç")
     public IadeEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.IadeEttiklerim);
+        return this;
+    }
+
+    @Step("Önizleme Tab Kontrolü")
+    public IadeEttiklerimPage onizlemeTabKontrol() {
+        Assert.assertEquals(tabOnizlemeKontrol.isDisplayed(),true,"Önizleme Tab Kontrolü");
+        Allure.addAttachment("Önizleme Tab Kontrolü","açılmaktadır");
         return this;
     }
 
@@ -62,6 +69,17 @@ public class IadeEttiklerimPage extends MainPage {
                 .filterBy(Condition.text(tarih)).size() > 1;
         Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
         Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{birim}\" \"{islemSureci}\" \"{tarih}\"")
+    public IadeEttiklerimPage evrakGecmisi(String teslimAlinan, String birim, String islemSureci, String tarih) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(birim)).size() > 0;
+        Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
+        Allure.addAttachment("Teslim Alinan:" + teslimAlinan + "Birim:" + birim +" İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();
         return this;
     }

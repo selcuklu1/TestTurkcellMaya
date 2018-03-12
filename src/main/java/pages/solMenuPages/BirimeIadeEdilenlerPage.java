@@ -124,6 +124,19 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    public BirimeIadeEdilenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[class$='document-typeIade']").isDisplayed();
+
+
+        Assert.assertEquals(durum, true, "Iade Et Button kontrolü:");
+        Allure.addAttachment("Iade Et Button Kontrolü", "");
+        return this;
+    }
+
     @Step("Teslim Al ve Havale Et")
     public BirimeIadeEdilenlerPage teslimAlVeHavaleEt() {
         $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
