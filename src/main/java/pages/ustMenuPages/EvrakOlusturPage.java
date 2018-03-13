@@ -2503,8 +2503,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            new TextEditor($(By.id("yeniGidenEvrakForm"))).editorShouldHave(text(beklenenEditorHitap));
-            /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/button/span")).getText();
+            $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).shouldHave(textCaseSensitive(beklenenEditorHitap));
+            /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).getText();
             System.out.println(editorHitap);
             Allure.addAttachment("EditorHitap" + editorHitap,"BeklenenEditorHitap" + beklenenEditorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);*/
