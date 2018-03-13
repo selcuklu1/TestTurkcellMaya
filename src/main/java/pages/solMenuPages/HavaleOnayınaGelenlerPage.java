@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -119,6 +120,13 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public HavaleOnayınaGelenlerPage evrakOnizlemeGeldigiGorme(boolean gorulen){
+        boolean durum = $(By.id("mainPreviewForm:evrakOnizlemeTab")).isDisplayed();
+        Assert.assertEquals(durum,gorulen);
+        return this;
+    }
+    
     @Step("Evrak no ile evrağın gelmediği görülür: \"{evrakNo}\" ")
     public HavaleOnayınaGelenlerPage evrakNoIleEvrakGelmedigiGorme(String evrakNo) {
         boolean durum = tblEvraklar
