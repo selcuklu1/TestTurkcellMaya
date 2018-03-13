@@ -38,6 +38,7 @@ public class EvrakIadesi extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
     ParafladiklarimPage parafladiklarimPage;
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
 
 
     @BeforeMethod
@@ -58,6 +59,7 @@ public class EvrakIadesi extends BaseTest {
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         parafladiklarimPage = new ParafladiklarimPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -2021,5 +2023,101 @@ public class EvrakIadesi extends BaseTest {
                 .evrakGecmisi(user1,islemSureci,evrakTarihiSaat);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS175: Postalanacak Evraklar Listesine düşen evrakın geri alınarak iade edilmesi ve kontrolü")
+    public void TS175() throws InterruptedException {
+        String testid = "TS175";
+        String konu = "TS175-" + getSysDate();
+        String user1 = "Mehmet BOZDEMİR";
+        String user2 = "Zübeyde TEKİN";
+        String user3 = "Yasemin Çakıl AKYOL";
+        String details = "BHUPGMY";
+        String kaldirilacakKlasorler = "KURUL KARARLARI";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+        String basariMesaji = "İşlem başarılıdır!";
 
+        testStatus(testid, "PreCondition Başladı");
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec("010.01")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .evrakTuruSec("Resmi Yazışma")
+                .gizlilikDerecesiSec("Hizmete Özel")
+                .ivedilikSec("Günlü")
+                .miatDoldur(getSysDateForKis())
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec("Başbakanlık")
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrolu(user1 , "Paraflama")
+                .onayAkisiKullaniciEkle(user3,details)
+                .onayAkisiKullaniciTipiSec(user3,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user3, "İmzalama")
+                .kullan();
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+
+        login(TestData.usernameYAKYOL,TestData.passwordYAKYOL);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .searchTable()
+                .findRows(text(konu))
+                .getFoundRow().click();
+
+        evrakOlusturPage
+                .evrakImzala()
+                .islemMesaji()
+                .basariliOlmali();
+
+        testStatus(testid, "Test Başladı");
+
+        postalanacakEvraklarPage
+                .openPage()
+                .evrakSec(konu);
+//        new PostalanacakEvraklarPage().openPage().searchTable().findRows(text(konu)).getFoundRow().should(exist);
+
+        imzaladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(konu)
+                .evrakSecEvrakNoyaGore(konu)
+                .geriAl()
+                .geriAlEkranKontrolu()
+                //TODO bu satırla alakalı bir ui bulunmamaktadir
+//                .parafciKontrol(user1)
+                .geriAlAciklamaDoldurVeOnayla(konu)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaladiklarimPage
+                .konuyaGoreEvrakGelmemeKontrolu(konu);
+
+        postalanacakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakGelmemeKontrolu(konu);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonuyaGoreSec(konu)
+                .iadeEt()
+                .iadeEtIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        iadeEttiklerimPage
+                .openPage()
+                .evrakSec(konu)
+                .iadeEdilmistirIkonKontrolu(konu);
+
+
+    }
 }
