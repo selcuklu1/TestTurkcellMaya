@@ -349,6 +349,7 @@ public class SearchTable extends MainPage {
         return foundRows;
     }
 
+    @Step("Kayıt Bulunamamıştır yazısı var mı?")
     public boolean isRowsExist() {
         return !parentElement.find(Selectors.byText("Kayıt Bulunamamıştır")).exists()
                 && parentElement.$$(rowCssLocator + " " + columnCssLocator).size() != 0;

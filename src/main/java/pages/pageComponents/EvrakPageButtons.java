@@ -10,6 +10,7 @@ import pages.MainPage;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -226,6 +227,15 @@ public class EvrakPageButtons extends MainPage {
     public EvrakPageButtons evrakKaydet() {
         getContainer().$("button .kaydet").click();
         $("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        return this;
+    }
+
+    @Step("Kaydet")
+    public EvrakPageButtons evrakKaydetMesajKontrollu() {
+        getContainer().$("button .kaydet").click();
+        confirmDialog().onayMesajKontrolu(text("Evrakı kaydetmek istediğinize emin misiniz?"))
+                .confirmEvetTikla();
+        //$("#kaydetConfirmForm\\:kaydetEvetButton").click();
         return this;
     }
 

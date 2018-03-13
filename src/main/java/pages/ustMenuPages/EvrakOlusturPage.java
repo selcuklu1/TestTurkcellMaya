@@ -10,6 +10,7 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+import sun.jvm.hotspot.ui.Editor;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
@@ -2442,9 +2443,10 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
+            new TextEditor($(By.id("yeniGidenEvrakForm"))).editorShouldHave(text(beklenenEditorHitap));
+            /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
             System.out.println(editorHitap);
-            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);*/
             return this;
         }
 

@@ -60,6 +60,11 @@ public class DogrulamaTab extends MainPage {
         return getContainer().$x(".//td[contains(@class,'tabMenuContainer') and .//span[contains(@class,'tabMenu') and .='" + tabName + "']]");
     }
 
+    @Step(tabName + " {conditions} kriterlere göre kontrol")
+    public DogrulamaTab tabKontrol(Condition... conditions) {
+        getTabButtonTextElement().should(conditions);
+        return this;
+    }
 
     //Use element hidden use checkboxSelect()
     public SelenideElement getDogrulanabilirCheckbox(){

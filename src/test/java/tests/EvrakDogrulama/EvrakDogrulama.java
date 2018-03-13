@@ -1,5 +1,6 @@
 package tests.EvrakDogrulama;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 import pages.newPages.EvrakDetayiPage;
 import pages.newPages.RolYonetimiPage;
 import pages.pageData.alanlar.GeregiSecimTipi;
+import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.ParafladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -150,28 +152,55 @@ public class EvrakDogrulama extends BaseTest {
                 .islemZamaniKontrolu(not(empty));
     }
 
-    @Test(description = "TS2081: Evrak Doğrulama Aktarım - Aktar/Geri Al aksiyonunun kaldırılması", enabled = true)
+    @Test(description = "TS2081: Evrak Doğrulama Aktarım - Aktar/Geri Al aksiyonunun eklemesi ve kaldırılması", enabled = true)
     public void TS2081() {
         User user = new User("user6", "123", "User6 TS2081", "AnaBirim1", "Danışman");
 
-        login(user);
-
-
-
-
-       /* String rolAdi = "TS2081";
+        String rolAdi = "TS2081";
         String aksiyonAdi = "Evrak Doğrulama Aktarım - Aktar/Geri Al";
         RolYonetimiPage rolYonetimiPage;
-        RolYonetimiPage.YeniAksiyonIliskilendirme yeniAksiyonIliskilendirme;*/
+        RolYonetimiPage.YeniAksiyonIliskilendirme yeniAksiyonIliskilendirme;
+        pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
 
-        /*rolYonetimiPage = new RolYonetimiPage();
+        login(user);
+
+        rolYonetimiPage = new RolYonetimiPage();
         rolYonetimiPage.openPage()
                 .sorgulamadaAdGir(rolAdi)
                 .ara()
                 .rolListesindeKayitBul(text(rolAdi))
                 .bulunanRoldeAksiyonlarTikla()
-                .aksiyonListesindeAdGirilir(aksiyonAdi)
-                .aksiyonListesindeKayitBul(text(aksiyonAdi))*/
+                .aksiyonListesindeAdGirilir(aksiyonAdi);
+
+        if (rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
+            evrakOlusturPage.openPage()
+                    .dogrulamaTab().tabKontrol(visible);
+
+            rolYonetimiPage.openPage()
+                    .bulunanAksiyondaIliskiyiSilBasarili();
+
+            logout();
+            login(user);
+
+            evrakOlusturPage.openPage()
+                    .dogrulamaTab().tabKontrol(not(exist));
+        } else {
+            evrakOlusturPage.openPage()
+                    .dogrulamaTab().tabKontrol(not(exist));
+
+            rolYonetimiPage.openPage()
+                    .yeniAksiyonEkle()
+                    .sorgulamadaAdGir(aksiyonAdi)
+                    .aksiyonBulunurVeCheckboxSecilir(aksiyonAdi, true)
+                    .ekleBasarili();
+
+            logout();
+            login(user);
+
+            evrakOlusturPage.openPage()
+                    .dogrulamaTab().tabKontrol(visible);
+        }
+
 
         /*UserMenu userMenu = new UserMenu();
         UserMenu.Profil profil = userMenu.userMenuAc().profilMenuSec();
@@ -184,5 +213,74 @@ public class EvrakDogrulama extends BaseTest {
                 .rolYonetimiSorgulamaveFiltrelemeTabAc()
                 .txtRolAdArama("TS2081")*/
 
+    }
+
+    @Test(description = "TS2082: Onay sürecinde evrak doğrulama checkinin kaldırılması", enabled = true)
+    public void TS2082() {
+        User parafci = user1;
+        User imzaci = user5;
+
+        String konu = "TS2078-" + getDateTime();
+        System.out.println("Konu: " + konu);
+        String kurum = "Cumhurbaşkanlığı";
+
+        login(parafci);
+
+        pages.newPages.EvrakOlusturPage page = new pages.newPages.EvrakOlusturPage();
+        page.openPage()
+                .bilgileriTab()
+                .alanlariDoldur(konu, GeregiSecimTipi.KURUM, kurum, parafci, imzaci);
+        page.editorTab().openTab()
+                .getEditor().type("Editör tekst");
+
+        page.dogrulamaTab().openTab()
+                .dogrulanabilirSeciliKontrolu(true)
+                .evrakPageButtons()
+                .evrakParafla().islemMesaji().basariliOlmali();
+
+        EvrakDetayiPage evrakDetayiPage = new ParafladiklarimPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .icerikGoster();
+        evrakDetayiPage.dogrulamaTab().openTab()
+                .aktarilmaDurumuKontrolu("Aktarılacak")
+                .islemZamaniKontrolu(empty);
+        evrakDetayiPage.closePage();
+
+
+        login(imzaci);
+
+        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage();
+        evrakDetayiPage = imzaBekleyenlerPage.openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .icerikGoster();
+        evrakDetayiPage.dogrulamaTab().openTab()
+                .aktarilmaDurumuKontrolu("Aktarılacak")
+                .dogrulanabilirSec(false);
+        evrakDetayiPage.pageButtons()
+                .evrakKaydetMesajKontrollu()
+                .islemMesaji().basariliOlmali();
+        evrakDetayiPage.closePage();
+        imzaBekleyenlerPage.openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().evrakImzala().islemMesaji().basariliOlmali();
+
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
+        imzaladiklarimPage.openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .icerikGoster()
+                .dogrulamaTab().openTab()
+                .aktarilmaDurumuKontrolu("Geri Alınacak")
+                .islemZamaniKontrolu(empty);
+        evrakDetayiPage.closePage();
+
+        //125 saniye beklenir
+        step("2 dk beklenir", "121 saniye");
+        Selenide.sleep(121000);
+        imzaladiklarimPage.openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .icerikGoster();
+        evrakDetayiPage.dogrulamaTab().openTab()
+                .aktarilmaDurumuKontrolu("Geri alındı")
+                .islemZamaniKontrolu(not(empty));
     }
 }
