@@ -11,6 +11,10 @@ import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+
+import javax.swing.text.AbstractDocument;
+import java.util.List;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
@@ -2259,6 +2263,11 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement lblImzaciKontrol = $(By.id("yeniGidenEvrakForm:imzacilarPanel"));
         SelenideElement txtPopupHitapHitap = $(By.id("yeniGidenEvrakForm:hitapEkInplaceTextId"));
         SelenideElement btnPdfGoster = $x("//*[@class='cke_button cke_button__pdf_goster cke_button_off']");
+        SelenideElement btnIcerikSablonu = $x("//*[@class='cke_button cke_button__sablon_sec cke_button_off']");
+        BelgenetElement cmbSablonlar = comboBox("table[id='yeniGidenEvrakForm:icerikSablonListPanel'] select");
+        SelenideElement btnUygula = $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//span[text()='Uygula']//..//..//button[1]");
+        SelenideElement txtIcerik = $("body[class='cke_editable cke_editable_themed cke_contents_ltr'] p");
+
         SelenideElement btnTamam = $x("//input[@id='yeniGidenEvrakForm:hitapEkInplaceTextId']//..//..//td[2]//button");
 
 
@@ -2537,6 +2546,45 @@ public class EvrakOlusturPage extends MainPage {
             clickJs(btnPdfGoster);
             return this;
         }
+
+        @Step("Ön tanımlı içerik şablonu ikonu tıklanır.")
+        public EditorTab onTanimliIcerikSablonuGoster() {
+            clickJs(btnIcerikSablonu);
+            return this;
+        }
+
+        @Step("Şablon Seçilir. \"{sablon}\" ")
+        public EditorTab onTanimliIcerikSablonuSec(String sablon) {
+
+            SelenideElement cmbAc=$("[id='yeniGidenEvrakForm:icerikSablonListPanel'] td:nth-child(2) span");
+
+            SelenideElement cmbMenu = $("div[id^='yeniGidenEvrakForm:'][id$='panel'] ul");
+            ElementsCollection liste =  cmbMenu.$$("li");
+            cmbAc.click();
+            for(int i = 0; i<liste.size();i++){
+                if(liste.get(i).getText().equals(sablon))
+                    liste.get(i).click();
+            }
+//            cmbSablonlar.selectComboBox(sablon);
+            return this;
+        }
+
+        @Step("Şablonlar ekranında Uygula butonuna tıklanır ")
+        public EditorTab sablonlarUygula() {
+            btnUygula.click();
+            return this;
+        }
+
+        @Step("Önizleme içerik kontrolü.")
+        public EditorTab onizlemeIcerikKontrol(String icerik) {
+            SelenideElement txtIcerik2 = $("body[class='cke_editable cke_editable_themed cke_contents_ltr'] p");
+
+            switchTo().frame(2);
+            txtIcerik2.shouldHave(text(icerik));
+            switchTo().parentFrame();
+            return this;
+        }
+
 
         @Step("Editör ekranında kişinin geregi alanında görüntülenmeme kontrolu")
         public EditorTab geregiAlanindaGoruntulenmemeKontrolu(String ad) {
@@ -4301,7 +4349,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Pdf hitap kontrolu. \"{beklenenPDFHitap}\" ")
+        @Step("Pdf hitap kontrolü. \"{beklenenPDFHitap}\" ")
         public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
             switchTo().window(1);
             SelenideElement PDFHitap = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + beklenenPDFHitap + "']"));
@@ -4311,6 +4359,18 @@ public class EvrakOlusturPage extends MainPage {
             switchTo().window(0);
             return this;
         }
+
+        @Step("Pdf icerik kontrolü. \"{icerik}\" ")
+        public PDFKontrol PDFIcerikKontrol(String icerik) {
+            switchTo().window(1);
+            SelenideElement PDFHitap = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + icerik + "']"));
+            Assert.assertEquals(PDFHitap.getText().contains(icerik), true);
+            takeScreenshot();
+            closeNewWindow();
+            switchTo().window(0);
+            return this;
+        }
+
 
         @Step("Pdf EK-1 kontrolu")
         public PDFKontrol PDFEk1Kontrolu(String ek1) {

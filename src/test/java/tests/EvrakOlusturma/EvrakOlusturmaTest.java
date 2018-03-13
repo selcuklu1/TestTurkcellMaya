@@ -111,10 +111,37 @@ public class EvrakOlusturmaTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .evrakTuruSec("Genelge");
-//                .genelgeNoKontrol(genelgeNo);
+                .evrakTuruSec("Genelge")
+                .genelgeNoKontrol(genelgeNo);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2251 : Yetki Devri Kullanılarak Evrak Oluşturma (Geri al ve iade et senaryoları)")
+    public void TS2251() throws InterruptedException{
 
 
+        useFirefox();
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
+        String konu = "TS2248 " + createRandomNumber(8);
+//        String konu = "TS2248 12165034";
+        String guncelHitap = "Genel Müdürlük Emri";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        String sablon = "TS2251 (K)";
+        String icerik="TS2251 senaryosu için hazırlanmıştır.";
+
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .onTanimliIcerikSablonuGoster()
+                .onTanimliIcerikSablonuSec(sablon)
+                .sablonlarUygula()
+//                .onizlemeIcerikKontrol(icerik)
+                .pdfGoster();
+
+        evrakOlusturPage
+                .pdfKontrol
+                .PDFIcerikKontrol(icerik);
     }
 }
