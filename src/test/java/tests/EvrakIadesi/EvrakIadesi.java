@@ -66,7 +66,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2017: Akıştaki Evrağın Değiştirilip İmzala Butonuna Basılması - Güncellemeye Devam Et")
     public void TS2017() throws InterruptedException {
-
+        String testid = "TS2017";
         String konu = "TS2017-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -95,6 +95,7 @@ public class EvrakIadesi extends BaseTest {
         String secenek1 = "İade Et";
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -226,7 +227,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2015: Akıştaki Evrağın Değiştirilip İmzala Butonuna Basılması - İade Et")
     public void TS2015() throws InterruptedException {
-
+        String testid = "TS2015";
         String konu = "TS2015-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -254,6 +255,7 @@ public class EvrakIadesi extends BaseTest {
         String secenek1 = "İade Et";
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -358,7 +360,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2016: Akıştaki Evrağın Değiştirilip İmzala Butonuna Basılması - Öncekileri Çıkart")
     public void TS2016() throws InterruptedException {
-
+        String testid = "TS2016";
         String konu = "TS2016-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -386,6 +388,7 @@ public class EvrakIadesi extends BaseTest {
         String secenek1 = "İade Et";
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -478,7 +481,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2332: Beklemeye alınanlar listesindeki evrakta değişiklik yapılarak iade")
     public void TS2332() throws InterruptedException {
-
+        String testid = "TS2332";
         String konu = "TS2332-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -506,6 +509,7 @@ public class EvrakIadesi extends BaseTest {
         String secenek1 = "İade Et";
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -607,7 +611,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2331: Beklemeye alınanlar listesindeki evrakta değişiklik yapmadan iade")
     public void TS2331() throws InterruptedException {
-
+        String testid = "TS2331";
         String konu = "TS2331-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -639,6 +643,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -713,8 +718,7 @@ public class EvrakIadesi extends BaseTest {
         evrakOlusturPage
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .dosyaEkle(pathToFileText,fileName)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -735,7 +739,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS170: Evrak detay ekranından evrakın iade edilmesi ve kontrolü")
     public void TS170() throws InterruptedException {
-
+        String testid = "TS170";
         String konu = "TS170-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -767,6 +771,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -832,8 +837,7 @@ public class EvrakIadesi extends BaseTest {
         evrakOlusturPage
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .dosyaEkle(pathToFileText,fileName)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -854,7 +858,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS105a: Evrak detay ekranından evrakın iade edilmesi ve kontrolü")
     public void TS105a() throws InterruptedException {
-
+        String testid = "TS105a";
         String konu = "TS105a-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -886,6 +890,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -954,8 +959,7 @@ public class EvrakIadesi extends BaseTest {
         evrakOlusturPage
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .dosyaEkle(pathToFileText,fileName)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -976,7 +980,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS105b: Evrak detay ekranından evrakın iade edilmesi ve kontrolü")
     public void TS105b() throws InterruptedException {
-
+        String testid = "TS105b";
         String konu = "TS105b-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -1008,6 +1012,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -1072,8 +1077,7 @@ public class EvrakIadesi extends BaseTest {
         evrakOlusturPage
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .dosyaEkle(pathToFileText,fileName)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -1094,7 +1098,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS135: Evrak ön izleme ekranından evrakın iade edilmesi ve kontrolü")
     public void TS135() throws InterruptedException {
-
+        String testid = "TS135";
         String konu = "TS135-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -1126,6 +1130,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -1190,8 +1195,7 @@ public class EvrakIadesi extends BaseTest {
         evrakOlusturPage
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .dosyaEkle(pathToFileText,fileName)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -1212,7 +1216,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS104: Evrak ön izleme ekranından evrakın iade edilmesi ve kontrolü")
     public void TS104() throws InterruptedException {
-
+        String testid = "TS104";
         String konu = "TS104-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -1245,6 +1249,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -1654,6 +1659,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2328: Paraf bekleyen evrakın güncellenerek iadesi")
     public void TS2328() throws InterruptedException {
+        String testid = "TS2328";
         String konu = "TS2328-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -1687,6 +1693,7 @@ public class EvrakIadesi extends BaseTest {
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -1794,7 +1801,7 @@ public class EvrakIadesi extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS169: Ön izleme ekranından evrakın iade edilmesi ve kontrolü")
     public void TS169() throws InterruptedException {
-
+        String testid = "TS169";
         String konu = "TS169-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "KURUL KARARLARI";
@@ -1823,7 +1830,10 @@ public class EvrakIadesi extends BaseTest {
         String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
         String evrakTarihiSaat = getSysDateForTarihSaat();
         String islemSureci = "Evrak paraf bekliyor";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
 
+        testStatus(testid, "Test Başladı");
         evrakOlusturPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -1885,8 +1895,7 @@ public class EvrakIadesi extends BaseTest {
                 .iadeEtKontrol()
                 .iadeEt()
                 .parafciKontrol(user1)
-                //TODO burasi calismiyor fix it
-//                .dosyaEkle(pathToFileText,fileName)
+                .iadeEtDosyaEkle(pathToFileText)
                 .notAlaniDoldur(konu)
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
