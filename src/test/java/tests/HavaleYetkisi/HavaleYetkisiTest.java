@@ -225,7 +225,6 @@ public class HavaleYetkisiTest extends BaseTest {
 
         String konu = "TS0597 " + createRandomNumber(8);
 //        String konu = "TS0597 16403152";
-        String konu2 = "TS0597 " + createRandomNumber(8);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Username21g TEST";
 
@@ -333,6 +332,35 @@ public class HavaleYetkisiTest extends BaseTest {
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
     }
 
-    
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS0614 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
+    public void TS0615() throws InterruptedException{
+
+
+        login(TestData.user21g);
+
+        String konu = "TS0614 " + createRandomNumber(8);
+//        String konu = "TS0597 16403152";
+        String konu2 = "TS0614 " + createRandomNumber(8);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String birim = "Username21g TEST";
+
+
+        reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
+
+        String btnHavaleYap = "Havale Yap";
+        String btnTeslimAlveHavaleYap = "Teslim Al ve Havale Et";
+        String btnBirim = "Birim";
+
+        gelenEvraklarPage
+                .openPage()
+                .tabloKonuyaGoreEvrakAc(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnHavaleYap)
+                .evrakOnizlemeButonTikla(btnHavaleYap)
+                .evrakOnizlemeButonKontrolu(btnBirim, false)
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+    }
 
 }

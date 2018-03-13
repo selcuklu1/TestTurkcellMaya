@@ -49,10 +49,17 @@ public class TeslimAlinanlarPage extends MainPage {
     SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
     ElementsCollection lblIadeEdilecekBirim = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
     SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
+    SelenideElement btntopluHavale = $("[class='ui-button-icon-left ui-icon document-charge']");
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinanlar);
+        return this;
+    }
+
+    @Step("Toplu Havale Tıklanır")
+    public TeslimAlinanlarPage topluHavale(){
+        btntopluHavale.click();
         return this;
     }
 

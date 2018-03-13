@@ -71,7 +71,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement evrakTeslimAl = $("[class='ui-button-icon-left ui-icon teslimAl']");
 
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
-    SelenideElement teslimAlGönder = $("[id='mainPreviewForm:btnTeslimAlGonder']");
+    SelenideElement teslimAlGönder = $("[class='ui-button-icon-left ui-icon teslimAl']");
     ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
 
     SelenideElement btnIadeEt = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
@@ -96,10 +96,17 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
     SelenideElement btnTeslimAlPopup=$(By.id("teslimAlEvetButton"));
+    SelenideElement btnTeslimAlveHavaleEt=$("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class$='document-delivery-publish']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
 //        ustMenu("Teslim Alınmayı Bekleyenler");
+        return this;
+    }
+
+    @Step("Teslim al ve havale et butonunu tıklanır")
+    public TeslimAlinmayiBekleyenlerPage teslimAlveHavaleEt(){
+        btnTeslimAlveHavaleEt.click();
         return this;
     }
 
