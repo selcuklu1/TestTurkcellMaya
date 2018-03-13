@@ -2506,6 +2506,7 @@ public class EvrakOlusturPage extends MainPage {
             $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).shouldHave(textCaseSensitive(beklenenEditorHitap));
             /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).getText();
             System.out.println(editorHitap);
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
             Allure.addAttachment("EditorHitap" + editorHitap,"BeklenenEditorHitap" + beklenenEditorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);*/
             return this;
