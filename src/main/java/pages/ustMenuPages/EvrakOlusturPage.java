@@ -80,7 +80,8 @@ public class EvrakOlusturPage extends MainPage {
     private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
     private SablonIslemleriTab sablonIslemleriTab = new SablonIslemleriTab();
-    private EvrakDogrulamaTab evrakDogrulamaTab = new EvrakDogrulamaTab() ;
+    private EvrakDogrulamaTab evrakDogrulamaTab = new EvrakDogrulamaTab();
+
     @Step("Evrak Oluştur sayfasını aç")
     public EvrakOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.EvrakOlustur);
@@ -88,18 +89,17 @@ public class EvrakOlusturPage extends MainPage {
     }
 
 
-
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public EvrakOlusturPage sayfaKontrol(String sayfa) {
-        Assert.assertEquals(lblSayfa.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
-        Allure.addAttachment(sayfa,"açılmaktadır");
+        Assert.assertEquals(lblSayfa.filterBy(Condition.text(sayfa)).size() > 0, true, sayfa);
+        Allure.addAttachment(sayfa, "açılmaktadır");
         return this;
     }
 
     @Step(" \"{sayfa}\" ekranı açılır\n")
     public EvrakOlusturPage sayfaKontrol2(String sayfa) {
-        Assert.assertEquals(lblSayfa2.filterBy(Condition.text(sayfa)).size() > 0,true,sayfa);
-        Allure.addAttachment(sayfa,"açılmaktadır");
+        Assert.assertEquals(lblSayfa2.filterBy(Condition.text(sayfa)).size() > 0, true, sayfa);
+        Allure.addAttachment(sayfa, "açılmaktadır");
         return this;
     }
 
@@ -119,7 +119,6 @@ public class EvrakOlusturPage extends MainPage {
         btnPDFOnizleme.click();
         return this;
     }
-
 
 
     @Step("İmzalama")
@@ -172,23 +171,23 @@ public class EvrakOlusturPage extends MainPage {
     }
 
     @Step("\"{text}\" butonu kontrolu. Ekranda görünüyor mu : {shoulBeExist} ")
-    public EvrakOlusturPage butonKontrolu(String text,boolean shoulBeExist) {
+    public EvrakOlusturPage butonKontrolu(String text, boolean shoulBeExist) {
         SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
-        if(shoulBeExist)
-            Assert.assertEquals(btn.isDisplayed(),true);
+        if (shoulBeExist)
+            Assert.assertEquals(btn.isDisplayed(), true);
         else
-            Assert.assertEquals(btn.isDisplayed(),false);
+            Assert.assertEquals(btn.isDisplayed(), false);
         return this;
     }
 
     @Step("Evrak Kopyala tıklanır")
-    public EvrakOlusturPage evrakKopyala(){
+    public EvrakOlusturPage evrakKopyala() {
         btnEvrakKopyala.click();
         return this;
     }
 
     @Step("Evet tıklanır")
-    public EvrakOlusturPage evrakKopyalaEvet(){
+    public EvrakOlusturPage evrakKopyalaEvet() {
         btnEvrakKopyalaEvet.click();
         return this;
     }
@@ -328,10 +327,12 @@ public class EvrakOlusturPage extends MainPage {
     public IliskiliEvraklarTab iliskiliEvraklarTabAc() {
         return iliskiliEvraklarTab.open();
     }
+
     @Step("Evrak Dogrulama Tab aç")
-    public EvrakDogrulamaTab evrakDogrulamaTabAc () {
+    public EvrakDogrulamaTab evrakDogrulamaTabAc() {
         return evrakDogrulamaTab.open();
     }
+
     public EvrakNotlariTab evrakNotlariTabAc() {
         return evrakNotlariTab.open();
     }
@@ -508,49 +509,51 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Konu alanı geldiği kontrolü")
         public BilgilerTab konuAlaniGeldigiGorme() {
-            Assert.assertEquals(true , txtKonu.exists() );
+            Assert.assertEquals(true, txtKonu.exists());
             return this;
         }
-        @Step("Konu Kodu alanı geldiği kontrolü")
-        public  BilgilerTab konuKoduAlaniGeldigiKtrl () {
 
-            Assert.assertEquals(true , cmbKonuKodu.exists() );
+        @Step("Konu Kodu alanı geldiği kontrolü")
+        public BilgilerTab konuKoduAlaniGeldigiKtrl() {
+
+            Assert.assertEquals(true, cmbKonuKodu.exists());
             return this;
         }
 
         @Step("Gizlilik Derecesi alanı geldiği kontrolü")
-        public BilgilerTab gizlilikDerecesiAlaniKtrl () {
-            Assert.assertEquals(true , cmbGizlilikDerecesi.exists() );
+        public BilgilerTab gizlilikDerecesiAlaniKtrl() {
+            Assert.assertEquals(true, cmbGizlilikDerecesi.exists());
             return this;
         }
 
         @Step("Ivedilik alani geldiği kontrolü")
-        public BilgilerTab ivedilikAlaniKtrl () {
-            Assert.assertEquals(true , cmbIvedik.exists() );
+        public BilgilerTab ivedilikAlaniKtrl() {
+            Assert.assertEquals(true, cmbIvedik.exists());
             return this;
         }
 
 
         @Step("Bilgi alani geldiği kontrolü")
         public BilgilerTab bilgiAlaniktrol() {
-            Assert.assertEquals(true , txtBilgi.exists() );
+            Assert.assertEquals(true, txtBilgi.exists());
             return this;
         }
+
         @Step("Geregi alani geldiği kontrolü")
         public BilgilerTab geregiAlanigeldigiKtrol() {
-            Assert.assertEquals(true , txtGeregi.exists() );
+            Assert.assertEquals(true, txtGeregi.exists());
             return this;
         }
 
         @Step("Onay akışı alanlarının oldugu ekranın geldigi kontrolü")
-        public BilgilerTab onayAkisiAlangelktrl () {
-            Assert.assertEquals(true , btnOnayAkisiEkle.exists() );
+        public BilgilerTab onayAkisiAlangelktrl() {
+            Assert.assertEquals(true, btnOnayAkisiEkle.exists());
             return this;
         }
 
         @Step("Kaldırılacak klasör alanlarının geldigi kontrolü")
-        public BilgilerTab kaldiralacakKlasoralanKtrol () {
-            Assert.assertEquals(true , cmbKaldiralacakKlasorler.exists() );
+        public BilgilerTab kaldiralacakKlasoralanKtrol() {
+            Assert.assertEquals(true, cmbKaldiralacakKlasorler.exists());
             return this;
         }
 
@@ -589,8 +592,8 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Kullanıcılar alanı doldur")
-        public BilgilerTab kullanicilarDoldur(String kullanici,String birim) {
-            txtOnayAkisiKullanicilar.selectLov(kullanici,birim);
+        public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
+            txtOnayAkisiKullanicilar.selectLov(kullanici, birim);
             return this;
         }
 
@@ -680,7 +683,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Kaldiralacak Klasörler alanında Kontrol \"{kaldirilacakKlasorler}\" ")
         public BilgilerTab kaldiralacakKlasorlerKontrol(String kaldirilacakKlasorler) {
-            Assert.assertEquals(txtKaldiralacakKlasorlerKontrol.getText().contains(kaldirilacakKlasorler),true,"Kaldiralacak Klasörler alanında Kontrol:" + kaldirilacakKlasorler);
+            Assert.assertEquals(txtKaldiralacakKlasorlerKontrol.getText().contains(kaldirilacakKlasorler), true, "Kaldiralacak Klasörler alanında Kontrol:" + kaldirilacakKlasorler);
             Allure.addAttachment("Kaldiralacak Klasörler alanında Kontrol:", kaldirilacakKlasorler);
             return this;
         }
@@ -693,12 +696,22 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Genelge alanı kontrol edilir.")
-        public BilgilerTab genelgeAlaniKontrolu(){
-            Assert.assertEquals(txtGenelgeNo.isDisplayed(),true,"Genelge no textboxı görülür.");
-            Assert.assertEquals(txtBirOncekiGenelge.isDisplayed(),true,"Bir önceki genelge no görülür.");
-            Assert.assertEquals(lblBirOnceki.isDisplayed(),true,"Bir Önceki labelı görülür.");
-            Allure.addAttachment("Genelge No alanı kontrolü","Genelge no alanının ve \n" +
+        public BilgilerTab genelgeAlaniKontrolu() {
+            Assert.assertEquals(txtGenelgeNo.isDisplayed(), true, "Genelge no textboxı görülür.");
+            Assert.assertEquals(txtBirOncekiGenelge.isDisplayed(), true, "Bir önceki genelge no görülür.");
+            Assert.assertEquals(lblBirOnceki.isDisplayed(), true, "Bir Önceki labelı görülür.");
+            Allure.addAttachment("Genelge No alanı kontrolü", "Genelge no alanının ve \n" +
                     "Bir önceki : sayı/sayı şeklinde bilginin geldiği görülür.");
+            return this;
+        }
+
+        @Step("Genelge No alanı kontrol edilir.")
+        public BilgilerTab genelgeNoKontrol(String genelgeNo) {
+
+            Assert.assertEquals(txtBirOncekiGenelge.getText().equals(genelgeNo), true);
+            Allure.addAttachment("Genelge No alanı kontrolu : ", "Ekranda olan : " + txtBirOncekiGenelge.getText() + " \n" +
+                    "Beklenen : " + genelgeNo + " ");
+
             return this;
         }
 
@@ -706,11 +719,11 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab evrakTuruIcerikKontrol() {
 //            if (!cmbEvrakTuru.getSelectedOption().equals(text))
             String text = cmbEvrakTuru.innerText();
-            Assert.assertEquals(text.contains("Resmi Yazışma"),true);
-            Assert.assertEquals(text.contains("Form"),true);
-            Assert.assertEquals(text.contains("Genelge"),true);
-            Assert.assertEquals(text.contains("Beyanname"),true);
-            Assert.assertEquals(text.contains("Diğer"),true);
+            Assert.assertEquals(text.contains("Resmi Yazışma"), true);
+            Assert.assertEquals(text.contains("Form"), true);
+            Assert.assertEquals(text.contains("Genelge"), true);
+            Assert.assertEquals(text.contains("Beyanname"), true);
+            Assert.assertEquals(text.contains("Diğer"), true);
             Allure.addAttachment("Evrak Turu Icerik", "Resmi yazışma\n" +
                     "Form \n" +
                     "Genelge\n" +
@@ -720,29 +733,31 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Bir önceki genelge sayısını alma")
-        public String birOncekiGenelgeSayisi () {
+        public String birOncekiGenelgeSayisi() {
             Allure.addAttachment("Bir önceki Genelge Sayisi", txtBirOncekiGenelge.innerText());
             return txtBirOncekiGenelge.innerText();
         }
 
         @Step("Genelge Sayisi girme : \"{genelgeSayi}\" ")
-        public BilgilerTab inputGenelgeSayisi (String genelgeSayi) {
+        public BilgilerTab inputGenelgeSayisi(String genelgeSayi) {
             txtGenelgeNo.setValue(genelgeSayi);
             return this;
         }
+
         @Step("Genelge Sayisini bir arttırma")
-        public String genelgeSayisiArttirma (String genelge) {
+        public String genelgeSayisiArttirma(String genelge) {
             int lenght = genelge.length();
-            String genelge1 = genelge.substring(0,4);
-            String genelge2 = genelge.substring(4,lenght);
+            String genelge1 = genelge.substring(0, 4);
+            String genelge2 = genelge.substring(4, lenght);
             String genelgeno = null;
 
-                int x = Integer.valueOf(genelge2);
-                x = x + 1;
-                genelgeno = genelge1 + String.valueOf(x);
-                return genelgeno;
+            int x = Integer.valueOf(genelge2);
+            x = x + 1;
+            genelgeno = genelge1 + String.valueOf(x);
+            return genelgeno;
 
         }
+
         @Step("Kayıt Tarih alanında \"{dateText}\" seç")
         public BilgilerTab dateKayitTarihiSec(String dateText) {
             dateKayitTarihi.setValue(dateText);
@@ -789,7 +804,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gizlilik Derecesi kontrol {gizlilikDerecesi}")
         public BilgilerTab gizlilikDerecesiKontrol(String gizlilikDerecesi) {
-            Assert.assertEquals(cmbGizlilikDerecesi.getText().contains(gizlilikDerecesi),true,"Gizlilik Derecesi Kontrol:" + gizlilikDerecesi);
+            Assert.assertEquals(cmbGizlilikDerecesi.getText().contains(gizlilikDerecesi), true, "Gizlilik Derecesi Kontrol:" + gizlilikDerecesi);
             Allure.addAttachment("Gizlilik Derecesi:", gizlilikDerecesi);
             return this;
         }
@@ -853,7 +868,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("İvedik alanında kontrol \"{ivedilik}\"")
         public BilgilerTab ivedilikKontrol(String ivedilik) {
-            Assert.assertEquals(cmbIvedik.getText().contains(ivedilik),true,"Kİvedik alanında kontrol:" + ivedilik);
+            Assert.assertEquals(cmbIvedik.getText().contains(ivedilik), true, "Kİvedik alanında kontrol:" + ivedilik);
             Allure.addAttachment("İvedik alanında kontrol:", ivedilik);
             return this;
         }
@@ -918,7 +933,6 @@ public class EvrakOlusturPage extends MainPage {
 //            cmbGeregi.closeTreePanel();
             return this;
         }
-
 
 
         @Step("Geregi alanında \"{kisAd}\" kısa adı girilir, {kurum} kurumu geldiği görülür ve seçilir.")
@@ -1016,7 +1030,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Konu kodu kontrol \"{konuKodu}\"")
         public BilgilerTab konuKoduDoldurKontrol(String konuKodu) {
-            Assert.assertEquals(txtKonuKoduKontrol.getText().contains(konuKodu),true,"Konu Kodu Kontrol:" + konuKodu);
+            Assert.assertEquals(txtKonuKoduKontrol.getText().contains(konuKodu), true, "Konu Kodu Kontrol:" + konuKodu);
             Allure.addAttachment("Konu Kodu Kontrol:", konuKodu);
             return this;
         }
@@ -1043,7 +1057,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Konu kontrol \"{konu}\"")
         public BilgilerTab konuDoldurKontrol(String konu) {
-            Assert.assertEquals(txtKonu.getText().contains(konu),true,"Konu Kontrol:" + konu);
+            Assert.assertEquals(txtKonu.getText().contains(konu), true, "Konu Kontrol:" + konu);
             Allure.addAttachment("Konu Kontrol:", konu);
             return this;
         }
@@ -1062,7 +1076,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Kaydet ve Onaya Sun buton kontrolü ")
         public BilgilerTab kaydetVeOnayaSunKontrol() {
             btnKaydetveOnayaSun.exists();
-            Allure.addAttachment("Kaydet ve Onaya sun butonu" , "Kaydet ve Onaya sun butonu geldiği görülür");
+            Allure.addAttachment("Kaydet ve Onaya sun butonu", "Kaydet ve Onaya sun butonu geldiği görülür");
             return this;
         }
 
@@ -1161,11 +1175,10 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği Seçim Tipi alanında Kontrol \"{geregiSecimTipi}\" ")
         public BilgilerTab geregiSecimTipiKontrol(String geregiSecimTipi) {
-            Assert.assertEquals(txtGeregiSecimTipiYeniEvrak.getSelectedText().contains(geregiSecimTipi),true,"Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
+            Assert.assertEquals(txtGeregiSecimTipiYeniEvrak.getSelectedText().contains(geregiSecimTipi), true, "Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
             Allure.addAttachment("Gereği Seçim Tipi alanında Kontrol:", geregiSecimTipi);
             return this;
         }
-
 
 
         @Step("Bilgi alanında {description} doldur: | {bilgi}")
@@ -1183,7 +1196,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği Seçim Tipi alanında Kontrol \"{geregiSecimTipi}\" ")
         public BilgilerTab geregiSecimTipiEskiKontrol(String geregiSecimTipi) {
-            Assert.assertEquals(txtGeregiSecimTipiEskiEvrak.getSelectedText().contains(geregiSecimTipi),true,"Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
+            Assert.assertEquals(txtGeregiSecimTipiEskiEvrak.getSelectedText().contains(geregiSecimTipi), true, "Gereği Seçim Tipi alanında Kontrol:" + geregiSecimTipi);
             Allure.addAttachment("Gereği Seçim Tipi alanında Kontrol:", geregiSecimTipi);
             return this;
         }
@@ -1197,14 +1210,14 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Gereği kontrol: | {geregi}")
         public BilgilerTab geregiKontrol(String geregi) {
-            Assert.assertEquals(cmbGeregiKontrol.getText().contains(geregi),true,"Gereği kontrol:" + geregi);
+            Assert.assertEquals(cmbGeregiKontrol.getText().contains(geregi), true, "Gereği kontrol:" + geregi);
             Allure.addAttachment("Gereği kontrol:", geregi);
             return this;
         }
 
         @Step("Gereği kontrol: | {geregi}")
         public BilgilerTab geregiKontrolInbox(String geregi) {
-            Assert.assertEquals(cmbGeregiInboxKontrol.getText().contains(geregi),true,"Gereği kontrol:" + geregi);
+            Assert.assertEquals(cmbGeregiInboxKontrol.getText().contains(geregi), true, "Gereği kontrol:" + geregi);
             Allure.addAttachment("Gereği kontrol:", geregi);
             return this;
         }
@@ -1282,7 +1295,7 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Bilgileri tabında gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
-       // @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu: {description}")
+        // @Step("Bilgileri tabında kişinin geregi alanında görüntülenmeme kontrolu: {description}")
         public BilgilerTab geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
             boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
@@ -1303,7 +1316,6 @@ public class EvrakOlusturPage extends MainPage {
             cmbGeregi.getSelectedTitles().last().shouldHave(text(adSoyad));
             return this;
         }
-
 
 
         @Step("Otomatik onay akışı alanında geldiği görünür \"{ekranAdi}\" | \"{ad}\"")
@@ -1368,12 +1380,12 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
-        public BilgilerTab kullaniciylaSecimTipiSec(String deger,String secim){
-        $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
-                .last().$("select").selectOption(secim);
+        public BilgilerTab kullaniciylaSecimTipiSec(String deger, String secim) {
+            $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
+                    .last().$("select").selectOption(secim);
             return this;
         }
-        
+
         @Step("Güncel kullanıcının default paraflama aksiyonu ile geldiği görülür.")
         public BilgilerTab onayAkisiParaflamaGeldigiGorme() {
             boolean durum = $("[id*='akisAdimLov:LovSecilenTable'][id$='selectOneMenu']").getSelectedText().equals("Paraflama");
@@ -1494,7 +1506,7 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab onayAkisiKontrolu() {
             BelgenetElement txtOnayAkisi = comboLov("[id^='yeniGidenEvrakForm:evrakBilgileriList:'][id$=':akisLov:LovSecilen']");
             boolean deger = txtOnayAkisi.getSelectedItems().isEmpty();
-            Assert.assertEquals(deger,false,"Onay Akısı dolu.");
+            Assert.assertEquals(deger, false, "Onay Akısı dolu.");
 
             return this;
         }
@@ -1576,8 +1588,8 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Onay akışı kullanıcı ekle")
-        public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi,String details) {
-            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi,details);
+        public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi, String details) {
+            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi, details);
             return this;
         }
 
@@ -1645,9 +1657,9 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Onay akışı kullanıcı adı ve tipi kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\" ")
         public BilgilerTab onayAkisiKullaniciKontrolu(String kullaniciAdi, String kullaniciTipi) {
             boolean durum = trOnayAkisiEkleKullanicilar
-                    .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size()==1;
-            Assert.assertEquals(durum,true,"Onay akışı kullanıcı adı ve tipi kontrolu");
-            Allure.addAttachment("Onay akışı kullanıcı adı ve tipi kontrolu",kullaniciAdi + " " + kullaniciTipi );
+                    .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size() == 1;
+            Assert.assertEquals(durum, true, "Onay akışı kullanıcı adı ve tipi kontrolu");
+            Allure.addAttachment("Onay akışı kullanıcı adı ve tipi kontrolu", kullaniciAdi + " " + kullaniciTipi);
 
             return this;
         }
@@ -1655,11 +1667,10 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Parafla Button kontrol")
         public BilgilerTab paraflaKontrol() {
-            Assert.assertEquals(btnParaflaKontrol.isDisplayed(),true,"Parafla Button kontrol");
+            Assert.assertEquals(btnParaflaKontrol.isDisplayed(), true, "Parafla Button kontrol");
             Allure.addAttachment("Parafla Button kontrol", "");
             return this;
         }
-
 
 
         @Step("Her kullanıcının yanında işaretlenmek üzere checbox bulunması kontrolu {description}")
@@ -1834,9 +1845,10 @@ public class EvrakOlusturPage extends MainPage {
                     .$(By.xpath(".//span[contains(., '" + kullaniciAdi + "') and @class='lovItemDetail']")).shouldBe(exist);
             return this;
         }
+
         @Step("Onay akışı otomatik olarak ilk gelen kullanici kontrol et : \"{kullaniciAdi}\" ")
         public BilgilerTab onayAkisiotomatikilkgelenKullaniciKontrolEt2(String kullaniciAdi) {
-           SelenideElement kullanicion = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td[2]/div/table/tbody/tr/td[1]/div");
+            SelenideElement kullanicion = $x("//*[@id='yeniGidenEvrakForm:evrakBilgileriList:18:akisAdimLov:LovSecilenTable_data']/tr/td[2]/div/table/tbody/tr/td[1]/div");
             System.out.println(kullanicion.innerText());
             kullanicion.innerText().contains(kullaniciAdi);
             return this;
@@ -2262,7 +2274,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Editör Tab Kontrol")
         private EditorTab editorTabKontrol() {
             boolean durum = divContainer.isDisplayed();
-            Assert.assertEquals(durum,true,"Editor Tab Kontrol");
+            Assert.assertEquals(durum, true, "Editor Tab Kontrol");
             Allure.addAttachment("Editor Tab Kontrol", "");
             return this;
         }
@@ -2270,11 +2282,10 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Editör Tab Kontrol")
         private EditorTab editorTabKontrolInbox() {
             boolean durum = divContainerInbox.isDisplayed();
-            Assert.assertEquals(durum,true,"Editor Tab Kontrol");
+            Assert.assertEquals(durum, true, "Editor Tab Kontrol");
             Allure.addAttachment("Editor Tab Kontrol", "");
             return this;
         }
-
 
 
         @Step("Hitap alanı \"{hitap}\" olarak gelmeli")
@@ -2438,6 +2449,7 @@ public class EvrakOlusturPage extends MainPage {
             sayisalImzaOnay.click();
             return this;
         }
+
         @Step("Imzalama popup içinde S imzalama geldiği görme ve tıklama")
         public EditorTab popupSImzalaIslemleri() throws InterruptedException {
             Thread.sleep(10000);
@@ -2496,7 +2508,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında Hitap popup kontrolu")
         public EditorTab hitapPopupKontrol() {
-            Assert.assertEquals(txtPopupHitapHitap.isDisplayed(),true,"Hitap popup açıldı.");
+            Assert.assertEquals(txtPopupHitapHitap.isDisplayed(), true, "Hitap popup açıldı.");
             return this;
         }
 
@@ -2685,11 +2697,10 @@ public class EvrakOlusturPage extends MainPage {
         }
 
 
-
         @Step("Editorde dagitim kontrolu: {dagitim}")
         public EditorTab editorDagitimKontrol(String dagitim) {
-            Assert.assertEquals(lblDagitimKontrol.getText().contains(dagitim), true,"Editorde dagitim kontrol");
-            Allure.addAttachment("Editorde dagitim kontrol" , dagitim);
+            Assert.assertEquals(lblDagitimKontrol.getText().contains(dagitim), true, "Editorde dagitim kontrol");
+            Allure.addAttachment("Editorde dagitim kontrol", dagitim);
 
             return this;
         }
@@ -2723,7 +2734,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editorde konu kontrolu: {konu}")
         public EditorTab editorKonuKontrol(String konu) {
-            Assert.assertEquals(editorKonuKontrol.getText().contains(konu), true,"Editor Konu Kontrol");
+            Assert.assertEquals(editorKonuKontrol.getText().contains(konu), true, "Editor Konu Kontrol");
             Allure.addAttachment("Editor Konu Kontrol", konu);
             return this;
         }
@@ -2930,10 +2941,10 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Tabloda Evrak no kontrolü")
         public EkleriTab tabloEvrakNoKontrol(String evrakNo) {
-            SelenideElement table=$(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable"));
+            SelenideElement table = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable"));
 
-            boolean displayed = findElementOnTableByColumnInputInAllPages(table,1,evrakNo).isDisplayed();
-            Assert.assertEquals(displayed,true,"evrakno eşit");
+            boolean displayed = findElementOnTableByColumnInputInAllPages(table, 1, evrakNo).isDisplayed();
+            Assert.assertEquals(displayed, true, "evrakno eşit");
 //            tblSistemdeKayitliEvrakListe
 //                    .filterBy(Condition.text(evrakNo)).shouldHaveSize(1);
             return this;
@@ -3345,6 +3356,7 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
         // İşlem penceresi kapatma onay - popup
         @Step("Popup : İşlem penceresi kapatma onayi: \"{secim}\" ")
         public EkleriTab islemPenceresiKapatmaOnayiPopup2(String secim) {
@@ -3732,13 +3744,15 @@ public class EvrakOlusturPage extends MainPage {
             txtIlgileriSistemdeEvrakArama.setValue(evrakAdi);
             return this;
         }
+
         @Step("Ilgileri Tab Sisteme Kayitli Evrak EkleTab Arama başlangıç tarihi")
-        public IlgileriTab sistemeKayitlievrakInputDate (String date) {
+        public IlgileriTab sistemeKayitlievrakInputDate(String date) {
             SelenideElement btnSistemeKayitliEvrakAraTarihBasla = $x("//*[@id='yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input']");
 
             btnSistemeKayitliEvrakAraTarihBasla.setValue(date);
             return this;
         }
+
         @Step("IlgileriTab Sisteme Kayitli Evrak EkleTab Dokuman Ara")
         public IlgileriTab sistemeKayitliDokumanArama() {
             btnIlgileriSistemdeDokumanAra.click();
@@ -4280,10 +4294,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Pdf hitap kontrolu")
+        @Step("Pdf hitap kontrolu. \"{beklenenPDFHitap}\" ")
         public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
-            String PDFHitap = $(By.xpath("//*[@id='viewer']/div/div[2]/div[5]")).getText();
-            Assert.assertEquals(PDFHitap.contains(beklenenPDFHitap), true);
+            switchTo().window(1);
+            SelenideElement PDFHitap = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + beklenenPDFHitap + "']"));
+            Assert.assertEquals(PDFHitap.getText().contains(beklenenPDFHitap), true);
+            takeScreenshot();
+            closeNewWindow();
+            switchTo().window(0);
             return this;
         }
 
@@ -4326,7 +4344,7 @@ public class EvrakOlusturPage extends MainPage {
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
             String pdfDagitim2 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
             String pdfDagitim2Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
-            String pdfDagitim = pdfDagitim2 + " " +pdfDagitim2Devam;
+            String pdfDagitim = pdfDagitim2 + " " + pdfDagitim2Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }
@@ -4335,7 +4353,7 @@ public class EvrakOlusturPage extends MainPage {
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
             String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
             String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[23]")).getText();
-            String pdfDagitim = pdfDagitim3 + " " +pdfDagitim3Devam;
+            String pdfDagitim = pdfDagitim3 + " " + pdfDagitim3Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }
@@ -4367,6 +4385,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement chxBoxDogrulanabilirForHiddenCase = $x("//*[@id='yeniGidenEvrakForm:dogrulanabilirPanelGrid']/tbody/tr/td[3]/div/div[2]");
 
         SelenideElement chxBoxDogrulanabilir = $x("//*[@id='yeniGidenEvrakForm:dogrulanabilirPanelGrid']/tbody/tr/td[3]/div/div[2]/span");
+
         @Step("Evrak Dogrulama Tab açma")
         private EvrakDogrulamaTab open() {
             tabEvrakDogrulama.shouldBe(exist);
@@ -4375,47 +4394,48 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Evrak Dogrulanabilir checkbox kontrolü")
-        public EvrakDogrulamaTab chkevrakDogrulanabilirktrol () {
+        public EvrakDogrulamaTab chkevrakDogrulanabilirktrol() {
             chxBoxDogrulanabilir.exists();
             return this;
         }
+
         @Step("Evrak Dogrulanabilir checkbox dogrulanabilir işaretinin kontrolü")
-        public boolean chkboxEvrakDogrulanabilirclick () {
+        public boolean chkboxEvrakDogrulanabilirclick() {
             String className = chxBoxDogrulanabilir.getAttribute("className");
             int compare = className.compareTo("ui-chkbox-icon ui-icon ui-icon-check");
             if (compare == 0) {
-                Allure.addAttachment("Dogrulanabilir işareti" , "Dogrulanabilir işaretlenmiştir");
+                Allure.addAttachment("Dogrulanabilir işareti", "Dogrulanabilir işaretlenmiştir");
                 return true;
-             } else {
-                Allure.addAttachment("Dogrulanabilir işareti" , "Dogrulanabilir işaretlenmemiştir");
+            } else {
+                Allure.addAttachment("Dogrulanabilir işareti", "Dogrulanabilir işaretlenmemiştir");
                 return false;
             }
-            }
+        }
 
-            @Step("Evrak Dogrulanabilir checkbox durum kontrol ve işaretleme")
-        public EvrakDogrulamaTab chkdogrulanabilirİsaretle () {
-                String className = chxBoxDogrulanabilir.getAttribute("className");
-                int compare = className.compareTo("ui-chkbox-icon ui-icon ui-icon-check");
-                if (compare == 0) {
-                    Allure.addAttachment("Dogrulanabilir Checkbox" , "Checkbox işaretli");
-                } else {
-                    chxBoxDogrulanabilirForHiddenCase.click();
-                    Allure.addAttachment("Dogrulanabilir Checkbox" , "Checkbox işaretlendi");
+        @Step("Evrak Dogrulanabilir checkbox durum kontrol ve işaretleme")
+        public EvrakDogrulamaTab chkdogrulanabilirİsaretle() {
+            String className = chxBoxDogrulanabilir.getAttribute("className");
+            int compare = className.compareTo("ui-chkbox-icon ui-icon ui-icon-check");
+            if (compare == 0) {
+                Allure.addAttachment("Dogrulanabilir Checkbox", "Checkbox işaretli");
+            } else {
+                chxBoxDogrulanabilirForHiddenCase.click();
+                Allure.addAttachment("Dogrulanabilir Checkbox", "Checkbox işaretlendi");
 
-                }
-                return this;
             }
+            return this;
+        }
 
 
     }
 
     @Step("Evrak oluştur alanında parafla tıklanır")
     public void evrakOlusturParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
-                String konuKodu = "Diğer";
-                String kaldirilacakKlasor = "Diğer";
-                String icerik = createRandomText(15);
+        String konuKodu = "Diğer";
+        String kaldirilacakKlasor = "Diğer";
+        String icerik = createRandomText(15);
 
-                openPage()
+        openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
@@ -4424,21 +4444,21 @@ public class EvrakOlusturPage extends MainPage {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
-                .kullanicilarDoldur(kullanici2,kullaniciBirim)
-                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullanicilarDoldur(kullanici2, kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2, OnayAkisiKullanici2Turu)
                 .kullan();
-                editorTabAc()
+        editorTabAc()
                 .editorIcerikDoldur(icerik);
-                parafla();
+        parafla();
     }
 
     @Step("Evrak türüne göre vrak oluşturulur.")
     public void evrakOlusturEvrakTuruneGore(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu, String evrakTuru, String sablon) {
-                String konuKodu = "Diğer";
-                String kaldirilacakKlasor = "Diğer";
-                String icerik = createRandomText(15);
+        String konuKodu = "Diğer";
+        String kaldirilacakKlasor = "Diğer";
+        String icerik = createRandomText(15);
 
-                openPage()
+        openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
@@ -4447,23 +4467,23 @@ public class EvrakOlusturPage extends MainPage {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
-                .kullanicilarDoldur(kullanici2,kullaniciBirim)
+                .kullanicilarDoldur(kullanici2, kullaniciBirim)
                 .kullanicilarImzaciSec2(OnayAkisiKullanici2Turu)
                 .kullan()
                 .evrakTuruSec(evrakTuru)
                 .formSablonuSec(sablon);
-                kaydet(true);
-                evrakOlusturSayfaKapat();
+        kaydet(true);
+        evrakOlusturSayfaKapat();
     }
 
     @Step("Evrak oluştur alanında birim içerik oluştur kullan parafla tıklanır")
-    public void evrakOlusturBirimIcerikKullanParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu,String sablonAdi) {
-                String konuKodu = "Diğer";
-                String kaldirilacakKlasor = "Diğer";
-                String icerik = createRandomText(15);
-                pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
+    public void evrakOlusturBirimIcerikKullanParafla(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu, String sablonAdi) {
+        String konuKodu = "Diğer";
+        String kaldirilacakKlasor = "Diğer";
+        String icerik = createRandomText(15);
+        pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
 
-                openPage()
+        openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
@@ -4472,15 +4492,15 @@ public class EvrakOlusturPage extends MainPage {
                 .geregiSec(geregi)
                 .onayAkisiEkle()
                 .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
-                .kullanicilarDoldur(kullanici2,kullaniciBirim)
-                .kullaniciylaSecimTipiSec(kullanici2,OnayAkisiKullanici2Turu)
+                .kullanicilarDoldur(kullanici2, kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2, OnayAkisiKullanici2Turu)
                 .kullan();
-                pages.pageComponents.tabs.EditorTab editorTab = evrakOlusturPage.editorTab().openTab();
-                editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-                editorTab.onTanimliSablonuSec(sablonAdi)
+        pages.pageComponents.tabs.EditorTab editorTab = evrakOlusturPage.editorTab().openTab();
+        editorTab.getEditor().toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
+        editorTab.onTanimliSablonuSec(sablonAdi)
                 .onTanimliSablonuUygula();
-                bilgilerTabiAc();
-                parafla();
+        bilgilerTabiAc();
+        parafla();
     }
     //endregion
 }

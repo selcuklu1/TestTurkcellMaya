@@ -1,5 +1,7 @@
 package tests.EvrakOlusturma;
 
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -7,25 +9,32 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.tabs.AltTabs;
+import pages.solMenuPages.ImzaladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 public class EvrakOlusturmaTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
+    ImzaladiklarimPage imzaladiklarimPage;
     AltTabs alttabs;
 
     @BeforeMethod
     public void BeforeTestStart() {
         evrakOlusturPage = new EvrakOlusturPage();
-
+        imzaladiklarimPage = new ImzaladiklarimPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2248 : Genelge tipinde evrak oluşturmada hitap ve genelge no kontrolü")
     public void TS2248() throws InterruptedException {
+
+        useFirefox();
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         String konu = "TS2248 " + createRandomNumber(8);
+//        String konu = "TS2248 12165034";
+        String guncelHitap = "Genel Müdürlük Emri";
+        String basariMesaji = "İşlem başarılıdır!";
 
         evrakOlusturPage.openPage()
                 .bilgilerTabiAc()
@@ -38,9 +47,9 @@ public class EvrakOlusturmaTest extends BaseTest {
                 .onayAkisiAlangelktrl()
                 .kaldiralacakKlasoralanKtrol()
                 .evrakTuruIcerikKontrol()
-                .evrakTuruSec("Genelge")
+                .evrakTuruSec("Genelge");
 
-                .inputGenelgeSayisi("87878978994");
+//                .inputGenelgeSayisi("87878978994");
 
         String BirOncekiGenelgeNo = evrakOlusturPage.bilgilerTabiAc().birOncekiGenelgeSayisi();
         String genel = evrakOlusturPage.bilgilerTabiAc().genelgeSayisiArttirma(BirOncekiGenelgeNo);
@@ -75,13 +84,36 @@ public class EvrakOlusturmaTest extends BaseTest {
                 .editorIcerikDoldur("Acıklama")
                 .hitapTikla()
                 .hitapPopupKontrol()
-                .hitapGuncellePopup("Genel Müdürlük Emri")
+                .hitapGuncellePopup(guncelHitap)
                 .hitapGuncellePopupKapat();
 
         evrakOlusturPage.editorTabAc()
                 .pdfGoster();
 
-        //11. adımdan devam edilecek
+        evrakOlusturPage
+                .pdfKontrol
+                .PDFHitapKontrol(guncelHitap);
+
+        evrakOlusturPage
+                .editorTabAc()
+                .evrakImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
+//
+//        Selenide.close();
+//        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        imzaladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(konu)
+                .konuyaGoreEvrakOnizlemedeAc(konu)
+                .evrakOnizlemeHitapKontrol(guncelHitap);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .evrakTuruSec("Genelge");
+//                .genelgeNoKontrol(genelgeNo);
+
 
 
     }
