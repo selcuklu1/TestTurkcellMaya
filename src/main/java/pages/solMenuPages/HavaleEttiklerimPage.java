@@ -54,6 +54,13 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("Geri al butonunun gelmediği görülür.")
+    public HavaleEttiklerimPage icerikGosterGeriAlGelmedigiGorme(boolean gorunum) {
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum, gorunum);
+        takeScreenshot();
+    return  this;
+    }
     @Step("{konu} adlı evrakın içerik göster tıklanır")
     public HavaleEttiklerimPage konuyaGoreEvrakIcerikGoster(String konu) {
         tblEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
@@ -66,6 +73,14 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public HavaleEttiklerimPage evrakSagındaGerialGelmedigiKontrolu(boolean gorunum){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorunum);
+        takeScreenshot();
+        return this;
+    }
+    
     @Step("{konu} adlı evrak tıklanır")
     public HavaleEttiklerimPage konuyaGoreEvrakSec(String konu) {
         tblEvraklar.filterBy(Condition.text(konu)).first().click();

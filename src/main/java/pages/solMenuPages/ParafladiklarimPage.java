@@ -68,6 +68,10 @@ public class ParafladiklarimPage extends MainPage {
     ElementsCollection tblOnIzlemeIlgiBilgileri = $$("[id*='ilgiListesiDataTable_data'] > tr[role='row']");
     ElementsCollection tblOnIzlemeIlisikBilgileri = $$("[id*='ilisikListesiDataTable_data'] > tr[role='row']");
 
+    SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    SelenideElement btnGeriAl = $("[class='ui-button-icon-left ui-icon evrakGeriAl']");
+    SelenideElement btnGeriAlGeriAl = $("[id='mainPreviewForm:evrakOnizlemeTab'] button");
+
     @Step("Parafladıklarım sayfası aç")
     public ParafladiklarimPage openPage() {
         solMenu(IslemYaptiklarim.Parafladiklarim);
@@ -75,6 +79,30 @@ public class ParafladiklarimPage extends MainPage {
         $("#mainInboxForm\\:inboxDataTable .ui-inbox-header-title")
                 .shouldHave(text(pageTitle));
         System.out.println("Page: " + pageTitle);
+        return this;
+    }
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public ParafladiklarimPage evrakOnizlemeKontrolu() {
+        evrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Not alanını doldur: {not}")
+    public ParafladiklarimPage notAlaniDoldur(String not) {
+        $("textarea[id$='evrakGeriAlInputTextareaId']").setValue(not);
+        return this;
+    }
+
+    @Step("Geri Al Butonu tıkla")
+    public ParafladiklarimPage geriAl() {
+        btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Geri al tıklanır")
+    public ParafladiklarimPage geriAlGeriAl() {
+        btnGeriAlGeriAl.click();
         return this;
     }
 

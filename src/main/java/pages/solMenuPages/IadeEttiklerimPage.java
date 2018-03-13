@@ -23,6 +23,8 @@ public class IadeEttiklerimPage extends MainPage {
     ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
     SelenideElement tabOnizlemeKontrol = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    ElementsCollection tblParafImzacilarListesi = $$("tbody[id='mainInboxForm:imzaListesiDataTable_data'] > tr[role='row']");
+
     @Step("İade ettiklerim sayfası aç")
     public IadeEttiklerimPage openPage() {
         solMenu(SolMenuData.IslemYaptiklarim.IadeEttiklerim);
@@ -57,6 +59,37 @@ public class IadeEttiklerimPage extends MainPage {
         boolean durum = tblEvraklar.filterBy(Condition.text(konu)).get(0).$("button[id^='mainInboxForm:inboxDataTable:0:j_idt']").isDisplayed();
         return this;
     }
+
+    @Step("Imzacıları Kontrolü ve Tıklama - Kurdele Ikon Kontrolü : {konu}")
+    public IadeEttiklerimPage imzacilari(String konu) {
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='btnImzasiz']").click();
+        return this;
+    }
+
+    @Step("Paraf/Imzacılar Listesi Kontrol: {user}")
+    public IadeEttiklerimPage parafImzacilarListesiKontrol(String user,boolean status) {
+        boolean durum = tblParafImzacilarListesi
+                .filterBy(Condition.text(user)).size() > 0;
+        Assert.assertEquals(durum,status,"Paraf/Imzacılar Listesi Kontrol:");
+        Allure.addAttachment("Paraf/Imzacılar Listesi Kontrol:" + status,user);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Paraf/Imzacılar Listesinde tarih ve durum kontrolü")
+    public IadeEttiklerimPage parafImzacilarListesiKontrolTarihDurum() {
+        boolean tarih = tblParafImzacilarListesi.get(0).$$("td[role='gridcell']").get(2).getText().equals("");
+        boolean durum = tblParafImzacilarListesi.get(0).$$("td[role='gridcell']").get(3).getText().equals("");
+        Assert.assertEquals(tarih,true,"Tarih Boş Kontrolü");
+        Assert.assertEquals(durum,true,"Durum Boş Kontrolü");
+        Allure.addAttachment("Paraf/Imzacılar Listesinde tarih ve durum :" , " sonuç:" + tarih +" " + durum);
+        return this;
+    }
+
+
     @Step("Evrak geçmişi alanına tıklanır")
     public IadeEttiklerimPage secilenEvrakEvrakGecmisi() {
         tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
@@ -66,7 +99,7 @@ public class IadeEttiklerimPage extends MainPage {
     @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{islemSureci}\" \"{tarih}\"")
     public IadeEttiklerimPage evrakGecmisi(String teslimAlinan, String islemSureci, String tarih) {
         boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
-                .filterBy(Condition.text(tarih)).size() > 1;
+                .filterBy(Condition.text(tarih)).size() > 0;
         Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
         Allure.addAttachment("Teslim Alinan:" + teslimAlinan + " İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
         takeScreenshot();

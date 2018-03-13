@@ -129,6 +129,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
     SelenideElement btnIcerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
 
+    BelgenetElement txtIcerikGosterKullaniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+
+
     //otomatik havale  kontrol içerikten
     SelenideElement cboxIcerikOtomatikHavaleCheckbox = $("[id='inboxItemInfoForm:havaleDagitimLovPanel'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
     SelenideElement txtIcerikBirimKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
@@ -1370,6 +1373,19 @@ public class GelenEvraklarPage extends MainPage {
         Allure.addAttachment("Bilgi", bilgi);
         Allure.addAttachment("KayitTarihi", kayitTarihi);
         Allure.addAttachment("Sayi", sayiSag);
+        return this;
+    }
+
+    @Step("Kullanıcı listesi alanından bir kullanıcı seçerek doldur")
+    public GelenEvraklarPage icerikGosterKullaniciListesiDoldur(String kullaniciListesi){
+        txtIcerikGosterKullaniciListesi.selectLov(kullaniciListesi);
+        return this;
+    }
+
+    @Step("Gönder butonunu tıkla")
+    public GelenEvraklarPage icerikGosterGonder(){
+        $(By.id("inboxItemInfoForm:havaleDagitimLovPanel")).parent().$$("button")
+                .filterBy(Condition.text("Gönder")).first().pressEnter();
         return this;
     }
 

@@ -374,6 +374,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement dateMiat = $("input[id$='miatCalendar_input']");
 
         SelenideElement cmbBilgiSecimTipi = $x("//form[@id='yeniGidenEvrakForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
+        SelenideElement cmbBilgiSecimEskiTipi = $x("//form[@id='inboxItemInfoForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
         //SelenideElement cmbBilgiSecimTipi = $(By.xpath("//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
 
         BelgenetElement txtBilgi = comboLov("input[id$='bilgiLov:LovText']");
@@ -882,6 +883,12 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Bilgi Secim Tipi alanında \"{bilgiSecimTipi}\" seç")
         public BilgilerTab bilgiSecimTipiSec(String bilgiSecimTipi) {
             cmbBilgiSecimTipi.selectOption(bilgiSecimTipi);
+            return this;
+        }
+
+        @Step("Bilgi Secim Tipi alanında \"{bilgiSecimTipi}\" seç")
+        public BilgilerTab bilgiSecimTipiEskiSec(String bilgiSecimTipi) {
+            cmbBilgiSecimEskiTipi.selectOption(bilgiSecimTipi);
             return this;
         }
 

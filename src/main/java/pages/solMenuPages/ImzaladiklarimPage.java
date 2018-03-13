@@ -82,6 +82,14 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
+
+    @Step("Geri Al Ekran Kontrolü")
+    public ImzaladiklarimPage geriAlEkranKontrolu() {
+        Assert.assertEquals(tabEvrakOnizleme.isDisplayed(), true,"Geri Al Ekran Kontrolü");
+        Allure.addAttachment("Geri Al Ekran Kontrolü","");
+        return this;
+    }
+
     @Step("Paylaş butonu gelmediği görülür")
     public ImzaladiklarimPage paylasButonGelmedigiGorme(String buton) {
         boolean t = evrakSecButonlar.filterBy(text(buton)).size() == 0;
@@ -216,6 +224,7 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
+
     @Step("Geri Al açıklaması doldur: {aciklama}")
     public ImzaladiklarimPage geriAlAciklamaDoldurVeOnayla(String aciklama) {
         txtGeriAlAciklama.setValue(aciklama);
@@ -246,6 +255,18 @@ public class ImzaladiklarimPage extends MainPage {
         boolean durum = tblImzaladiklarimEvraklar
                 .filterBy(Condition.text(konu))
                 .size() > 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
+    @Step("Imzaladıklarım Evraklar listesinde evrakın listelenmediği kontrolu")
+    public ImzaladiklarimPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
 
         Assert.assertEquals(durum, true);
 
