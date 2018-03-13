@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -73,6 +74,9 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement txtEklenenKisi = $("div[id^='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:j_idt']");
     SelenideElement txtEklenenKisiOpsiyon = $("select[id='mainPreviewForm:dagitimBilgileriKullaniciLov:LovSecilenTable:0:selectOneMenu']");
     ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
+
+    SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+
 
     @Step("Birim Havale Edilenler sayfası aç")
     public BirimHavaleEdilenlerPage openPage() {
@@ -167,6 +171,60 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakSecGerialGelmedigiGorme(boolean gorebilme){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorebilme);
+        return this;
+    }
+
+    @Step("Geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakIcerikGosterGerialGelmedigiGorme(boolean gorebilme){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorebilme);
+        return this;
+    }
+
+    @Step("Tabloda evrak no ile evrak seçme. \"{konu}\" ")
+    public BirimHavaleEdilenlerPage konuyaGoreTablodanEvrakSecme(String konu) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeKontrolu() {
+        formEvrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public BirimHavaleEdilenlerPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+
     @Step("Evrak no ile teslim al")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
@@ -229,6 +287,22 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage gerialGelmedigiGorme(boolean gorulen){
+        boolean durum = btnGeriAl.isDisplayed();
+        Assert.assertEquals(durum,gorulen);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakSecGeriAlGelmedigiGorme(boolean gorulen){
+        boolean durum = btnGeriAl.isDisplayed();
+        Assert.assertEquals(durum,gorulen);
+        takeScreenshot();
         return this;
     }
 

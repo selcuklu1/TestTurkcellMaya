@@ -1,6 +1,7 @@
 package pages.altMenuPages;
 
 import com.codeborne.selenide.*;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -34,6 +35,8 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnKaydet = $("span[class='ui-button-icon-left ui-icon kaydet']");
     SelenideElement btnKaydetEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnKaydetHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+
+    SelenideElement evrakDetayi = $(By.xpath("//div[@id='windowItemInfoDialog']//span[.='Evrak Detayı']"));
 
     SelenideElement txtAciklama = $(By.id("inboxItemInfoForm:onayIslemiAciklama"));
     SelenideElement btnGonder = $(By.id("inboxItemInfoForm:gonderButton"));
@@ -118,6 +121,26 @@ public class EvrakDetayiPage extends MainPage {
     public EvrakDetayiPage btnTikla(String text) {
         SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
         btn.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public EvrakDetayiPage havaleYapAlanındaButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("\"{text}\" butonu kontrolu. Ekranda görünüyor mu : {shoulBeExist} ")
+    public EvrakDetayiPage butonKontrolu(String text,boolean shoulBeExist) {
+        SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
+        if(shoulBeExist)
+            Assert.assertEquals(btn.isDisplayed(),true);
+        else
+            Assert.assertEquals(btn.isDisplayed(),false);
         return this;
     }
 

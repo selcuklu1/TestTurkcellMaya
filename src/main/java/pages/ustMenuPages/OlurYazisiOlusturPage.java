@@ -10,10 +10,12 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class OlurYazisiOlusturPage extends MainPage {
@@ -25,11 +27,16 @@ public class OlurYazisiOlusturPage extends MainPage {
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
     private EditorTab editorTab = new EditorTab();
+    private SelenideElement page = $("#yeniOnayEvrakForm");
 
     @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
         return this;
+    }
+
+    public pages.pageComponents.tabs.EditorTab editorTab() {
+        return new pages.pageComponents.tabs.EditorTab(page);
     }
 
     //region Tabs

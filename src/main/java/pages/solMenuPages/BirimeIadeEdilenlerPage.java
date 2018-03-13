@@ -124,6 +124,42 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın listelendiği görülür: {konu}, {yer}, {tarih}")
+    public BirimeIadeEdilenlerPage evrakGeldigiGorme(String konu, String yer, String tarih) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(konu))
+                .filterBy(Condition.text(yer))
+                .filterBy(Condition.text(tarih)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    public BirimeIadeEdilenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[class$='document-typeIade']").isDisplayed();
+
+
+        Assert.assertEquals(durum, true, "Iade Et Button kontrolü:");
+        Allure.addAttachment("Iade Et Button Kontrolü", "");
+        return this;
+    }
+
+    @Step("Evrak Üzerinde Iade Notu kontrolu")
+    public BirimeIadeEdilenlerPage konuyaGoreEvrakNotuKontrolu(String konu) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .get(0)
+                .$("[class$='document-note']").isDisplayed();
+
+
+        Assert.assertEquals(durum, true, "Iade Notu kontrolü:");
+        Allure.addAttachment("Iade Notu Kontrolü", "");
+        return this;
+    }
+
     @Step("Teslim Al ve Havale Et")
     public BirimeIadeEdilenlerPage teslimAlVeHavaleEt() {
         $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
@@ -289,6 +325,25 @@ public class BirimeIadeEdilenlerPage extends MainPage {
     public BirimeIadeEdilenlerPage evrakOnizlemeKontrol() {
         if (evrakOnizlemeKontrol.isDisplayed())
             Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+    ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
+    @Step("Evrak geçmişi alanına tıklanır")
+    public BirimeIadeEdilenlerPage secilenEvrakEvrakGecmisi() {
+        tabEvrakGecmisi.filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol: \"{teslimAlinan}\" \"{birim}\" \"{islemSureci}\" \"{tarih}\"")
+    public BirimeIadeEdilenlerPage evrakGecmisi(String teslimAlinan, String birim, String islemSureci, String tarih) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(birim)).size() > 0;
+        Assert.assertEquals(durum, true,"Evrak Geçmişi Kontrol");
+        Allure.addAttachment("Teslim Alinan:" + teslimAlinan + "Birim:" + birim +" İşlem Süreci:" + islemSureci + " Tarih:" +  tarih , "");
+        takeScreenshot();
         return this;
     }
 

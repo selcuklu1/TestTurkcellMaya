@@ -268,8 +268,6 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement evrakGelisTipiKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakGelisTipi"));
     SelenideElement ivedilikKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:12:ivedilik"));
 
-
-
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GelenEvrakKayit);
@@ -282,6 +280,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
+
 
     @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec() {
