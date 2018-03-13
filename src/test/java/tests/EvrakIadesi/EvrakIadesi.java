@@ -1,5 +1,6 @@
 package tests.EvrakIadesi;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -2120,4 +2121,182 @@ public class EvrakIadesi extends BaseTest {
 
 
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2329: İade edilen evrakta versiyon kontrolü")
+    public void TS2329() throws InterruptedException {
+        String testid = "TS2329";
+        String konu = "TS2329-" + getSysDate();
+        String konuKodu = "Kanunlar";
+        String kaldirilacakKlasorler = "KURUL KARARLARI";
+        String evrakDerecesi = GizlilikDerecesi.GIZLI.getOptionText();
+        String geregiSecimKurum = "Kurum";
+        String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String geregiKurum2 = "BÜYÜK HARFLERLE KURUM";
+        String geregiKurum3 = "TS1493 Kurumu";
+        String geregiSecimBirim = "Birim";
+        String geregiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String bilgiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";//"AFYON VALİLİĞİ";
+        String geregiSecimKullanici = "Kullanıcı";
+        String geregiKullanici = "Ahmet SAVAŞ";
+        String akisAdim = "İmzalama";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+        String basariMesaji = "İşlem başarılıdır!";
+        String user1 = "Mehmet BOZDEMİR";
+        String user2 = "Zübeyde TEKİN";
+        String user3 = "Yasemin Çakıl AKYOL";
+        String user4 = "Gökçe ŞAHİN";
+        String details = "BHUPGMY";
+        String sayfa1 = "Evrak Oluştur";
+        String evrakGuncellendiImzalanamazUyari = "Evrakınız güncellendiği için imzalanamaz! Evrakın iade edilmesi gerekmektedir.";
+        String evrakİmzaUyari = "Sayısal imza ile imzaladığınız belge 5070 sayılı kanun kapsamına girmemektedir.";
+        String evrakIcerikDegistiUyari = "Evrak içeriğini değiştirdiğiniz için aşağıdakilerden uygun olanı seçerek işleminize devam edebilirsiniz.";
+        String evrakIcerikDegistiUyari2 = "Evrak içeriğini değiştirdiğiniz için evrak üzerindeki değişiklikler kaydedilecektir ve bu aşamadan sonra evrakınızı yalnızca iade edebilir veya güncellemeye devam edebilirsiniz. İşleminize devam etmek istiyor musunuz?";
+        String secenek1 = "İade Et";
+        String secenek2 = "İmzala ve devam et (Önceki kullanıcıları akıştan çıkartarak)";
+        String evrakTarihiSaat = getSysDateForTarihSaat();
+        String islemSureci = "Evrak paraf bekliyor";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
+
+        testStatus(testid, "PreCondition Başladı");
+        evrakOlusturPage
+                .openPage()
+                .sayfaKontrol(sayfa1)
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuKoduDoldurKontrol(konuKodu)
+                .konuDoldur(konu)
+                //Bug: text alani "Kanunlar" olarak kalıyor yeni değer html domda set edilmiyor. Deger olarak TS2017-20180224165929 set ediliyor bizim tarafımızdan.
+//                .konuDoldurKontrol(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec("Normal")
+                .gizlilikDerecesiKontrol("Normal")
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .geregiSecimTipiYeniEvrak("Kurum")
+                .geregiSecimTipiKontrol("Kurum")
+                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiKontrol(geregiKurum)
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrolu(user1 , "Paraflama")
+                .onayAkisiKullaniciEkle(user2,details)
+                .onayAkisiKullaniciTipiSec(user2,"Kontrol")
+                .onayAkisiKullaniciKontrolu(user2 , "Kontrol")
+                .onayAkisiKullaniciEkle(user4,details)
+                .onayAkisiKullaniciTipiSec(user4,"Paraflama")
+                .onayAkisiKullaniciKontrolu(user4 , "Paraflama")
+                .onayAkisiKullaniciEkle(user3,details)
+                .onayAkisiKullaniciTipiSec(user3,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user3, "İmzalama")
+                .kullan()
+                .paraflaKontrol();
+
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .editorTabKontrol()
+                .editorKonuKontrol(konu)
+                .editorHitapKontrol(geregiKurum.toUpperCase())
+//                .editorImzaciKontrol(user2)
+                .editorImzaciKontrol(user3)
+                .editorDagitimKontrol(geregiKurum);
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        kontrolBekleyenlerPage
+                .openPage()
+                .evrakSec(konu)
+                .onizlemeKontrol()
+                .kontrolKontrolu()
+                .kontrolTıklama()
+                .kontrolEtPanelKontrolu(user3,"İmzalama")
+                //TODO test stepinde dosya ekle diyor ama böyle bir ekran yok
+                .kontrolEtGonder();
+
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(konu)
+                .konuyaGoreEvrakDetayGoster(konu);
+
+        evrakOlusturPage
+                .editorTabKontrolInbox()
+                .editorIcerikDoldur(editorIcerik);
+
+        String yeniKonu = "TS2329-" + getSysDate();
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .konuDoldur(yeniKonu)
+//                .geregiSecimTipiEskiEvrak("Kurum")
+                .bilgiSecimTipiEskiSec("Kullanıcı")
+                .bilgiSec(user2)
+                .paraflaButonaTikla();
+
+        evrakOlusturPage
+                .evrakSecmeliDegistiEvet()
+                .paraflanamazButtonKontrol()
+                .iadeEt()
+                .kontrolEdenKontrol(user2)
+                .parafciKontrol(user1)
+                .kullaniciyaIadeEt()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        iadeEttiklerimPage
+                .openPage()
+                .evrakGeldigiGorme(yeniKonu,geregiKurum,evrakTarihiSaat)
+                .evrakSec(yeniKonu)
+                .iadeEdilmistirIkonKontrolu(yeniKonu)
+                .imzacilari(yeniKonu)
+                .parafImzacilarListesiKontrol(user1,true)
+                .parafImzacilarListesiKontrol(user3,true)
+                .parafImzacilarListesiKontrol(user4,true)
+                .parafImzacilarListesiKontrolTarihDurum();
+
+        testStatus(testid, "Test Başladı");
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+
+        parafBekleyenlerPage
+                .openPage()
+                .iadeEdilmistirIkonKontrolu(yeniKonu)
+                .konuyaGoreEvrakOnizlemedeAc(yeniKonu)
+                .onizlemeEkranKontrolu()
+                .versiyonlariListeleKontrolu()
+                .versiyonlariListele()
+                .versiyonAktifPasifKontrolu(yeniKonu, "Aktif Belge")
+                .versiyonAktifPasifKontrolu(konu, "Pasif Belge")
+                .versiyonlariSecKarsilastir(konu,yeniKonu)
+                .versiyonlariKarsilastirma();
+
+        parafBekleyenlerPage
+                .openPage()
+                .konuyaGoreEvrakDetayGoster(yeniKonu)
+                .versiyonlariListele2()
+                .versiyonAktifPasifKontrolu(yeniKonu, "Aktif Belge")
+                .versiyonAktifPasifKontrolu(konu, "Pasif Belge")
+                .versiyonlariSecKarsilastir(konu,yeniKonu)
+                .versiyonlariKarsilastirma();
+
+
+
+
+
+
+
+
+
+    }
+
 }
