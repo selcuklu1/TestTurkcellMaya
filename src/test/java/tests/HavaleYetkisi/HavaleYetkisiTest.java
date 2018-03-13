@@ -13,12 +13,10 @@ import pages.ustMenuPages.RolYonetimiPage;
 
 public class HavaleYetkisiTest extends BaseTest {
 
-
     RolYonetimiPage rolYonetimiPage;
     MainPage mainPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
 
-    String degerKod = createRandomNumber(8);
     String[] rolAdi;
 
 
@@ -35,6 +33,7 @@ public class HavaleYetkisiTest extends BaseTest {
     @Step("Havale işlemleri Tüm birimleri görebilme aksiyonlu rol oluşturma")
     public void preTS2253(String yenirolad, String eklenecekAksiyon) throws InterruptedException {
 
+        String degerKod = createRandomNumber(8);
         String kullaniciAdi = "username21g";
 
         rolYonetimiPage.openPage();
@@ -176,6 +175,7 @@ public class HavaleYetkisiTest extends BaseTest {
                     .islemMesaji().isBasarili();
         }
     }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
     public void TS0597() throws InterruptedException{
