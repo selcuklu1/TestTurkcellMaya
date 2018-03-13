@@ -67,6 +67,12 @@ public class ParafBekleyenlerPage extends MainPage {
     SelenideElement btnOnizlemeIadeEt = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td[class='buttonMenuContainerDefault'] span[class='ui-button-icon-left ui-icon iadeEt']");
     SelenideElement btnOnizlemeIadeEtIadeEt = $("[id='mainPreviewForm:iadeEtButton_id']");
 
+    SelenideElement panelOnizlemeKontrol = $("[id='mainPreviewForm:onizlemePanel']");
+    SelenideElement btnVersiyonlariListele= $("[class$='versiyonlariListele']");
+    ElementsCollection tblVersiyonlar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement btnKarsilastir= $("[class$='document-compare']");
+
+
     @Step("Paraf Bekleyenler sayfası aç")
     public ParafBekleyenlerPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.ParafBekleyenler);
@@ -76,6 +82,39 @@ public class ParafBekleyenlerPage extends MainPage {
         System.out.println("Page: " + pageTitle);
         return this;
     }
+
+    @Step("Önizleme Ekran Kontrolü")
+    public ParafBekleyenlerPage onizlemeEkranKontrolu() {
+        Assert.assertEquals(panelOnizlemeKontrol.isDisplayed(),true,"Önizleme Ekran Kontrolü");
+        Allure.addAttachment("Önizleme Ekran Kontrolü","");
+        return this;
+    }
+
+    @Step("Versiyonları Listele Kontrolü")
+    public ParafBekleyenlerPage versiyonlariListeleKontrolu(){
+        btnVersiyonlariListele.click();
+        return this;
+    }
+
+    @Step("Versiyonları Listele")
+    public ParafBekleyenlerPage versiyonlariListele(){
+        btnVersiyonlariListele.click();
+        return this;
+    }
+
+    @Step("Versiyonları Listele")
+    public ParafBekleyenlerPage versiyonlariListele2(){
+        clickJs(btnVersiyonlariListele);
+        return this;
+    }
+
+    @Step("Iade Edilmiştir Ikon Kontrolü")
+    public ParafBekleyenlerPage iadeEdilmistirIkonKontrolu(String konu) {
+        boolean durum = tblParafBekleyenEvraklar.filterBy(Condition.text(konu)).get(0).$("button[id^='mainInboxForm:inboxDataTable:0:j_idt']").isDisplayed();
+        return this;
+    }
+
+
 
     @Step("Kullancılar doldur")
     public ParafBekleyenlerPage takipListesiKullanicilarDoldur(String kullanicilar) {
@@ -493,4 +532,33 @@ public class ParafBekleyenlerPage extends MainPage {
         $("textarea[id$='notTextArea_id'").setValue(not);
         return this;
     }
+
+    @Step("Versiyon Aktif Pasif Kontrolü {konu}")
+    public ParafBekleyenlerPage versiyonAktifPasifKontrolu(String konu, String status) {
+        boolean durum = tblVersiyonlar
+                .filterBy(text(konu))
+                .filterBy(Condition.text(status)).size() > 0;
+        Assert.assertEquals(durum,true,"Aktif Pasif Kontrolü");
+        Allure.addAttachment(konu + ":" + status,"");
+        return this;
+    }
+
+    @Step("Versiyonları Karşılaştır {konu} {yenikonu}")
+    public ParafBekleyenlerPage versiyonlariSecKarsilastir(String konu, String yenikonu) {
+        tblVersiyonlar.filterBy(text(konu)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        tblVersiyonlar.filterBy(text(yenikonu)).get(0).$$("div[class^='ui-chkbox-box']").first().click();
+        takeScreenshot();
+        btnKarsilastir.click();
+        return this;
+    }
+
+    @Step("Versiyonlari Karşılaştırma")
+    public ParafBekleyenlerPage versiyonlariKarsilastirma() {
+        boolean durum = $("[class='onizlemeFrame']").isDisplayed();
+        if(durum)
+            takeScreenshot();
+        return this;
+    }
+
+
 }

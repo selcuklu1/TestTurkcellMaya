@@ -576,11 +576,11 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.tuzelKisiAramaDetaylari()
                 .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
                 .alanlariKonrolu()
-                .tuzelKisiDoldurulur(tuzelKisi)
+                .tuzelKisiAdiGirilir(tuzelKisi)
                 .uyduTvSecilir(true)
                 .ara()
                 .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true)
-                .ekle();
+                .tuzelKisiEkle();
 
         page.getDagitimHitapDuzenlemeSilButton(tuzelKisi, "bulunur").shouldBe(visible);
         page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi, "bulunur").shouldBe(visible);
@@ -608,10 +608,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .tuzelKisiAramaDetaylari()
                 .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
                 .alanlariKonrolu()
-                .tuzelKisiDoldurulur(tuzelKisi.get(0))
+                .tuzelKisiAdiGirilir(tuzelKisi.get(0))
                 .ara()
                 .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi.get(0)), true)
-                .ekle();
+                .tuzelKisiEkle();
         page.ekle()
                 .kaydet().islemMesaji().basariliOlmali();
         //page.dagitimPlaniOlustur(adi, "Medya Şirketi", user.getBirimAdi(),true, "Tüzel Kişi", tuzelKisi.get(0));
@@ -698,7 +698,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
     }
 
-
     @Test(description = "TS2243: KEP li Dağıtım Planı Oluşturma ve Evrak Üzerinden Kontrolü", enabled = true)
     public void TS2243() {
         /*Cumhurbaşkanlığı
@@ -732,6 +731,42 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
                 .geregiSec(planAdi)
                 .geregiPostaTipiKontrolu("KEP");
+    }
+
+    @Test(description = "TS2268: Medya Tipi Hariç Diğer Tiplerde Tüzel Kişi Ekleme İşlemleri", enabled = true)
+    public void TS2268() {
+        User user = user1;
+
+        login(user);
+
+        String tuzelAdi = "TS2268";
+        String tuzelTipi = "LİMİTED ŞİRKETİ";
+        String tuzelVergiNo = "10000000000";
+
+        String planAdi = "TS2268 " + getDateTime();
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        page = new DagitimPlaniYonetimiPage().openPage();
+        page.yeni()
+                .adiGir(planAdi)
+                .aciklamaGir("Medya Şirketi")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .dagitimElemanlariTipiSec("Tüzel Kişi")
+                .tuzelKisiAramaDetaylari()
+                .tuzelKisiAdiGirilir(tuzelAdi)
+                .vergiKimlikNumarasiGirilir(tuzelVergiNo)
+                .tuzelKisiTipiSecilir(tuzelTipi)
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelAdi), true)
+                .tuzelKisiEkle();
+        page.ekle()
+                .kaydet().islemMesaji().basariliOlmali();
+        page.sorgulamadaAdGir(planAdi)
+                .sorgulamadaDurumSec("Sadece Aktifler")
+                .ara()
+                .sorgulamaDataTable.findRows(text(planAdi)).shouldHaveSize(1);
+        page.aktifKotrolu();
     }
 
     //region Steps

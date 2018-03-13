@@ -71,14 +71,14 @@ public class BilgilerTab extends MainPage {
         return getTabButtonTextElement().$("button");
     }
 
+    private SelenideElement getTabButtonTextElement() {
+        return getContainer().$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
+    }
+
     //******************************************************
 
     //region Konu Kodu
 //    BelgenetElement konuKoduCombolov = comboLov("input[id$='konuKoduLov:LovText']");
-
-    private SelenideElement getTabButtonTextElement() {
-        return getContainer().$x("descendant::td[contains(@class,'tabMenuContainer') and descendant::span[contains(@class,'tabMenu') and text()='" + tabName + "']]");
-    }
 
     @Step("Konu Kodu alan")
     public BelgenetElement getKonuKodu() {
@@ -1149,6 +1149,20 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Alanları doldurulur")
+    public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User kendisiImzaci) {
+        konuKoduSec("010.01");
+        konuDoldur(konu);
+        kaldiralacakKlasorleriSec("Diğer");
+        geregiSecimTipiSec(geregiSecimTipi);
+        geregiSec(geregi);
+        onayAkisiTemizle();
+        onayAkisiEkleButonaTikla();
+        anlikOnayAkisKullanicininTipiSec(kendisiImzaci, OnayKullaniciTipi.IMZALAMA);
+        kullan();
+        return this;
+    }
+
+    @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi, User parafci, User imzaci) {
         konuKoduSec("010.01");
         konuDoldur(konu);
@@ -1168,6 +1182,7 @@ public class BilgilerTab extends MainPage {
         kullan();
         return this;
     }
+
 
     @Step("Alanları doldurulur")
     public BilgilerTab alanlariDoldur(String konu, GeregiSecimTipi geregiSecimTipi, String geregi) {
