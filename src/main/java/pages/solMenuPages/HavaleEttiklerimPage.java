@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
@@ -48,12 +49,28 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("Geri al butonunun gelmediği görülür.")
+    public HavaleEttiklerimPage icerikGosterGeriAlGelmedigiGorme(boolean gorunum){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorunum);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("{evrakNo} adlı evrak tıklanır")
     public HavaleEttiklerimPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar.filterBy(Condition.text(evrakNo)).first().click();
         return this;
     }
 
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public HavaleEttiklerimPage evrakSagındaGerialGelmedigiKontrolu(boolean gorunum){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorunum);
+        takeScreenshot();
+        return this;
+    }
+    
     @Step("Evrak Geçmişi tıklanır")
     public HavaleEttiklerimPage evrakGecmisiSec() {
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).first().click();

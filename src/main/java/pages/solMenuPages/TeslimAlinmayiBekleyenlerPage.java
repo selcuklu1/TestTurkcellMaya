@@ -285,6 +285,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın ekranın sağında önizlemede geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeGeldigiGorme(boolean gorunum){
+        boolean durum = $(By.id("mainPreviewForm:evrakOnizlemeTab")).shouldBe(visible).exists();
+        Assert.assertEquals(durum,gorunum);
+        return this;
+    }
+
     @Step("Evrak no ile evrak içerik göster seçilir : \"{evrakNo}\" ")
     public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakIcerikGosterSec(String evrakNo) {
         tblEvraklar

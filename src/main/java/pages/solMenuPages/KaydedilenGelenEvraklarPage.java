@@ -15,6 +15,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -59,6 +60,7 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     SelenideElement icerikHavaleYap = $(By.id("inboxItemInfoForm:dialogTabMenuRight:uiRepeat:5:cmdbutton"));
     SelenideElement btnHavaleYap = $("[class='ui-button-icon-left ui-icon havaleEt']");
     BelgenetElement txthavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txthavaleOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     SelenideElement btnOnizlemeHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:4:cmdbutton"));
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovText"));
     BelgenetElement cmbHavaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
@@ -447,12 +449,26 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale ekranının geldiği görülür.")
+    public KaydedilenGelenEvraklarPage haveleYapEkranGeldigigorme(boolean gorunum){
+        boolean durum = $(By.id("mainPreviewForm:havaleDagitimLovPanel")).shouldBe(visible).exists();
+        Assert.assertEquals(durum,gorunum);
+        return this;
+    }
+
     @Step("Birim alanını doldur: {birim}")
     public KaydedilenGelenEvraklarPage havaleYapBirimDoldur(String birim){
         txthavaleYapBirim.selectLov(birim);
         return this;
     }
 
+    @Step("Onaylayacak kişi alanından seçim yap: {onaylayacakKisi}")
+    public KaydedilenGelenEvraklarPage havaleYapOnaylanacakKisiDoldur(String onaylayacakKisi, String birim){
+        txthavaleOnaylayacakKisi.openTreePanel().closeTreePanel();
+        txthavaleOnaylayacakKisi.selectLov(onaylayacakKisi,birim);
+        return this;
+    }
+    
     @Step("Gönder tıklanır")
     public KaydedilenGelenEvraklarPage havaleYapGonder(){
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Gönder")).first().click();

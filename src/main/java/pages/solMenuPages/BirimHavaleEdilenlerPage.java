@@ -12,6 +12,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -167,7 +168,21 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak no ile teslim al")
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakSecGerialGelmedigiGorme(boolean gorebilme){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorebilme);
+        return this;
+    }
+
+    @Step("Geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakIcerikGosterGerialGelmedigiGorme(boolean gorebilme){
+        boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
+        Assert.assertEquals(durum,gorebilme);
+        return this;
+    }
+
+    @Step("Evrak no ile içerik goster")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
@@ -229,6 +244,22 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage gerialGelmedigiGorme(boolean gorulen){
+        boolean durum = btnGeriAl.isDisplayed();
+        Assert.assertEquals(durum,gorulen);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Geri al butonunun gelmediği görülür.")
+    public BirimHavaleEdilenlerPage evrakSecGeriAlGelmedigiGorme(boolean gorulen){
+        boolean durum = btnGeriAl.isDisplayed();
+        Assert.assertEquals(durum,gorulen);
+        takeScreenshot();
         return this;
     }
 

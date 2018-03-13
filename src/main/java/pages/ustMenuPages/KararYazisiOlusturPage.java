@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -60,12 +61,18 @@ public class KararYazisiOlusturPage extends MainPage {
     private IlgileriTab ilgileriTab = new IlgileriTab();
     private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
+    private SelenideElement page = Belgenet.$("#yeniKararEvrakForm");
+
     //endregion
 
     @Step("Karar yazısı oluştur sayfası aç")
     public KararYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.KararYazisiOlustur);
         return this;
+    }
+
+    public pages.pageComponents.tabs.EditorTab editorTab() {
+        return new pages.pageComponents.tabs.EditorTab(page);
     }
 
     //region Tabs
