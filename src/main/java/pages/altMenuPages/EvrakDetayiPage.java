@@ -9,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
+import pages.solMenuPages.GelenEvraklarPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -58,6 +59,15 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnKullaniciGrupDetayKullan = $(By.id("inboxItemInfoForm:kullaniciGrubuDetayKullanViewDialog"));
     SelenideElement btnKullaniciGrupDetayEkraniKapat = $("div[id$='kullaniciGrubuDetayViewDialog'] span[class='ui-icon ui-icon-closethick']");
 
+    //otomatik havale  kontrol içerikten
+    SelenideElement txtIcerikBirimKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement txtIcerikKisiKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
+    SelenideElement txtIcerikKullanıcıListeKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
+    SelenideElement txtIcerikAciklamaKontrol = $(By.id("inboxItemInfoForm:havaleAciklama"));
+    SelenideElement btnIcerikDosyaEkleKontrol = $(By.id("inboxItemInfoForm:fileUploadHavaleEk"));
+    SelenideElement txtIcerikIslemSureKontrol = $(By.id("inboxItemInfoForm:islemSuresiTarih_input"));
+    SelenideElement btnIcerikHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
+    SelenideElement btnIcerikHavaleGonder = $("[class$='havaleGonderButonClass']");
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
@@ -340,6 +350,44 @@ public class EvrakDetayiPage extends MainPage {
         else
             txtTebligEtKullniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(0);
 
+        return this;
+    }
+
+    @Step("Havale yap ekran geldigi gorulur")
+    public EvrakDetayiPage havaleYapEkranGeldigiGorme(){
+        boolean durum = $(By.id("inboxItemInfoForm:havaleDagitimLovPanel")).isDisplayed();
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
+    public EvrakDetayiPage icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {
+        Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
+        Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikKisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+        Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
+        Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikAciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+        Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(btnIcerikDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
+        Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
+        Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
+
+        boolean durum8 =btnIcerikHavaleGonder.isDisplayed();
+        Assert.assertEquals(durum8,true);
+        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+
+        boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9,true);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
         return this;
     }
 

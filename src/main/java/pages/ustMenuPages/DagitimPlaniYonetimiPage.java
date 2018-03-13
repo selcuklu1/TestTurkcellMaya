@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
@@ -37,7 +38,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public SearchTable sorgulamaDataTable = new SearchTable($(By.id("dagitimPlaniListingForm:dagitimPlaniDataTable")));
     public SearchTable dagitimPlaniDataTable = new SearchTable($(By.id("dagitimPlaniEditorForm:dagitimPlaniDataTable")));
     //region Sorgulama ve Filtreleme
-    SelenideElement listingForm = $("#dagitimPlaniListingForm");
+    SelenideElement form = $("#dagitimPlaniListingForm");
     SelenideElement filterPanel = $(By.id("dagitimPlaniListingForm:filterPanel"));
     SelenideElement sorgulamaVeFiltrelemeTab = $("#dagitimPlaniListingForm h3[role=tab]");
     SelenideElement adInput = $(By.id("dagitimPlaniListingForm:filterPanel:dagitimPlaniFiltreAd_id"));
@@ -61,7 +62,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
     @Step("Sorgulama ve Filtrelemeyi genişlet")
     public DagitimPlaniYonetimiPage sorgulamayiGenislet(boolean... genislet) {
-        SelenideElement element = listingForm.$("h3[role=tab]").shouldBe(visible);
+        SelenideElement element = form.$("h3[role=tab]").shouldBe(visible);
 
         if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length > 0 ? genislet[0] : "true")))
             element.find("a").click();
@@ -130,6 +131,13 @@ public class DagitimPlaniYonetimiPage extends MainPage {
 
     public boolean aktifMi(){
         return sorgulamaDataTable.getFoundRow().$(toPassiveButtonLocator).exists();
+    }
+
+    @Step("Aktif olmalı")
+    public DagitimPlaniYonetimiPage aktifKotrolu(){
+        //sorgulamaDataTable.getFoundRow().$(toPassiveButtonLocator).shouldBe(visible);
+        Assert.assertTrue(aktifMi(), "Bulunan kayıt aktif olmalı (toPassiveButton bulunmlı)");
+        return this;
     }
 
     @Step("Pasif Yap")
@@ -285,7 +293,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     @Step("Guncelle buton tıklanır")
     public DagitimHitapDuzenle guncelleTikla() {
         getGuncelleButton().shouldHave(visible).pressEnter();
-        return new DagitimHitapDuzenle(listingForm.$x("ancestor::div[contains(@id,'window') and contains(@id,'Dialog')]"));
+        return new DagitimHitapDuzenle(form.$x("ancestor::div[contains(@id,'window') and contains(@id,'Dialog')]"));
     }
 
 
@@ -334,7 +342,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     }
 
     public UstMenuPageHeader pageHeader() {
-        return new UstMenuPageHeader(listingForm);
+        return new UstMenuPageHeader(form);
     }
 
     @Step("\"{adi}\" dağıtım planı bul ve güncelle butona tıkla")

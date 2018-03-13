@@ -18,7 +18,6 @@ import pages.ustMenuPages.RolYonetimiPage;
 
 public class HavaleYetkisiTest extends BaseTest {
 
-
     RolYonetimiPage rolYonetimiPage;
     MainPage mainPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
@@ -30,7 +29,6 @@ public class HavaleYetkisiTest extends BaseTest {
     TeslimAlinanlarPage teslimAlinanlarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
 
-    String degerKod = createRandomNumber(8);
     String[] rolAdi;
 
 
@@ -52,6 +50,7 @@ public class HavaleYetkisiTest extends BaseTest {
     @Step("Havale işlemleri Tüm birimleri görebilme aksiyonlu rol oluşturma")
     public void preTS2253(String yenirolad, String eklenecekAksiyon) throws InterruptedException {
 
+        String degerKod = createRandomNumber(8);
         String kullaniciAdi = "username21g";
 
         rolYonetimiPage.openPage();

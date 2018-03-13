@@ -155,12 +155,24 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
+    SelenideElement tblIlkEvrakIcerikGoster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
+    SelenideElement btnEvraklarTopluHavale = $("[class='ui-button-icon-left ui-icon document-charge']");
+
+    BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
+
 
     @Step("Kaydedilen gelen evraklar sayfası aç")
     public KaydedilenGelenEvraklarPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.KaydedilenGelenEvraklar);
+        return this;
+    }
+
+    @Step("Listeden seçim yapmadan liste üzerindeki toplu havale butonunu tıkla")
+    public KaydedilenGelenEvraklarPage topluHavale(){
+        clickJs(btnEvraklarTopluHavale);
         return this;
     }
 
@@ -807,9 +819,38 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak seç")
+    public KaydedilenGelenEvraklarPage ilkEvrakSec() {
+        tblIlkEvrak.click();
+        return this;
+    }
+
+
+    @Step("İlk Evrak içerik göster")
+    public KaydedilenGelenEvraklarPage ilkEvrakIcerikGoster(){
+        tblIlkEvrakIcerikGoster.click();
+        return this;
+    }
+
+
     @Step("Havale yap")
     public KaydedilenGelenEvraklarPage havaleYap() {
         btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Kaydedilen Gelen Evraklar listesinden İki evrak seçilir")
+    public KaydedilenGelenEvraklarPage ilkIkiEvrakCheckBoxSec(){
+        tblEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        tblEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
+    @Step("Havale ekranın açıldığı görülür")
+    public KaydedilenGelenEvraklarPage havaleYapEkranGeldigiGorme(){
+    boolean durum = $(By.id("mainPreviewForm:havaleDagitimLovPanel")).isDisplayed();
+    Assert.assertEquals(durum,true);
+    takeScreenshot();
         return this;
     }
 
