@@ -2,24 +2,32 @@ package tests.EvrakHavaleIslemleri;
 
 import common.BaseTest;
 import common.ReusableSteps;
+import io.qameta.allure.Epic;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
+import pages.pageComponents.EvrakOnizleme;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static data.TestData.*;
 
-
+@Epic("Evrak Havale İşemleri")
 public class EvrakHavaleIslemleriTest extends BaseTest {
 
     GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
+    EvrakDetayiPage evrakDetayiPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     ReusableSteps reusableSteps;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
+    TeslimAlinanlarPage teslimAlinanlarPage;
+    EvrakOlusturPage evrakOlusturPage;
+    EvrakOnizleme evrakOnizleme;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -31,33 +39,132 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         havaleEttiklerimPage = new HavaleEttiklerimPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
+        teslimAlinanlarPage = new TeslimAlinanlarPage();
+        evrakOlusturPage = new EvrakOlusturPage();
+        evrakDetayiPage = new EvrakDetayiPage();
+        evrakOnizleme = new EvrakOnizleme();
     }
 
-    @Test(enabled = true, description = "2295: Toplu havale ekranı alan kontrolü")
+    @Test(enabled = true, description = "TS2295: Toplu havale ekranı alan kontrolü")
     public void TS2295() {
 
-        useFirefox();
         String konuKodu = "TS2295-"+createRandomNumber(15);
-        String konuKodu2 = "TS2295-2_"+createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullanici = "Zübeyde Tekin";
         String birim = "Yazılım Geliştirme Direktörlüğü";
+        String dikkatMesaji = "Evrak seçilmemiştir!";
 
         login(usernameZTEKIN,passwordZTEKIN);
-
-        gelenEvrakKayitPage
-                .gelenEvrakKayitBirimHavaleEt(konuKodu,kurum,birim);
+        //Pre Condition oluşturulmakta
+        gelenEvrakKayitPage.gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
         login(usernameZTEKIN,passwordZTEKIN);
         gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(usernameZTEKIN,passwordZTEKIN);
         reusableSteps.teslimAlinanlarEvrakOlustur(konuKodu,kurum,birim);
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(usernameZTEKIN,passwordZTEKIN);
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKodu,kurum,birim);
+        //
+
+        gelenEvraklarPage
+                .openPage()
+                .topluHavale()
+                .islemMesaji().isDikkat(dikkatMesaji);
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .topluHavale()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .teslimAlveHavaleEt()
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
+
+        teslimAlinanlarPage
+                .openPage()
+                .topluHavale()
+                .islemMesaji().isDikkat(dikkatMesaji);
+    }
+
+    @Test(enabled = true, description = "TS2198: Havale İşlemi Yapılabilecek Ekranların kontrolü")
+    public void TS2198() {
+
+        String konuKodu = "TS2295-"+createRandomNumber(15);
+        String kurum = "BÜYÜK HARFLERLE KURUM";
+        String kullanici = "Zübeyde Tekin";
+        String birim = "Yazılım Geliştirme Direktörlüğü";
+        String dikkatMesaji = "Evrak seçilmemiştir!";
+
+        login(usernameZTEKIN,passwordZTEKIN);
 
         gelenEvrakKayitPage
-                .evrakOlusturSayfaKapat();
+                .openPage()
+                .havaleIslemleriTabAc()
+                .havaleIslemleriGeldigiGorulur(true,true,true,true,true,true,true,true,true);
 
-        gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKodu2,kurum,"Yazılım Geliştirme Direktörlüğü");
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .havaleEkranAcilidigiGeldigiGorme()
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true)
+                .ilkIcerikGoster()
+                .icerikHavaleYap()
+                .icerikHavaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        gelenEvraklarPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluHavale()
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        havaleEttiklerimPage
+                .openPage()
+                .ilkEvrakSec()
+                .havaleYap()
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true)
+                .ilkEvrakIcerikGoster()
+                .havaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .ilkEvrakSec()
+                .havaleYap()
+                .havaleYapEkranGeldigiGorme();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        kaydedilenGelenEvraklarPage
+                .ilkEvrakIcerikGoster()
+                .havaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluHavale();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeHavaleEt();
+
+        evrakOnizleme
+                .teslimAlVeHavaleEtGeldigiGorme()
+                .teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
     }
 
 
