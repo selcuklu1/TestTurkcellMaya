@@ -2445,6 +2445,7 @@ public class EvrakOlusturPage extends MainPage {
             String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/span")).getText();
             System.out.println(editorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
+            Allure.addAttachment(editorHitap,beklenenEditorHitap);
             return this;
         }
 
