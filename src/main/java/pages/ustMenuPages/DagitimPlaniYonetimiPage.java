@@ -217,7 +217,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return dagitimElemanlariCombolov;
     }
 
-    @Step("\"Dağıtım Elemanları\"da \"{text}\" seçilir")
+    @Step("\"Dağıtım Elemanları\"da \"{dagitimElemani}\" seçilir")
     public DagitimPlaniYonetimiPage dagitimElemanlariSec(String... dagitimElemani) {
         getDagitimElemanlariCombolov().selectLov(dagitimElemani);
         /*getSecilenDagitimElemaniSilButton(dagitimElemani, "bulunur").shouldBe(visible);
@@ -368,7 +368,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
     public DagitimPlaniYonetimiPage dagitiminElemaniEkleVeAdresSec(String dagitimElemanlariTipi, String dagitimElemanlari, String adres, String evraktaGorunecekHitap) {
         dagitimElemanlariEkle(dagitimElemanlariTipi, dagitimElemanlari);
         DagitimHitapDuzenle dagitimHitapDuzenle = guncelleTikla();
-        dagitimHitapDuzenle.adresHitaptaGorunsunSec(true).adresSec(adres, evraktaGorunecekHitap).kaydet();;
+        dagitimHitapDuzenle.adresHitaptaGorunsunSec(true).adresGirilir(adres, evraktaGorunecekHitap).kaydet();;
         return this;
     }
 

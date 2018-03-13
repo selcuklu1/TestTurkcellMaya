@@ -12,7 +12,6 @@ import listeners.DriverEventListener;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -20,7 +19,9 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.TestRunner;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.MainPage;
@@ -49,7 +50,7 @@ public class BaseTest extends BaseLibrary {
 
     public Locale turkishLocal;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeSuite(alwaysRun = true)
     public void driverSetUp() {
 
         log.info("Setup started");
@@ -123,9 +124,23 @@ public class BaseTest extends BaseLibrary {
         AllureEnvironmentUtils.create();
     }
 
-    @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method test) {
+    @BeforeSuite
+    public void beforeSuite(ITestContext context) {
+        if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
+            context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
+        else
+            context.getSuite().getXmlSuite().setName("Suite");
 
+        ((TestRunner) context).getTest().setName("Tests");
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void beforeMethod(ITestContext context, Method test) {
+        /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
+            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
+        else
+            ((TestRunner) context).getTest().setName(test.getDeclaringClass().getSimpleName());
+        */
         String testName = firstNonEmpty(
                 test.getDeclaredAnnotation(org.testng.annotations.Test.class).description(),
                 test.getName())
@@ -133,9 +148,17 @@ public class BaseTest extends BaseLibrary {
 
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
-
         System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("");
+        //System.out.println("Total Test Classes: " + ((TestRunner) context).getTestClasses().size());
+        System.out.println("Total Tests: " + context.getAllTestMethods().length);
+        System.out.println("Passed Tests: " + context.getPassedTests().size());
+        System.out.println("Failed Tests: " + context.getFailedTests().size());
+        System.out.println("Left Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString());
+        System.out.println("");
         System.out.println("///////////////////////////////////////////////////////");
+        System.out.println("TEST CLASS: " + test.getDeclaringClass().getSimpleName());
+        System.out.println("");
         System.out.println("TEST: " + testName);
         System.out.println("");
         System.out.println("STATUS: Started");
@@ -202,34 +225,6 @@ public class BaseTest extends BaseLibrary {
         log.info("Browser has been closed.");
     }
 
-    @Step("Login")
-    public void login(User user) {
-        LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
-        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
-            loginPage.birimSec(Condition.text(user.getBirimAdi()));
-    }
-
-    @Step("Test Numarası : {testid} {status} ")
-    public void testStatus(String testid, String status) { }
-
-    @Step("{name} : {description}")
-    public void step(String name, String description) { }
-
-    @Step("Login")
-    public void login() {
-        new LoginPage().login();
-    }
-
-    @Step("Login")
-    public void login(String username, String password) {
-        new LoginPage().login(username, password);
-    }
-
-    @Step("Logout")
-    public void logout() {
-        new MainPage().logout();
-    }
-
 
     /**
      * @param testName
@@ -276,6 +271,7 @@ public class BaseTest extends BaseLibrary {
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
+            //WebDriverRunner.setWebDriver(new FirefoxDriver(options));
         } catch (Exception e) {
             throw new RuntimeException("Invalid 'remote' parameter: " + Configuration.remote, e);
         }
@@ -284,14 +280,31 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
+           /* FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);*/
+            //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
+            //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            //capabilities.setAcceptInsecureCerts(true);
+            capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote.toString()), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+                    //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
+            //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
+            /*WebDriver driver = System.getProperty("hub") == null ?
+                    new FirefoxDriver()
+                    : new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);*/
+            /*WebDriver driver = System.getProperty("hub") == null ?
+                    new FirefoxDriver()
+                    : new RemoteWebDriver(firefoxOptions);*/
+            //C:\drivers
             WebDriverRunner.setWebDriver(driver);
+            /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
+            System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
+            Configuration.remote = System.getProperty("hub");*/
+
         } catch (Exception e) {
             throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
         }
@@ -321,9 +334,12 @@ public class BaseTest extends BaseLibrary {
             options.setCapability(CapabilityType.BROWSER_VERSION, "151");
             options.addArguments("disable-infobars");
             options.setAcceptInsecureCerts(true);
+            /*WebDriver driver = Configuration.remote == null ?
+                    new ChromeDriver(options)
+                    : new RemoteWebDriver(new URL(Configuration.remote), options);*/
             WebDriver driver = Configuration.remote == null ?
-                    new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
+                    new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {
@@ -331,5 +347,35 @@ public class BaseTest extends BaseLibrary {
         }
         return downloadPath;
     }
+
+
+    @Step("Login")
+    public void login(User user) {
+        LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
+        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
+            loginPage.birimSec(Condition.text(user.getBirimAdi()));
+    }
+
+    @Step("Test Numarası : {testid} {status} ")
+    public void testStatus(String testid, String status) { }
+
+    @Step("{name} : {description}")
+    public void step(String name, String description) { }
+
+    @Step("Login")
+    public void login() {
+        new LoginPage().login();
+    }
+
+    @Step("Login")
+    public void login(String username, String password) {
+        new LoginPage().login(username, password);
+    }
+
+    @Step("Logout")
+    public void logout() {
+        new MainPage().logout();
+    }
+
 
 }

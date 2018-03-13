@@ -82,7 +82,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtAntentBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
     ElementsCollection tblBirimYonetimiListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
     ElementsCollection tblPasifBirimListesi = $$("[id='birimYonetimiListingForm:pasifBirimlerDataTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
-    ElementsCollection tblAktifBirimListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
+    ElementsCollection tblAktifBirimListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody");// span[class='ui-chkbox-icon']");
     SelenideElement btnPasifYap = $("[id$='updateBirimStatusButton'] [class$='to-passive-status-icon']");
     SelenideElement btnAktifYap = $("[id$='updateBirimStatusButton'] [class$='to-active-status-icon']");
     SelenideElement chkDisBirimBos = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-default']");
@@ -571,6 +571,16 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Pasif yapılan kaydın gelmediği görülür")
+    public BirimYonetimiPage pasifKaydinAktifteGelmedigiKontrolu(String birimAdi) {
+
+        tblAktifBirimListesi
+                .filterBy(Condition.text(birimAdi))
+                .shouldHaveSize(0);
+
+        return this;
+    }
+
     @Step("Birim pasif yap")
     public BirimYonetimiPage birimPasifYap(String birimAdi) {
 
@@ -844,11 +854,32 @@ public class BirimYonetimiPage extends MainPage {
             btnBirimPasifYap.click();
             popupIslemOnayiAciklamaDoldur("Birim pasif yapılacak.");
             popupIslemOnayiEvet();
+            islemMesaji().basariliOlmali("İşlem başarılıdır!");
             Allure.addAttachment("Birim aktif olduğu için pasif yapıldı.", "");
         }
         else
         {
             Allure.addAttachment("Birim pasif olduğu için işlem yapılmadı.", "");
+        }
+
+        return this;
+    }
+
+    @Step("Birim pasif ise aktif yap")
+    public BirimYonetimiPage birimPasifIseAktifYap() {
+
+        btnBirimGuncelle.shouldBe(visible);
+
+        if (btnBirimAktifYap.isDisplayed()) {
+            btnBirimAktifYap.click();
+            popupIslemOnayiAciklamaDoldur("Birim aktif yapılacak.");
+            popupIslemOnayiEvet();
+            islemMesaji().basariliOlmali("İşlem başarılıdır!");
+            Allure.addAttachment("Birim pasif olduğu için aktif yapıldı.", "");
+        }
+        else
+        {
+            Allure.addAttachment("Birim aktif olduğu için işlem yapılmadı.", "");
         }
 
         return this;
@@ -871,6 +902,17 @@ public class BirimYonetimiPage extends MainPage {
         durumSec("Tümü");
         ara();
         birimAktifIsePasifYap();
+        return this;
+    }
+
+    @Step("Data Resetleme")
+    public BirimYonetimiPage dataResetlemeBirimPasifIseAktifYap(String birimAdi) {
+
+        Allure.addAttachment("Birim pasif ise aktif yapılacak", "");
+        birimFiltreDoldur(birimAdi);
+        durumSec("Tümü");
+        ara();
+        birimPasifIseAktifYap();
         return this;
     }
 

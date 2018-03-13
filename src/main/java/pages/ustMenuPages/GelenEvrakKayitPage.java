@@ -12,9 +12,7 @@ import pages.pageData.UstMenuData;
 import java.io.File;
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -40,6 +38,7 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement cmbGeldigiTuzelKisi = comboLov("[id$='geldigiTuzelKisiLov:LovText']");
     By cmbGeldiğiGercekKisiBy = By.cssSelector("[id$='geldigiGercekKisiLov:LovText']");
     By cmbGeldiğiTuzelKisiBy = By.cssSelector("[id$='geldigiTuzelKisiLov:LovText']");
+    By cmbGeldiğiBirimBy = By.cssSelector("[id$='geldigiBirimLov:LovText']");
     SelenideElement txtEvrakBilgileriListEvrakSayiTextAreaSag = $("[id$='evrakSayiTextAreaSag']");
     SelenideElement cmbEvrakBilgileriListEvrakGelisTipi = $("[id$='evrakGelisTipi']");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
@@ -269,8 +268,6 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement evrakGelisTipiKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:11:evrakGelisTipi"));
     SelenideElement ivedilikKontrol = $(By.id("evrakBilgileriForm:evrakBilgileriList:12:ivedilik"));
 
-
-
     @Step("Gelen Evrak Kayıt sayfasını aç")
     public GelenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GelenEvrakKayit);
@@ -283,6 +280,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
+
 
     @Step("Otomatik havale seçilir")
     public GelenEvrakKayitPage otomatikHavaleSec() {
@@ -566,13 +564,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Tüzel kişinin geldiği alanında \" {kisi}\" görüntülenmeme kontrolu")
-    public GelenEvrakKayitPage geldigiTuzelKisiGoruntulenmemeKontrolu(String kisi) {
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigiTuzelKisi}")
+    public GelenEvrakKayitPage geldigiAlanindaTuzelKisiGoruntulenmemeKontrolu(String geldigiTuzelKisi, String description) {
 
-        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbGeldiğiTuzelKisiBy).isLovValueSelectable(geldigiTuzelKisi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiTuzelKisi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigiTuzelKisi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigiTuzelKisi + ": görüntülenmediği görülür.", "");
+        return this;
+    }
 
+    @Step("Geldiği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geldigiBirim}")
+    public GelenEvrakKayitPage geldigiAlanindaBirimGoruntulenmemeKontrolu(String geldigiBirim, String description) {
+
+        boolean selectable = comboLov(cmbGeldiğiBirimBy).isLovValueSelectable(geldigiBirim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geldigiBirim + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geldigiBirim + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geldigiBirim + ": görüntülenmediği görülür.", "");
         return this;
     }
 
@@ -1347,6 +1355,11 @@ public class GelenEvrakKayitPage extends MainPage {
             clickJs(mukerrerPopUpEvet);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
+        String basariMesaji = "İşlem başarılıdır!";
+
+        if (islemMesaji().isBasarili())
+            Allure.addAttachment("İşlem başarılı ","mesajı gelmektedir.");
+
         basariliPopUp.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         basariliPopUp.getText().contains(mesaj4);
@@ -1354,8 +1367,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
         String evrakNo = getNumberFromText(vEvrakBasarili.getText());
+        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir. Evrakınız" , evrakNo + " numarasıyla kaydedilmiştir.");
         clickJs(basariliPopUpKapat);
-        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir" , evrakNo);
+        Allure.addAttachment("Kapat butonu tıklanır. ","Uyarı pop up kapatıldığı görülmüştür");
         return evrakNo;
     }
 

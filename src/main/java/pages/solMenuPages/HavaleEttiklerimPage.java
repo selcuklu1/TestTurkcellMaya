@@ -36,6 +36,11 @@ public class HavaleEttiklerimPage extends MainPage {
     BelgenetElement txtIcerikGosterHavaleYapKullaniciListesi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtIcerikGosterHavaleYapOnaylayacakKisi = comboLov(By.id("inboxItemInfoForm:onaylayacakKisiLov:LovText"));
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement evrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    BelgenetElement txtHavaleYapBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    SelenideElement txtHavaleYapAciklama = $(By.id("mainPreviewForm:havaleAciklama"));
+    SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
+
 
     @Step("Havale Ettiklerim sayfası aç")
     public HavaleEttiklerimPage openPage() {
@@ -50,10 +55,15 @@ public class HavaleEttiklerimPage extends MainPage {
     }
 
     @Step("Geri al butonunun gelmediği görülür.")
-    public HavaleEttiklerimPage icerikGosterGeriAlGelmedigiGorme(boolean gorunum){
+    public HavaleEttiklerimPage icerikGosterGeriAlGelmedigiGorme(boolean gorunum) {
         boolean durum = $("[class='ui-button-icon-left ui-icon evrakGeriAl']").isDisplayed();
-        Assert.assertEquals(durum,gorunum);
+        Assert.assertEquals(durum, gorunum);
         takeScreenshot();
+    return  this;
+    }
+    @Step("{konu} adlı evrakın içerik göster tıklanır")
+    public HavaleEttiklerimPage konuyaGoreEvrakIcerikGoster(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
         return this;
     }
 
@@ -71,6 +81,62 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
     
+    @Step("{konu} adlı evrak tıklanır")
+    public HavaleEttiklerimPage konuyaGoreEvrakSec(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu)).first().click();
+        return this;
+    }
+
+
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public HavaleEttiklerimPage evrakOnizlemeKontrolu() {
+        evrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public HavaleEttiklerimPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public HavaleEttiklerimPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public HavaleEttiklerimPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Birim alanına \"{birim}\" doldurulur.")
+    public HavaleEttiklerimPage havaleYapBirimDoldur(String birim) {
+        txtHavaleYapBirim.type(birim).getTitleItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Açıklama alanı doldurulur.")
+    public HavaleEttiklerimPage havaleYapAciklamaDoldur(String text) {
+        txtHavaleYapAciklama.setValue(text);
+        return this;
+    }
+
+    @Step("Havele Yap Gönder butonu")
+    public HavaleEttiklerimPage havaleYapGonder() {
+        btnHavaleYapGonder.click();
+        return this;
+    }
+
     @Step("Evrak Geçmişi tıklanır")
     public HavaleEttiklerimPage evrakGecmisiSec() {
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).first().click();

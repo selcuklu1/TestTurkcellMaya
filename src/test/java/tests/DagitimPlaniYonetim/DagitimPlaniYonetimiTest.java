@@ -41,8 +41,8 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  * Tarih: 1.02.2018
  * Açıklama:
  */
+//@Test(suiteName = "Dağıtım Plan Yönetimi")
 @Feature("Dağıtım Planı Yönetimi")
-@Test(suiteName = "SuitName")
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
@@ -71,7 +71,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         yeniPlanAdi1280 = "TS1280a_" + getSysDate();
         System.out.println("Dağınım Planı: " + yeniPlanAdi1280);
 
-        dagitimPlanElemanlari = new LinkedHashMap<String, String>();
+        dagitimPlanElemanlari = new LinkedHashMap<>();
         dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
         dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
         dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
@@ -267,13 +267,21 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         login(user);
 
+
+        /*LinkedHashMap<String, String[]> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kullanıcı", new String[]{user.getFullname(), "Sayın " + user.getFullname()});
+        dagitimPlanElemanlari.put("Birim", new String[]{user.getBirimAdi(), user.getBirimAdi().toUpperCase() + "E"});
+        dagitimPlanElemanlari.put("Kurum", new String[]{"Başbakanlık", "BAŞBAKANLIĞINA"});
+        dagitimPlanElemanlari.put("Gerçek Kişi", new String[]{"Zübeyde TEKİN", "Sayın Zübeyde TEKİN"});
+        dagitimPlanElemanlari.put("Tüzel Kişi", new String[]{"Türksat Optiim", "TÜRKSAT OPTIIME"});*/
+
         //yeniPlanAdi1280 = "TS1280_20180205102433";
-        dagitimPlanElemanlari = new LinkedHashMap<String, String>();
+        /*LinkedHashMap dagitimPlanElemanlari = new LinkedHashMap<String, String>();
         dagitimPlanElemanlari.put("Kullanıcı", user.getFullname());
         dagitimPlanElemanlari.put("Birim", user.getBirimAdi());
         dagitimPlanElemanlari.put("Kurum", "Başbakanlık");
         dagitimPlanElemanlari.put("Gerçek Kişi", "ZÜBEYDE");
-        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");*/
 
         /*System.out.println("Dağınım Planı: " + yeniPlanAdi1280);
         page = new DagitimPlaniYonetimiPage().openPage();
@@ -322,7 +330,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         Selenide.switchTo().window(0);
         evrakOlusturPage.editorTab().getEditor().type("editör teksti");
 
-        String konu = "TS1280_" + getSysDate();
+        String konu = "TS2323 - " + getDateTime();
         System.out.println("Konu: " + konu);
         evrakOlusturPage.bilgileriTab().openTab()
                 .bilgiTemizle()
@@ -354,7 +362,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         u = page.getKullanildigiBirim().getSelectedTitles().last().has(text(u1.getBirimAdi())) ? u2 : u1;
 
-        page.kullanildigiBirimSec(u.getBirimAdi(), u.getBirimKisaAdi()).kaydet().islemMesaji().basariliOlmali();
+        page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
+                .kaydet().islemMesaji().basariliOlmali();
 
         evrakOlusturSayfadaPasifKontrolu(adi);
 
@@ -478,7 +487,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         switchTo().window(0);
     }
 
-    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true, priority = 3)
+    @Test(testName = "TS2296", description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Alan Kontrolleri", enabled = true, priority = 3)
     public void TS2296() {
         User user = user1;
         login(user);
@@ -689,6 +698,41 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimHitapDuzenle.dagitimPlaniDetayListesiKontroluGereksizKontrollu(dagitimPlanElemanlari);
     }
 
+
+    @Test(description = "TS2243: KEP li Dağıtım Planı Oluşturma ve Evrak Üzerinden Kontrolü", enabled = true)
+    public void TS2243() {
+        /*Cumhurbaşkanlığı
+                AnaBirim1, YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ
+                tüzel - hepsi küçük harflerle tüzel kişi
+        TS2243*/
+
+        User user = user1;
+        login(user);
+
+        String planAdi = "TS2243 " + getDateTime();
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        LinkedHashMap<String, String> dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
+        dagitimPlanElemanlari.put("Birim", "AnaBirim1");
+        dagitimPlanElemanlari.put("Gerçek Kişi", "TS2243 Kepli");
+        dagitimPlanElemanlari.put("Tüzel Kişi", "hepsi küçük harflerle tüzel kişi");
+
+        page = new DagitimPlaniYonetimiPage().openPage();
+        page.yeni()
+                .adiGir(planAdi)
+                .aciklamaGir("TS2243 açıklama")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true);
+
+        dagitimPlanElemanlari.forEach((k, v) -> page.dagitimElemanlariEkle(k, v));
+        page.kaydet().islemMesaji().basariliOlmali();
+
+        new EvrakOlusturPage().openPage().bilgileriTab()
+                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
+                .geregiSec(planAdi)
+                .geregiPostaTipiKontrolu("KEP");
+    }
 
     //region Steps
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")

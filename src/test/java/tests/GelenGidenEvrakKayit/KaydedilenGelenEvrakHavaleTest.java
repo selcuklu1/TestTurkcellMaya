@@ -5,14 +5,14 @@ import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.TopluEvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 /****************************************************
  * Tarih: 2018-02-12
  * Proje: Türksat Functional Test Automation
@@ -170,8 +170,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .onizlemeHavaleGeriAlKontrol()
                 .onizlemeHavaleGeriAl()
                 .onizlemeNotAlanınıDoldur(konu)
-                .onizlemeGeriAl();
-//                .islemMesaji().basariliOlmali();
+                .onizlemeGeriAl()
+                .islemMesaji().basariliOlmali();
 
 
         login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
@@ -593,8 +593,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
-                .geriAl();
-//                .islemMesaji().basariliOlmali();
+                .geriAl()
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -608,8 +608,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
-                .geriAl();
-//                .islemMesaji().basariliOlmali();
+                .geriAl()
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -629,18 +629,18 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-        kaydedilenGelenEvraklarPage
-                .openPage()
+//        kaydedilenGelenEvraklarPage
+//                .openPage()
                 //TODO Aslında evrak buraya düşmüyor, düşmesi gereken yer:
                 //İşlem Bekleyen Evraklar - Gelen Evraklar olmalı. Destek Bekleyen Konularda cevap bekleniyor.
                 //Bu hali ile fail ediyor.
-                .tabloEvrakNoileEvrakKontrolu(konu1)
-                .tabloEvrakNoileEvrakKontrolu(konu2);
+//                .tabloEvrakNoileEvrakKontrolu(konu1)
+//                .tabloEvrakNoileEvrakKontrolu(konu2);
 
-//        gelenEvraklarPage
-//                .openPage()
-//                .tabloEvrakNoSec(konu1)
-//                .tabloEvrakNoSec(konu2);
+        gelenEvraklarPage
+                .openPage()
+                .tabloEvrakNoSec(konu1)
+                .tabloEvrakNoSec(konu2);
     }
 
     @Severity(SeverityLevel.CRITICAL)

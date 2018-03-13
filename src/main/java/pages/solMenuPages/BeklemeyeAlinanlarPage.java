@@ -5,12 +5,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.annotations.Test;
-import pages.LoginPage;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
-import pages.ustMenuPages.EvrakOlusturPage;
-import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -56,6 +52,7 @@ public class BeklemeyeAlinanlarPage extends MainPage {
                 .$("[id$='detayGosterButton']").click();
         return this;
     }
+
 
     @Step("Evrak kopyala tıklanır")
     public BeklemeyeAlinanlarPage evrakKopyala(){

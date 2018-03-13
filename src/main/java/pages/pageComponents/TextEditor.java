@@ -1,13 +1,9 @@
 package pages.pageComponents;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
@@ -38,8 +34,8 @@ public class TextEditor extends MainPage {
         /*new WebDriverWait(WebDriverRunner.getWebDriver(), Configuration.timeout / 1000, Configuration.pollingInterval)
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));*/
         switchTo().frame(container.$(".cke_wysiwyg_frame"));
-        System.out.println(".cke_editable: " + $(".cke_editable").getCssValue("class"));
-        System.out.println(".cke_editable: " + $(".cke_editable").attr("class"));
+        /*System.out.println(".cke_editable: " + $(".cke_editable").getCssValue("class"));
+        System.out.println(".cke_editable: " + $(".cke_editable").attr("class"));*/
         return $(".cke_editable");
     }
 

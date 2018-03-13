@@ -13,7 +13,6 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -42,6 +41,14 @@ public class TeslimAlinanlarPage extends MainPage {
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection tabEvrakGecmisi = $$("[id$='evrakOnizlemeTab'] ul li");
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
+    By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
+    SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+
+
+    SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
+    SelenideElement btnOnizlemeIadeEt = $("button[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] span[class$='iadeEt']");
+    ElementsCollection lblIadeEdilecekBirim = $$("table[id='mainPreviewForm:iadeBilgileriPanelGrid'] label");
+    SelenideElement btnIadeEtIadeEt = $(By.id("mainPreviewForm:iadeEtButton_id"));
 
     @Step("Teslim Alınanlar sayfası aç")
     public TeslimAlinanlarPage openPage() {
@@ -278,6 +285,80 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Konuya göre evrak seçilir : \"{konu}\" ")
+    public TeslimAlinanlarPage konuyaGoreEvrakSec(String konu) {
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .click();
+        return this;
+    }
+
+
+    @Step("Evrak Önizleme geldiği görülür. ")
+    public TeslimAlinanlarPage evrakOnizlemeKontrolu() {
+        formEvrakOnizleme.isDisplayed();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton geldiği görülür.")
+    public TeslimAlinanlarPage evrakOnizlemeButonKontrolu(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public TeslimAlinanlarPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
+    public TeslimAlinanlarPage evrakOnizlemeButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Evrak Onizleme Kontrolu")
+    public TeslimAlinanlarPage evrakOnizlemeKontrol() {
+        if (formEvrakOnizleme.isDisplayed())
+            Allure.addAttachment("Evrak Önizleme Ekranı", "açılmıştır");
+        return this;
+    }
+
+    @Step("Iade Et buton kontrolü")
+    public TeslimAlinanlarPage onizlemeIadeEtKontrol() {
+        Assert.assertEquals(btnOnizlemeIadeEt.isDisplayed(),true,"Iade et buton kontrolü");
+        Allure.addAttachment("Iade et buton kontrolü","");
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi")
+    public TeslimAlinanlarPage onizlemeIadeEt() {
+        btnOnizlemeIadeEt.click();
+        return this;
+    }
+
+    @Step("Iade Edilecek Birim Kontrolü")
+    public TeslimAlinanlarPage onizlemeIadeEdilecekBirimKontrolu(String birim) {
+        boolean durum = lblIadeEdilecekBirim.filterBy(Condition.text(birim)).size() == 1;
+        Assert.assertEquals(durum,true,"Iade Edilecek Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Birim Kontrolü","");
+        return this;
+    }
+
+    @Step("Teslim Alınan Evrakın Iade Edilmesi ve Iade Et Tıklanması")
+    public TeslimAlinanlarPage iadeEtIadeEt() {
+        btnIadeEtIadeEt.click();
+        return this;
+    }
+
     @Step("Evrak Adedi Kontrolu: \"{evrakNo}\" ")
     public TeslimAlinanlarPage evrakAdediKontrolu(String evrakNo) {
         int evrakSayisi = tblEvraklar.filterBy(Condition.text(evrakNo)).size();
@@ -342,4 +423,13 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
+    public TeslimAlinanlarPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {
+
+        boolean selectable = comboLov(cmbBirimeHavaleBy).isLovValueSelectable(birim);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + birim + ": Birimin görüntülenmediği görülür.", "");
+        return this;
+    }
 }

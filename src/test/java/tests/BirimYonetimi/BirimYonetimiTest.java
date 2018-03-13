@@ -626,4 +626,95 @@ public class BirimYonetimiTest extends BaseTest {
                 .openPage()
                 .dataResetlemeBirimAktifIsePasifYap(birimAdi);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1114: Birimin pasif yapılması ve evrak işlemlerinden kontrolü")
+    public void TS1114() throws InterruptedException {
+
+        String birimAdi = "TS1114 Birim";
+        String soru = "Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz?";
+        String aciklama = "TS1114 Birim pasif yapma";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimPasifIseAktifYap(birimAdi)
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimKayitKontrolu(birimAdi)
+
+                .birimPasifYap(birimAdi)
+                .islemOnayiPopupSorusu(soru)
+                .popupIslemOnayiAciklamaDoldur(aciklama)
+                .popupIslemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .birimFiltreDoldur(birimAdi)
+                .durumSec("Sadece Pasifler")
+                .ara()
+                .pasifBirimKayitKontrolu(birimAdi)
+
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .pasifKaydinAktifteGelmedigiKontrolu(birimAdi);
+
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
+
+                .bilgiSecimTipiSec("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecByText("Birim")
+                .geldigiAlanindaBirimGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiSecimTipiSecByText("Birim")
+                .geregiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim")
+
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .evrakSec()
+                .teslimAlVeHavaleEt()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        kaydedilenGelenEvraklarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+                .birimeHavaleAlanindaGoruntulenmemeKontrolu(birimAdi, "Birim");
+
+        birimYonetimiPage
+                .openPage()
+                .dataResetlemeBirimPasifIseAktifYap(birimAdi);
+    }
 }

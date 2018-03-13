@@ -3,7 +3,6 @@ package pages.pageComponents;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import common.BaseLibrary;
 import io.qameta.allure.Step;
 import pages.MainPage;
 
@@ -59,7 +58,7 @@ public class ConfirmDialog extends MainPage {
 
     @Step("Evet butona tikla")
     public ConfirmDialog confirmEvetTikla() {
-        getConfirmButton("Evet").shouldBe(visible).click();
+        getConfirmButton("Evet").shouldBe(visible).pressEnter();
         return this;
     }
 

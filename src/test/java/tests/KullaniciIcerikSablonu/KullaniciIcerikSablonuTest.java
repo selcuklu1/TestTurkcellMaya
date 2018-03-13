@@ -18,6 +18,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static data.TestData.passwordZTEKIN;
 import static data.TestData.usernameZTEKIN;
+import pages.ustMenuPages.KullaniciIcerikSablonuPage;
 
 /****************************************************
  * Tarih: 2017-12-22
