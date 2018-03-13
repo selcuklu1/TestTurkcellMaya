@@ -2503,7 +2503,7 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).shouldHave(textCaseSensitive(beklenenEditorHitap));
+            $(By.id("yeniGidenEvrakForm:hitapInplace")).shouldHave(textCaseSensitive(beklenenEditorHitap));
             /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).getText();
             System.out.println(editorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
