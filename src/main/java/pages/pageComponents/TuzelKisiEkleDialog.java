@@ -94,8 +94,14 @@ public class TuzelKisiEkleDialog extends MainPage {
         return this;
     }
 
-    @Step("Tüzel Kişi doldurulur")
-    public TuzelKisiEkleDialog tuzelKisiDoldurulur(String tuzelKisi){
+    @Step("Vergi Kimlik Numarası girilir")
+    public TuzelKisiEkleDialog vergiKimlikNumarasiGirilir(String vergiKimlikNo){
+        vergiKimlikNoInput.setValue(vergiKimlikNo);
+        return this;
+    }
+
+    @Step("Tüzel Kişi adı girilir")
+    public TuzelKisiEkleDialog tuzelKisiAdiGirilir(String tuzelKisi){
         tuzelKisiInput.setValue(tuzelKisi);
         return this;
     }
@@ -129,7 +135,7 @@ public class TuzelKisiEkleDialog extends MainPage {
     }
 
     @Step("Ekle")
-    public TuzelKisiEkleDialog ekle(){
+    public TuzelKisiEkleDialog tuzelKisiEkle(){
         clickJs(ekleButton);
         dialog.should(disappear);
         return this;

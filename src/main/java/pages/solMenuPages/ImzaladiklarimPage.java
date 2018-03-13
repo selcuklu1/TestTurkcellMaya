@@ -498,4 +498,16 @@ public class ImzaladiklarimPage extends MainPage {
                 .closeTreePanel();
         return this;
     }
+
+    @Step("Pdf hitap kontrolu. \"{beklenenPDFHitap}\" ")
+    public ImzaladiklarimPage evrakOnizlemeHitapKontrol(String beklenenPDFHitap){
+//        SelenideElement PDFHitap = $(By.xpath("//div[@id='viewer']//div[@class='page']//div[.='" + beklenenPDFHitap + "']"));
+
+        switchTo().frame(1);
+        SelenideElement PDFHitap=$("#viewer .page").shouldHave(text("Genel Müdürlük Emri"));
+        switchTo().parentFrame();
+//        Assert.assertEquals(PDFHitap.getText().contains(beklenenPDFHitap), true);
+        takeScreenshot();
+        return this;
+    }
 }

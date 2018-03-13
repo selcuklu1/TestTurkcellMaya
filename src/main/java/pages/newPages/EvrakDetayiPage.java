@@ -87,4 +87,8 @@ public class EvrakDetayiPage extends MainPage {
     public DagitimHitapDuzenle dagitimHitapDuzenle() {
         return new DagitimHitapDuzenle(page);
     }
+
+    public DogrulamaTab dogrulamaTab() {
+        return new DogrulamaTab(page);
+    }
 }

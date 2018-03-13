@@ -41,7 +41,7 @@ public class ReusableSteps extends BaseLibrary{
                 .gelenEvrakKayitBirimHavaleEt(konu,kurum,birim);
     }
 
-    @Step("Teslim Alınmayı Bekleyenler sayfasında evrak oluştur.")
+    @Step("Teslim Alınanlar sayfasında evrak oluştur.")
     public void teslimAlinanlarEvrakOlustur(String konu,String kurum,String birim) {
 
         GelenEvrakKayitPage gelenEvrakKayitPage =  new GelenEvrakKayitPage();

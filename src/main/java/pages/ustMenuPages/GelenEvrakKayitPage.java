@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -220,6 +221,11 @@ public class GelenEvrakKayitPage extends MainPage {
     BelgenetElement txtHavaleIslemleriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleIslemleriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
     BelgenetElement txtHavaleIslemleriBirim = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriBirimLov:LovText"));
+    BelgenetElement txtHavaleIslemleriOnaylayacakKisi = comboLov(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovText"));
+    SelenideElement txtHavaleIslemleriAciklama = $(By.id("evrakBilgileriForm:havaleAciklama"));
+    SelenideElement txtHavaleIslemleriDosyaEkle = $(By.id("evrakBilgileriForm:fileUploadHavaleEk"));
+    SelenideElement txtHavaleIslemleriIslemSuresi = $(By.id("evrakBilgileriForm:islemSuresiTarih_input"));
+
     //endregion
     SelenideElement btnSecilenGeldigiKurumKaldir = $("div[id$='geldigiKurumLov:LovSecilen'] button");
 
@@ -274,6 +280,16 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri tabı tıklanır.")
+    public GelenEvrakKayitPage havaleIslemleriTabAc(){
+        boolean durum = $(By.id("evrakBilgileriForm:havaleDagitimLovPanel")).shouldBe(visible).exists();
+        Assert.assertEquals(durum,true);
+        if (durum==false){
+            $(By.id("evrakBilgileriForm:havalePanel_header")).click();
+        }
+        return this;
+    }
+
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public GelenEvrakKayitPage sayfaKontrol(String sayfa) {
         Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
@@ -309,6 +325,46 @@ public class GelenEvrakKayitPage extends MainPage {
         clickJs($("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
         sleep(3000);
         clickJs($("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
+        return this;
+    }
+
+    @Step("Havale İşlemleri Alanlarının geldiği görülür")
+    public GelenEvrakKayitPage havaleIslemleriGeldigiGorulur(boolean otomatikHavale,boolean birim,boolean kisi,boolean kullaniciListesi,boolean onaylayacakKisi,boolean aciklama, boolean dosyaEkle, boolean islemSuresi, boolean kaydet){
+        boolean durum =$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").isDisplayed();
+        Assert.assertEquals(durum,otomatikHavale);
+        Allure.addAttachment("Otomatik Havale CheckBoxı geldiği Görme","Otomatik Havale");
+
+        boolean durum2 =txtHavaleIslemleriBirim.isDisplayed();
+        Assert.assertEquals(durum2,birim);
+        Allure.addAttachment("Havale edilecek Birim alanın geldiği görülür","Havale edilecek Birim");
+
+        boolean durum3 =txtHavaleIslemleriKisi.isDisplayed();
+        Assert.assertEquals(durum3,kisi);
+        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür","Havale edilecek Kişi");
+
+        boolean durum4 =txtHavaleIslemleriKullaniciListesi.isDisplayed();
+        Assert.assertEquals(durum4,kullaniciListesi);
+        Allure.addAttachment("Kullanıcı Listesi seçim alanı geldiği görülür","Havale edilecek Kullanıcı Listesi");
+
+        boolean durum5 =txtHavaleIslemleriOnaylayacakKisi.isDisplayed();
+        Assert.assertEquals(durum5,onaylayacakKisi);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylayacak Kişi");
+
+        boolean durum6 =txtHavaleIslemleriAciklama.isDisplayed();
+        Assert.assertEquals(durum6,aciklama);
+        Allure.addAttachment("Açıklama alanı geldiği görülür","Açıklama");
+
+        boolean durum7 =txtHavaleIslemleriDosyaEkle.isDisplayed();
+        Assert.assertEquals(durum7,dosyaEkle);
+        Allure.addAttachment("Dosya yükleme butonun geldiği görülür","Dosya Ekle");
+
+        boolean durum8 =txtHavaleIslemleriIslemSuresi.isDisplayed();
+        Assert.assertEquals(durum8,islemSuresi);
+        Allure.addAttachment("İşlem süresi girilebilecek alanın geldiği görülür","İşlem Süresi");
+
+        boolean durum9 =btnKaydet.isDisplayed();
+        Assert.assertEquals(durum9,islemSuresi);
+        Allure.addAttachment("Sağ yukarda kaydet butonun geldiği görülür","Kaydet");
         return this;
     }
 
