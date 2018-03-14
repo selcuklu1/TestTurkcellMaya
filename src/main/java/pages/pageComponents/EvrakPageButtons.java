@@ -346,6 +346,7 @@ public class EvrakPageButtons extends MainPage {
     @Step("Kullanıcıya Iade Et butonu tıklanır)")
     public MainPage kullaniciyaIadeEt() {
         btnKullaniciyaIadeEt.click();
+        takeScreenshot();
         return this;
     }
 
