@@ -35,9 +35,7 @@
     </test>-->
     <!--<test name="All">
         <packages>
-            <package name="tests.BirimIcerikSablonu"/>
-            <package name="tests.EvrakNot"/>
-            <package name="tests.EvrakBeklemeyeAlma"/>
+            <package name="tests.*"/>
         </packages>
     </test>-->
 </suite>
