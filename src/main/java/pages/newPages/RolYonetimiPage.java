@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
@@ -14,10 +16,12 @@ import pages.pageData.UstMenuData.KullaniciIslemleri;
 import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 
 import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 
@@ -162,9 +166,21 @@ public class RolYonetimiPage extends MainPage {
     By icerikGosterButtonLocator = By.cssSelector("button[id$=viewRolAksiyonButton]");
     By iliskiyiSilButtonLocator = By.cssSelector("button[id$=deleteRolAksiyonButton]");
 
+
+    @Step("Yeni Aksiyon ekle")
+    public YeniAksiyonIliskilendirme yeniAksiyonEkle(){
+        yeniAksiyonButton.click();
+        return new YeniAksiyonIliskilendirme();
+    }
+
     @Step("Aksiyon Listesinde Ad alana {ad} girilir")
     public RolYonetimiPage aksiyonListesindeAdGirilir(String ad){
-        aksiyonListesindeAdInput.setValue(ad);
+        /*aksiyonListesindeAdInput.shouldBe(visible).clear();
+        sleep(3000);
+        aksiyonListesindeAdInput.sendKeys(ad);*/
+        //aksiyonListesindeAdInput.setValue(ad);
+        setValueJS(aksiyonListesindeAdInput, ad);
+        aksiyonListesindeAdInput.sendKeys(Keys.RIGHT);
         return this;
     }
 
@@ -174,11 +190,11 @@ public class RolYonetimiPage extends MainPage {
         return this;
     }
 
-    /*@Step("Aksiyon Listesinde {aramaKriteri} arama kritere göre kayıt ")
+    @Step("Aksiyon Listesinde {aramaKriteri} arama kritere göre kayıt ")
     public boolean aksiyonListesindeKayitVarMi(Condition... aramaKriteri){
         aksiyonDataTable.findRows(aramaKriteri);
         return aksiyonDataTable.isRowsExist();
-    }*/
+    }
 
     @Step("Aksiyon Listesinde {aramaKriteri} arama kritere göre kayıt bulunur")
     public RolYonetimiPage aksiyonListesindeKayitBulunur(Condition... aramaKriteri){
@@ -193,13 +209,19 @@ public class RolYonetimiPage extends MainPage {
     }
 
     @Step("Bulunan aksiyon kayıtta \"İlişkiyi Sil\" butona tıkla")
-    public RolYonetimiPage bulunanAksiyondaIliskiyiSil(){
+    public RolYonetimiPage bulunanAksiyondaIliskiyiSilTiklanir(){
+        aksiyonDataTable.getFoundRow().$(iliskiyiSilButtonLocator).click();
+        return this;
+    }
+
+    @Step("Bulunan aksiyon kayıtta \"İlişkiyi Sil\" tıklanır ve başarılı silindiğini kotrol edilir")
+    public RolYonetimiPage bulunanAksiyondaIliskiyiSilBasarili(){
         aksiyonDataTable.getFoundRow().$(iliskiyiSilButtonLocator).click();
         confirmDialog()
                 .onayMesajKontrolu(text("Rolün aksiyonunu silmek istediğinize emin misiniz?"))
                 .confirmEvetTikla()
                 .islemMesaji().basariliOlmali();
-        //Akışta İade Edilenler - Rapor Al
+        Assert.assertFalse(aksiyonDataTable.isRowsExist(), "Kayıt Bulunamamıştır olmalı");
         return this;
     }
 
@@ -266,9 +288,17 @@ public class RolYonetimiPage extends MainPage {
             return this;
         }
 
-        @Step("eni Aksiyon İlişkilendirme - Ekle")
-        public YeniAksiyonIliskilendirme ekle(){
+        @Step("eni Aksiyon İlişkilendirme - Ekle butona tıklanir")
+        public YeniAksiyonIliskilendirme ekleButonaTiklanir(){
             clickJs(aksiyonEkleButton);
+            return this;
+        }
+
+        @Step("eni Aksiyon İlişkilendirme - Ekle tıkla, Başarılı mesajı ve dialog penceresinin kapandığını kontrol et")
+        public YeniAksiyonIliskilendirme ekleBasarili(){
+            clickJs(aksiyonEkleButton);
+            islemMesaji().basariliOlmali();
+            container.should(disappear);
             return this;
         }
 

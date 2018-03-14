@@ -14,6 +14,7 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
@@ -553,10 +554,13 @@ public class ParafBekleyenlerPage extends MainPage {
     }
 
     @Step("Versiyonlari Karşılaştırma")
-    public ParafBekleyenlerPage versiyonlariKarsilastirma() {
+    public ParafBekleyenlerPage versiyonlariKarsilastirma() throws InterruptedException {
+//        switchTo().frame("onizlemeFrame");
         boolean durum = $("[class='onizlemeFrame']").isDisplayed();
         if(durum)
             takeScreenshot();
+
+//        switchToDefaultWindow();
         return this;
     }
 

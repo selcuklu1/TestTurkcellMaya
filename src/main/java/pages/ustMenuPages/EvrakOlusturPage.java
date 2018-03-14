@@ -10,13 +10,7 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
-
-
-import javax.swing.text.AbstractDocument;
-import java.util.List;
-
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
@@ -2509,9 +2503,12 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Editör ekranında hitap kontrolu: {beklenenEditorHitap}")
         public EditorTab editorHitapKontrol(String beklenenEditorHitap) {
-            String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']/button/span")).getText();
+            $(By.id("yeniGidenEvrakForm:hitapInplace")).shouldHave(textCaseSensitive(beklenenEditorHitap));
+            /*String editorHitap = $(By.xpath("//*[@id='yeniGidenEvrakForm:hitapInplace']")).getText();
             System.out.println(editorHitap);
             Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);
+            Allure.addAttachment("EditorHitap" + editorHitap,"BeklenenEditorHitap" + beklenenEditorHitap);
+            Assert.assertEquals(editorHitap.contains(beklenenEditorHitap), true);*/
             return this;
         }
 

@@ -10,6 +10,7 @@ import pages.MainPage;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -229,6 +230,15 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    @Step("Kaydet")
+    public EvrakPageButtons evrakKaydetMesajKontrollu() {
+        getContainer().$("button .kaydet").click();
+        confirmDialog().onayMesajKontrolu(text("Evrakı kaydetmek istediğinize emin misiniz?"))
+                .confirmEvetTikla();
+        //$("#kaydetConfirmForm\\:kaydetEvetButton").click();
+        return this;
+    }
+
     //region Kaydet ve Onaya Sun
     @Step("Kaydet ve Onaya Sun butonu bul")
     public SelenideElement getEvrakKaydetVeOnayaSun() {
@@ -404,15 +414,13 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
-    SelenideElement btnDosyaEkle = $("[id='inboxItemInfoForm:fileUploadIadeEk']");
     @Step("Dosya ekle")
     public EvrakPageButtons dosyaEkle(String path,String dosyaAdi) throws InterruptedException{
-        btnDosyaEkle.click();
         havaleDosyaEkle(path);
         havaleDosyaEkleDosyaAdiKontrol(dosyaAdi);
         return this;
     }
-    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadIadeEk_input']"));
     @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
     public EvrakPageButtons havaleDosyaEkle(String pathToFile) throws InterruptedException {
         uploadFile(dosyaPath, pathToFile);
