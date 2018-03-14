@@ -1,6 +1,7 @@
 package tests.BirimIcerikSablonu;
 
 import com.codeborne.selenide.SelenideElement;
+import common.BaseLibrary;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Allure;
@@ -10,19 +11,15 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.LoginPage;
 import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.Ivedilik;
 import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.ustMenuPages.BirimIcerikSablonlarPage;
-import pages.ustMenuPages.EvrakOlusturPage;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
-
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -32,27 +29,22 @@ import static com.codeborne.selenide.Condition.*;
 @Feature("Birim İçerik Şablonu")
 public class BirimIcerikSablonuTest extends BaseTest {
 
-    String sablonAdi1082 = "TS1082_" + getSysDate();
-    String editorText1082;
-
-    String sablonAdi1085 = "TS1085_" + getSysDate();
-    String editorText1085;
-
-    String sablonAdi1079;
-
-    static String ALT_BIRIMLER_GORSUN = "ALT BİRİMLER GÖRSÜN";
-    static String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
-
-    String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
-
-
-    BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
-    pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
-    OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
-
+    private static String ALT_BIRIMLER_GORSUN = "ALT BİRİMLER GÖRSÜN";
+    private static String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
+    public static BaseLibrary baseLibrary= new BaseLibrary();
+    public static String sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
+    public static String editorText1082;
+    private String sablonAdi1085 = "TS1085_" + getSysDate();
+    private String editorText1085;
+    private String sablonAdi1079;
+    private String evrakTipi = "Giden Evrak";
+    private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+    private BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+    private pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
+    private OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
 
     @Test(description = "TS1084: Alan aktif durum kontrolleri", enabled = true, priority = 1)
     public void TS1084() {
@@ -66,8 +58,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)
-    public void TS1082() {
-        login(user1);
+    public static void TS1082() {
+        LoginPage loginPage = new LoginPage();
+        BaseLibrary baseLibrary = new BaseLibrary();
+        String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
+        User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
+         String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+         BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+
+        loginPage.login(user1);
         birimIcerikSablonlarPage
                 .openPage()
                 .yeniSablonOlustur()
@@ -152,7 +151,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .sablonAdiDoldur(sablonAdi1085)
                 .kullanilacakBirimiSec(user1.getBirimAdi(), exactText(user1.getBirimAdi()))
                 .altBirimlerGorsunMuSec(ALT_BIRIMLER_GORMESIN)
-                .evrakTipiSec("Giden Evrak");
+                .evrakTipiSec(evrakTipi);
 
         editorText1085 = birimIcerikSablonlarPage.getEditor()
                 .type(sablonAdi1085).type(Keys.ENTER)
@@ -165,7 +164,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         birimIcerikSablonlarPage.detayButonaTikla(birimIcerikSablonlarPage.sablonuBul(sablonAdi1085));
-        birimIcerikSablonlarPage.sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085);
+        birimIcerikSablonlarPage.sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085, evrakTipi);
     }
 
     @Test(description = "TS1085: Alt Biriminde görünmemeli", dependsOnMethods = {"TS1085"}, enabled = true, priority = 6)
@@ -214,7 +213,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
         String sablon = birimIcerikSablonlarPage.sablonAdiAl(0);
 
         birimIcerikSablonlarPage.detayButonaTikla(birimIcerikSablonlarPage.sablonuBul(sablonAdi1085))
-                .sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085)
+                .sablonBilgileriKontrolu(sablonAdi1085, user1.getBirimAdi(), ALT_BIRIMLER_GORMESIN, editorText1085, evrakTipi)
                 .sablonAdiDoldur(sablon)
                 .kaydet().islemMesaji().dikkatOlmali("Daha önce tanımlanmış şablon ismi ile aynı isimli şablon tanımlanamaz!");
 
@@ -420,14 +419,14 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
         editorTab.getEditor().editorShouldHave(text(user1.getBirimAdi()));
 
-        Map staff = new HashMap<String, OnayKullaniciTipi>();
+       /* Map<String, OnayKullaniciTipi> staff = new LinkedTreeMap<>();
         //staff.put(user1.getFullname(), OnayKullaniciTipi.PARAFLAMA);
-        staff.put(user3.getFullname(), OnayKullaniciTipi.IMZALAMA);
+        staff.put(user3.getFullname(), OnayKullaniciTipi.IMZALAMA);*/
         olurYazisiOlusturPage.bilgileriTab().openTab().alanlariDoldur(
                 "310.04"
                 , sablonAdi1082
                 , "Diğer"
-                , Ivedilik.Normal
+                , Ivedilik.NORMAL
                 , GeregiSecimTipi.BIRIM
                 , user1.getBirimAdi()
 //                , "optiimtekin"
@@ -438,83 +437,5 @@ public class BirimIcerikSablonuTest extends BaseTest {
         /*evrakOlustur(evrakOlusturPage, konu);
         new EvrakPageButtons().evrakParafla();
         new IslemMesajlari().basariliOlmali();*/
-    }
-
-
-
-    @Step("Evrak oluştur")
-    public BirimIcerikSablonuTest olurYazisiOlustur(String konu) {
-        olurYazisiOlusturPage.bilgileriTab().openTab()
-                .konuKoduSec("310.04")
-                .konuDoldur(konu)
-                .kaldiralacakKlasorleriSec("Diğer")
-                .ivedilikSec(Ivedilik.Normal)
-                /*.bilgiSecimTipiSec("Kurum")
-                .bilgiSec("Başbakanlık")*/
-                .geregiSecimTipiSec("Birim")
-                .geregiSec("AFYON VALİLİĞİ")
-                .onayAkisiEkleButonaTikla()
-                .kullanicilariSec(user3.getFullname())
-//                .onayAkisiKullaniciTipiSec("user1 TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullanicininTipiSec(user1.getFullname(), "Paraflama")
-                .onayAkisiKullanicininTipiSec(user3.getFullname(), "İmzalama")
-                .kullanButonaTikla();
-//                .onayAkisiTitleKontrol("Yeni akış")
-//                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
-        return this;
-    }
-
-    @Step("Evrak oluştur")
-    public BirimIcerikSablonuTest evrakOlustur(EvrakOlusturPage page, String konu) {
-        page.bilgilerTabiAc()
-                .konuKoduSec("310.04")
-                .konuDoldur(konu)
-                .kaldirilacakKlasorler("Diğer")
-                .ivedilikSec("Normal")
-                /*.bilgiSecimTipiSec("Kurum")
-                .bilgiSec("Başbakanlık")*/
-                .geregiSecimTipiSec("Birim")
-                .geregiSec("AFYON VALİLİĞİ")
-//                .onayAkisiTemizle()
-                .onayAkisiEkle()
-                .onayAkisiEkle(user3.getFullname())
-//                .onayAkisiKullaniciTipiSec("user1 TEST [Ağ (Network) Uzman Yardımcısı]", "Paraflama")
-                .onayAkisiKullaniciTipiSec(user1.getFullname(), "Paraflama")
-                .onayAkisiKullaniciTipiSec(user3.getFullname(), "İmzalama")
-                .kullan();
-//                .onayAkisiTitleKontrol("Yeni akış")
-//                .onayAkisiDetailKontrol(user1.getName() + "-Paraflama / " + user2.getName() + "-İmzalama");
-        return this;
-    }
-    @Test(description = "TS1082: Yeni şablon (Alt birimler görsün) Evrak Oluşturmada kullan"
-            , dependsOnMethods = {"TS1082"}, enabled = false
-            , priority = 7)
-    public void TS1082_kontrolOld() {
-        /*login(user2);
-
-        String konu = "TS1082_" + getSysDate();
-        olurYazisiOlusturPage = page(OlurYazisiOlusturPage.class).openPage();
-//        olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
-        TextEditor editor = olurYazisiOlusturPage.editorTab().openTab().getEditor();
-        editor.toolbarButton("Öntanımlı İçerik Şablonu Kullan", true);
-        editorTabOntanimliSablonuSec(sablonAdi1082);
-        checkEditorHasText(exactText(editorText1082));
-        editorTabOntanimliSablonUygula();
-
-        Assert.assertFalse(user2.getBirimAdi().isEmpty(), "Kullanıcının birim boş olamamalı");
-        Assert.assertTrue(editor.getText().contains(user2.getBirimAdi()), user2.getBirimAdi() + " olmalı");
-        Assert.assertFalse(editor.getText().contains("(@BIRIM)"), "(@BIRIM) olmamalı");
-
-        olurYazisiOlustur(konu);
-        olurYazisiOlusturPage.pageButtons().parafla();
-
-        logout();
-        login(user3);
-
-        ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage().openPage();
-        imzaBekleyenlerPage.filter().findRowsWith(text(konu)).shouldHaveSize(1)
-                .first().click();
-        new EvrakPageButtons().evrakImzala();
-        imzaBekleyenlerPage.islemMesaji().basariliOlmali();*/
     }
 }

@@ -111,6 +111,34 @@ public class GundemIzlemePage extends MainPage {
         return filePath;
     }
 
+    public String indirilenDosyaAd(String path) {
+        int i = 0;
+        while (i < 140) {
+            sleep(i);
+            i++;
+        }
+
+        //İndirilen file name çeker
+        // File root = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        //Windows makine için sabit url
+        File root = new File(path);
+        FilenameFilter beginswithm = new FilenameFilter() {
+            public boolean accept(File directory, String filename) {
+                return filename.matches("Rapor_.*\\.docx");
+            }
+        };
+
+        File[] files = root.listFiles(beginswithm);
+        for (File f : files) {
+            System.out.println(f);
+        }
+
+        String filePath = files[0].getPath();
+
+
+        return filePath;
+    }
+
     @Step("Klasör doldur")
     public GundemIzlemePage klasorDoldur(String klasor) {
         txtKlasor.selectLov(klasor);
@@ -178,8 +206,10 @@ public class GundemIzlemePage extends MainPage {
             ex.printStackTrace();
         }
 
+        deleteFile(dosyaAdi);
 
-        File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+/*
+        File folder = new File(downloadPath);
         final File[] files = folder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(final File dir,
@@ -193,7 +223,7 @@ public class GundemIzlemePage extends MainPage {
             }
         }
 
-
+*/
         return this;
     }
 

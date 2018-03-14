@@ -5,12 +5,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
@@ -48,10 +50,15 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     SelenideElement btnKuralEklemeKaydet = $(By.id("havaleKuralYonetimiEditorForm:saveHavaleKuralButton"));
     SelenideElement sonTable = $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']");
     SelenideElement txtFiltreleKuralAdi = $(By.id("havaleKuralYonetimiListingForm:filterPanel:adFilterInput"));
+    BelgenetElement txtFiltreleGeldigiYerBirim = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerBirimLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerGercekKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerGercekKisiLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTuzelKisiLov:LovText"));
+    BelgenetElement txtFiltreleGeldigiYerKurum = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerKurumLov:LovText"));
+
     BelgenetElement txtGeldigiYerBirim = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerBirimLov:LovText"));
     BelgenetElement txtGeldigiYerKullanici = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerKullaniciLov:LovText"));
     BelgenetElement txtGeldigiYerGercekKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerGercekKisiLov:LovText"));
-    BelgenetElement txtGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiListingForm:filterPanel:geldigiYerTuzelKisiLov:LovText"));
+    BelgenetElement txtGeldigiYerTuzelKisi = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerTuzelKisiLov:LovText"));
     BelgenetElement txtGeldigiYerKurum = comboLov(By.id("havaleKuralYonetimiEditorForm:geldigiYerKurumLov:LovText"));
 
     //TODO Kime havale edilicek
@@ -72,7 +79,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     }
 
 
-    @Step("Kuralın tanımlı olduğu birimler alanından seç")
+    @Step("Kuralın tanımlı olduğu birimler alanından {durum} seçilir")
     public EvrakHavaleKurallariYonetimiPage kuralinTanimliOlduguBirimlerSec(String durum) {
         cmbKuralınTanimliOlduguBirimler.selectOption(durum);
         return this;
@@ -84,14 +91,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkPasifYap(){
+    @Step("Kuralın tanımlı olduğu birimler alanında listelenen aktif birimlerden sağında pasif yap butonu tıklanır.")
+    public EvrakHavaleKurallariYonetimiPage ilkPasifYap() {
         clickJs(btnIlkPasifYap);
         return this;
     }
 
     @Step("Aktif Yap")
-    public EvrakHavaleKurallariYonetimiPage ilkAktifYap(){
+    public EvrakHavaleKurallariYonetimiPage ilkAktifYap() {
         clickJs(btnIlkAktifYap);
         return this;
     }
@@ -102,9 +109,24 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen birim ve alt birimlerin kurala birim olarak atandığı görülür.")
+    public EvrakHavaleKurallariYonetimiPage secilenBirimVeAltBirimlerinAtandigiGorulur(String kullanici) {
+        boolean durum = $$("[id='havaleKuralYonetimiEditorForm:kullaniciBirimDataTable']").filterBy(Condition.text(kullanici)).size() == 1;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+
     @Step("Birim sil")
     public EvrakHavaleKurallariYonetimiPage yeniBirimSil(String birimAdi) {
         tblKuralinTanimliOlduguBirimler.filterBy(Condition.text(birimAdi)).get(0).$("[id$='deleteKullaniciBirimButton']").click();
+        return this;
+    }
+
+    @Step("Kullanıcı / Birim ilişkisini silmek istediğinizden emin misiniz?  Uyarı verdiği görülür.")
+    public EvrakHavaleKurallariYonetimiPage birimIliskisiniSilmekIstemisinizUyariGeldigiGorme() {
+        boolean durum = $$("[id='baseConfirmationDialog:dialog']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -117,12 +139,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
     @Step("Alt birim eklenir")
     public EvrakHavaleKurallariYonetimiPage birimEkleAltBirimEkle(boolean durum) {
         chkBirimEkleAltBirimIlk.click();
+        takeScreenshot();
         return this;
     }
 
     public String birimEkleAltBirimIlkAdCek() {
         String altBirim = chkBirimEkleAltBirimIlkAd.get(1).$("div[class='ui-dt-c']").getText();
-            return altBirim;
+        return altBirim;
     }
 
     @Step("Birim alanında alt birim seçeneği seçilir")
@@ -144,7 +167,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Genelge seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecGenelge() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(2).click();
@@ -152,7 +175,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Beyanname seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecBeyanname() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(3).click();
@@ -160,7 +183,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
+    @Step("Evrak türü Dilekçe seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakTuruSecDilekce() {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(1).click();
@@ -168,8 +191,8 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak türü seç")
-    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i) {
+    @Step("Evrak türü {turu} seçilir")
+    public EvrakHavaleKurallariYonetimiPage evrakTuruSec(int i, String turu) {
         cmbEvrakTuru.get(0).click();
         cmbEvrakTuruGenelge.get(i).click();
         cmbEvrakTuru.get(0).click();
@@ -182,15 +205,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak dili seç")
+    @Step("Evrak dili Türkçe seçilir")
     public EvrakHavaleKurallariYonetimiPage evrakDiliTurkceSec() {
-        cmbEvrakTuru.get(1).click();
-        $$("[class='ui-selectcheckboxmenu-panel ui-widget-content ui-corner-all ui-helper-hidden'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").get(1).click();
-        $$("[class='ui-selectcheckboxmenu-panel ui-widget-content ui-corner-all ui-helper-hidden'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").get(5).click();
-        $$("[class='ui-selectcheckboxmenu-item ui-selectcheckboxmenu-list-item ui-corner-all'] label").filterBy(Condition.text("Türkçe"))
-                .get(0).$$("ui-chkbox-box ui-widget ui-corner-all ui-state-default").get(0).click();
-        //cmbEvrakTuruGenelge.get(0).click();
-        cmbEvrakTuru.get(1).click();
+        boolean durum = $$(By.id("havaleKuralYonetimiEditorForm:selectedEvrakDiliListId"))
+                .filterBy(Condition.text("Türkçe")).size() == 1;
+        if (durum == true) {
+        }
         return this;
     }
 
@@ -212,9 +232,44 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Geldiği yer tipi seçiniz")
+    @Step("Geldiği yer tipi {geldigiYer} seçilir")
     public EvrakHavaleKurallariYonetimiPage geldigiYerTipiSec(String geldigiYer) {
         cmbGeldigiYerTipi.selectOption(geldigiYer);
+        return this;
+    }
+
+    @Step("Birim doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerBirimDoldur(String birim) {
+        txtFiltreleGeldigiYerBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Gerçek Kişi doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerGercekKisiDoldur(String gercekKisi) {
+        txtFiltreleGeldigiYerGercekKisi.selectLov(gercekKisi);
+        return this;
+    }
+
+    @Step("Kullanıcı doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerKullaniciDoldur(String kullanici) {
+
+        //İlk selectLov seçemiyor, sebeb araştırdık tek çözüm aşağıdaki gibi
+        txtGeldigiYerKullanici.type(kullanici).getSelectableItems().first().click();
+        txtGeldigiYerKullanici.closeTreePanel();
+        if (!txtGeldigiYerKullanici.isLovSelected())
+            txtGeldigiYerKullanici.selectLov(kullanici);
+        return this;
+    }
+
+    @Step("Tüzel Kişi doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerTuzelKisiDoldur(String tuzelKisi) {
+        txtFiltreleGeldigiYerTuzelKisi.selectLov(tuzelKisi);
+        return this;
+    }
+
+    @Step("Kurum doldur")
+    public EvrakHavaleKurallariYonetimiPage filtreleGeldigiYerKurumDoldur(String kurum) {
+        txtFiltreleGeldigiYerKurum.selectLov(kurum);
         return this;
     }
 
@@ -232,7 +287,12 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Kullanıcı doldur")
     public EvrakHavaleKurallariYonetimiPage geldigiYerKullaniciDoldur(String kullanici) {
-        txtGeldigiYerKullanici.selectLov(kullanici);
+
+        //İlk selectLov seçemiyor, sebeb araştırdık tek çözüm aşağıdaki gibi
+        txtGeldigiYerKullanici.type(kullanici).getSelectableItems().first().click();
+        txtGeldigiYerKullanici.closeTreePanel();
+        if (!txtGeldigiYerKullanici.isLovSelected())
+            txtGeldigiYerKullanici.selectLov(kullanici);
         return this;
     }
 
@@ -259,6 +319,11 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         txtKuralAdi.setValue(kuralAdi);
         return this;
     }
+    @Step("Kural adı doldur")
+    public EvrakHavaleKurallariYonetimiPage filtrelemeKuralAdiDoldur(String kuralAdi) {
+        txtFiltreleKuralAdi.setValue(kuralAdi);
+        return this;
+    }
 
     public String kuralAdiCek() {
         String kuralAdi = txtKuralAdi.getValue();
@@ -274,7 +339,7 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
 
     @Step("Birim doldur")
     public EvrakHavaleKurallariYonetimiPage kimeHavaleEdilecekBirimDoldur(String birim) {
-        txtKimeHavaleEdilecekBirim.selectLov(birim);
+        txtKimeHavaleEdilecekBirim.type(birim).getTitleItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 
@@ -331,6 +396,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen kuralın bilgilerinin sağda güncellemek için açıldığı görülür.")
+    public EvrakHavaleKurallariYonetimiPage kuralGuncellemeEkraniGeldigiGorme() {
+        boolean durum = $$(By.id("havaleKuralYonetimiEditorForm:havaleKuralYonetimiEditorPanel_header")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Aktif yap \"{konu}\" | \"{konuAdi}\" ")
     public EvrakHavaleKurallariYonetimiPage aktifYap(String konu, String konuAdi) {
         ElementsCollection evrak2 = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable'] table tbody tr");
@@ -338,6 +411,14 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
+
+    @Step("Havale kuralını silmek istediğinize emin misiniz? - uyarı verdiği görülür")
+    public EvrakHavaleKurallariYonetimiPage havaleKuraliniSilmekIstediginizeEminMisinizGeldigiGorme() {
+        boolean durum = $$("[id='baseConfirmationDialog:dialog']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
 
     @Step("İslem onayı evet")
     public EvrakHavaleKurallariYonetimiPage islemOnayiEvet() {
@@ -350,13 +431,22 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         btnAra.click();
         return this;
     }
+
+    @Step("Kayıtlı bütün kuralların listelendiği görülür.")
+    public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGorme() {
+        boolean durum = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] >tr").size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("")
-    public EvrakHavaleKurallariYonetimiPage pasifYapilanKullaniciGuncelle(String kuralAdi){
+    public EvrakHavaleKurallariYonetimiPage pasifYapilanKullaniciGuncelle(String kuralAdi) {
 
-        if ($("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").exists()==true)
-        $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").pressEnter();
+        if ($("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").exists() == true)
+            $("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']").pressEnter();
 
-    tblEvraklar.filterBy(Condition.text(kuralAdi)).get(0).$("[id$='updateHavaleKuralButton']").click();
+        tblEvraklar.filterBy(Condition.text(kuralAdi)).get(0).$("[id$='updateHavaleKuralButton']").click();
         return this;
     }
 

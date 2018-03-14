@@ -9,9 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 
 public class BenimlePaylasilanlarPage extends MainPage {
@@ -57,7 +55,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Benimle paylaşılanlar tablosundan \"{0}\" seçildi")
+    @Step("Benimle paylaşılanlar tablosundan evrak seçildi")
     public BenimlePaylasilanlarPage evrakSec(String paylasan) {
         tableBenimlePaylasilanlar
                 .filterBy(Condition.text("Paylaşan: " + paylasan))
@@ -98,7 +96,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public BenimlePaylasilanlarPage evrakOnizlemeTabSec(String tabAdi) {
         tabsEvrakOnizleme
                 .filterBy(Condition.text(tabAdi))
@@ -109,7 +107,7 @@ public class BenimlePaylasilanlarPage extends MainPage {
     }
 
     // Evrak notları fonksiyonları
-    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
+    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{aktifOlmali}\" ")
     public BenimlePaylasilanlarPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
         if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
@@ -146,14 +144,14 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("evrak notu eklendi: \"{0}\" ")
+    @Step("evrak notu eklendi: \"{evrakNotu}\" ")
     public BenimlePaylasilanlarPage evrakNotuGirVeKaydet(String evrakNotu) {
         txtEvrakNotu.setValue(evrakNotu);
         btnEvrakNotuKaydet.click();
         return this;
     }
 
-    @Step("evrak notu eklendi: \"{0}\" ")
+    @Step("evrak notu eklendi: \"{evrakNotu}\" ")
     public BenimlePaylasilanlarPage evrakNotuGirVeSil(String evrakNotu) {
         txtEvrakNotu.setValue(evrakNotu);
         txtEvrakNotu.clear();
@@ -166,15 +164,78 @@ public class BenimlePaylasilanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrak Notu kontrolü.")
     public BenimlePaylasilanlarPage evrakNotuKontrol(String ekleyen, String tarih, String aciklama) {
         boolean durum = tableEvrakNotlari
                 .filterBy(Condition.text(ekleyen))
                 .filterBy(Condition.text(tarih))
                 .filterBy(Condition.text(aciklama))
-                .get(0)
+                .first()
                 .shouldBe(Condition.visible).exists();
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+    // span[class*='delete-icon']
+
+    @Step("Evrak notu silinememeli")
+    public BenimlePaylasilanlarPage evrakNotuSilinmemeliKontrolet(String ekleyen, String tarih, String aciklama) {
+
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$("span[class*='delete-icon']")
+                .shouldNotBe(Condition.visible);
+
+        return this;
+    }
+
+    @Step("Evrak notu sil ve kontrol et. Evrak notu silinmeli.")
+    public BenimlePaylasilanlarPage evrakNotuSil(String ekleyen, String tarih, String aciklama) {
+
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$("span[class*='delete-icon']")
+                .click();
+
+        tableEvrakNotlari
+                .filterBy(Condition.text(ekleyen))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$("span[class*='delete-icon']")
+                .shouldNotBe(Condition.visible);
+
+        return this;
+    }
+
+    @Step("{konu} konulu Evrak Listede olmalı mı? : {shouldBeVisible}")
+    public BenimlePaylasilanlarPage evrakKontrol(String paylasan, String paylasilmaTarihi, String konu, boolean shouldBeVisible) {
+        if (shouldBeVisible == true) {
+
+            tableBenimlePaylasilanlar
+                    .filterBy(Condition.text("Paylaşan: " + paylasan))
+                    .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .first()
+                    .shouldBe(Condition.visible);
+
+        } else {
+
+            tableBenimlePaylasilanlar
+                    .filterBy(Condition.text("Paylaşan: " + paylasan))
+                    .filterBy(Condition.text("Paylaşılma Tarihi: " + paylasilmaTarihi))
+                    .filterBy(Condition.text("Konu: " + konu))
+                    .first()
+                    .shouldNotBe(Condition.visible);
+
+        }
+
+
         return this;
     }
 

@@ -4,12 +4,13 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import data.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
-import static data.TestData.password;
-import static data.TestData.username;
+import static data.TestData.passwordOPTIIM;
+import static data.TestData.usernameOPTIIM;
 
 public class LoginPage extends MainPage {
 
@@ -20,16 +21,22 @@ public class LoginPage extends MainPage {
     private LoginPage open() {
 //        clearCookies();
         WebDriverRunner.clearBrowserCache();
-        Selenide.open("");
+
         maximazeBrowser();
+
+        Selenide.open("");
+
+        System.out.println("================================");
+        System.out.println("Driver: " + getCapabilities().toString());
+        System.out.println("================================");
         return this;
     }
 
     @Step("Giriş yap")
     public LoginPage login() {
         open();
-        txtUsername.sendKeys(username);
-        txtPassword.sendKeys(password);
+        txtUsername.sendKeys(usernameOPTIIM);
+        txtPassword.sendKeys(passwordOPTIIM);
         btnLogin.shouldBe(Condition.visible).click();
         $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40000);
         return this;
@@ -45,5 +52,20 @@ public class LoginPage extends MainPage {
         return this;
     }
 
+    @Step("\"{username}\" kullanıcısı ile giriş yapmaya çalış. Bakımdan dolayı giriş yapamaz.")
+    public LoginPage loginBakim(String username, String password) {
+        open();
 
+        txtUsername.sendKeys(username);
+        txtPassword.sendKeys(password);
+        btnLogin.click();
+        return this;
+    }
+
+    @Step("Login")
+    public void login(User user) {
+        login(user.getUsername(), user.getPassword());
+        if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
+            birimSec(Condition.text(user.getBirimAdi()));
+    }
 }

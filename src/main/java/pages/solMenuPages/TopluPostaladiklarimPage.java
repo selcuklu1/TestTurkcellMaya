@@ -1,32 +1,32 @@
 package pages.solMenuPages;
 
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.openqa.selenium.*;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.galen.GalenControl;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.AltTabs;
 import pages.pageData.SolMenuData;
 
-import java.sql.Driver;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
 
 public class TopluPostaladiklarimPage extends MainPage {
+    public PDFKontrol pdfKontrol = new PDFKontrol();
 
     SelenideElement filtrePanelHeader = $("div[id='mainInboxForm:inboxDataTable:filtersAccordion'] > h3");
     SelenideElement txtPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']/ancestor::tr[@class='ui-widget-content']//input"));
@@ -36,11 +36,11 @@ public class TopluPostaladiklarimPage extends MainPage {
     ElementsCollection tblPostaladiklarim = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnFiltrele = $("[id='mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimFiltreButton']");
     SelenideElement btnTemizle = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:topluPostaladiklarimTemizleButton"));
-    ElementsCollection tblEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+    ElementsCollection tblEvrakListesi = $$("tbody[id='mainPreviewForm:dataTableId_data'] > tr");
     SelenideElement tabloEvrakListesi = $("tbody[id='mainInboxForm:inboxDataTable_data']");
     ElementsCollection tblPostaListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement popUpEvrakDetayi = $(By.xpath("//span[text()='Evrak Detayları']"));
-    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[role='row']");
+    ElementsCollection tblEvrakDetayi = $$("[id='mainPreviewForm:dtEvrakUstVeri_data'] tr[data-ri]");
     SelenideElement txtTutar = $(By.xpath("//label[normalize-space(text())='Tutar :']/../following-sibling::td//input"));
     SelenideElement btnGuncelle = $(By.id("mainPreviewForm:guncelleButton"));
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label"));
@@ -63,7 +63,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Toplu Postaladıklarım tablo kontrolü")
     public TopluPostaladiklarimPage topluPostaladiklarimTabloKontrolu() {
-        tabloEvrakListesi.isDisplayed();
+        Assert.assertEquals(tabloEvrakListesi.isDisplayed(), true);
         Allure.addAttachment("Tablo Listesi : ", "Ekran Kontrolü ok");
         return this;
     }
@@ -140,7 +140,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             SelenideElement postaListesi = tblPostaladiklarim
                     .filterBy(text("Posta Listesi Adı: " + postaListesiAdi))
-                    .filterBy(text("Posta Kodu: " + postaKodu))
+                    .filterBy(text("Barkod No: " + postaKodu))
                     .filterBy(text("Posta Tarihi: " + postaTarihi))
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari))
@@ -156,7 +156,7 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Posta Listesi seç")
+    @Step("Posta listesi alan kontolleri")
     public TopluPostaladiklarimPage postaListesiKontrol(String postaListesiAdi, String postaKodu, String postaTarihi, String postaGramaji, String pttTutari, boolean shouldBeExist) {
 
 
@@ -169,19 +169,21 @@ public class TopluPostaladiklarimPage extends MainPage {
 
             SelenideElement postaListesi = tblPostaladiklarim
                     .filterBy(text("Posta Listesi Adı: " + postaListesiAdi))
-                    .filterBy(text("Posta Kodu: " + postaKodu))
+                    .filterBy(text("Barkod No: " + postaKodu))
                     .filterBy(text("Posta Tarihi: " + postaTarihi))
                     .filterBy(text("Posta Gramajı: " + postaGramaji))
                     .filterBy(text("PTT Tutarı: " + pttTutari + " TL"))
                     .first();
+            takeScreenshot();
 
             if (postaListesi.isDisplayed() && postaListesi.exists()) {
                 elementFound = true;
-                Allure.addAttachment("Posta Listesi Adı: ", postaListesiAdi);
-                Allure.addAttachment("Posta Kodu: ", postaKodu);
-                Allure.addAttachment("Posta Tarihi: ", postaTarihi);
-                Allure.addAttachment("Posta Gramajı: ", postaGramaji);
-                Allure.addAttachment("PTT Tutarı: ", pttTutari + " TL");
+                Allure.addAttachment("Ekran Alan Kontrolleri", "Posta Listesi Adı: '" + postaListesiAdi + "'\n" +
+                        "Barkod No: '" + postaKodu + "'\n" +
+                        "Posta Tarihi: '" + postaTarihi + "'\n" +
+                        "Posta Gramajı: '" + postaGramaji + "'\n" +
+                        "PTT Tutarı: '" + pttTutari + " TL " + "bilgileri ile listelendiği görülür.");
+
                 break;
             }
         }
@@ -205,39 +207,42 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Toplu Postaladıklarım tablosundan \"{konu}\" konulu evrak seçilir")
     public TopluPostaladiklarimPage topluPostaladiklarimEvrakSec(String konu) {
-        tblPostaListesi
-                .filterBy(Condition.text(konu))
-                .first()
-                .click();
+        searchTable().findRowAndSelect(text(konu));
+//        tblPostaListesi
+//                .filterBy(Condition.text(konu))
+//                .first()
+//                .click();
         return this;
     }
 
     @Step("")
-    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi,String adres,String gramaj,String tutar){
+    public TopluPostaladiklarimPage postaDetayiAlanKontrolleri(String postaListesi, String adres, String gramaj, String tutar) {
 
         SelenideElement txtPostaDetayiPostaListesiAdi = $(By.xpath("//label[normalize-space(text())='Posta Listesi Adı :']//ancestor::tr//textarea"));
 
-        txtPostaListesiAdi.text().equals(postaListesi);
-        txtAdres.text().equals(adres);
-        txtGramaj.text().equals(gramaj);
-        txtTutar.text().equals(tutar);
+        Assert.assertEquals(txtPostaListesiAdi.getValue().equals(postaListesi), true);
+        Assert.assertEquals(txtAdres.text().equals(adres), true);
+        Assert.assertEquals(txtGramaj.getValue().equals(gramaj), true);
+        Assert.assertEquals(txtTutar.getValue().equals(tutar), true);
 
-        Allure.addAttachment("Ekran Alan Kontrolü : ","  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
-                                                                        "//Posta listesinin gönderildiği adresin posta kodunun doğru geldiği görülür.\n" +
-                                                                        "//Posta Tarihi ve Saatinin doğru geldiği görülür.\n" +
-                                                                        "//Posta gramajının doğru geldiği görülür.\n" +
-                                                                        "//Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
+        Allure.addAttachment("Ekran Alan Kontrolü : ", "  Seçilen posta listesinin adının doğru geldiği görülür.\n" +
+                "- Posta Tarihinin geldiği görülür.\n" +
+                "- Posta gramajının doğru geldiği görülür.\n" +
+                "- Pul Yönetimi ekranında girilen tutarlara göre hesaplama işleminin yapıldığı PTT Tutarının doğru geldiği görülür.");
 
         return this;
     }
+
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiYazdir(String[] konu) {
-        int size = tblEvrakListesi.size();
+        ElementsCollection table = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]");
+        int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", table);
         for (int i = 0; i < size; i++) {
-
-            tblEvrakListesi
-                    .get(i)
-                    .$x("//span[text() = 'Yazdır']/../../button").click();
+            $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::button[descendant::span[. = 'Yazdır']]").click();
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
             switchTo().window(1);
@@ -249,56 +254,134 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
-    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrol(String[] konu) {
+    public TopluPostaladiklarimPage evrakListesiYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
+        String remoteDownloadPath = getDownloadPath();
         int size = tblEvrakListesi.size();
-        for (int i = 0; i < size; i++) {
+        size = size - 1;
+        String pdfName = "";
+        for (int i = size; i >= 0; i--) {
 
             tblEvrakListesi
-                    .get(i)
-                    .$x("//span[text() = 'Yazdır']/../../button").click();
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::button[descendant::span[. = 'Yazdır']]").pressEnter();
+
             evrakDetayiPopUpKontrolü();
             evrakDetayiYazdır(konu[i]);
+
+//            pdfName = pdfIndir();
             switchTo().window(1);
-            pdfKontrol();
-//            closeNewWindow();
-//            switchTo().window(0);
-//            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+            String pdfPath = remoteDownloadPath + pdfName;
+            sleep(3000);
+            pdfKontrol
+                    .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
+//                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
+            closeNewWindow();
+            switchTo().window(0);
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
         }
         return this;
     }
 
-    @Step("")
-    public TopluPostaladiklarimPage pdfKontrol() {
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır")
+    public TopluPostaladiklarimPage evrakListesiOrjinaliYazdirPdfKontrolu(String[] konu, String[] evrakNo, String[] icerik) throws AWTException, IOException {
+        String remoteDownloadPath = getDownloadPath();
+        int size = tblEvrakListesi.size();
+        size = size - 1;
+        for (int i = size; i >= 0; i--) {
 
-        WebElement root1 = WebDriverRunner.getWebDriver().findElement(By.id("toolbar"));
-
-        //Get shadow root element
-        WebElement shadowRoot1 = expandRootElement(root1);
-
-        WebElement root2 = shadowRoot1.findElement(By.id("buttons"));
-        WebElement shadowRoot2 = expandRootElement(root2);
-
-        WebElement root3 = shadowRoot2.findElement(By.id("download"));
-        WebElement shadowRoot3 = expandRootElement(root3);
-        shadowRoot3.click();
+            tblEvrakListesi
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
+            evrakDetayiPopUpKontrolü();
+            evrakDetayiOrjinaliYazdır(konu[i]);
+            switchTo().window(1);
+            sleep(3000);
+            pdfKontrol
+                    .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
+//                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
+            closeNewWindow();
+            switchTo().window(0);
+            $(By.xpath("//div[@id='mainPreviewForm:evrakDetayiViewDialog']//span[@class='ui-icon ui-icon-closethick']")).click();
+        }
         return this;
-
     }
+
+
+    @Step("Kontrol edilecek Pdf bilgisayara indirilir.")
+    public String pdfIndir() throws AWTException {
+
+        String pdfName = "";
+        WebDriver win = switchTo().window(1);
+        WebElement pdfPage = win.findElement(By.tagName("embed"));
+        takeScreenshot();
+        CharSequence kisayolCTRLS = Keys.chord(Keys.CONTROL, "s");
+        pdfPage.sendKeys(kisayolCTRLS);
+
+        Robot robot = new Robot();  // Robot class throws AWT Exception
+        sleep(2000); // Thread.sleep throws InterruptedException
+        String name = createRandomNumber(4);
+        int num = Integer.parseInt(name);
+        int[] modArr = new int[4];
+        for (int i = 0; i < 4; i++) {
+            modArr[i] = num % 10;
+            num = num / 10;
+            System.out.println(modArr[i]);
+            pdfName = pdfName + modArr[i];
+            switch (modArr[i]) {
+                case 1:
+                    robot.keyPress(KeyEvent.VK_NUMPAD1);
+                    break;
+                case 2:
+                    robot.keyPress(KeyEvent.VK_NUMPAD2);
+                    break;
+                case 3:
+                    robot.keyPress(KeyEvent.VK_NUMPAD3);
+                    break;
+                case 4:
+                    robot.keyPress(KeyEvent.VK_NUMPAD4);
+                    break;
+                case 5:
+                    robot.keyPress(KeyEvent.VK_NUMPAD5);
+                    break;
+                case 6:
+                    robot.keyPress(KeyEvent.VK_NUMPAD6);
+                    break;
+                case 7:
+                    robot.keyPress(KeyEvent.VK_NUMPAD7);
+                    break;
+                case 8:
+                    robot.keyPress(KeyEvent.VK_NUMPAD8);
+                    break;
+                case 9:
+                    robot.keyPress(KeyEvent.VK_NUMPAD9);
+                    break;
+                case 0:
+                    robot.keyPress(KeyEvent.VK_NUMPAD0);
+            }
+        }
+        pdfName = pdfName + ".pdf";
+        robot.keyPress(KeyEvent.VK_ENTER);
+        return pdfName;
+    }
+
     public WebElement expandRootElement(WebElement element) {
-        WebElement ele = (WebElement) ((JavascriptExecutor)WebDriverRunner.getWebDriver())
+        WebElement ele = (WebElement) ((JavascriptExecutor) WebDriverRunner.getWebDriver())
                 .executeScript("return arguments[0].shadowRoot", element);
         return ele;
     }
 
-    @Step("Evrak Listesi tablosunda Yazdır butonu tıklanır.")
+    @Step("Evrak Listesi tablosunda Orjinalini Yazdır butonu tıklanır.")
     public TopluPostaladiklarimPage evrakListesiOrjinaliYazdir(String[] konu) {
-        int size = tblEvrakListesi.size();
+        int size = $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]").size();
         for (int i = 0; i < size; i++) {
-            tblEvrakListesi
-                    .get(i)
-                    .$x("//span[text() = 'Orjinalini Yazdır']/../../button").click();
+            $$("tbody[id='mainPreviewForm:dataTableId_data'] tr[data-ri]")
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$x("descendant::button[descendant::span[. = 'Orjinalini Yazdır']]").pressEnter();
             evrakDetayiPopUpKontrolü();
-            evrakDetayiYazdır(konu[i]);
+            evrakDetayiOrjinaliYazdır(konu[i]);
             switchTo().window(1);
             closeNewWindow();
             switchTo().window(0);
@@ -318,6 +401,14 @@ public class TopluPostaladiklarimPage extends MainPage {
         tblEvrakDetayi.filterBy(Condition.text(konu))
                 .first()
                 .$("[id$='evrakDetayiViewDialogYazdir']").click();
+        return this;
+    }
+
+    @Step("Evrak Detayı Yazdır butonu")
+    public TopluPostaladiklarimPage evrakDetayiOrjinaliYazdır(String konu) {
+        tblEvrakDetayi.filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='evrakDetayiViewDialogOrjYazdir']").click();
         return this;
     }
 
@@ -383,7 +474,7 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Etiket bastır butonuna tıkla.")
     public TopluPostaladiklarimPage etiketBastir() {
-        btnEtiketBastir.click();
+        clickJs(btnEtiketBastir);
         txtEtiketBastir.waitUntil(Condition.visible, 5000);
         return this;
     }
@@ -420,8 +511,8 @@ public class TopluPostaladiklarimPage extends MainPage {
     }
 
     public TopluPostaladiklarimPage etiketBastirEkraniKontrolü(String adres, String konu) {
-        txtEtiketBastir.text().contains(konu);
-        txtEtiketBastir.text().contains(adres);
+        Assert.assertEquals(txtEtiketBastir.text().contains(konu), true);
+        Assert.assertEquals(txtEtiketBastir.text().contains(adres), true);
         return this;
     }
 
@@ -432,6 +523,11 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü yapılır. \"{konu}\" ")
+    public TopluPostaladiklarimPage topluPostaladiklarimEvrakKontrolu(String konu) {
+        searchTable().searchInAllPages(true).findRows(text(konu)).getFoundRow().shouldBe(exist);
+        return this;
+    }
 
     @Step("İndirim Öncesi tutar alaninda \"{indirimOncesiTutar}\" değeri olmalı mı? : \"{shouldBeEquals}\" ")
     public TopluPostaladiklarimPage indirimOncesiTutarKontrol(String indirimOncesiTutar, boolean shouldBeEquals) {
@@ -498,6 +594,75 @@ public class TopluPostaladiklarimPage extends MainPage {
                 .getText();
 
         return postaListesiAdi;
+    }
+
+    public class PDFKontrol extends MainPage {
+
+        @Step("PDF'teki alanların kontrolü")
+        public PDFKontrol PDFAlanKontrolleri(String pdfPath, String konu, String evrakNo, String icerik) throws IOException {
+
+            PDDocument pd;
+            pd = PDDocument.load(new File(pdfPath));
+            System.out.println("Total pages: " + pd.getNumberOfPages());
+            PDFTextStripper pdf = new PDFTextStripper();
+            String pdfText = pdf.getText(pd);
+            System.out.println(pdfText);
+            System.out.println(pdf.getText(pd));
+
+            pdfText.contains(konu);
+            pdfText.contains(evrakNo);
+            pdfText.contains(konu);
+
+            Allure.addAttachment("PDF Kontrolü konu : ", konu);
+            Allure.addAttachment("PDF Kontrolü evrakNo : ", evrakNo);
+            Allure.addAttachment("PDF Kontrolü içerik : ", konu);
+
+            return this;
+        }
+
+        @Step("PDF'teki alanların kontrolü")
+        public PDFKontrol PDFAlanKontrolleriFF(String konu, String evrakNo, String icerik) throws IOException {
+
+            SelenideElement konuAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + konu + "']"));
+//            SelenideElement konuAlaniPDF = $("div[class='firefinder-match']");
+            SelenideElement evrakNoAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + evrakNo + "']"));
+//            SelenideElement evrakNoAlaniPDF = $(".textLayer > div:nth-child(5)");
+            SelenideElement icerikAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + icerik + "']"));
+            SelenideElement altAntetAdresAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1']"));
+            SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
+            SelenideElement altAntetWebSitesiAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Web: www.turksat.com.tr']"));
+
+            String evraNoPDF = evrakNoAlaniPDF.getText();
+
+            System.out.println("Beklenen Sayı : " + evrakNo);
+            System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
+            System.out.println("Beklenen Konu : " + konu);
+            System.out.println("Gelen Konu : " + konuAlaniPDF.getText());
+            System.out.println("Beklenen İcerik : " + icerik);
+            System.out.println("Gelen İcerik : " + icerikAlaniPDF.getText());
+            System.out.println("Beklenen Alt Antet Adres : " + "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1");
+            System.out.println("Gelen Alt Antet Adres : " + altAntetAdresAlaniPDF.getText());
+            System.out.println("Beklenen Alt Antet Telefon : " + "Tel: 0312 222 22 22");
+            System.out.println("Gelen Alt Antet Telefon : " + altAntetTelefonAlaniPDF.getText());
+            System.out.println("Beklenen Alt Antet Web Sitesi : " + "Web: www.turksat.com.tr");
+            System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
+
+            Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
+            Assert.assertEquals(konuAlaniPDF.getText(), konu);
+            Assert.assertEquals(icerikAlaniPDF.getText(), icerik);
+            Assert.assertEquals(altAntetAdresAlaniPDF.getText(), "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1");
+            Assert.assertEquals(altAntetTelefonAlaniPDF.getText(), "Tel: 0312 222 22 22");
+            Assert.assertEquals(altAntetWebSitesiAlaniPDF.getText(), "Web: www.turksat.com.tr");
+
+            Allure.addAttachment("PDF Kontrolü konu : ", konuAlaniPDF.getText());
+            Allure.addAttachment("PDF Kontrolü evrakNo : ", evrakNoAlaniPDF.getText());
+            Allure.addAttachment("PDF Kontrolü içerik : ", icerikAlaniPDF.getText());
+            Allure.addAttachment("PDF Kontrolü Altantet : ", altAntetAdresAlaniPDF.getText() + altAntetTelefonAlaniPDF.getText() + altAntetWebSitesiAlaniPDF.getText());
+
+            takeScreenshot();
+
+            return this;
+        }
     }
 }
 

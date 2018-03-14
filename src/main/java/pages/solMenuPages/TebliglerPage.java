@@ -74,9 +74,12 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("Tebliğler menüsü kırmızı mı?")
-    public TebliglerPage tebliglerMenuKirmiziKontrolu() {
-        menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
+    @Step("Tebliğler menü yazısı kırmızı renk olmalı mı? {kirmiziOlmalimi}")
+    public TebliglerPage tebliglerMenuKirmiziKontrolu(boolean kirmiziOlmalimi) {
+        if (kirmiziOlmalimi == true)
+            menuTebligler.shouldHave(Condition.cssClass("ui-menuitem-unread"));
+        else
+            menuTebligler.shouldNotHave(Condition.cssClass("ui-menuitem-unread"));
         return this;
     }
 
@@ -96,7 +99,8 @@ public class TebliglerPage extends MainPage {
 
     @Step("Sil butonuna tıkla.")
     public TebliglerPage tebligSil() {
-        btnTebligSil.click();
+        $$(By.xpath("//div[@id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar']//span[contains(@class, 'document-messageDelete')]")).last().click();
+        //btnTebligSil.click();
         return this;
     }
 
@@ -114,15 +118,13 @@ public class TebliglerPage extends MainPage {
         return this;
     }
 
-    @Step("Tebelliğ Et butonuna tıkla.")
+    @Step("Tebellüğ Et butonuna tıkla.")
     public TebliglerPage tebellugEt(boolean onay) {
         btnTebellugEt.click();
-
         if (onay == true)
-            btnTebellugEvet.click();
+            $$(By.id("mainInboxForm:tebellugEtEvetButton")).last().click();
         else
-            btnTebellugHayir.click();
-
+            $$(By.id("mainInboxForm:tebellugEtHayirButton")).last().click();
         return this;
     }
 
@@ -149,6 +151,11 @@ public class TebliglerPage extends MainPage {
                     .first()
                     .shouldNotBe(Condition.visible);
         }
+        return this;
+    }
+
+    public TebliglerPage tebellugEtButonuKontrolEt() {
+        btnTebellugEt.shouldBe(Condition.visible);
         return this;
     }
 

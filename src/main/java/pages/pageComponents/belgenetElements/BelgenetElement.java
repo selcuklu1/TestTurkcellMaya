@@ -2,11 +2,18 @@ package pages.pageComponents.belgenetElements;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.impl.ElementFinder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public interface BelgenetElement extends SelenideElement {
 
     //region ComboLov
+
+    static BelgenetElement $(WebElement parentElement, String cssLocator) {
+        return ElementFinder.wrap(BelgenetElement.class, parentElement, By.cssSelector(cssLocator), 0);
+
+    }
 
     BelgenetElement comboLov(String selector);
 
@@ -23,9 +30,24 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement clearAllSelectedItems();
 
     /**
+     * Search by text exact words case insensitive
+     * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
+     * select first filtered
+     * if empty first will be selected
+     *
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
-    BelgenetElement selectLov(String value);
+    BelgenetElement selectLov(String... text);
+
+    /**
+     * Search by text exact words case insensitive
+     * comboLov().selectLov("Optiim TEST, "Optiim Birim", "Danışman")
+     * select first filtered
+     * if empty first will be selected
+     *
+     * @see pages.pageComponents.belgenetElements.ComboLovHelper
+     */
+    BelgenetElement selectExactLov(String... text);
 
     /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
@@ -95,12 +117,12 @@ public interface BelgenetElement extends SelenideElement {
      */
     ElementsCollection getSelectedDetails();
 
+    //endregion
+
     /**
      * @see pages.pageComponents.belgenetElements.ComboLovHelper
      */
     ElementsCollection getSelectedItems();
-
-    //endregion
 
     //region ComboBox
     BelgenetElement comboBox(String selector);
@@ -108,13 +130,13 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement comboBox(By locator);
 
     BelgenetElement selectComboBox(String text, boolean... js);
-
-    ElementsCollection getComboBoxValues();
     //BelgenetElement getComboBoxHtmlList();
     //endregion
 
 
     //region Selenide $ to BelgenetElements
+
+    ElementsCollection getComboBoxValues();
 
     /**
      * ATTENTION! This method doesn't start any search yet!
@@ -164,7 +186,6 @@ public interface BelgenetElement extends SelenideElement {
      * @see com.codeborne.selenide.commands.FindByXpath
      */
     BelgenetElement $x(String xpath, int index);
-
 
     /**
      * <p>

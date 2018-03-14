@@ -8,6 +8,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -19,7 +20,9 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GidenEvrakKayitPage extends MainPage {
@@ -27,9 +30,9 @@ public class GidenEvrakKayitPage extends MainPage {
     //region Elements
 
     // gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt14590
-    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:11:j_idt')]"));
+    SelenideElement cmbGeregiSecimTipi = $(By.xpath("//form[@id='gidenEvrakDefterKaydiForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbGeregi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
-    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//select[starts-with(@id,'gidenEvrakDefterKaydiForm:evrakBilgileriList:12:j_idt')]"));
+    SelenideElement cmbBilgiSecimTipi = $(By.xpath("//form[@id='gidenEvrakDefterKaydiForm']//label[normalize-space(text())='Bilgi Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select"));
     BelgenetElement cmbBilgi = comboLov("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
@@ -43,7 +46,7 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement dateTxtEvrakBilgileriListEvrakTarihi = $("[id$='evrakTarihi_input']");
     SelenideElement cmbEvrakBilgileriListGizlilikDerecesi = $("[id$='guvenlikKodu']");
     SelenideElement cmbEvrakBilgileriListKisiKurum = $("[id$='kisiKurum']");
-    SelenideElement ustYazi = $(By.xpath("//input[@class='ustYaziUploadClass']"));
+    SelenideElement ustYazi = $(By.xpath("//input[@id='gidenEvrakDefterKaydiForm:ustYaziForm:gedkUploadButton_input']"));
     SelenideElement lblEklenenPdfUstYazi = $("[id$='eklendiYazisi'] label");
     SelenideElement cmbEvrakBilgileriListIvedilik = $("[id$='ivedilik']");
     SelenideElement dateTxtMiat = $("[id$='miatCalendar_input']");
@@ -67,6 +70,16 @@ public class GidenEvrakKayitPage extends MainPage {
     SelenideElement popUpEvrakDefterBasariliKapat = $(By.id("gidenEvrakDefterKaydiBasarili:vazgecButton"));
     //endregion
 
+    public static String clearHorizantalTabChars(String str) {
+        String ret = str;
+        char[] horizantalTabChars = new char[]{0x9};
+        char[] newChars = new char[]{' ', ' '};
+        for (int i = 0; i < horizantalTabChars.length; i++) {
+            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
+        }
+        return ret;
+    }
+
     @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
@@ -80,12 +93,11 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Gereği seçim tipi alanında \"{kisiKurum}\" seç")
-    public GidenEvrakKayitPage geregiSecimTipiSecByText(String kisiKurum) {
-        cmbGeregiSecimTipi.selectOption(kisiKurum);
+    @Step("Gereği seçim tipi alanında \"{geregiSecimTipi}\" seç")
+    public GidenEvrakKayitPage geregiSecimTipiSecByText(String geregiSecimTipi) {
+        cmbGeregiSecimTipi.selectOption(geregiSecimTipi);
         return this;
     }
-
 
     @Step("Gereği {description} doldur: | {geregi}")
     public GidenEvrakKayitPage geregiDoldur(String geregi, String description) {
@@ -100,21 +112,25 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Gereği doldur")
     public GidenEvrakKayitPage geregiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
-        cmbGeregi.selectLov(geregiAdSoyad);
+        cmbGeregi
+                .type(geregiAdSoyad)
+                .getTitleItems()
+                .first()
+                .click();
 
-        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
+        cmbGeregi.closeTreePanel();
 
         cmbGeregi.clearAllSelectedItems();
         return this;
     }
 
-    @Step("Kişinin Geregi alanında görüntülenmeme kontrolu")
-    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String kisi) {
+    @Step("Gereği alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {geregi}")
+    public GidenEvrakKayitPage geregiAlanindaGoruntulenmemeKontrolu(String geregi, String description) {
 
-        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+        boolean selectable = comboLov(cmbGeregiBy).isLovValueSelectable(geregi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + geregi + ": Kişinin görüntülenmediği görülür.");
+        Allure.addAttachment("MyCombolov alanında " + geregi + ": görüntülenmediği görülür.", "");
         return this;
     }
 
@@ -150,33 +166,53 @@ public class GidenEvrakKayitPage extends MainPage {
     }
 
     @Step("Bilgi doldur")
-    public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad) {
+    public GidenEvrakKayitPage bilgiDoldur(String bilgiAdSoyad) {
 
-        cmbBilgi.selectLov(geregiAdSoyad);
+        cmbBilgi.selectLov(bilgiAdSoyad);
         /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
         System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
 
+        return this;
+    }
+
+    @Step("Bilgi {description} doldur: | {bilgi}")
+    public GidenEvrakKayitPage bilgiDoldur(String bilgi, String description) {
+
+        cmbGeregi.selectLov(bilgi);
+
+        /*System.out.println("title: " + cmbGeregi.lastSelectedLovTitleText());
+        System.out.println("detail: " + cmbGeregi.lastSelectedLovDetailText());*/
         return this;
     }
 
     @Step("Bilgi doldur")
     public GidenEvrakKayitPage bilgiDoldur(String geregiAdSoyad, Boolean clearAfter) {
 
-        cmbBilgi.selectLov(geregiAdSoyad);
-        /*System.out.println("title: " + cmbBilgi.lastSelectedLovTitleText());
-        System.out.println("detail: " + cmbBilgi.lastSelectedLovDetailText());*/
+        cmbBilgi
+                .type(geregiAdSoyad)
+                .getTitleItems()
+                .first()
+                .click();
 
+        cmbBilgi.closeTreePanel();
         cmbBilgi.clearAllSelectedItems();
 
         return this;
     }
 
-    @Step("Kişinin Bilgi alanında görüntülenmeme kontrolu")
-    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String kisi) {
+    @Step("Bilgi temizle")
+    public GidenEvrakKayitPage bilgiTemizle() {
+        cmbBilgi.clearAllSelectedItems();
 
-        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(kisi);
-        Assert.assertEquals(selectable, false, "MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür");
-        System.out.println("MyCombolov alanında " + kisi + ": Kişinin görüntülenmediği görülür.");
+        return this;
+    }
+
+    @Step("Bilgi alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {bilgi}")
+    public GidenEvrakKayitPage bilgiAlanindaGoruntulenmemeKontrolu(String bilgi, String description) {
+
+        boolean selectable = comboLov(cmbBilgiBy).isLovValueSelectable(bilgi);
+        Assert.assertEquals(selectable, false, "MyCombolov alanında " + bilgi + ": Kişinin görüntülenmediği görülür");
+        System.out.println("MyCombolov alanında " + bilgi + ": görüntülenmediği görülür.");
 
         return this;
     }
@@ -195,7 +231,6 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
-
     @Step("Kurumun Geregi alanında görüntüleme kontrolu")
     public GidenEvrakKayitPage bilgiAlanindaDegerKontrolu(String aranacakDeger, Boolean shouldBeExist) {
 
@@ -212,8 +247,11 @@ public class GidenEvrakKayitPage extends MainPage {
 
     @Step("Panel kapat")
     public GidenEvrakKayitPage panelKapat(Boolean kaydet) {
-        $(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']"))
-                .contextClick();
+        //$(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']")).contextClick();
+
+        SelenideElement closeButton = $$(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']")).last().waitUntil(visible, 5000);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        closeButton.click();
 
         if (kaydet)
             $(By.id("kapatKaydetEvetButton")).click();
@@ -227,15 +265,17 @@ public class GidenEvrakKayitPage extends MainPage {
         comboKonuKodu.selectLov(konuKodu);
         return this;
     }
+
     @Step("Evrak Turu \"{evrakTuru}\" seçilir")
     public GidenEvrakKayitPage evrakTuruSec(String evrakTuru) {
         cmbEvrakBilgileriListEvrakTuru.selectOption(evrakTuru);
         return this;
     }
+
     @Step("Evrak Turu alanında \"{icerik}\" olduğu görülür.")
     public GidenEvrakKayitPage evrakTuruIcerikKontrolu(String icerik) {
         boolean sonuc = cmbEvrakBilgileriListEvrakTuru.innerText().contains(icerik);
-        Assert.assertEquals(true,sonuc);
+        Assert.assertEquals(true, sonuc);
         return this;
     }
 
@@ -250,17 +290,19 @@ public class GidenEvrakKayitPage extends MainPage {
         dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
+
     @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" seçilir.")
     public GidenEvrakKayitPage gizlilikDerecesiSec(String gizlilikDerecesi) {
         cmbEvrakBilgileriListGizlilikDerecesi.selectOption(gizlilikDerecesi);
         return this;
     }
+
     @Step("Gizlilik Derecesi içerik kontrol.")
     public GidenEvrakKayitPage gizlilikDerecesiIcerikKontrol() {
-        String icerik  = cmbEvrakBilgileriListGizlilikDerecesi.innerText();
+        String icerik = cmbEvrakBilgileriListGizlilikDerecesi.innerText();
         String text = clearHorizantalTabChars(icerik);
         System.out.println(text);
-        Allure.addAttachment("İvedilik alanı",text);
+        Allure.addAttachment("İvedilik alanı", text);
         return this;
     }
 
@@ -270,6 +312,7 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Üst yazi \"{path}\" ekle")
     public GidenEvrakKayitPage evrakBilgileriUstYaziEkle(String path) {
         uploadFile(ustYazi, path);
         //ustYaziUploadFile(path);
@@ -295,18 +338,8 @@ public class GidenEvrakKayitPage extends MainPage {
         String icerik = cmbEvrakBilgileriListIvedilik.innerText();
         String text = clearHorizantalTabChars(icerik);
         System.out.println(text);
-        Allure.addAttachment("İvedilik alanı",text);
+        Allure.addAttachment("İvedilik alanı", text);
         return this;
-    }
-
-    public static String clearHorizantalTabChars(String str) {
-        String ret = str;
-        char[] horizantalTabChars = new char[]{0x9};
-        char[] newChars = new char[]{' ',' '};
-        for (int i = 0; i < horizantalTabChars.length; i++) {
-            ret = ret.replaceAll(new String(new char[]{horizantalTabChars[i]}), new String(new char[]{newChars[i]}));
-        }
-        return ret;
     }
 
     @Step("Miat alnına \"{miatTarihi}\" girilir")
@@ -383,13 +416,19 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gereği alanını temizle.")
+    public GidenEvrakKayitPage geregiTemizle() {
+        cmbGeregi.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Başarılı Pop up kontrol")
     public String popUpBasariliKapat() {
         popUpEvrakDefterBasarili.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
         popUpEvrakDefterBasarili.getText().contains(mesaj4);
 
-        String evrakNo = getIntegerInText(By.id("gidenEvrakDefterKaydiBasariliDialogId"));
+        String evrakNo = getNumberFromText(By.id("gidenEvrakDefterKaydiBasariliDialogId"));
         popUpEvrakDefterBasariliKapat.click();
         return evrakNo;
     }
@@ -400,5 +439,49 @@ public class GidenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Gereği alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage geregiAlanindaBiriminGeldigiSecilemedigiKontrolu(String birim, String description) {
 
+        int gorunurSecilemezBirimSize = comboLov(cmbGeregiBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        comboLov(cmbGeregiBy).closeTreePanel();
+        System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Bilgi alanında Birimin geldiği ve seçilemediği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(String birim, String description) {
+
+        int gorunurSecilemezBirimSize = comboLov(cmbBilgiBy).type(birim).getSelectableItems().size();
+        Assert.assertEquals(gorunurSecilemezBirimSize == 0, true, "Birimin geldiği ve seçilemediği görülür: " + birim);
+        comboLov(cmbBilgiBy).closeTreePanel();
+        System.out.println("Birimin geldiği ve seçilemediği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilemediği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Gereği alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage geregiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+        cmbGeregi.selectLov(birim);
+
+        System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+        return this;
+    }
+
+    @Step("Bilgi alanında Birimin geldiği ve seçilebildiği kontrolu - {description} : {birim}")
+    public GidenEvrakKayitPage bilgiAlanindaBiriminGeldigiVeSecilebildigiKontrolu(String birim, String description) {
+
+        cmbBilgi.selectLov(birim);
+
+        System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
+        Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
+
+        return this;
+    }
 }

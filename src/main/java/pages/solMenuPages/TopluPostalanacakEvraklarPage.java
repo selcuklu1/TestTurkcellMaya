@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -63,8 +62,10 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
 
-    @Step("Gideceği yer alanından {0} seç")
+    @Step("Gideceği yer alanından {gidecegiYer} seç")
     public TopluPostalanacakEvraklarPage gidecegiYerSec(String gidecegiYer, boolean secim) {
+
+        filtreGidecegiYer(gidecegiYer);
 
         Boolean isSelected = false;
 
@@ -198,7 +199,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gideceği yer listesinde alfabetik kontrol")
+    @Step("Dağıtım yerlerinin alfabetik olarak sıralı geldiği görülür.")
     public TopluPostalanacakEvraklarPage gidecegiYerListesiAlfabetikSiraKontrolu() {
 
         String[] gidecegiYerList = new String[tableGidecegiYer.size()];
@@ -216,17 +217,43 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Tarih aralığını seç. Başlangıç: {0} - Bitiş:")
+    @Step("Tarih aralığını seç. Başlangıç: {baslangicTarihi} - Bitiş: {bitisTarihi} ")
     public TopluPostalanacakEvraklarPage tarihAraligiSec(String baslangicTarihi, String bitisTarihi) {
-
         txtBaslangic.setValue(baslangicTarihi);
         txtBitis.setValue(bitisTarihi);
+        return this;
+    }
 
+    @Step("Posta tipi alanından {postaTipi} seç.")
+    public TopluPostalanacakEvraklarPage postaTipiSec(String postaTipi) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
+        lblPostaTipiSeciniz.click();
+        ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
+
+        SelenideElement currentRow = currentListElement
+                .filterBy(Condition.text(postaTipi))
+                .first();
+
+        SelenideElement chkBox = currentRow.$("div[class='ui-chkbox ui-widget']");
+
+        boolean isSelected = false;
+        if (chkBox.$(By.xpath("./div[contains(@class, 'ui-state-active')]")).exists())
+            isSelected = true;
+
+        if (isSelected == false) {
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", chkBox);
+            chkBox.click();
+        }
+
+        lblPostaTipiSeciniz.click();
         return this;
     }
 
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
+
         lblPostaTipiSeciniz.click();
         ElementsCollection currentListElement = $$(By.xpath("//label[.='Adi Posta']/../../../ul")).last().$$("li");
         for (int i = 0; i < postaTipleri.length; i++) {
@@ -248,14 +275,15 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
 
         }
-        $x("//tbody").click();
+        lblPostaTipiSeciniz.click();
+//        $x("//tbody").click();
 
         return this;
     }
 
     @Step("Sorgula butonuna tıkla.")
     public TopluPostalanacakEvraklarPage sorgula() {
-        btnSorgula.click();
+        clickJs(btnSorgula);
         return this;
     }
 
@@ -277,6 +305,13 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
         currentItem.click();
 
+        return this;
+    }
+
+    @Step("Listeye Ekle butonuna tıkla")
+    public TopluPostalanacakEvraklarPage postaListesiSec2(String postaListesi) {
+        BelgenetElement cmbPostaListesi = comboBox(By.id("mainPreviewForm:tpbeSelectOneMenuId"));
+        cmbPostaListesi.selectComboBox(postaListesi);
         return this;
     }
 
@@ -362,14 +397,14 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     public TopluPostalanacakEvraklarPage evrakSec(String konu, boolean secim) {
         Boolean isSelected = false;
 
-        SelenideElement currentRow = tableEvraklar
+        SelenideElement currentRow = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]")
                 .filterBy(Condition.text(konu))
                 .first();
 
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
-
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRowCheckBox);
         if (currentRowCheckBox.$(By.xpath(".//div[contains(@class, 'ui-state-active')]")).exists())
             isSelected = true;
 
@@ -380,8 +415,6 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
             if (isSelected == true)
                 currentRowCheckBox.click();
         }
-
-
         return this;
     }
 
@@ -400,6 +433,19 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         } else {
             if (isSelected == true)
                 currentRowCheckBox.click();
+        }
+        return this;
+    }
+
+    @Step("Konuya göre evraklar seçilir. ")
+    public TopluPostalanacakEvraklarPage konuyaGoreEvrakSec(String[] konu, boolean secim) {
+        Boolean isSelected = false;
+        int size = konu.length;
+        for (int i = size - 1; i >= 0; i--) {
+            tableEvraklar
+                    .filterBy(Condition.text(konu[i]))
+                    .first()
+                    .$("span[class='ui-chkbox-icon']").click();
         }
         return this;
     }
@@ -560,7 +606,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gönderildiği gerçek kişi seç: {gercekKkisi}")
+    @Step("Gönderildiği gerçek kişi seç: {gercekKisi}")
     public TopluPostalanacakEvraklarPage gonderildigiGercekKisiSec(String gercekKisi) {
         txtGonderildigiGercekKisi.selectLov(gercekKisi);
         return this;
@@ -584,9 +630,37 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
     }
 
     @Step("Filtre Panelinde Gideceği Yer doldur: {gidecegiYer}")
-    public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer){
+    public TopluPostalanacakEvraklarPage filtreGidecegiYer(String gidecegiYer) {
         txtFiltreGidecegiYer.setValue(gidecegiYer);
         txtFiltreGidecegiYer.pressEnter();
+        return this;
+    }
+
+    @Step("Posta Şekli \"Kep\" olan ve Kep ile gönderilecek olan evrakların bu ekranda listelenmediği görülür.")
+    public TopluPostalanacakEvraklarPage kepPostaSekliKontrol() {
+        for (int i = 0; i < tableEvraklar.size(); i++) {
+            tableEvraklar
+                    .get(i)
+                    .shouldNotHave(Condition.text("Posta Şekli: KEP"));
+        }
+        return this;
+    }
+
+    @Step("Dağıtım yerinin yanında ,o dağıtım yerine kaç adet evrak gönderileceği bilgisinin olduğu görülür. ")
+    public TopluPostalanacakEvraklarPage dagitimYeriAdetKontrol() {
+        for (int i = 0; i < tableGidecegiYer.size(); i++) {
+            tableGidecegiYer
+                    .get(i)
+                    .shouldHave(Condition.text("-"));
+        }
+        return this;
+    }
+
+    @Step("Listenin paging özelliği olduğu görülür.")
+    public TopluPostalanacakEvraklarPage pagingOzelligi() {
+        $$("th[id='mainInboxForm:inboxDataTable_paginator_top'] > span[class='ui-paginator-pages'] > span")
+                .get(0)
+                .shouldBe(Condition.visible);
         return this;
     }
 

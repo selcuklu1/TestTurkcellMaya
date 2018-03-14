@@ -3,13 +3,13 @@ package pages.newPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.MainPage;
+import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.EvrakPageButtons;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.tabs.*;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 
 /**
@@ -18,11 +18,12 @@ import static pages.pageComponents.belgenetElements.Belgenet.$;
  * Açıklama:
  */
 public class EvrakOlusturPage extends MainPage {
+    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.EvrakOlustur;
     private SelenideElement page = $("#yeniGidenEvrakForm");
 
     public EvrakOlusturPage openPage() {
-        ustMenu(UstMenuData.EvrakIslemleri.EvrakOlustur);
-        pageHeader().getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.EvrakOlustur.getName()));
+        ustMenu(pageTitle);
+        pageHeader().getPageTitle().shouldHave(text(pageTitle.getName()));
         return this;
     }
 
@@ -30,10 +31,14 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage closePage(boolean save) {
         pageHeader().closePage();
         if (save)
-            confirmDialog().button("Evet").shouldBe(visible).click();
+            confirmDialog().confirmEvetTikla();
         else
-            confirmDialog().button("Hayır").shouldBe(visible).click();
+            confirmDialog().confirmHayirTikla();
         return this;
+    }
+
+    public SelenideElement getPage() {
+        return page;
     }
 
     public EvrakPageButtons pageButtons() {
@@ -63,5 +68,13 @@ public class EvrakOlusturPage extends MainPage {
 
     public IliskiliEvraklar iliskiliEvraklarTab() {
         return new IliskiliEvraklar(page);
+    }
+
+    public DagitimHitapDuzenle dagitimHitapDuzenle() {
+        return new DagitimHitapDuzenle(page);
+    }
+
+    public DogrulamaTab dogrulamaTab() {
+        return new DogrulamaTab(page);
     }
 }

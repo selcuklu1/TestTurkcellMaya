@@ -1,9 +1,6 @@
 package pages.pageComponents.belgenetElements;
 
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.commands.Commands;
-import com.codeborne.selenide.commands.Find;
-import com.codeborne.selenide.impl.WebElementSource;
 
 public class BelgenetFramework {
 
@@ -14,6 +11,8 @@ public class BelgenetFramework {
 
         //region ComboLov
         Commands.getInstance().add("selectLov", new ComboLov().new SelectLov());
+
+        Commands.getInstance().add("selectExactLov", new ComboLov().new SelectExactLov());
 
         Commands.getInstance().add("clearLastSelectedItem", new ComboLov().new ClearLastSelectedItem());
 

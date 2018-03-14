@@ -17,7 +17,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
  */
 public class SearchFiltreleme extends BaseLibrary {
 
-
+    //Selenide.$("#formSablonYonetimiListingForm").$$("label.columnLabel,input").indexOf(Selenide.$$("label.columnLabel").filterBy(exactText("Form Adı")).first())
     private SelenideElement parentElement;
 
     public SearchFiltreleme(SelenideElement parentElement) {
@@ -25,9 +25,9 @@ public class SearchFiltreleme extends BaseLibrary {
     }
 
     @Step("\"Sorgulama ve Filtreleme\"yi genişlet")
-    public SearchFiltreleme sorgulamaVeFiltrelemeyiGenislet() {
-        SelenideElement element = parentElement.$("h3");
-        if (element.attr("aria-expanded").equalsIgnoreCase("false"))
+    public SearchFiltreleme sorgulamaVeFiltrelemeyiGenislet(boolean... genislet) {
+        SelenideElement element = parentElement.$("h3[role=tab]");
+        if (!element.attr("aria-expanded").equalsIgnoreCase(String.valueOf(genislet.length > 0 ? genislet[0] : "true")))
             element.find("a").click();
         return this;
     }
@@ -86,6 +86,32 @@ public class SearchFiltreleme extends BaseLibrary {
         ElementsCollection elements = getFilterElement(label).$$("button");
         return elements;
     }
+
+    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\"'butonu bul")
+    public SelenideElement getButton(String name) {
+        sorgulamaVeFiltrelemeyiGenislet();
+        return parentElement.$x("descendant::button[.='" + name + "']");
+    }
+
+
+    @Step("{alanLabel} alanı doldur")
+    public SearchFiltreleme alanDoldur(String alanLabel, String deger) {
+        getFilterInput(alanLabel).setValue(deger);
+        return this;
+    }
+
+    @Step("{alanLabel} alanda sec")
+    public SearchFiltreleme alanSec(String alanLabel, String deger) {
+        getFilterSelect(alanLabel).setValue(deger);
+        return this;
+    }
+
+    @Step("{buttonLabel} butona tikla")
+    public SearchFiltreleme butonaTikla(String buttonLabel) {
+        getButton(buttonLabel).click();
+        return this;
+    }
+
 
 
 /*    @Step("\"Sorgulama ve Filtreleme\"de \"{name}\" alanı doldur")

@@ -1,6 +1,7 @@
 package common;
 
 import com.codeborne.selenide.*;
+import com.codeborne.selenide.ex.InvalidStateException;
 import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
@@ -15,9 +16,8 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static java.lang.Thread.currentThread;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
@@ -39,9 +38,9 @@ public class BaseLibrary extends ElementsContainer {
 
     protected static final Logger log = Logger.getLogger(BaseLibrary.class.getName());
     protected static String winHandleBefore = null;
-    private static String docPath = null;
+    protected static String uploadPath = null;
+    protected static String downloadPath = null;
     private static String browserName = null;
-    private String downoladPath = null;
     private long waitForLoading = 20;
     private int doWaitLoading = 0;
     private boolean doNotWaitLoading = false;
@@ -90,6 +89,7 @@ public class BaseLibrary extends ElementsContainer {
         return userName;
     }
 
+    @Step("Browserdaki Cookieleri temizle")
     public void clearCookies() {
         try {
             Selenide.clearBrowserLocalStorage();
@@ -104,9 +104,11 @@ public class BaseLibrary extends ElementsContainer {
     public byte[] takeScreenshot() {
         byte[] bytes = new byte[]{};
         try {
+            System.out.println("Screenshot will be taken");
             bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            System.out.println("Screenshot has been taken");
         } catch (WebDriverException e) {
-            System.out.println("Error takeScreenshot:" + e.getMessage());
+            System.out.println("Take screenshot error:" + e.getMessage());
         }
         return bytes;
     }
@@ -283,6 +285,12 @@ public class BaseLibrary extends ElementsContainer {
         waitForLoadingJS(driver, timeout);
     }
 
+    public void waitForLoadingJS() {
+//        long timeout = Configuration.timeout / 1000;
+        long timeout = getWaitForLoading();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), Configuration.timeout);
+    }
+
     public void maximazeBrowser() {
         try {
             if (Configuration.browserSize != null) {
@@ -302,7 +310,7 @@ public class BaseLibrary extends ElementsContainer {
                 System.out.println("manage().window().maximize()");
             }
         } catch (Exception e) {
-            System.out.println("SettingsListener maximize:" + e.getMessage());
+            System.out.println("ResultListener maximize:" + e.getMessage());
         }
     }
 
@@ -359,6 +367,17 @@ public class BaseLibrary extends ElementsContainer {
      */
     public void clickJs(SelenideElement element) {
         executeJavaScript("arguments[0].click();", element);
+        waitForLoadingJS(WebDriverRunner.getWebDriver());
+    }
+
+    /**
+     * JavaSctipt ile click yapılır
+     *
+     * @param element
+     */
+    @Step("{stepDescription}")
+    public void clickJs(SelenideElement element, String stepDescription) {
+        executeJavaScript("arguments[0].click();", element);
     }
 
     /**
@@ -369,6 +388,19 @@ public class BaseLibrary extends ElementsContainer {
     public void clickJs(WebElement element) {
         executeJavaScript("arguments[0].click();", element);
     }
+
+    /**
+     * if input not visible, otherwise use selenide setselected
+     */
+    public void checkboxSelect(SelenideElement element, boolean setSelected) {
+        element = element.getTagName().equalsIgnoreCase("input") ? element : element.$("input");
+        if (element.isSelected() ^ setSelected) {
+            if (element.getAttribute("readonly") != null)
+                throw new InvalidStateException("Cannot change value of readonly element");
+            clickJs(element);
+        }
+    }
+
 
 //    private String closeAlertAndGetItsText() {
 //        try {
@@ -388,7 +420,7 @@ public class BaseLibrary extends ElementsContainer {
     //Dosya ekler
     public void uploadFile(SelenideElement element, String pathToFile) {
         try {
-            element.sendKeys(pathToFile);
+            element.toWebElement().sendKeys(pathToFile);
             log.info("Dosya yüklemeye başlandı.");
         } catch (Exception e) {
             log.info("Dosya yükleme başarısız. : " + e);
@@ -431,6 +463,22 @@ public class BaseLibrary extends ElementsContainer {
         return output;
     }
 
+    //Random text üretir.
+    public String createRandomTextWithLineBreaks(int textSize) {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int lineBreakEveryChar = 10;
+        int i = 0;
+        while (sb.length() < textSize){
+            if (i!=0 && i%lineBreakEveryChar==0)
+                sb.append(' ');
+            sb.append(chars[random.nextInt(chars.length)]);
+            i++;
+        }
+        return sb.toString();
+    }
+
     //yyyyMMddHHmmss formatına göre sysdate alır.
     public String getSysDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -439,6 +487,11 @@ public class BaseLibrary extends ElementsContainer {
         String sysDate = dtf.format(now);
 
         return sysDate;
+    }
+
+    //dd.MM.yyyy HH:mm:ss formatına göre sysdate alır.
+    public String getDateTime() {
+        return DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss").format(LocalDateTime.now());
     }
 
     //dd.MM.yyyy formatına göre sysdate alır.
@@ -451,6 +504,16 @@ public class BaseLibrary extends ElementsContainer {
         return sysDate;
     }
 
+
+    //dd.MM.yyyy HH formatına göre sysdate alır.
+    public String getSysDateForTarihSaat() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+        String sysDate = dtf.format(now);
+
+        return sysDate;
+    }
     //dd.MM.yyyy formatına göre / koyarak sysdate alır.
     public String getSysDateForKis2() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -473,11 +536,12 @@ public class BaseLibrary extends ElementsContainer {
 
     }
 
+
     //Günün tarihinden sonraki bir tarihi alır.
     public String getAfterSysDate(int i) throws ParseException {
         String untildate = getSysDateForKis();// can take any date in current
         // format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateFormat.parse(untildate));
         cal.add(Calendar.DATE, i);
@@ -646,7 +710,7 @@ public class BaseLibrary extends ElementsContainer {
         return null;
     }
 
-    public String getIntegerInText(By by) {
+    public String getNumberFromText(By by) {
         String x = WebDriverRunner.getWebDriver().findElement(by).getText();
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(x);
@@ -657,12 +721,12 @@ public class BaseLibrary extends ElementsContainer {
         return number;
     }
 
-    public String getIntegerInText(String text) {
+    public String getNumberFromText(String text) {
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(text);
         m.find();
         String number = m.group();
-        System.out.println(number);
+//        System.out.println("Get number from text: \"" + text + "\" number: " + number);
         return number;
     }
 
@@ -704,7 +768,7 @@ public class BaseLibrary extends ElementsContainer {
 
     }
 
-    @Step("[\"{0}\"] alanının değeri [\"{0}\"] olmalı.")
+    @Step("\"{element}\" alanının değeri \"{value}\" olmalı.")
     public void alanDegeriKontrolEt(SelenideElement element, String value, boolean shouldHaveValue, boolean exactText) {
         if (shouldHaveValue == true) {
             if (exactText == true)
@@ -723,6 +787,7 @@ public class BaseLibrary extends ElementsContainer {
             }
         }
     }
+
 
     public boolean findElementOnTableAllPages(String form, SelenideElement element) {
 
@@ -744,6 +809,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     //Bilgisayarda uzantısını verdiğiniz klasordeki dosyalardan gönderdiğiniz ismi içinde içeriyorsa o dosyayı siler.
+    @Step("Gönderilen klasöreki dosyayı siler. Path : \"{path}\" \n Filename : \"{fileName}\" ")
     public boolean deleteFile(String path, String fileName) throws IOException {
 
         boolean flag = false;
@@ -791,6 +857,22 @@ public class BaseLibrary extends ElementsContainer {
 
     }
 
+    @Step("Silme Onayı: Kaydı silmek istediğinize emin misiniz?: {secim}")
+    public void silmeOnayiEvrakSilPopup(String secim) {
+
+        SelenideElement btnEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
+        SelenideElement btnHayir = $(By.id("mainPreviewForm:evrakSilHayirButton"));
+
+        switch (secim) {
+            case "Evet":
+                btnEvet.click();
+                break;
+            case "Hayır":
+                btnHayir.click();
+                break;
+        }
+    }
+
     // İşlem penceresi kapatma onay - popup
     @Step("Popup : İşlem penceresi kaydet: {secim}")
     public void islemPenceresiKaydetPopup(String secim) {
@@ -802,10 +884,10 @@ public class BaseLibrary extends ElementsContainer {
 
         switch (secim) {
             case "Evet":
-                btnEvet.click();
+                btnEvet.pressEnter();
                 break;
             case "Hayır":
-                btnHayir.click();
+                btnHayir.pressEnter();
                 break;
             case "İptal":
                 btnIptal.click();
@@ -833,40 +915,28 @@ public class BaseLibrary extends ElementsContainer {
     }
 
 
-    @Step("Popup Ek Silme Onayı: {secim}")
-    public void ekSilmeOnayi(String secim) {
+    @Step("\"{fileName}\" isimli dosya silindi")
+    public BaseLibrary deleteSpecificFile(String fileName) {
 
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ekSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ekSilHayirButton']");
-
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
+        File folder = new File("C://users//" + System.getProperty("user.name") + "//Downloads//");
+        final File[] files = folder.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(final File dir,
+                                  final String name) {
+                return name.matches("Rapor_.*\\.");
+            }
+        });
+        for (File file1 : files) {
+            if (!file1.delete()) {
+                System.err.println("Dosya silinemedi: " + file1.getAbsolutePath());
+            }
         }
-    }
 
-
-    @Step("Popup İlişik Silme Onayı: {secim}")
-    public void ilisikSilmeOnayi(String secim) {
-
-        SelenideElement btnSilmeOnayiEvet = $("[id$='ilisikSilEvetButton']");
-        SelenideElement btnSilmeOnayiHayir = $("['ilisikSilHayirButton']");
-
-        switch (secim) {
-            case "Evet":
-                clickJs(btnSilmeOnayiEvet);
-                break;
-            case "Hayır":
-                clickJs(btnSilmeOnayiHayir);
-                break;
-        }
+        return this;
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
+    @Step("Gönderilen klaörede verilen dosyayı arama : Path :  \"{downloadPath}\" \n Filename : \"{fileName}\"  ")
     public boolean searchDownloadedFileWithName(String downloadPath, String fileName) {
         boolean flag = false;
         File dir = new File(downloadPath);
@@ -898,7 +968,6 @@ public class BaseLibrary extends ElementsContainer {
         return flag;
     }
 
-
     //region Capabilities
     public String getOS() {
         Capabilities caps = getCapabilities();
@@ -924,45 +993,47 @@ public class BaseLibrary extends ElementsContainer {
         System.out.println("Operation System: " + operationSystem.name());
 
         if (operationSystem.is(Platform.WINDOWS)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+            uploadPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
         } else if (operationSystem.is(Platform.XP)) {
-            docPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
+            uploadPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
         } else if (operationSystem.is(Platform.LINUX)) {
             //TODO: Linux pathi verilecek
-            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+            uploadPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         } else if (operationSystem.is(Platform.MAC)) {
             //TODO: Mac pathi verilecek
-            docPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
+            uploadPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         }
-        System.out.println("File path: " + docPath);
-        return docPath;
+        System.out.println("File path: " + uploadPath);
+        return uploadPath;
     }
 
-    public String getDocPath() {
+    public String getUploadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
 
-        String path = "";
+        //String uploadPath = "";
         if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
-            path = TestData.docPathWindows;
+            uploadPath = TestData.docPathWindows;
         else
-            path = TestData.docPathLinux;
+            uploadPath = TestData.docPathLinux;
 
-        log.info("Documents path: " + path);
-        return path;
+        log.info("Upload file path: " + uploadPath);
+
+        return uploadPath;
     }
 
     public String getDownloadPath() {
         Capabilities caps = getCapabilities();
         Platform operationSystem = caps.getPlatform();
-        String path = "";
+        //String downloadPath = "";
         if (operationSystem.is(Platform.WINDOWS) || operationSystem.is(Platform.XP))
-            path = TestData.docDownloadPathWindows;
+            downloadPath = TestData.docDownloadPathWindows;
         else
-            path = TestData.docDownloadPathLinux;
+            downloadPath = TestData.docDownloadPathLinux;
 
-        log.info("Downloads path: " + path);
-        return path;
+        log.info("Downloads file path: " + downloadPath);
+
+        return downloadPath;
     }
 
     /**
@@ -1002,6 +1073,49 @@ public class BaseLibrary extends ElementsContainer {
 
     public int getRandomNumber(int startIndex, int endIndex) {
         return (new Random().nextInt((endIndex - startIndex) + 1) + startIndex);
+    }
+
+    public void waitForFileUploading(WebDriver driver, long timeoutSec) {
+
+        try {
+
+            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .template-upload")).size());
+            new WebDriverWait(driver, timeoutSec, 10).
+                    until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
+                            By.className("template-upload"))));
+
+        } catch (Exception e) {
+            System.out.println("File uploading error: " + e.getMessage());
+        }
+
+    }
+
+    public String myip()
+    {
+        WebDriver driver = WebDriverRunner.getWebDriver();
+        driver.get("http://www.whatismyip.com/");
+        String myIP = driver.findElement(By.cssSelector("ul[class='list-group text-center'] h3")).getText();
+        String[] ipString = myIP.split(":");
+        myIP = ipString[1].trim();
+        System.out.println(myIP);
+        return myIP;
+    }
+
+
+    private String setValueByJs(SelenideElement element, String text) {
+        return executeJavaScript(
+                "return (function(webelement, text) {" +
+                        "if (webelement.getAttribute('readonly') != undefined) return 'Cannot change value of readonly element';" +
+                        "if (webelement.getAttribute('disabled') != undefined) return 'Cannot change value of disabled element';" +
+                        "webelement.focus();" +
+                        "var maxlength = webelement.getAttribute('maxlength') == null ? -1 : parseInt(webelement.getAttribute('maxlength'));" +
+                        "webelement.value = " +
+                        "maxlength == -1 ? text " +
+                        ": text.length <= maxlength ? text " +
+                        ": text.substring(0, maxlength);" +
+                        "return null;" +
+                        "})(arguments[0], arguments[1]);",
+                element, text);
     }
 
     //endregion

@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
@@ -35,6 +37,7 @@ public class GercekKisiYonetimPage extends MainPage {
     SelenideElement btnGercekKisiGuncelle = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='updateGercekKisiButton']");
     SelenideElement btnGercekKisiPasifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='pasifEtGercekKisi']");
     SelenideElement btnGercekKisiAktifYap = $("[id^='gercekKisiYonetimiListingForm:gercekKisiDataTable'][id$='aktifEtGercekKisi']");
+    ElementsCollection tblGercekKisi = $$("tbody[id*='gercekKisiYonetimiListingForm:gercekKisiDataTable'] tr[role='row']");
 
     SelenideElement btnIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     SelenideElement btnIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
@@ -97,7 +100,6 @@ public class GercekKisiYonetimPage extends MainPage {
     public GercekKisiYonetimPage openPage() {
         ustMenu(UstMenuData.TeskilatKisiTanimlari.GercekKisiYonetimi);
         $("#gercekKisiYonetimiListingForm").shouldBe(visible);
-
         return this;
     }
 
@@ -189,6 +191,14 @@ public class GercekKisiYonetimPage extends MainPage {
     @Step("Ara")
     public GercekKisiYonetimPage ara() {
         btnAra.click();
+        return this;
+    }
+
+    @Step("Gerçek Kişi kayıtlarının tabloda listelendiği görülür")
+    public GercekKisiYonetimPage gercekKisilerinListelendigiGorme() {
+        boolean durum = $$(By.id("gercekKisiYonetimiListingForm:gercekKisiDataTable_data")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -324,6 +334,14 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
+    @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
+    public GercekKisiYonetimPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
+        boolean durum = $("[id='kurumYonetimiEditorForm:kepBilgileriDataTable']").shouldBe(Condition.text(kep)).shouldBe(Condition.visible).exists() == true;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+
+
     @Step("Kep adresi doldur")
     public GercekKisiYonetimPage kepAdresiDoldur(String kepAdres) {
         txtKepAdresi.clear();
@@ -380,7 +398,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Pasif gerçek kişi tüm liste kayıt kontrolu")
+    @Step("Pasif gerçek kişi tüm liste görüntülenme kontrolu")
     public GercekKisiYonetimPage pasiflerTumListeKayitKontrolu() throws InterruptedException {
 
         String formGercekKisiYonetimi = "gercekKisiYonetimiListingForm";
@@ -388,6 +406,15 @@ public class GercekKisiYonetimPage extends MainPage {
         btnGercekKisiAktifYap.shouldBe(visible);
         boolean status = findElementOnTableAllPages(formGercekKisiYonetimi, btnGercekKisiPasifYap);
         Assert.assertEquals(status, false);
+        return this;
+    }
+
+    @Step("Pasif gerçek kişi listesinin görüntülenme kontrolu")
+    public GercekKisiYonetimPage pasiflerListesiKayitKontrolu() throws InterruptedException {
+
+        btnGercekKisiAktifYap.shouldBe(visible);
+        Assert.assertEquals(btnGercekKisiPasifYap.isDisplayed(), false);
+
         return this;
     }
 
@@ -459,7 +486,7 @@ public class GercekKisiYonetimPage extends MainPage {
         return this;
     }
 
-    @Step("Tabloda \"{tbNO}\" TCKN kontrolü")
+    @Step("Tabloda \"{tcNO}\" TCKN kontrolü")
     public GercekKisiYonetimPage tabloTCKNKontrol(String tcNO) {
         $(byText(tcNO)).shouldBe(Condition.visible);
 //        boolean statusTCNO = findElementOnTableByColumnInputInAllPages(tblGercekKisiDataTable, 1, tcNO).isDisplayed();

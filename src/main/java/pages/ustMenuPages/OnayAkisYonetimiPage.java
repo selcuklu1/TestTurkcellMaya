@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -56,6 +57,8 @@ public class OnayAkisYonetimiPage extends MainPage {
     private BelgenetElement txtOnayAkisiIslemleriKullanicilar = comboLov("[id='onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimLov:LovText']");
     private SelenideElement btnOnayAkisiIslemleriKaydet = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiEditorKaydetId"));
     private SelenideElement txtOnayAkisiIslemleriAd = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiAkisAdiInput"));
+    private SelenideElement chkVekilCheckbox = $(By.id("onayAkisiYonetimiEditorForm:onayAkisiYonetimiKullaniciBirimDataTable:1:onayAkisiYonetimiVekilBooleanCheckbox"));
+
 
     @Step("Onay akışı sayfası aç")
     public OnayAkisYonetimiPage openPage() {
@@ -69,7 +72,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay Akışı işlemler kaydet")
+    @Step("Onay Akışı işlemler ara")
     public OnayAkisYonetimiPage ara() {
         btnAra.click();
         return this;
@@ -102,6 +105,13 @@ public class OnayAkisYonetimiPage extends MainPage {
         //selectLov(kullanici);
         return this;
     }
+
+    @Step("Vekalet checkbox tikini kaldır")
+    public OnayAkisYonetimiPage vekilCheckboxSec(boolean secim) {
+        chkVekilCheckbox.setSelected(secim);
+        return this;
+    }
+
 
     @Step("Onay akışı işlemleri kullanıcılar alanında yazılan kullanıcıyı sil")
     public OnayAkisYonetimiPage onayAkisiIslemlerKullaniciAlaniniSil() {
@@ -184,8 +194,14 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Koordine checkboxını seç")
+    @Step("Koordineli seçeneğini seç")
     public OnayAkisYonetimiPage koordineliSec(boolean secim) {
+        chkKoordineli.setSelected(secim);
+        return this;
+    }
+
+    @Step("Koordineli seçimini kaldır")
+    public OnayAkisYonetimiPage koordineliSecimiKaldir(boolean secim) {
         chkKoordineli.setSelected(secim);
         return this;
     }
@@ -393,7 +409,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcıya kullanıcı tipi seçme")
+    @Step("Kullanıcıya kullanıcı tipi seç")
     public OnayAkisYonetimiPage kullaniciyaKullaniciTipiSec(String kullanici, String secimTipi) {
 
         trOnayAkisiEkleKullanicilar
@@ -406,7 +422,7 @@ public class OnayAkisYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay akışı kullanıcı adı ve tipi kontrol et")
+    @Step("Onay akışı kullanıcı adı ve tipi kontrolu")
     public OnayAkisYonetimiPage onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
 
         trOnayAkisiEkleKullanicilar
@@ -415,6 +431,46 @@ public class OnayAkisYonetimiPage extends MainPage {
                 .shouldBe(exist)
                 .$("select[id*='onayAkisiYonetimiIslemTipi']")
                 .shouldHave(value(kullaniciTipi));
+
+        return this;
+    }
+
+
+    @Step("Onay akışı vekalet tarihi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiVekaletTarihiKontrol(String vekaletTarihi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(vekaletTarihi))
+                .get(0)
+                .shouldBe(exist);
+
+        return this;
+    }
+
+
+    @Step("Onay akışı vekil kullanıcı adı ve tipi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiVekilKullaniciKontrol(String vekilKullaniciAdi, String vekilKullaniciTipi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(vekilKullaniciAdi))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .shouldHave(value(vekilKullaniciTipi));
+
+        return this;
+    }
+
+
+    @Step("Onay akışı asil kullanıcı adı ve tipi kontrolu")
+    public OnayAkisYonetimiPage onayAkisiAsilKullaniciKontrol(String asilkullaniciAdi, String asilkullaniciTipi) {
+
+        trOnayAkisiEkleKullanicilar
+                .filterBy(text(asilkullaniciAdi))
+                .get(0)
+                .shouldBe(exist)
+                .$("select[id*='onayAkisiYonetimiIslemTipi']")
+                .shouldHave(value(asilkullaniciTipi));
 
         return this;
     }
@@ -432,6 +488,50 @@ public class OnayAkisYonetimiPage extends MainPage {
     public OnayAkisYonetimiPage birimTikla() {
         btnBirim.shouldBe(visible);
         btnBirim.click();
+        return this;
+    }
+
+    //İşlem mesajındaki yazılar tam yüklenmiyor hata veriyor. O yüzden 1 sn bekleniyor.
+    public OnayAkisYonetimiPage islemMesajiBekle() {
+        Selenide.sleep(1000);
+        return this;
+    }
+
+    @Step("Onay Akışı data resetleme")
+    public OnayAkisYonetimiPage onayAkisiDataResetleme(String yeniOnayAkisi, String eskiOnayAkisi, String basariMesaji) {
+
+        filtredeAdDoldur(eskiOnayAkisi);
+        ara();
+
+        if (tblOnayAkisListesi
+                .filterBy(text(eskiOnayAkisi)).size() == 1) {
+            tblOnayAkisListesi
+                    .filterBy(text(eskiOnayAkisi))
+                    .first()
+                    .shouldBe(exist)
+                    .$("[id$='updateRolButton']").click();
+
+            onayAkisiIslemleriAdDoldur(yeniOnayAkisi);
+            onayAkisiIslemleriKaydet();
+            islemMesaji().basariliOlmali(basariMesaji);
+        } else {
+            Allure.addAttachment("Data düzgün, resetleme yapılmadı.", "");
+        }
+
+        return this;
+    }
+
+    @Step("Onay Akışı alan kontrolleri")
+    public OnayAkisYonetimiPage onayAkisiAlanKontrolleri() {
+
+        Assert.assertEquals(chkKoordineli.isDisplayed(), true);
+        Allure.addAttachment("Koordineli alan kontrolu başaralı.", "");
+
+        Assert.assertEquals(btnBirim.isDisplayed(), true);
+        Allure.addAttachment("Birim alan kontrolu başaralı.", "");
+
+        takeScreenshot();
+
         return this;
     }
 }

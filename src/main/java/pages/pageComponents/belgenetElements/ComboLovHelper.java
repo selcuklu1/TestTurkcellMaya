@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -38,6 +39,7 @@ public class ComboLovHelper extends BaseLibrary {
     private String lovItemDetail;
 
     private String lovSecilen;
+    private String lovSelectedItems;
     private String lovSecilenItemTitle;
     private String lovSecilenItemDetail;
     private String lovSecilenTemizleButton;
@@ -77,6 +79,7 @@ public class ComboLovHelper extends BaseLibrary {
         lovSecilen = id + (multiType ? "[id$='LovSecilenTable_data']" : "[id$='LovSecilen']");
 //        lovSecilen = id + "[id*='LovSecilen']";
 //        LovSecilenTable_data = id + "[id$='LovSecilenTable_data']";
+        lovSelectedItems = lovSecilen + " > tr[role='row']";
         lovSecilenItemTitle = lovSecilen + lovItemTitle;
         lovSecilenItemDetail = lovSecilen + lovItemDetail;
         lovSecilenTemizleButton = "button[onclick*='lovInputTextleriTemizle']";
@@ -102,19 +105,22 @@ public class ComboLovHelper extends BaseLibrary {
 //        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
-    @Step("Clear last selected items")
+    @Step("Clear last selected item")
     BelgenetElement clearLastSelectedItem() {
-        SelenideElement b = $$(lovInputTextleriTemizle).last().shouldBe(visible);
-        int count = $$(lovInputTextleriTemizle).size();
-        b.click();
-        if (b.is(visible))
-            // $$(lovInputTextleriTemizle).last().click();   Firefox browserda aşağı inmeme sorunundan dolayı commentlendi.
-            clickJs($$(lovInputTextleriTemizle).last());
+        ElementsCollection items = $$(lovSelectedItems).filterBy(visible);
+        int size = items.size();
+        if (size == 0) {
+            Allure.addAttachment("No item to clear", String.valueOf(size));
+            return (BelgenetElement) element;
+        }
 
-        $$(lovInputTextleriTemizle).filter(visible).shouldHaveSize(count - 1);
+        SelenideElement lastItem = items.last();
+        Allure.addAttachment("Remove last selected item", lastItem.text());
+        clickJs(lastItem.$(lovSecilenTemizleButton));
 
+        //lastItem.shouldNotBe(exist);
+        $$(lovSelectedItems).filterBy(visible).shouldHaveSize(size - 1);
         return (BelgenetElement) element;
-//        return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovText), 0);
     }
 
     @Step("Clear all selected items")
@@ -144,8 +150,8 @@ public class ComboLovHelper extends BaseLibrary {
         return By.cssSelector(locator);
     }
 
-    //Depricated
     @Step("Get last selected title")
+    @Deprecated
     SelenideElement getLastSelectedItemTitle() {
         ElementsCollection selectedItems = getSelectedTitles();
         selectedItems = selectedItems.filterBy(visible);
@@ -154,8 +160,8 @@ public class ComboLovHelper extends BaseLibrary {
         return selectedItems.last();
     }
 
-    //Depricated
     @Step("Get last selected detail")
+    @Deprecated
     SelenideElement getLastSelectedItemDetail() {
         ElementsCollection selectedItems = getSelectedDetails();
         selectedItems = selectedItems.filterBy(visible);
@@ -228,7 +234,8 @@ public class ComboLovHelper extends BaseLibrary {
 
     //region selectLov metodları
     @Step("Select")
-    public By selectLov(String value) {
+    @Deprecated
+    public By selectLov_o(String value) {
 
         //executeJavaScript("arguments[0].scrollIntoView();", element);
         try {
@@ -318,6 +325,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Single select type")
+    @Deprecated
     private void selectSingleType(String value) {
 //        String title, detail;
 
@@ -372,6 +380,7 @@ public class ComboLovHelper extends BaseLibrary {
     }
 
     @Step("Multi select type")
+    @Deprecated
     private void selectMultiType(String value) {
         long defaultTimeout;
         boolean isSelected = false;
@@ -419,7 +428,9 @@ public class ComboLovHelper extends BaseLibrary {
     @Step("Close tree panel")
     public void closeTreePanel() {
         if ($$(lovTreePanelKapat).last().is(visible)) {
-            $$(lovTreePanelKapat).last().click();
+            //clickJs($$(lovTreePanelKapat).last());
+            //$$(lovTreePanelKapat).last().click();
+            $$(lovTreePanelKapat).last().pressEnter();
         }
     }
     //endregion
@@ -444,9 +455,9 @@ public class ComboLovHelper extends BaseLibrary {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    @Step("Is empty?")
+    @Step("Sonuç bulunamamıştır mı?")
     public boolean isEmpty() {
-        boolean isempty = $$(lovTreeList).get(0).is(have(text("Sonuç bulunamamıştır")));
+        boolean isempty = $$(lovTreeList).get(0).shouldBe(visible).is(have(text("Sonuç bulunamamıştır")));
         Allure.addAttachment("Value", String.valueOf(isempty));
         return isempty;
     }
@@ -478,4 +489,105 @@ public class ComboLovHelper extends BaseLibrary {
         return $$(lovTree).last().$$(locator);
     }
 
+    @Step("Select Lov")
+    public By selectLov(String... text) {
+        String selectableItemsLocator = "li span[class*='ui-tree-selectable-node']";
+        ElementsCollection collection;
+
+        if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
+            $(lovInputTextleriTemizle).click();
+
+        //try used for disabled field with openTree button
+        try {
+            if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) {
+        }
+
+        $(lovText).shouldBe(visible);
+
+        if ($(lovText).isEnabled() && text.length > 0)
+            $(lovText).setValue(text[0]);
+        else
+            $(treeButton).click();
+
+        collection = $$(lovTree).shouldHave(sizeGreaterThan(0)).filterBy(visible).last().$$(selectableItemsLocator);
+        //collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+        Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
+        Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
+
+        //ElementsCollection collection1 = collection;
+        for (String t : text) {
+            collection = collection.filterBy(text(t));
+            //regex vs türkçe karakterleri
+            //collection1 = collection1.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+        }
+        /*if (collection1.size() == 0)
+            for (String t : text)
+                collection = collection.filterBy(text(t));
+        else
+            collection = collection1;*/
+
+        Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
+        Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");
+        Allure.addAttachment("First item will be selected", collection.first().text());
+        collection.first().click();
+
+        closeTreePanel();
+
+        SelenideElement selectedItem = multiType
+                ? $$(lovSelectedItems).last().shouldBe(visible)
+                : $$(lovSecilen).last().shouldBe(visible);
+        for (String t : text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
+        Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
+
+        return By.cssSelector(lovText);
+    }
+
+    @Step("Select Lov")
+    public By selectExactLov(String... text) {
+        String selectableItemsLocator = "li span[class*='ui-tree-selectable-node']";
+        ElementsCollection collection;
+
+        if (!$(lovText).isDisplayed() && $(lovInputTextleriTemizle).isDisplayed())
+            $(lovInputTextleriTemizle).click();
+
+        //try used for disabled field with openTree button
+        try {
+            if ($(lovText).isDisplayed()) $(lovText).getWrappedElement().sendKeys(Keys.SHIFT);
+        } catch (Exception ignored) {
+        }
+
+        $(lovText).shouldBe(visible);
+
+        if ($(lovText).isEnabled() && text.length > 0)
+            $(lovText).setValue(text[0]);
+        else
+            $(treeButton).click();
+
+        collection = $$(lovTree).shouldHave(sizeGreaterThan(0)).filterBy(visible).last().$$(selectableItemsLocator);
+        //collection.shouldHave(sizeGreaterThan(0)).last().shouldBe(visible);
+        Allure.addAttachment("Selectable items " + collection.size(), collection.texts().toString());
+        Allure.addAttachment("Filter texts " + text.length, Arrays.toString(text));
+
+        //ElementsCollection collection1 = collection;
+        for (String t : text) {
+            //regex vs türkçe karakterleri
+            collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+        }
+
+        Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());
+        Assert.assertTrue(collection.size() > 0, "Filtered selectable items should have size greater than 0");
+        Allure.addAttachment("First item will be selected", collection.first().text());
+        collection.first().click();
+
+        closeTreePanel();
+
+        SelenideElement selectedItem = multiType
+                ? $$(lovSelectedItems).last().shouldBe(visible)
+                : $$(lovSecilen).last().shouldBe(visible);
+        for (String t : text) Assert.assertTrue(selectedItem.has(text(t)), "Selected item should have text: " + t);
+        Allure.addAttachment("Selected item", $$(lovSecilen).last().text());
+
+        return By.cssSelector(lovText);
+    }
 }

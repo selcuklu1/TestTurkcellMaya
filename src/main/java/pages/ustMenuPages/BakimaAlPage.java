@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -26,13 +27,37 @@ public class BakimaAlPage extends MainPage {
     SelenideElement blinkUyari = $(By.xpath("//blink[starts-with(.,'Sistem') and contains(.,'tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.')]"));
     ElementsCollection tableSecilenKullanicilar = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] > tr[role='row']");
 
-    @Step("Bilgilendirme metni 500 karakteri geçiyor mu?")
+    @Step("500 karaterlik yazının girilebildiği görülür.")
     public BakimaAlPage bilgilendirmeMetni500KarakterKontrolu() {
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
         txtBilgilendirmeMetni.shouldBe(Condition.visible);
         boolean isSmallerThan500 = false;
         if (txtBilgilendirmeMetni.getValue().length() <= 500)
+            isSmallerThan500 = true;
+        Assert.assertTrue(isSmallerThan500);
+        return this;
+    }
+
+    @Step("500 karakterden fazla karakter girilemediği görülür.")
+    public BakimaAlPage bilgilendirmeMetniMaxKarakterKontrolu() {
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+        txtBilgilendirmeMetni.shouldBe(Condition.visible);
+        boolean isSmallerThan500 = false;
+        if (txtBilgilendirmeMetni.getValue().length() <= 500)
+            isSmallerThan500 = true;
+        Assert.assertTrue(isSmallerThan500);
+        return this;
+    }
+
+    @Step("Bilgilendirme metni 500 den fazla karakter girilememelidir.")
+    public BakimaAlPage bilgilendirmeMetni500denfazlaKarakterKontrolu() {
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+        txtBilgilendirmeMetni.shouldBe(Condition.visible);
+        boolean isSmallerThan500 = false;
+        if (txtBilgilendirmeMetni.getValue().length() <= 510)
             isSmallerThan500 = true;
         Assert.assertTrue(isSmallerThan500);
         return this;
@@ -62,17 +87,39 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("Bilgilendirme metnine \"{bilgilendirmeMetni}\" değerini gir.")
+    @Step("Bilgilendirme metni alanına \"{bilgilendirmeMetni}\" değerini gir.")
     public BakimaAlPage bilgilendirmeMetniGir(String bilgilendirmeMetni) {
 
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
         btnBakimaAl.waitUntil(Condition.visible, 5000);
 
         if (spanBilgilendirmeMetni.isDisplayed())
             spanBilgilendirmeMetni.click();
 
+
         txtBilgilendirmeMetni
-                .shouldBe(Condition.visible)
                 .setValue(bilgilendirmeMetni);
+
+        return this;
+    }
+
+    @Step("Bilgilendirme metni alanına \"{karakterSayisi}\" karakterlik yazı girilir.")
+    public BakimaAlPage bilgilendirmeMetniGir(int karakterSayisi) {
+
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnBakimaAl);
+        btnBakimaAl.waitUntil(Condition.visible, 5000);
+
+        if (spanBilgilendirmeMetni.isDisplayed())
+            spanBilgilendirmeMetni.click();
+
+
+        String girilecekDeger = "";
+        for (int i = 0; i < karakterSayisi; i++) {
+            girilecekDeger += "x";
+        }
+
+        txtBilgilendirmeMetni
+                .setValue(girilecekDeger);
 
         return this;
     }
@@ -97,15 +144,14 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
-    @Step("{kullaniciAdi} kullanicisini ekle")
+    @Step("{kullaniciAdi} kullanicisini listeye ekle")
     public BakimaAlPage kullaniciEkle(String kullaniciAdi) {
         txtKullanicilar.selectLov(kullaniciAdi);
         return this;
     }
 
-    @Step("{kullaniciAdi} kullanicisini ekle")
+    @Step("{kullaniciAdi} kullanıcısı listelenmeli mi?: {shouldBeSelectable}")
     public BakimaAlPage kullaniciKontrol(String kullaniciAdi, boolean shouldBeSelectable) {
-
 
         boolean isUserSelectable = txtKullanicilar.isLovValueSelectable(kullaniciAdi);
 
@@ -126,24 +172,22 @@ public class BakimaAlPage extends MainPage {
     @Step("Kullanıcıları temizle.")
     public BakimaAlPage kullanicilarTemizle() {
 
-        ElementsCollection allClearButtons = $$("tbody[id='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable_data'] button[id^='bakimaAlFormId:bakimaAlKullanicilarId:LovSecilenTable']");
-        if (allClearButtons.size() > 0) {
-            for (int i = 0; i < allClearButtons.size(); i++) {
-                allClearButtons.get(i).click();
-            }
-        }
+        txtKullanicilar.clearAllSelectedItems();
         return this;
     }
 
-    @Step("Bakıma alındı mı? Kontrol et.")
-    public BakimaAlPage bakimdaOlmali(boolean bakimdaOlmalimi) {
-        if (bakimdaOlmalimi == true) {
-            blinkUyari.shouldBe(Condition.visible);
-            btnBakimdanCikar.shouldBe(Condition.visible);
-        } else {
-            blinkUyari.shouldNotBe(Condition.visible);
-            btnBakimaAl.shouldBe(Condition.visible);
-        }
+    @Step("\"Bakım Modu\" buton adı \"Bakımdan Çıkar\" olarak değişitiği, \"Sistem ......... tarihinde bakım moduna alınmıştır.Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısı verdiği ve bakım moduna geçildiği görülür.")
+    public BakimaAlPage bakimdaOlmali() {
+        blinkUyari.shouldBe(Condition.visible);
+        btnBakimdanCikar.shouldBe(Condition.visible);
+
+        return this;
+    }
+
+    @Step("\"Sistem ......... tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.\" Uyarısının kaybolduğu ve \"Bakım Modundan Çıkar\" butonunun \"Bakım Modun\" butonuna çevrildiği görülür.")
+    public BakimaAlPage bakimdaOlmamali() {
+        blinkUyari.shouldNotBe(Condition.visible);
+        btnBakimaAl.shouldBe(Condition.visible);
         return this;
     }
 
@@ -162,6 +206,25 @@ public class BakimaAlPage extends MainPage {
         return this;
     }
 
+
+    @Step("Sisteme girebilecek kullanıcıların Ad, Soyad ve Görev kontrolü")
+    public BakimaAlPage sistemeGirebilecekKullanicilarBilgiKontrolEt() {
+
+        for (int i = 0; i <= tableSecilenKullanicilar.size(); i++) {
+            tableSecilenKullanicilar.get(0).$("span[class='lovItemTitle']").shouldBe(Condition.visible);
+            tableSecilenKullanicilar.get(0).$("span[class='lovItemDetail']").shouldBe(Condition.visible);
+        }
+
+        return this;
+    }
+
+    @Step("Uyarı kaybolmalı ve Bakımdan Çıkar butonu değişmeli.")
+    public BakimaAlPage bakimdanCikarKontrol() {
+        btnBakimdanCikar.shouldNotBe(Condition.visible);
+        btnBakimaAl.shouldBe(Condition.visible);
+        blinkUyari.shouldNotBe(Condition.visible);
+        return this;
+    }
     // Sistem 06.12.2017 14:19:32 tarihinde bakım moduna alınmıştır. Sisteme aşağıda tanımlanan kullanıcılar giriş yapabilecektir.
     // bakimaAlFormId:bakimModundanCikar
 

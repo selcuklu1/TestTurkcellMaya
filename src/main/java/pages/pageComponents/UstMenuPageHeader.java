@@ -1,13 +1,7 @@
 package pages.pageComponents;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
-import org.openqa.selenium.support.FindBy;
 import pages.MainPage;
-
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Yazan: Ilyas Bayraktar
@@ -36,18 +30,18 @@ public class UstMenuPageHeader extends MainPage {
 
     private SelenideElement container;
 
-    public SelenideElement getContainer() {
-        if (super.getSelf() != null)
-            container = super.getSelf();
-        return container;
+    public UstMenuPageHeader(SelenideElement container) {
+        this.container = container;
     }
 
     /*public UstMenuPageHeader() {
         container = $("html");
     }*/
 
-    public UstMenuPageHeader(SelenideElement container) {
-        this.container = container;
+    public SelenideElement getContainer() {
+        if (super.getSelf() != null)
+            container = super.getSelf();
+        return container;
     }
 
     public SelenideElement getPageWindow() {

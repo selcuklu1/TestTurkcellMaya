@@ -3,13 +3,12 @@ package pages.newPages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.MainPage;
-import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.EvrakPageButtons;
+import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.tabs.*;
 import pages.pageData.UstMenuData;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Condition.text;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 
 /**
@@ -21,16 +20,33 @@ public class OlurYazisiOlusturPage extends MainPage {
 
 //    private final static String pageLocator = "//*[@id='yeniOnayEvrakForm']/ancestor::div[contains(@class,'windowDialog')]";
 
+    public final UstMenuData.EvrakIslemleri pageTitle = UstMenuData.EvrakIslemleri.OlurYazisiOlustur;
     /*@FindBy(xpath = pageLocator)
-    private UstMenuPageHeader ustMenuPageHeader;
+        private UstMenuPageHeader ustMenuPageHeader;
 
-    @FindBy(xpath = pageLocator)
-    private BilgilerTab bilgilerTab;*/
+        @FindBy(xpath = pageLocator)
+        private BilgilerTab bilgilerTab;*/
     private SelenideElement page = $("#yeniOnayEvrakForm");
 
+    public SelenideElement getPage() {
+        return page;
+    }
+
+    @Step("Onay İşlem Açıklama alanı bul")
+    public SelenideElement getOnayIslemAciklama() {
+        return page.$("textarea[id$=onayIslemiAciklama]");
+    }
+
+    @Step("Onay İşlem Açıklama alanı doldur")
+    public OlurYazisiOlusturPage onayIslemAciklamaDoldur(String aciklama) {
+        page.$("textarea[id$=onayIslemiAciklama]").setValue(aciklama);
+        return this;
+    }
+
+
     public OlurYazisiOlusturPage openPage() {
-        ustMenu(UstMenuData.EvrakIslemleri.OlurYazisiOlustur);
-        pageHeader().getPageTitle().shouldHave(text(UstMenuData.EvrakIslemleri.OlurYazisiOlustur.getName()));
+        ustMenu(pageTitle);
+        pageHeader().getPageTitle().shouldHave(text(pageTitle.getName()));
         return this;
     }
 
@@ -38,9 +54,9 @@ public class OlurYazisiOlusturPage extends MainPage {
     public void closePage(boolean save) {
         pageHeader().closePage();
         if (save)
-            confirmDialog().button("Evet").shouldBe(visible).click();
+            confirmDialog().confirmEvetTikla();
         else
-            confirmDialog().button("Hayır").shouldBe(visible).click();
+            confirmDialog().confirmHayirTikla();
     }
 
     public EvrakPageButtons pageButtons() {

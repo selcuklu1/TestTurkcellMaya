@@ -14,12 +14,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.newPages.OlurYazisiOlusturPage;
 import pages.pageComponents.belgenetElements.BelgentCondition;
 import pages.pageData.SolMenuData;
 import pages.ustMenuPages.EvrakOlusturPage;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static java.util.regex.Pattern.DOTALL;
+import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
 public class dumpTest extends BaseTest {
@@ -72,7 +78,7 @@ public class dumpTest extends BaseTest {
         String href = $("a[class='btn downloadpdf']").attr("href");
        /* $("a[class='btn downloadpdf']").click();
 
-        getDocPath();
+        getUploadPath();
         login();*/
 
 
@@ -110,6 +116,28 @@ public class dumpTest extends BaseTest {
         new MainPage().solMenu(SolMenuData.KurulIslemleri.KararIzleme);
     }
 
+    @Test(description = "", enabled = true)
+    public void selectLovTexts() {
+        login();
+        OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage().openPage();
+        boolean b = comboLov("input[id$='konuKoduLov:LovText']").selectLov("010", "kanunlar").isLovSelected();
+        comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
+        //Pattern.compile(".*" + "" + ".*", DOTALL).matcher("").matches();
+        $("button[id$=onayAkisiEkle]").click();
+
+        comboLov("input[id$='akisAdimLov:LovText']")
+                .selectLov(" Zübeyde tekin", "ALtyapı", "OPtiİm BİRİM", "YGD");
+
+        comboLov("input[id$='akisAdimLov:LovText']")
+                .selectLov("OPtiİm TEST2", "Ağ (Network) Uzman Yardımcısı", "Optiim Birim", "YGD");
+
+        comboLov("input[id$='akisAdimLov:LovText']")
+                .selectLov("OPTİİM test");//,"Optiim TEST [Ağ (Network) Uzman Yardımcısı]", "Optiim Birim", "YGD");
+
+
+        comboLov("input[id$='eklenecekKlasorlerLov:LovText']").selectLov();
+
+    }
 
     @Test(enabled = false, dataProvider = "zorunluAlanlar")
     public void test1(String fieldName, Object field) {
@@ -132,5 +160,58 @@ public class dumpTest extends BaseTest {
 //                {"Konu Kodu", tabBilgiler.getCmlKonuKodu()}
 //                , {"Konu", tabBilgiler.getTxtKonu()}
         };
+    }
+
+
+    @Test(description = "", enabled = true)
+    public void aaa() {
+
+        String source1 = "Optiim TEST2 [Danışman]\n" +
+                "Optiim Alt Birim1\n" +
+                "Optiim Birim";
+        String source2 = "Optiim TEST2 [Ağ (Network) Uzman Yardımcısı]\n" +
+                "Optiim Birim\n" +
+                "YGD";
+        String source3 = "Optiim TEST [Ağ (Network) Uzman Yardımcısı]\n" +
+                "Optiim Birim\n" +
+                "YGD";
+        String subterm_1 = "Optiim TEST";
+
+        System.out.println(isContain(source1, subterm_1));
+        System.out.println(isContain(source2, subterm_1));
+        System.out.println(isContain(source3, subterm_1));
+
+    }
+
+    private boolean isContain(String source, String subItem) {
+        String pattern = "\\b" + subItem + "\\b";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(source);
+        return m.find();
+    }
+
+
+    public boolean matches(String text, String regex) {
+        return Pattern.compile(".*" + regex + ".*", DOTALL).matcher(text).matches();
+    }
+
+    public boolean contains(String text, String subtext) {
+        return reduceSpaces(text.toLowerCase()).contains(reduceSpaces(subtext.toLowerCase()));
+    }
+
+    public boolean containsCaseSensitive(String text, String subtext) {
+        return reduceSpaces(text).contains(reduceSpaces(subtext));
+    }
+
+    public boolean equals(String text, String subtext) {
+        return reduceSpaces(text).equalsIgnoreCase(reduceSpaces(subtext.toLowerCase()));
+    }
+
+    public boolean equalsCaseSensitive(String text, String subtext) {
+        return reduceSpaces(text).equals(reduceSpaces(subtext));
+    }
+
+    String reduceSpaces(String text) {
+        return text.replaceAll("[\\[\\]\\s\\n\\r\u00a0]+", " ").trim();
     }
 }

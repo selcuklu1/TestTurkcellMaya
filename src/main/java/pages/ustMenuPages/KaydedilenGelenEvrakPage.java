@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -17,8 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class KaydedilenGelenEvrakPage extends MainPage {
@@ -36,7 +36,6 @@ public class KaydedilenGelenEvrakPage extends MainPage {
     ElementsCollection tblKaydedilenGelenEvrak = $$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable_data'] tr[role='row']");
     BelgenetElement txtGeldigiBirim = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiBirimLov_id:LovText"));
     BelgenetElement txtGeldigiKurum = comboLov(By.id("birimeGelenEvrakRaporuForm:geldigiKurumLov_idTeblig:LovText"));
-
 
     @Step("Kaydedilen Gelen Evrak sayfasını aç")
     public KaydedilenGelenEvrakPage openPage() {
@@ -169,6 +168,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
             size2 = tblKaydedilenGelenEvrak
                     .filterBy(Condition.text(evraNo2))
                     .size();
+
         }
 
 //        SelenideElement table= $(By.id("birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable"));
@@ -183,15 +183,22 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al Excel")
-    public KaydedilenGelenEvrakPage raporAlExcel() throws IOException {
+    public KaydedilenGelenEvrakPage raporAlExcel(String remoteDownloadPath) throws IOException {
 
-        deleteFile(getDownloadPath(), "Rapor_");
+//        deleteFile(remoteDownloadPath, "Rapor_");
+        deleteSpecificFile("Rapor_");
+
+        sleep(3000);
+//        File file=$("[id='birimeGelenEvrakRaporuForm:birimeGelenEvrakRaporuDataTable'] button:nth-child(4)").download();
         btnRaporAlExcel.click();
+        islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
 //        islemMesaji().basariliOlmali();
 //        Thread.sleep(8000);
 //        btnSorgula.click();
 //        islemMesaji().basariliOlmali();
-        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.xls");
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.xls");
         return this;
     }
 
@@ -200,13 +207,18 @@ public class KaydedilenGelenEvrakPage extends MainPage {
 
 
     @Step("Rapor al PDF")
-    public KaydedilenGelenEvrakPage raporAlPdf() throws IOException {
-        deleteFile(getDownloadPath(), "Rapor_");
+    public KaydedilenGelenEvrakPage raporAlPdf(String remoteDownloadPath) throws IOException {
+//        deleteFile(remoteDownloadPath, "Rapor_");
+        deleteSpecificFile("Rapor_");
+        sleep(3000);
         btnRaporAlPdf.click();
-//        Thread.sleep(8000);
         islemMesaji().basariliOlmali();
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 180);
+//        Thread.sleep(8000);
+
 //        btnSorgula.click();
-        searchDownloadedFileWithName(getDownloadPath(), "Rapor_.pdf");
+        sleep(3000);
+        searchDownloadedFileWithName(remoteDownloadPath, "Rapor_.pdf");
         return this;
     }
 
@@ -222,5 +234,7 @@ public class KaydedilenGelenEvrakPage extends MainPage {
         tblKaydedilenGelenEvrak.filterBy(Condition.text(evrakNo)).shouldHave(sizeGreaterThan(0));
         return this;
     }
+
+
 
 }

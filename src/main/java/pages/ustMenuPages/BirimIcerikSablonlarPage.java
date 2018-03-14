@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -16,9 +15,10 @@ import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import java.sql.Timestamp;
 import java.util.List;
 
-import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
@@ -240,8 +240,11 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
 
     @Step("Birim Şablonlarında şablonu bul")
-    public SelenideElement sablonuBul(String sablonAdi){
-        return searchTable.searchStartFromLastPage(true).findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
+    public SelenideElement sablonuBul(String sablonAdi) {
+        return searchTable
+                .searchInAllPages(true)
+                .searchStartFromLastPage(true)
+                .findRows(text(sablonAdi)).shouldHaveSize(1).useFirstFoundRow().getFoundRow();
                 /*.findRowsInAllPagesByTextFromLast(sablonAdi)
                 .shouldHaveSize(1)
                 .first();*/
@@ -284,7 +287,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
             btnSil.click();
             $("#sablonSilDialog button").click();
             boolean b = islemMesaji().isBasarili();
-            if(!b)
+            if (!b)
                 i++;
         }
     }
@@ -328,8 +331,9 @@ public class BirimIcerikSablonlarPage extends MainPage {
 
     @Step("Var olan şablonun adını al")
     public String sablonAdiAl(int satir) {
-        return searchTable.findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumn(1).text();
-//        return searchTable.getColumn(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
+        return searchTable.searchInAllPages(false).searchStartFromLastPage(false)
+                .findRows().shouldHave(sizeGreaterThan(0)).useFirstFoundRow().getColumnValue(1).text();
+//        return searchTable.getColumnValue(searchTable.getRows().shouldHave(sizeGreaterThan(0)).get(satir), 1).text();
     }
 
     @Step("Alt birimler görsün mü seç")
@@ -350,22 +354,28 @@ public class BirimIcerikSablonlarPage extends MainPage {
         btnEvrakOnizleme.click();
 
         WebDriver driver = switchTo().window("htmlToPdfServlet");
-//        sleep(5000);
+        $(".textLayer").shouldBe(exist, visible);
+        for (Condition condition : conditions) {
+            System.out.println(new Timestamp(System.currentTimeMillis()) + "   pdfonizleme text: " + $(".textLayer").text());
+            $(".textLayer").shouldHave(condition);
+        }
+
+        /*sleep(5000);
         $(".textLayer").shouldBe(visible);
         for (Condition condition : conditions) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < Configuration.timeout / 1000; i++) {
                 if (!$(".textLayer").text().isEmpty() || condition.equals(text("")))
                     break;
 
                 if (!driver.getTitle().equals("htmlToPdfServlet"))
                     driver = switchTo().window("htmlToPdfServlet");
 
-                System.out.println($(".textLayer").text());
+                System.out.println("Text empty: " + $(".textLayer").text());
                 sleep(1000);
             }
             Allure.addAttachment("Tekst kontrol", $(".textLayer").text());
             $(".textLayer").shouldHave(condition);
-        }
+        }*/
         takeScreenshot();
         driver.close();
         switchTo().window(0);
@@ -389,10 +399,12 @@ public class BirimIcerikSablonlarPage extends MainPage {
     }
 
     @Step("Şablon bilgileri kontolü")
-    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText){
+    public BirimIcerikSablonlarPage sablonBilgileriKontrolu(String sablonAdi, String kullanilacakBirimi, String altBirimlerGorsunMu, String editorText, String... evrakTipi) {
         getTxtSablonAdi().shouldHave(value(sablonAdi));
         SelenideElement birim = getLovKullanilacakBirimler().getSelectedItems().filterBy(text(kullanilacakBirimi)).shouldHaveSize(1).first();
         birim.$("select").getSelectedOption().shouldHave(text(altBirimlerGorsunMu));
+        if (evrakTipi.length > 0)
+            getSelEvrakTipi().getSelectedOption().shouldHave(text(evrakTipi[0]));
         getEditor().editorShouldHave(text(editorText));
         return this;
     }

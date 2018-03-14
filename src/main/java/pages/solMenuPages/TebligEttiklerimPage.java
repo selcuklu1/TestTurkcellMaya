@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -21,7 +22,10 @@ public class TebligEttiklerimPage extends MainPage {
     SelenideElement btnTebligHatirlat = $(By.id("mainPreviewForm:tebligHatirlatButton_id"));
 
     SelenideElement txtTebligHatirlatNot = $("div[id='mainPreviewForm:evrakOnizlemeTab'] textarea");
+    SelenideElement btnTebligHatirlatVazgec = $(By.id("mainPreviewForm:tebligHatirlatVazgecButton"));
+    ElementsCollection tableTebligHatirlatEvrakBilgileri = $$("div[id='mainPreviewForm:evrakOnizlemeTab'] > table[class='formTable'] > tbody > tr");
 
+    // document-detail
 
     @Step("Tebliğler sayfasını aç")
     public TebligEttiklerimPage openPage() {
@@ -43,9 +47,7 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
-    // document-detail
-
-    @Step("İçerik göster butonuna tıkla.")
+    @Step("{konu} konulu evrak Tebliğ Ettiklerim listesi kontrolü. Eğer evrak Tebliğ Ettiklerim lsitesinde ise içerik göster butonuna tıkla.")
     public TebligEttiklerimPage icreikGoster(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tableTebligEttiklerim
@@ -55,8 +57,8 @@ public class TebligEttiklerimPage extends MainPage {
                 .filterBy(Condition.text("No: " + no))
                 .first()
                 .find(By.xpath(".//span[contains(@class, 'document-detail')]"))
+                .shouldBe(Condition.visible)
                 .click();
-
         return this;
     }
 
@@ -102,16 +104,47 @@ public class TebligEttiklerimPage extends MainPage {
         return this;
     }
 
-
     @Step("Tebliğ Hatırlat Notu gir.")
     public TebligEttiklerimPage tebligHatirlatNotuGir(String not) {
         txtTebligHatirlatNot.setValue(not);
         return this;
     }
 
+    @Step("Tebliğ hatırlat ekranında Vazgeç butonunun geldiği kontrolü.")
+    public TebligEttiklerimPage tebligHatirlatVazgecButonKontrolu() {
+        btnTebligHatirlatVazgec.shouldBe(Condition.visible);
+        return this;
+    }
+
     @Step("Tebliğ Hatırlat butonuna tıkla.")
     public TebligEttiklerimPage tebligHatirlat() {
         btnTebligHatirlat.click();
+        return this;
+    }
+
+    @Step("Tebliğ Hatırlat ekranında Birim, Ad Soyad, Tebellüğ Tarihi, Okundu bilgilerinin geldiği tablo görülür.")
+    public TebligEttiklerimPage tebligHatirlatTabloKontrol() {
+        $("div[id='mainPreviewForm:tebligDataTable'] table").shouldBe(Condition.visible);
+        return this;
+    }
+
+    @Step("Tebliğ Hatırlat ekranında bilgi kontrolü")
+    public TebligEttiklerimPage tebligHatirlatBilgiKontrol() {
+
+        for (int i = 0; i < tableTebligHatirlatEvrakBilgileri.size(); i++) {
+
+            String raporAciklama = tableTebligHatirlatEvrakBilgileri
+                    .get(i)
+                    .$x("./td[1]")
+                    .getText() + " : " + tableTebligHatirlatEvrakBilgileri
+                    .get(i)
+                    .$x("./td[3]")
+                    .getText();
+            Allure.addDescription(raporAciklama);
+
+        }
+
+
         return this;
     }
 

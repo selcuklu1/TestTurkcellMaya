@@ -18,8 +18,6 @@ import pages.ustMenuPages.KararYazisiOlusturPage;
 import pages.ustMenuPages.OlurYazisiOlusturPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 
-import java.lang.reflect.Method;
-
 public class OnayAkisiTest3 extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -29,11 +27,10 @@ public class OnayAkisiTest3 extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
 
     @BeforeMethod
-    public void beforeTests(Method method) {
-
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
+    public void beforeTests() {
 
         login();
+
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
         olurYazisiOlusturPage = new OlurYazisiOlusturPage();
@@ -42,13 +39,18 @@ public class OnayAkisiTest3 extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2113a: Onay Akıışı Yönetimi - Güncelleme")
+    @Test(enabled = true, description = "TS2113a: Onay Akışı Yönetimi - Güncelleme")
     public void TS2113a() {
 
         String onayAkisAdi = "Optiim";
-        String eskiKullanici = "Bulut Toprak";
-        String yeniKullanici = "Bulut Toprak" + createRandomNumber(5);
-        String ikinciKullanici = "Zübeyde Tekin";
+        String eskiOnayAkisi = "TS2113 OnayAkışı";
+        String yeniOnayAkisi = "TS2113 OnayAkışı" + getSysDate();
+
+        String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
+        String kullaniciKontrolcu = "Mehmet BOZDEMİR"; //KONTROL
+        String kullaniciKoordineci = "Sezai ÇELİK"; //KOORDİNE
+        String kullaniciImzaci = "Zübeyde TEKİN"; //KOORDİNE
+
         String basariMesaji = "İşlem başarılıdır!";
 
         //NOTE: Note:  Kullanılan data güncelleneceği için bir sonraki adımda test patlar. O yüzden data eski haline geti getiriliyor.
@@ -56,18 +58,20 @@ public class OnayAkisiTest3 extends BaseTest {
         onayAkisYonetimiPage
                 .openPage()
                 .filtreAc()
-                .filtredeAdDoldur(eskiKullanici)
+                .filtredeAdDoldur(eskiOnayAkisi)
                 .ara()
                 .guncelle()
-                .onayAkisiIslemleriAdDoldur(eskiKullanici)
+                .onayAkisiIslemleriAdDoldur(yeniOnayAkisi)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(eskiKullanici)
+                .onayAkisiDoldur(yeniOnayAkisi)
                 .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama");
 
         onayAkisYonetimiPage
@@ -75,65 +79,90 @@ public class OnayAkisiTest3 extends BaseTest {
                 .filtreAc()
                 .birimKontrol(onayAkisAdi)
                 .durumKontrol("Sadece Aktifler")
-                .filtredeAdDoldur(eskiKullanici)
+                .filtredeAdDoldur(yeniOnayAkisi)
                 .ara()
-                //.kayitGoruntulenmeKontrolu(eskiKullanici)
                 .guncelle()
-                .onayAkisiIslemleriAdDoldur(yeniKullanici)
+                .onayAkisiIslemleriAdDoldur(yeniOnayAkisi)
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         olurYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiAlanindaGoruntulenmemeKontrolu(eskiKullanici)
-                .onayAkisDoldur(yeniKullanici)
+                .onayAkisiAlanindaGoruntulenmemeKontrolu(eskiOnayAkisi)
+                .onayAkisDoldur(yeniOnayAkisi)
                 .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama");
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2113b: Onay Akıışı Yönetimi - Güncelleme")
     public void TS2113b() {
 
-        String ad = "Alex de Souza";
-        String kullanici = "Zübeyde Tekin";
+        String onayAkisAdi = "Optiim";
+        String onayAkisi = "TS2113b OnayAkışı";
+
+        String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
+        String kullaniciKontrolcu = "Mehmet BOZDEMİR"; //KONTROL
+        String kullaniciKoordineci = "Sezai ÇELİK"; //KOORDİNE
+        String kullaniciImzaci = "Zübeyde TEKİN"; //KOORDİNE
+
         String basariMesaji = "İşlem başarılıdır!";
 
         onayAkisYonetimiPage
                 .openPage()
                 .filtreAc()
-                .filtredeAdDoldur(ad)
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
+                .filtredeAdDoldur(onayAkisi)
                 .ara()
                 .guncelle()
-                .silOnayAkisiItem2()
-                .onayAkisiIslemlerKullaniciDoldur(kullanici)
-                .imzacıSonSec("İmzalama")
+                .onayAkisiIslemleriKullaniciSil(kullaniciImzaci)
+                .onayAkisiIslemlerKullaniciDoldur(kullaniciImzaci)
+                .kullaniciyaKullaniciTipiSec(kullaniciImzaci, "IMZALAMA")
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         kararYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(ad)
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Kontrol")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2113c: Onay Akıışı Yönetimi - Güncelleme")
+    @Test(enabled = true, description = "TS2113c: Onay Akışı Yönetimi - Güncelleme")
     public void TS2113c() {
 
-        String ad = "Daniel Guiza";
-        String kullanici = "Mehmet BOZDEMİR";
+        String onayAkisAdi = "Optiim";
+
+        String onayAkisi = "TS2113c OnayAkışı";
+
+        String kullaniciParafci = "Optiim TEST"; //PARAFLAMA
+        String kullaniciKontrolcu = "Mehmet BOZDEMİR"; //KONTROL
+        String kullaniciKoordineci = "Sezai ÇELİK"; //KOORDİNE
+        String kullaniciImzaci = "Zübeyde TEKİN"; //IMZACI
+        String kullaniciImzaci2 = "Optiim TEST2"; //IMZACI
+
+
         String basariMesaji = "İşlem başarılıdır!";
 
         onayAkisYonetimiPage
                 .openPage()
                 .filtreAc()
-                .filtredeAdDoldur(ad)
+                .birimKontrol(onayAkisAdi)
+                .durumKontrol("Sadece Aktifler")
+                .filtredeAdDoldur(onayAkisi)
                 .ara()
+                .kayitGoruntulenmeKontrolu(onayAkisi)
                 .guncelle()
-                .kontrolcuYoksaEkle(kullanici)
+                .kontrolcuYoksaEkle(kullaniciKontrolcu)
                 .kontrolcuSil()
                 .onayAkisiIslemleriKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -141,7 +170,9 @@ public class OnayAkisiTest3 extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .onayAkisiDoldur(ad)
+                .onayAkisiDoldur(onayAkisi)
+                .onayAkisiDetailKontrol("Paraflama")
+                .onayAkisiDetailKontrol("Koordine")
                 .onayAkisiDetailKontrol("İmzalama")
                 .onayAkisiDetailKontrol("İmzalama");
     }

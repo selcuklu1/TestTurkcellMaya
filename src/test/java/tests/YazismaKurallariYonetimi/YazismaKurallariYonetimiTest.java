@@ -13,28 +13,31 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
         yazismaKurallariYonetimiPage = new YazismaKurallariYonetimiPage();
-        login();
     }
 
     @Test(enabled = true, description = "TS1957A : Yazışma Kuralı Ekle")
     public void TS1957A() {
 
         String basariMesaj = "İşlem başarılıdır!";
-        String birimAdi = "Diğer Birimler";
+        String birimAdi = "Yürütme Organları";
         Boolean sinirsizYazilabilir = true;
         Boolean vekaletSeviyesi = true;
         Boolean sonImzaSeviyesi = false;
 
+        login("mbozdemir", "123");
+
         yazismaKurallariYonetimiPage
                 .openPage()
+                .yazismaKuraliSilEgerVarsa(birimAdi)
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
                 .islemMesaji().basariliOlmali(basariMesaj);
+        yazismaKurallariYonetimiPage
+                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
 
     }
 
@@ -42,8 +45,9 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
     public void TS1957B() {
 
         String basariMesaj = "İşlem başarılıdır!";
-        String birimAdi = "Belde Belediyesi";
+        String birimAdi = "Yürütme Organları";
 
+        login("mbozdemir", "123");
         yazismaKurallariYonetimiPage
                 .openPage()
                 .yazismaKuraliSil(birimAdi)
@@ -54,28 +58,32 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS1957C : Yazışma Kuralı Güncelle")
     public void TS1957C() {
 
+        String birimAdi = "Yürütme Organları";
         String basariMesaj = "İşlem başarılıdır!";
-        String birimAdi = "Diğer Birimler";
-        Boolean sinirsizYazilabilir = true;
-        Boolean vekaletSeviyesi = true;
-        Boolean sonImzaSeviyesi = false;
+        String yeniBirimAdi = "testgkc";
+        boolean sinirsizYazilabilir = false;
+        boolean vekaletSeviyesi = false;
+        boolean sonImzaSeviyesi = false;
+
+        login("mbozdemir", "123");
 
         yazismaKurallariYonetimiPage
                 .openPage()
+                .yazismaKuraliSilEgerVarsa(birimAdi)
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali();
 
-        String yeniBirimAdi = "Belde Belediyesi";
+        yazismaKurallariYonetimiPage
+                .yazismakurallariKontrolEt(birimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
+
         sinirsizYazilabilir = true;
         vekaletSeviyesi = true;
-        sonImzaSeviyesi = false;
-
+        sonImzaSeviyesi = true;
         yazismaKurallariYonetimiPage
                 .yazismaKuraliGuncelle(birimAdi)
                 .birimTipiSec(yeniBirimAdi)
@@ -83,8 +91,10 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi)
-                .islemMesaji().basariliOlmali(basariMesaj);
+                .islemMesaji().basariliOlmali();
+        yazismaKurallariYonetimiPage
+                .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
+
 
     }
 

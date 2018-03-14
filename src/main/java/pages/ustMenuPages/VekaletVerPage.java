@@ -21,7 +21,7 @@ public class VekaletVerPage extends MainPage {
     SelenideElement txtBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBasTarihi_input"));
     SelenideElement txtBitisTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletBitTarihi_input"));
     SelenideElement chkEvraktaVelaketeSonEkiGorunsun = $(By.id("vekaletVerForm:vekaletLayout:j_idt5317_input"));
-    SelenideElement chkOzelUnvanKullan = $(By.id("vekaletVerForm:vekaletLayout:j_idt5320_input"));
+//    SelenideElement chkOzelUnvanKullan = $(By.id("vekaletVerForm:vekaletLayout:j_idt5320_input"));
     SelenideElement txtAciklama = $(By.id("vekaletVerForm:vekaletLayout:aciklamaTextArea"));
     SelenideElement btnUygula = $(By.id("vekaletVerForm:vekaletLayout:onayaSunButton"));
     SelenideElement btnEvrakEkle = $("[id$='onayEvrakiDialogButton']");
@@ -45,7 +45,7 @@ public class VekaletVerPage extends MainPage {
 
     //Vekalet Listesi Tabı
     SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
-    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[role='row']");
+    ElementsCollection tblVekaletListesi = $$("[id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel'] tbody tr[data-ri]");
     SelenideElement tblVekaletListesi2 = $(By.xpath("//div[@id='vekaletVerForm:vekaletLayout:bulunanVekaletlerPanel']//div[starts-with(@id,'vekaletVerForm:vekaletLayout:j_idt')]"));
 
     SelenideElement dateTxtVekaletListesiBaslangicTarihi = $(By.id("vekaletVerForm:vekaletLayout:vekaletListeBasTarih_input"));
@@ -53,6 +53,7 @@ public class VekaletVerPage extends MainPage {
 //    BelgenetElement cmbDurum = comboBox (By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
 
     SelenideElement cmbDurum = $(By.xpath("//table[@id='vekaletVerForm:vekaletLayout:vekaletSorgulaPanelGrid']//select"));
+    SelenideElement chkOzelUnvanKullan = $("table[id='vekaletVerForm:vekaletLayout:vekaletOzelUnvanPanelGrid'] div:nth-child(2)");
 
     @Step("Vekalet Ver sayfasını aç")
     public VekaletVerPage openPage() {
@@ -73,6 +74,12 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
+    @Step("Vekalet Alan alanı seçilebilirlik kontrolü. \"{secilebilmeli}\" ")
+    public VekaletVerPage vekaletAlanAlanKontrolu(Boolean secilebilmeli) {
+        Assert.assertEquals(txtVekaletAlanCombolov.isEnabled(),true,"Vekalet Alan alanı enable");
+        return this;
+    }
+
     @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
         btnVekalelVerenTemizle.click();
@@ -80,15 +87,67 @@ public class VekaletVerPage extends MainPage {
         return this;
     }
 
-    @Step("Onay verecek kullanıcı doldur : \"{onayVerecekKullanici}\" ")
+    @Step("Onay verecek alanına kullanıcı doldur : \"{onayVerecekKullanici}\" ")
     public VekaletVerPage onayVerecekDoldur(String onayVerecekKullanici) {
         txtOnaylayacakKisi.selectLov(onayVerecekKullanici);
+        return this;
+    }
+
+
+    @Step("Onay verecek kişi alanı seçilebilirlik kontrolü. \"{shouldBeSelectable}\" ")
+    public VekaletVerPage onayVerecekAlanKontrolu(boolean shouldBeSelectable) {
+        Assert.assertEquals(txtOnaylayacakKisi.isEnabled(),true,"Onayalacak Kişi alanı enable");
         return this;
     }
 
     @Step("Vekalet veren alanını doldur : \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenDoldur(String vekaletVeren) {
         txtVekaletVerenCombolov.selectLov(vekaletVeren);
+        return this;
+    }
+
+
+    @Step("Vekalet veren alanını silinir.")
+    public VekaletVerPage vekaletVerenSil() {
+        txtVekaletVerenCombolov.clearAllSelectedItems();
+        return this;
+    }
+
+    @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
+    public VekaletVerPage vekaletVerenKontrolu(String vekaletVeren, boolean shouldBeExist) {
+
+        if (shouldBeExist){
+            txtVekaletVerenCombolov.type(vekaletVeren).getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+            txtVekaletVerenCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+
+        }
+        else{
+            txtVekaletVerenCombolov.type(vekaletVeren).getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+            txtVekaletVerenCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+
+        }
+        txtVekaletVerenCombolov.clear();
+        return this;
+    }
+
+    @Step("Vekalet veren alanını kontrolü : \"{vekaletVeren}\" , {shouldBeExist} ")
+    public VekaletVerPage vekaletAlanKontrolu(String vekaletAlan, boolean shouldBeExist) {
+
+        if (shouldBeExist){
+            txtVekaletAlanCombolov.type(vekaletAlan).getSelectableItems().filterBy(Condition.text(vekaletAlan)).shouldHaveSize(1);
+            txtVekaletAlanCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(1);
+
+        }
+        else{
+            txtVekaletAlanCombolov.type(vekaletAlan).getSelectableItems().filterBy(Condition.text(vekaletAlan)).shouldHaveSize(0);
+            txtVekaletAlanCombolov.closeTreePanel();
+            //            txtVekaletVerenCombolov.openTreePanel().getSelectableItems().filterBy(Condition.text(vekaletVeren)).shouldHaveSize(0);
+
+        }
+        txtVekaletAlanCombolov.clear();
         return this;
     }
 
@@ -128,6 +187,11 @@ public class VekaletVerPage extends MainPage {
 
     public VekaletVerPage baslangicTarihDoldur(String text) {
         txtBaslangicTarihi.setValue(text);
+        return this;
+    }
+
+    public VekaletVerPage ozelUnvanSec() {
+        chkOzelUnvanKullan.click();
         return this;
     }
 
@@ -198,9 +262,30 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet Listesi statü tablo kontrolü : \"{statu}\" ")
     public VekaletVerPage vekaletListesiTabloKontrol(int column, String statu) {
-        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
-        Assert.assertEquals(status, true);
+
+        ElementsCollection kisiselPages = $$("td[id^='vekaletVerForm:vekaletLayout:'][id$='paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
+
+        for (int i = 0; i < kisiselPages.size(); i++) {
+            kisiselPages.get(i).click();
+            int size = tblVekaletListesi
+                    .filterBy(Condition.text(statu))
+                    .size();
+
+            if(size==1)
+                break;
+            //            for (int j = 0; j<tblVekaletListesi.size();j++) {
+//                tblVekaletListesi.get(j)
+//                        .$("button[id$=':kullaniciGrubuGuncelle_id']").shouldBe(Condition.visible);
+//                tblVekaletListesi.get(j)
+//                        .$("button[id$=':kullaniciGrubuAktif_id']").shouldBe(Condition.visible);
+//            }
+        }
         return this;
+
+//        boolean status = findElementOnTableByColumnInputInAllPages(tblVekaletListesi2, column, statu).isDisplayed();
+//
+//        Assert.assertEquals(status, true);
+//        return this;
     }
 
     @Step("Vekalet Listesi Tablo Kontrol")

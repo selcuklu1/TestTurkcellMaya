@@ -114,15 +114,14 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik onay akışı kontrol")
+    @Step("Girilen açıklamanın geldiği görünür. \"{aciklama}\"")
     public PaylastiklarimPage evrakNotlariAciklamaGorme(String aciklama) {
-
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] table tbody tr")
                 .filterBy(text(aciklama)).shouldHave(sizeGreaterThan(0)).get(0).click();
         return this;
     }
 
-    @Step("Paylaşılanlar kullanıcı görme")
+    @Step("Evrakın paylaşıldığı kullanıcıların listelendiği ve durumlarının paylaşımda olarak geldiği görülür.")
     public PaylastiklarimPage paylasilanlarKullaniciGorme(String kisi) {
 
         $$("[id='mainPreviewForm:evrakOnizlemeTab'] div[class='ui-datatable ui-widget'] table tbody tr")
@@ -193,7 +192,7 @@ public class PaylastiklarimPage extends MainPage {
 
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage evrakOnizlemeTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -205,7 +204,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("\"{0}\" tabını seç")
+    @Step("\"{tabAdi}\" tabını seç")
     public PaylastiklarimPage paylasilanlarTabSec(String tabAdi) {
 
         tabEvrakOnizleme
@@ -218,7 +217,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Paylaş tab fonsiyonlar
-    @Step("Paylaşımı durdur")
+    @Step("Paylaşımı durdur ve onayla")
     public PaylastiklarimPage paylasimiDurdur() {
         btnPaylasimiDurdur.click();
         $$("div[id='mainInboxForm:paylasmaDurdurulsunMuDialog'] button[id='mainInboxForm:paylasmaDurdurEvetButton']").last().click();
@@ -226,7 +225,7 @@ public class PaylastiklarimPage extends MainPage {
     }
 
     // Evrak notları fonksiyonları
-    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{0}\" ")
+    @Step("Evrak ekleme butonu aktif olmalı mı? : \"{aktifOlmali}\" ")
     public PaylastiklarimPage evrakNotEklemeButonuAktifOlmali(boolean aktifOlmali) {
         if (aktifOlmali == true)
             btnEvratNotEkle.shouldHave(Condition.attribute("aria-disabled", "false"));
@@ -274,13 +273,13 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("paylaş butonuna tıklandı. ")
+    @Step("Paylaş butonuna tıkla. ")
     public PaylastiklarimPage paylas() {
         btnPaylas.click();
         return this;
     }
 
-    @Step("Paylaşılacak kişi seç: {0} ")
+    @Step("Paylaşılacak kişi seç: {kisiAdi} ")
     public PaylastiklarimPage paylasKisiSec(String kisiAdi) {
         txtPaylasKisi.selectLov(kisiAdi);
         return this;
@@ -293,7 +292,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Paylaşma tabında açıklama girildi : \"{0}\"")
+    @Step("Açıklama alanını doldur.")
     public PaylastiklarimPage paylasimAciklamaYaz(String aciklama) {
         txtPaylasAciklama.setValue(aciklama);
         return this;
@@ -305,7 +304,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("paylaşılan kişileri temizle ")
+    @Step("Kişi alanını boşalt.")
     public PaylastiklarimPage paylasilanKisileriTemizle() {
         txtPaylasKisi.clearAllSelectedItems();
         return this;
@@ -322,7 +321,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrak {kullanici} kullanıcısı ile paylaşıldı.")
     public PaylastiklarimPage paylasilanKontrol(String kullanici, String birim, String paylasimDurumu, String geriAlinmaTarihi) {
         tablePaylasilanlar
                 .filterBy(Condition.text(kullanici))
@@ -334,7 +333,7 @@ public class PaylastiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Açıklama kontrol")
+    @Step("Evrakın paylaşıldığı kullanıcılar kontrolü.")
     public PaylastiklarimPage paylasilanKontrolTumKullanıcılıar(String[] kullanici, String paylasimDurumu) {
         for (int i = 0; i < kullanici.length; i++)
             tablePaylasilanlar

@@ -1,12 +1,11 @@
 package pages.ustMenuPages;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
@@ -21,7 +20,8 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement btnAra = $(By.id("kurumYonetimiListingForm:filterPanel:searchEntitiesButton"));
     SelenideElement cmbDurum = $(By.id("kurumYonetimiListingForm:filterPanel:durumSelectBox"));
     SelenideElement txtIdariBirimKimlikKodu = $(By.id("kurumYonetimiEditorForm:kurumEKodInput"));
-    SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox_input"));
+    SelenideElement txtIdariBirimKimlik = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
+    SelenideElement chkKaysisteYerAlmiyor = $(By.id("kurumYonetimiEditorForm:kaysisteVarMiCheckbox"));
     SelenideElement txtKurumAdi = $(By.id("kurumYonetimiEditorForm:kurumAdiInput"));
     SelenideElement chkPaketKullanim = $(By.id("kurumYonetimiEditorForm:paketKullanimCheckbox_input"));
     SelenideElement chkKepAdresiKullaniyor = $(By.id("kurumYonetimiEditorForm:kepAdresiKullanimCheckbox"));
@@ -36,6 +36,7 @@ public class KurumYonetimiPage extends MainPage {
     BelgenetElement txtKurum = comboLov(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
     SelenideElement divFiltreKurum = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:lovInputPanel"));
     SelenideElement txtFiltreIdariBirimKimlikKodu = $(By.id("kurumYonetimiListingForm:filterPanel:kurumFilterLov:LovText"));
+    SelenideElement btnKurumIptal = $(By.id("kurumYonetimiEditorForm:cancelSaveKurumButton"));
 
     // Hüseyin
     ElementsCollection tableKurumListesi = $$("div[id='kurumYonetimiListingForm:kurumTreeTable'] tbody > tr[role='row']");
@@ -55,12 +56,15 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtFaxNumarasi1 = $(By.id("kurumBilgileriEditorForm:fax1Input"));
     SelenideElement txtFaxNumarasi2 = $(By.id("kurumBilgileriEditorForm:fax2Input"));
     SelenideElement txtAdres = $(By.id("kurumBilgileriEditorForm:adresInput"));
+    //SelenideElement txtUlke = $(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
     BelgenetElement txtUlke = comboLov(By.id("kurumBilgileriEditorForm:lovUlke:LovText"));
     BelgenetElement txtIl = comboLov(By.id("kurumBilgileriEditorForm:lovIl:LovText"));
     BelgenetElement txtIlce = comboLov(By.id("kurumBilgileriEditorForm:lovIlce:LovText"));
     SelenideElement txtEPosta = $(By.id("kurumBilgileriEditorForm:ePostaInput"));
     SelenideElement txtWebAdresi = $(By.id("kurumBilgileriEditorForm:webAdresiInput"));
     SelenideElement btnIletisimBilgisiKaydet = $(By.id("kurumBilgileriEditorForm:saveIletisimBilgisiButton"));
+    SelenideElement btnIletisimBilgisiIptalEt = $(By.id("kurumBilgileriEditorForm:cancelSaveIletisimBilgisiButton"));
+    ElementsCollection listUlkeler = $$("div[id='kurumBilgileriEditorForm:lovUlke:lovTree'] > ul > li");
 
     // Kep Adresi elementleri
     ElementsCollection tableKepAdresleri = $$("tbody[id='kurumYonetimiEditorForm:kepBilgileriDataTable_data'] tr[role='row']");
@@ -69,6 +73,7 @@ public class KurumYonetimiPage extends MainPage {
     SelenideElement txtKepAdresi = $(By.id("kurumKepAdresBilgiEditorForm:kurumKepAdresBilgiInputTextId"));
     SelenideElement cmbKepHizmetSaglayici = $(By.id("kurumKepAdresBilgiEditorForm:kephs"));
     SelenideElement btnKepAdresiBilgileriKaydet = $(By.id("kurumKepAdresBilgiEditorForm:saveKepAdresiButton"));
+    SelenideElement btnKepAdresiBilgileriIptalEt = $(By.id("kurumKepAdresBilgiEditorForm:cancelSaveIletisimBilgisiButton"));
     SelenideElement btnKurumHiyerarşisiniGuncelle = $("button[id^='kurumYonetimiListingForm:kurumTreeTable:'][id$=':applyChangesButton']");
 
     SelenideElement filtrePanel = $("div[id='kurumYonetimiListingForm:filterPanel'] > h3");
@@ -81,6 +86,9 @@ public class KurumYonetimiPage extends MainPage {
     By selectorBtnChangeStatu = By.cssSelector("button[id$='changeKurumStatusButton']");
     SelenideElement btnPasifYapEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     SelenideElement btnKepAdresiBilgisiEkle = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+    SelenideElement txtKisaAdi = $(By.id("kurumYonetimiEditorForm:kurumKisaAdInput"));
+    SelenideElement chkTsk = $(By.id("kurumYonetimiEditorForm:tskCheckbox"));
+    SelenideElement divKepAdresiBilgileri = $(By.id("kurumYonetimiEditorForm:kepBilgileriDataTable"));
 
     @Step("Kurum Yönetimi sayfası aç")
     public KurumYonetimiPage openPage() {
@@ -88,15 +96,21 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("TC kimlik no alma")
     public String idariBirimKimlikKoduCek() {
-        String getIdariBirimKodu = txtIdariBirimKimlikKodu.getValue();
+        String getIdariBirimKodu = txtIdariBirimKimlik.getValue();
         return getIdariBirimKodu;
     }
 
     @Step("Kaydet")
     public KurumYonetimiPage popupKaydet() {
         btnPopupKaydet.click();
+        return this;
+    }
+
+    @Step("Eklenen yeni kayıt listede görüntülenir: {kep}")
+    public KurumYonetimiPage kepAdresBilgileriKayitListedeGeldigiGorulur(String kep) {
+        boolean durum = $$("[id$='kepBilgileriDataTable_data']").filterBy(Condition.text(kep)).size() == 1;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
@@ -128,6 +142,12 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kaydet")
     public KurumYonetimiPage kaydet() {
         btnKurumKaydet.click();
+        return this;
+    }
+
+    @Step("İptal")
+    public KurumYonetimiPage iptal() {
+        btnKurumIptal.click();
         return this;
     }
 
@@ -174,7 +194,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kurum adı doldur")
+    @Step("Kurum adı doldur: {text}")
     public KurumYonetimiPage kurumAdiDoldur(String text) {
         txtKurumAdi.setValue(text);
         return this;
@@ -201,6 +221,14 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Ara")
     public KurumYonetimiPage ara() {
         btnAra.click();
+        return this;
+    }
+
+    @Step("Kurumların listelendiği görülür")
+    public KurumYonetimiPage kurumlarinListelendigiGorme() {
+        boolean durum = $$(By.id("kurumYonetimiListingForm:kurumTreeTable")).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -285,13 +313,19 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Sorgulama panelinde kurum doldur.")
     public KurumYonetimiPage sorgulaKurumDoldur(String kurumAdi) {
-        txtKurum.selectLov(kurumAdi);
+        txtKurum.clearAllSelectedItems();
+        txtKurum
+                .type(kurumAdi)
+                .getTitleItems()
+                .first()
+                .click();
         return this;
     }
 
     @Step("Filtrele panelini aç")
     public KurumYonetimiPage filtrePanelAc() {
         $("div[id='kurumYonetimiListingForm:filterPanel'] > h3").click();
+        Selenide.sleep(1000);
         return this;
     }
 
@@ -315,7 +349,7 @@ public class KurumYonetimiPage extends MainPage {
     }
 
     // Hüseyin Methods
-    @Step("{0} kurumunu güncelle")
+    @Step("{kurumAdi} kurumunu güncelle")
     public KurumYonetimiPage kurumGuncelle(String kurumAdi) {
         tableKurumListesi
                 .filterBy(Condition.text(kurumAdi))
@@ -325,7 +359,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumunu seç")
+    @Step("{ustKurum} kurumunu seç")
     public KurumYonetimiPage ustKurumSec(String ustKurum) {
         if (divSecilenUstKurum.exists())
             btnSecilenKurumListedenCikar.exists();
@@ -377,9 +411,21 @@ public class KurumYonetimiPage extends MainPage {
 
     @Step("Ülke doldur")
     public KurumYonetimiPage ulkeDoldur(String ulke) {
+
+        txtUlke.clearAllSelectedItems();
+        txtUlke.type(ulke)
+                .getTitleItems()
+                .filterBy(Condition.textCaseSensitive(ulke))
+                .first()
+                .click();
+        /*
         txtUlke.setValue(ulke);
-        txtUlke.getDetailItems().filterBy(Condition.text("TC")).first().click();
-        //txtUlke.selectLov(ulke);
+        listUlkeler
+                .filterBy(Condition.textCaseSensitive(ulke))
+                .first()
+                .click();
+        //txtUlke.getDetailItems().filterBy(Condition.text("TC")).first().click();
+        */
         return this;
     }
 
@@ -410,6 +456,12 @@ public class KurumYonetimiPage extends MainPage {
     @Step("İletişim bilgisi kaydet")
     public KurumYonetimiPage iletisimBilgisiKaydet() {
         btnIletisimBilgisiKaydet.click();
+        return this;
+    }
+
+    @Step("İletişim bilgisi iptal et")
+    public KurumYonetimiPage iletisimBilgisiIptalEt() {
+        btnIletisimBilgisiIptalEt.click();
         return this;
     }
 
@@ -463,6 +515,12 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Kep adresi bilgileri iptal et")
+    public KurumYonetimiPage kepAdresiBilgileriIptalEt() {
+        btnKepAdresiBilgileriIptalEt.click();
+        return this;
+    }
+
     @Step("Description")
     public KurumYonetimiPage kepAdresiKontrol(String kepAdresi, Integer kepIndex, Boolean shouldBeExist) {
 
@@ -507,7 +565,21 @@ public class KurumYonetimiPage extends MainPage {
     @Step("Kurum panelinde kaydet butonuna tıklandı.")
     public KurumYonetimiPage kurumKaydet() {
         //btnKurumKaydet.doubleClick();
-        clickJs(btnKurumKaydet);
+        //btnKurumKaydet.sendKeys(Keys.SHIFT);
+        if(!btnKurumKaydet.isDisplayed())
+            Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKurumKaydet);
+        btnKurumKaydet.click();
+        //clickJs(btnKurumKaydet);
+        return this;
+    }
+
+    @Step("Kurum panelinde kaydet butonuna tıklandı.")
+    public KurumYonetimiPage kurumKaydet2() {
+        Selenide.sleep(10000);
+        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", btnKurumKaydet);
+        Selenide.sleep(5000);
+        btnKurumKaydet.click();
+        //clickJs(btnKurumKaydet);
         return this;
     }
 
@@ -571,7 +643,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumu pasif edildi.")
+    @Step("{kurumAdi} kurumu pasif edildi.")
     public KurumYonetimiPage kurumPasifYap(String kurumAdi) {
 
         tableKurumListesi
@@ -584,7 +656,7 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("{0} kurumu pasif edildi.")
+    @Step("{kurumAdi} kurumu pasif edildi.")
     public KurumYonetimiPage kurumAktifYap(String kurumAdi) {
 
         ElementsCollection pages = $$("td[id='kurumYonetimiListingForm:pasifKurumlarDataTable_paginator_bottom'] > span[class='ui-paginator-pages'] >  span");
@@ -613,6 +685,41 @@ public class KurumYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Alan kontrolleri yapıldı.")
+    public KurumYonetimiPage alanKontrolu() {
 
+        chkKepAdresiKullaniyor.shouldBe(Condition.visible);
+        txtKisaAdi.shouldBe(Condition.visible);
+        chkPaketKullanim.shouldBe(Condition.visible);
+        chkTsk.shouldBe(Condition.visible);
+        chkKaysisteYerAlmiyor.shouldBe(Condition.visible);
+        divKepAdresiBilgileri.shouldBe(Condition.visible);
+        chkOzelHitap.shouldBe(Condition.visible);
+
+        Allure.addAttachment("Kurum Ekleme ekranında kontrol.", "Kep Adresi Kullanıyor \n" +
+                "Kaysiste yer almıyor\n" +
+                "Kısa Adı\n" +
+                "Paket Kullanım\n" +
+                "TSK\n" +
+                "Özel Hitap\n" +
+                "KEP adresi bilgileri alanlarının geldiği görülür."
+        );
+
+        takeScreenshot();
+
+        return this;
+    }
+
+    @Step("Kısa Adı alanını doldur: {kisaAd}")
+    public KurumYonetimiPage kisaAdiDoldur(String kisaAd) {
+        txtKisaAdi.setValue(kisaAd);
+        return this;
+    }
+
+    @Step("Hitap alanının geldiği görülür")
+    public KurumYonetimiPage hitapAlaniKontrolu() {
+        Assert.assertEquals(txtHitap.isDisplayed(), true, "Hitap alanı kontrolu");
+        return this;
+    }
 }
 

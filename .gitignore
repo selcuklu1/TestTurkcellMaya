@@ -1,4 +1,4 @@
-# Eclipse
+﻿# Eclipse
 .classpath
 .project
 .settings/
@@ -50,3 +50,8 @@ atlassian-ide-plugin.xml
 
 #Dökümanlar
 documents/*
+/src/test/resources/galen/*/dump/
+
+/test-result/*
+
+debug.log

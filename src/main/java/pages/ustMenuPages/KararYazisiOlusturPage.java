@@ -1,5 +1,6 @@
 package pages.ustMenuPages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
@@ -8,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
+import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
@@ -19,6 +21,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class KararYazisiOlusturPage extends MainPage {
 
     public PDFKontrol pdfKontrol = new PDFKontrol();
+
     //region Elements
     SelenideElement tabBilgiler = $("button[id^='yeniKararEvrakForm'] span[class$='kullaniciBilgileri']");
     //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
@@ -28,6 +31,7 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement tabIliskiliEvraklar = $("button .kullaniciIliskileri");
     SelenideElement tabEvrakNotlari = $("button .evrakNot");
     //endregion
+
     SelenideElement tabEvrakDogrulama = $("button .evrakDogrulamaAktarimIslemleri");
     SelenideElement btnPDFOnizleme = $("button[id^='yeniGidenEvrakForm:rightTab:uiRepeat'] span[class$='pdfOnIzleme']");
     SelenideElement btnKaydet = $(By.id("yeniKararEvrakForm:kararEvrakRightTab:uiRepeat:1:cmdbutton"));
@@ -38,6 +42,18 @@ public class KararYazisiOlusturPage extends MainPage {
     SelenideElement btnGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
     SelenideElement btnEvet = $(By.id("kaydetConfirmForm:kaydetEvetButton"));
     SelenideElement btnHayir = $(By.id("kaydetConfirmForm:kaydetHayirButton"));
+
+    SelenideElement labelIlkIslemTipi = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[1]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIkinciIslemTipi = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[2]//label[@class='columnLabelFixWidth']"));
+    SelenideElement labelIlkKullanici = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[1]//label[@class='columnLabelFix']"));
+    SelenideElement labelIkinciKullanici = $(By.xpath("//form[@id='yeniKararEvrakForm']/table[2]//label[@class='columnLabelFix']"));
+
+    SelenideElement txtImzaAciklama = $(By.id("yeniKararEvrakForm:onayIslemiAciklama"));
+    SelenideElement btnImzaGonder = $(By.id("yeniKararEvrakForm:gonderButton"));
+
+    SelenideElement btnKaydetEvet = $(By.id("kaydetEvetButton"));
+    SelenideElement btnKaydetHayir = $(By.id("kaydetHayirButton"));
+
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
     private EkleriTab ekleriTab = new EkleriTab();
@@ -45,12 +61,18 @@ public class KararYazisiOlusturPage extends MainPage {
     private IlgileriTab ilgileriTab = new IlgileriTab();
     private IliskiliEvraklarTab iliskiliEvraklarTab = new IliskiliEvraklarTab();
     private EvrakNotlariTab evrakNotlariTab = new EvrakNotlariTab();
+    private SelenideElement page = Belgenet.$("#yeniKararEvrakForm");
+
     //endregion
 
     @Step("Karar yazısı oluştur sayfası aç")
     public KararYazisiOlusturPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.KararYazisiOlustur);
         return this;
+    }
+
+    public pages.pageComponents.tabs.EditorTab editorTab() {
+        return new pages.pageComponents.tabs.EditorTab(page);
     }
 
     //region Tabs
@@ -77,6 +99,40 @@ public class KararYazisiOlusturPage extends MainPage {
 
     public EvrakNotlariTab evrakNotlariTabAc() {
         return evrakNotlariTab.open();
+    }
+
+    @Step("Kaydet ve onay sun")
+    public KararYazisiOlusturPage kaydetveOnaySun() {
+        btnKaydetOnayaSun.click();
+        return this;
+    }
+
+    @Step("Açıklama Gir")
+    public KararYazisiOlusturPage imzaAciklamaDoldur(String aciklama) {
+        txtImzaAciklama.setValue(aciklama);
+        return this;
+    }
+
+    @Step("Gönder")
+    public KararYazisiOlusturPage imzaGonder(boolean save) {
+        btnImzaGonder.click();
+        if (save)
+            btnKaydetEvet.click();
+        else
+            btnKaydetHayir.click();
+        return this;
+    }
+
+
+    @Step("Kullanıcı işlem ve sıra kontrolu")
+    public KararYazisiOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici1, String islemTipi1, String kullanici2, String islemTipi2) {
+
+        Assert.assertEquals(labelIlkIslemTipi.getText(), "1. " + islemTipi1);
+        Assert.assertEquals(labelIkinciIslemTipi.getText(), "2. " + islemTipi2);
+        Assert.assertEquals(labelIlkKullanici.getText(), kullanici1);
+        Assert.assertEquals(labelIkinciKullanici.getText(), kullanici2);
+
+        return this;
     }
 
     public class BilgilerTab extends MainPage {
@@ -112,6 +168,7 @@ public class KararYazisiOlusturPage extends MainPage {
         BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
         SelenideElement btnOnayAkisGuncelle = $(By.cssSelector("[id^='yeniKararEvrakForm:evrakBilgileriList:6:akisLov:j_idt'] [class$='update-icon']"));
         ElementsCollection trOnayAkisiEkleKullanicilar = $$("tbody[id*='akisAdimLov:LovSecilenTable_data'] tr[role='row']");
+        SelenideElement btnVekaletKaydet = $("[id^='yeniKararEvrakForm:j_idt'] [class*='ui-button-text-only tipTip button-icon-borderless']");
 
         //endregion
 
@@ -192,6 +249,7 @@ public class KararYazisiOlusturPage extends MainPage {
         public BilgilerTab imzalamaKontrol(String imzalama) {
 //            Assert.assertEquals(txtOnayAkisi.lastSelectedLovDetailText().contains(imzalama), true);
             txtOnayAkisi.getSelectedDetails().last().shouldHave(text(imzalama));
+            takeScreenshot();
             return this;
         }
 
@@ -206,6 +264,25 @@ public class KararYazisiOlusturPage extends MainPage {
             cmbOnayAkisi.selectLov(onayAkisi);
             return this;
         }
+
+        @Step("Onay akışı doldur")
+        public BilgilerTab onayAkisiDoldurWithoutKontrol(String onay) {
+            if (cmbOnayAkisi.isLovSelected() == true) {
+                cmbOnayAkisi.clearAllSelectedItems();
+            }
+            cmbOnayAkisi.type(onay).getDetailItems().first().click();
+            return this;
+        }
+
+        @Step("Seçilen akışta vekaleti bulunan kişiler bulunmaktadır. Lütfen evrakın akışında kullanılacak kişileri seçiniz.")
+        public BilgilerTab vekaletKaydet() {
+
+            if (btnVekaletKaydet.isDisplayed()) {
+                btnVekaletKaydet.click();
+            }
+            return this;
+        }
+
 
         @Step("Seçilen onay akışı detail kontrolu: \"{onayAkisiDetail}\" ")
         public BilgilerTab onayAkisiDetailKontrol(String onayAkisiDetail) {
@@ -248,8 +325,8 @@ public class KararYazisiOlusturPage extends MainPage {
         }
 
         @Step("Konu doldur")
-        public BilgilerTab konuDoldur(String konuKodu) {
-            txtKonu.setValue(konuKodu);
+        public BilgilerTab konuDoldur(String konu) {
+            txtKonu.setValue(konu);
             return this;
         }
 
@@ -260,10 +337,33 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Kullanıcılar doldur")
+        @Step("Güncel kullanıcının default geldiği görülür")
+        public BilgilerTab onayAkisiEkleKullaniciGeldigiGorme() {
+            boolean durum = $$("[id$='akisAdimLov:LovSecilenTable']").size() == 1;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Kullanıcılar alanını doldur \"{kullanici}\" | \"{birim}\" ")
         public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
             txtKullanicilar.type(kullanici).getTitleItems().filterBy(text(birim)).first().click();
             txtKullanicilar.closeTreePanel();
+            return this;
+        }
+
+        @Step("Kullanıcılar alanı doldur")
+        public BilgilerTab kullanicilarDoldur(String kullanici) {
+            txtKullanicilar.selectLov(kullanici);
+            return this;
+        }
+
+        @Step("Kullanıcının parafçı olarak seçilmediği görülür")
+        public BilgilerTab kullanicilarAlaniSecilenParafciSecilmedigiGorme() {
+            boolean durum = $$("[id^='yeniKararEvrakForm:evrakBilgileriList'][id$='kisAdimLov:LovSecilenTable_data']")
+                    .filterBy(Condition.text("Parafçı")).size() == 0;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
             return this;
         }
 
@@ -304,7 +404,7 @@ public class KararYazisiOlusturPage extends MainPage {
         public BilgilerTab onayAkisiAlanindaGoruntulenmemeKontrolu(String onayAkisi) {
 
             if (cmbOnayAkisi.isLovSelected() == true) {
-                cmbOnayAkisi.clearLastSelectedItem();
+                cmbOnayAkisi.clearAllSelectedItems();
             }
 
             comboLov(cmbOnayAkisiBy).type(onayAkisi).getTitleItems().filterBy(exactText(onayAkisi)).shouldHaveSize(0);
@@ -321,7 +421,7 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Onay akışında güncel gelen kullanıcıyı kontrol et")
+        @Step("Onay akışında güncel gelen kullanıcıyı kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi) {
             trOnayAkisiEkleKullanicilar
                     .filterBy(text(kullaniciAdi))
@@ -358,6 +458,33 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("İlgi alanının \"{ilgi}\" şeklinde geldiği görülür")
+        public EditorTab ilgiGeldigiGorme(String ilgi) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:allPanels_content"))
+                    .filterBy(Condition.text(ilgi)).size() == 1;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Toplantı no, Toplantı tarihi, Karar no alanlarının bilgileri sekmesinde girildiği şekliyle geldiği görülür.")
+        public EditorTab editorNoAlanıGeldigiGorme(String toplantiNo, String toplantiTarih, String kararNo) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:allPanels_content"))
+                    .filterBy(Condition.text(toplantiNo))
+                    .filterBy(Condition.text(toplantiTarih))
+                    .filterBy(Condition.text(kararNo)).size() == 1;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
+            return this;
+        }
+
+        @Step("Sayfanın alt sağında imzacının \"{imzaci}\" adla geldiği ")
+        public EditorTab imzaciGeldigiGorme(String imzaci) {
+            boolean durum = $$(By.id("yeniKararEvrakForm:imzacilarPanel")).filterBy(Condition.text(imzaci)).size() == 1;
+            Assert.assertEquals(durum, true);
+            return this;
+        }
+
         @Step("Gönder")
         public EditorTab gonder(boolean secim) {
             btnGonder.click();
@@ -380,11 +507,43 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kaydet")
+        public EditorTab kaydet() {
+            btnKaydet.click();
+            return this;
+        }
+
+
+        @Step("Evet tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizEvet() {
+            btnEvet.pressEnter();
+            return this;
+        }
+
+        @Step("Hayır tıklanır")
+        public EditorTab evrakiKaydetmekIsterMisinizHayir() {
+            btnHayir.pressEnter();
+            return this;
+        }
+
+        @Step("Evrakı kaydetmek istediğinize emin misiniz sorusunun geldiği görülür.")
+        public EditorTab evrakiKaydetmekIstediginizGeldigiGorme() {
+            boolean durum = $("[class='ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow ui-overlay-visible']").shouldBe(visible).exists() == true;
+            Assert.assertEquals(durum, true);
+            takeScreenshot();
+            return this;
+        }
 
         @Step("Editör İçerik Doldur")
         public EditorTab editorIcerikDoldur(String icerik) {
             TextEditor editor = new TextEditor();
             editor.type(icerik);
+            return this;
+        }
+
+        @Step("")
+        public EditorTab editorNoAlanıGeldigiGorme() {
+
             return this;
         }
 
@@ -557,6 +716,35 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Pdfte Toplantı No kontrolu: {toplantiNo}")
+        public PDFKontrol toplantiNoKontrol(String toplantiNo) {
+            String pdfToplantiNo = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[1]/td[4]")).getText();
+            Assert.assertEquals(pdfToplantiNo.contains(toplantiNo), true);
+            return this;
+        }
+
+        @Step("Pdfte Toplantı Tarihi kontrolu: {toplantiTarihi}")
+        public PDFKontrol toplantiTarihiKontrol(String toplantiTarihi) {
+            String pdfToplantiTarihi = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[2]/td[4]")).getText();
+            Assert.assertEquals(pdfToplantiTarihi.contains(toplantiTarihi), true);
+            return this;
+        }
+
+        @Step("Pdfte Karar No kontrolu: {kararNo}")
+        public PDFKontrol kararNoKontrol(String kararNo) {
+            String pdfKararNo = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels_content']/table/tbody/tr[3]/td[4]")).getText();
+            Assert.assertEquals(pdfKararNo.contains(kararNo), true);
+            return this;
+        }
+
+        @Step("Pdfte İmzacilar kontrolu: {imzaci}")
+        public PDFKontrol imzacilarKontrol(String imzaci) {
+
+            String pdfImzaci = $(By.xpath("//*[@id='yeniKararEvrakForm:allPanels'] //tr[normalize-space(.)='" + imzaci + "']")).getText();
+            Assert.assertEquals(pdfImzaci.contains(imzaci), true);
+
+            return this;
+        }
     }
     //endregion
 

@@ -14,6 +14,7 @@ public class TestData extends BaseLibrary {
 
     public static final String belgenetURL = "http://94.55.114.18:8889/edys-web/sistemeGiris.xhtml";
     //    public static final String belgenetURL = "http://10.101.20.153:8889/edys-web/sistemeGiris.xhtml";
+<<<<<<< HEAD
     //Default username
     public static final String username = "optiim";
     public static final String password = "123";
@@ -25,9 +26,56 @@ public class TestData extends BaseLibrary {
     public static final String password4 = "123";
     public static final String username5 = "sezaicelik";
     public static final String password45 = "123";
+=======
+
+    public static final User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
+    public static final User gsahin = new User("gsahin", "123", "Gökçe ŞAHİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+    public static final User username27 = new User("un27","123","Username27 TEST","TS2200 Alt Birim");
+    public static final User userMbozdemir = new User("mbozdemir","123","Mehmet BOZDEMİR","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    public static final User user21g = new User("username21g","123","Username21g TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+
+    //Default usernameOPTIIM
+    public static final String usernameOPTIIM = "optiim";
+    public static final String passwordOPTIIM = "123";
+
+    public static final String usernameZTEKIN = "ztekin";
+    public static final String passwordZTEKIN = "123";
+
+    public static final String usernameYAKYOL = "yakyol";
+    public static final String passwordYAKYOL = "123";
+
+    public static final String usernameMBOZDEMIR = "mbozdemir";
+    public static final String passwordMBOZDEMIR = "123";
+
+    public static final String usernameSEZAICELIK = "sezaicelik";
+    public static final String passwordSEZAICELIK = "123";
+
+    public static final String usernameGSAHIN = "gsahin";
+    public static final String passwordGSAHIN = "123";
+
+    public static final String usernameOPTIIMTEST6 = "optiimtest6";
+    public static final String passwordPTIIMTEST6 = "123";
+
+    public static final String usernameSCELIK = "scelik";
+    public static final String passwordSCELIK = "123";
+
+    public static final String username22n = "username22n";
+    public static final String passwor22n = "123";
+
+    public static final String username23t = "username23t";
+    public static final String passwor23t = "123";
+
+    public static final String username21g = "username21g";
+    public static final String passwor21g = "123";
+
+
+
+>>>>>>> 7a006cc7fe61f7e8c255003aa8d3e4efb455d1be
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";
-    public static String docPathLinux = "/Users/ilyas/TestAutomation/BelgenetFTA/documents";
-    public static String docDownloadPathLinux = "/Users/ilyas/TestAutomation/downloads";
+    public static String docPathLinux = "documents/";
+    public static String docDownloadPathLinux = "/home/optiim";//"home/optiim/Downloads";
 }

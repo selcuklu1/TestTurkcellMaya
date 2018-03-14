@@ -18,8 +18,8 @@ import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.OnayAkisYonetimiPage;
 import pages.ustMenuPages.VekaletVerPage;
 
-import static data.TestData.password2;
-import static data.TestData.username2;
+import static data.TestData.passwordZTEKIN;
+import static data.TestData.usernameZTEKIN;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -56,14 +56,16 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
 
         // Gelen evraklar alanında veri bulunmalı
 
-        login("kbagtipi", password2);
+        login("kbagtipi", passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara();
+                .ara()
+                .kullaniciListesiGeldigiGorme();
         String ad = kullaniciYonetimiPage.adCek();
         kullaniciYonetimiPage
                 .kullaniciListesiGuncelle(ad)
+                .kullaniciBilgileriGeldigiGorme()
                 .gorevliOlduguBirimlerGuncelle()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
@@ -105,21 +107,24 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String gnMdV = "Gn.Md. V.";
         String genelMudur = "Genel Müdür V.";
         String kullanicilarTuru = "İmzalama";
-        String randomAd = createRandomNumber(7);
+        String randomAd = createRandomNumber(15);
 
         //Gelen evraklar alanında veri bulunmalı
 
-        login(username2, password2);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()
-                .ara();
+                .ara()
+                .kullaniciListesiGeldigiGorme();
         String adCek = kullaniciYonetimiPage.adCek();
-                kullaniciYonetimiPage
-                .kullaniciListesiGuncelle(adCek);
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
         String birim = kullaniciYonetimiPage.birimAdCek();
-                kullaniciYonetimiPage
+        kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle(birim)
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -188,14 +193,21 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         String onayVerecek = "Zübeyde TEKİN";
 
         //Gelen evraklar alanında veri bulunmalı
-
-        login("kbagtipi", password2);
+        login("kbagtipi", passwordZTEKIN);
 
         kullaniciYonetimiPage
                 .openPage()
+                .filtreleyecekAlanGeldigiGorme()
                 .ara()
-                .kullaniciListesiGuncelle()
+                .kullaniciListesiGeldigiGorme();
+
+        String adCek = kullaniciYonetimiPage.adCek();
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle(adCek)
+                .kullaniciBilgileriGeldigiGorme();
+        kullaniciYonetimiPage
                 .gorevliOlduguBirimlerGuncelle()
+                .kullaniciBirimAtamaEkranıGorme()
                 .popupKullaniciBirimAtamaBagTipiSec(bagTipi, "Bağ Tipi")
                 .popupKullaniciBirimAtamaKaydet();
 
@@ -222,7 +234,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .tabHavaleYap()
-                .havaleYapOnaylanacakKisiTreeDoldur(ekranAdi, "Onaylanacak kişi");
+                .havaleYapOnaylanacakKisiTreeDoldurGelmedigiGorme(ekranAdi, "Onaylanacak kişi", false);
     }
 
 }

@@ -3,12 +3,22 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
-import static com.codeborne.selenide.Condition.text;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PostalananlarPage extends MainPage {
@@ -25,16 +35,24 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tblPostalananlartbl = $(By.id("mainInboxForm:inboxDataTable_data"));
     SelenideElement btnRadioPostaladiklarim = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaladiklarimCheckbox"));
     SelenideElement tblEvrakDetayPanel = $(By.id("mainPreviewForm:evrakDetayPanelGrid"));
+
+    SelenideElement btnIcDısEvrakIkonu = $("[id^='mainInboxForm:inboxDataTable:0:j_idt'] [class$='document-typeIcDisBelgeNiteliksiz']");
+
+
     //ElementsCollection  tblPostalananlartbl =  $$("tbody[id='mainInboxForm:inboxDataTable_data']");
     //Hüseyin
-    ElementsCollection tablePostalananlar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    ElementsCollection tablePostalananlar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr");
     SelenideElement btnPostaDetayi = $x("//span[text() = 'Posta Detayı']/../../..//button");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement tblPostalananYerler = $x("//*[@id='mainPreviewForm:postalananDataGrid']");
 
-    SelenideElement btnGuncelle = $(By.id("mainPreviewForm:j_idt18728:0:j_idt18764"));
-    SelenideElement txtPosta = $(By.id("mainPreviewForm:j_idt18803"));
-    SelenideElement txtAciklama = $(By.id("mainPreviewForm:j_idt18806"));
-    SelenideElement btnKaydet = $(By.id("mainPreviewForm:j_idt18809"));
+
+    SelenideElement btnIcerikPostaDetayiTuzelKisiGuncelle = $("[id='inboxItemInfoForm:postalananDataGrid'] span[class='ui-button-icon-left ui-icon update-icon']");
+    SelenideElement btnGuncelle = $("[id='mainPreviewForm:postalananDataGrid'] span[class='ui-button-icon-left ui-icon update-icon']");
+    SelenideElement btnTuzelKisiGuncelle = $("[id='mainPreviewForm:postaGuncelleDialog'] button[id^='mainPreviewForm']");
+    SelenideElement txtPosta = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[2]/td[3]/input");
+    SelenideElement txtAciklama = $x("//*[@id=\'mainPreviewForm:postaGuncellePanel\']/tbody/tr[3]/td[3]/textarea");
+    SelenideElement btnKaydet = $x("//span[text() = 'Kaydet']");
     SelenideElement btnTarihGuncelle = $(By.id("mainPreviewForm:tebligatMazbatasiTarihiId_input"));
     ElementsCollection dlgPostaGuncelle = $$("table[id='mainPreviewForm:postaGuncellePanel']");
     SelenideElement btnKurdele = $(By.id("mainInboxForm:inboxDataTable:0:btnImzasiz"));
@@ -55,13 +73,26 @@ public class PostalananlarPage extends MainPage {
     SelenideElement tabIcerikEkleri = $(By.id("inboxItemInfoForm:dialogTabMenuLeft:uiRepeat:1:cmdbutton"));
     SelenideElement tabIcerikKapat = $x("//*[@id='windowItemInfoDialog']/div[1]/a[1]/span");
     SelenideElement tabIcerikKapatmaOnay = $(By.id("kapatButton"));
+    SelenideElement btnIcerikPostaDetayi = $x("//*[@id='inboxItemInfoForm:dialogTabMenuRight:uiRepeat:4:cmdbutton']/span[1]");
+    SelenideElement popupEtiketTextIcerik = $x("//*[@id='inboxItemInfoForm:etiketMetinIDPostIslm']");
+    SelenideElement popupEtiketText = $x("//*[@id='mainPreviewForm:etiketMetinID']");
     //
+    SelenideElement popupEvrakYazdirma = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']");
     SelenideElement tuzelKisiGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[4]/td[8]/div/button[1]");
     //
     SelenideElement kullaniciGuncelle = $x("//*[@id='mainPreviewForm:postalananDataGrid']/tbody/tr/td/div/table/tbody/tr[5]/td[8]/div/button[1]");
-
-    //SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:showAppletContainer']/div/div[1]/a/span");
+    SelenideElement btnIcerikPDTebligatTarihGnc = $x("//*[@id='inboxItemInfoForm:tebligatMazbatasiTarihiId_input']");
+    SelenideElement btnIcerikPDPostaAciklama = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[3]/td[3]/textarea");
+    SelenideElement btnIcerikPDPostaKodGnc = $x("//*[@id='inboxItemInfoForm:postaGuncellePanel']/tbody/tr[2]/td[3]/input");
+    SelenideElement btnIcerkPDGuncellemeKaydet = $x("//*[@id='inboxItemInfoForm:postaGuncelleDialog']/div[2]/div/div/button");
+    SelenideElement icerikEvrakSayisi = $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label");
+    SelenideElement btnEtiketPopupKapat = $x("//*[@id='mainPreviewForm:appletContainer']/div/div[1]/a/span");
     //  SelenideElement btnDagitimYerDetayKapat = $x("//*[@id='mainPreviewForm:dagitimPlaniDetayViewDialog']/div[1]/a/span");
+    SelenideElement btnEvrakEkleri = $(By.xpath("//a[text() = 'Evrak Ekleri']"));
+    SelenideElement btnIlgiBilgileri = $(By.xpath("//a[text() = 'İlgi Bilgileri']"));
+
+    SelenideElement btnEvrakEyazismaPaket = $("//a[text() = 'E-Yazışma Paketi']");
+    ElementsCollection tblEvrakDetaylariUstVeriler = $$("tbody[id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data'] tr[data-ri]");
 
 
     @Step("Postalananlar sayfası aç")
@@ -75,20 +106,126 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Postalanan Evrak içi Evrak Ekleri tıklanır.")
+    public PostalananlarPage btnEvrakEkleri() {
+        btnEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Postalanan Evrak içi İlgi Bilgileri tıklanır.")
+    public PostalananlarPage btnIlgiBilgileri() {
+        btnIlgiBilgileri.click();
+        return this;
+    }
+
+    @Step("Postalanan Evrak içi Evrak Ekleri kontrolü : \"{ek}\" ")
+    public PostalananlarPage evrakEkleriKontrol(String ek) {
+        ElementsCollection tblEvrakEkleri = $$("tbody[id^='mainPreviewForm:'][id$=':ekListesiOnizlemeDataTable_data'] tr[data-ri]");
+        tblEvrakEkleri
+                .filterBy(Condition.text(ek))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Postalanan Evrak içi İlgi Bilgileri kontrolü : \"{ilgi}\" ")
+    public PostalananlarPage ilgiBilgileriKontrol(String ilgi) {
+        ElementsCollection tblIlgiBilgileri = $$("tbody[id^='mainPreviewForm:'][id$=':ilgiListesiDataTable_data'] tr[data-ri]");
+        tblIlgiBilgileri
+                .filterBy(Condition.text(ilgi))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Posta Detayi Postalanan Evrak Posta Detayi kontrolü.")
+    public PostalananlarPage postaDetayiPostalananYerlerKontrolu(String gonderilenYer, String postaKodu, String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler = $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+        tblPostaDetayiPostalananYerler
+                .filterBy(Condition.text(gonderilenYer))
+                .filterBy(Condition.text(postaKodu))
+                .filterBy(Condition.text(aciklama))
+                .shouldHaveSize(1);
+        return this;
+    }
+
+    @Step("Posta Detayi Postalanan Evrak Posta Detayi Yazdır butonu tıklanır.")
+    public PostalananlarPage postaDetayiPostalananYerlerYazdir(String gonderilenYer, String postaKodu, String aciklama) {
+        ElementsCollection tblPostaDetayiPostalananYerler = $$("tbody[id^='mainPreviewForm:'][id$='_data'] tr[data-ri]");
+        tblPostaDetayiPostalananYerler
+                .filterBy(Condition.text(gonderilenYer))
+                .filterBy(Condition.text(postaKodu))
+                .filterBy(Condition.text(aciklama))
+                .first()
+                .$(By.xpath("//span[text()='Yazdır']/../../button[2]")).click();
+        return this;
+    }
+
+    @Step("Evrak Detayları pop up Üst Veriler Yazdır tıklanır")
+    public PostalananlarPage evrakDetaylariUstVerilerYazdirButonTikla(String konu) {
+        tblEvrakDetaylariUstVeriler
+                .filterBy(text(konu))
+                .first()
+                .$("button").click();
+        return this;
+    }
+
+    @Step("Pdf kontrolü Yapılır.")
+    public PostalananlarPage pdfKontrol() {
+        switchTo().window(1);
+
+        sleep(3000);
+        takeScreenshot();
+
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Postalanan Evrak içi E-yazışma paketi içerik kontrol")
+    public PostalananlarPage btnEyazismaPaket() {
+        btnEvrakEyazismaPaket.click();
+        return this;
+    }
+
     @Step("Evrak seçilir")
     public PostalananlarPage evrakSec(String konu, String yer, String tarih) {
-        tblEvraklar.filterBy(Condition.text(konu))
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu))
                 .filterBy(Condition.text(yer))
                 .filterBy(Condition.text(tarih)).get(0).click();
         return this;
     }
 
+    @Step("Evrak seçilir")
+    public PostalananlarPage evrakSec(String konu) {
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).get(0).click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme \"{btnText}\" buton kontrolü.")
+    public PostalananlarPage evrakOnizlemeButonKontrol(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
+        Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak Önizleme Evrak Ek kontrolü.")
+    public PostalananlarPage evrakOnizlemeEvrakEkKontrolu() {
+        SelenideElement btnEvrakEk = $(By.xpath("//div[@class='textLayer']"));
+        Assert.assertEquals(btnEvrakEk.isDisplayed(), true);
+        return this;
+    }
+
     @Step("Evrak içerik göster")
     public PostalananlarPage evrakSecIcerikGoster(String konu, String yer, String tarih) {
-        tblEvraklar.filterBy(Condition.text(konu))
-                .filterBy(Condition.text(yer))
-                .filterBy(Condition.text(tarih))
+        $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']").filterBy(Condition.text(konu))
                 .get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Sağ üstte Posta Detayı ikonunun geldiği görülür.")
+    public PostalananlarPage postaDetayGeldigiGorme() {
+        boolean durum = $$("[class='ui-button-icon-left ui-icon postala']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -98,15 +235,127 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Postalanan yerler tablosu içerik ve kontrolleri")
+    public PostalananlarPage postalananyerlerKontrol() {
+        String kontrl = tblPostalananYerler.getAttribute("innerText");
+        System.out.println(kontrl);
+        return this;
+    }
+
+    @Step("Gönderilen yerlerin listelendiği görülür")
+    public PostalananlarPage gonderilenyerlerKontrol() {
+        boolean durum = $$("[id$='postalananDataGrid']").size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Tüzel kişi ve kullanıcı satırının açıklama alanının dolu ve doğru geldiği görülür.")
+    public PostalananlarPage tuzelKisiVeAciklamaAlanlarDoluGeldigiGorme(String kisi, String aciklama) {
+        boolean durum = $$("[id$='postalananDataGrid']").size() == 1;
+        boolean durum2 = $$("[id$='postalananDataGrid']").filterBy(Condition.text(kisi)).size() == 1;
+        Assert.assertEquals(durum, durum2);
+        return this;
+    }
+
+    @Step("Postalanan Evrak Orjinalini Yazdır")
+    public PostalananlarPage evrakOrjinaliniYazdir() {
+        SelenideElement postalananEvrakOrjYazdir = $x("//button[span[text()='Yazdır']]");
+        postalananEvrakOrjYazdir.click();
+        return this;
+    }
+
     @Step("Sayfada ara doldur")
     public PostalananlarPage sayfadaAraDoldur(String text) {
         txtSayfadaAra.setValue(text);
         return this;
     }
 
+    @Step("Dağıtım planı Yazdır, ÜstVeri ve Ekler için yazdır butonu kontrolleri")
+    public PostalananlarPage dagitimPlanYazdir() {
+        postalananEvrakYazdir.click();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri:0:evrakDetayiViewDialogYazdir']").exists();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button").exists();
+        $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button").exists();
+        return this;
+    }
+
+    @Step("Yazdır popup içinde Üstyazı ve Ekleri yazdir kontrolü")
+    public PostalananlarPage yazdirpopupYazdirButonktrl() {
+        SelenideElement evrakEkleri = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']");
+        evrakEkleri.exists();
+        SelenideElement evrakYazdirButonktrl = $x("//span[text()='Yazdır']");
+        evrakYazdirButonktrl.exists();
+
+        return this;
+    }
+
+    @Step("Ekleri Yazdırma butonu tıklama")
+    public PostalananlarPage btnEkleriPopupiciYazdir() {
+        SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
+        evrakYazdirButonktrl.click();
+        return this;
+    }
+
+    @Step("Ekleri Yazdirma butonu , Ekleri kontrolü ,  PDF'leri açma ve kontröl")
+    public PostalananlarPage eklerYazdirPopupbtn(String ek1, String ek2) throws InterruptedException {
+        SelenideElement evrakYazdirButonktrl = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[1]/td[7]/div/button");
+        evrakYazdirButonktrl.click();
+        switchTo().window(1);
+        SelenideElement ickKtrl = $x("//*[@id='plugin']");
+        ickKtrl.exists();
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        ickKtrl.sendKeys(Keys.PAGE_DOWN);
+        takeScreenshot();
+        ickKtrl.sendKeys(Keys.SPACE);
+
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+        ickKtrl.sendKeys(Keys.CONTROL, "a");
+        ickKtrl.sendKeys(Keys.CONTROL, "c");
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
     @Step("Başlangıç tarihi doldur")
     public PostalananlarPage baslangicTarihiDoldur(String text) {
         dateBaslangicTarihi.setValue(text);
+        return this;
+    }
+
+    @Step("Dikkat -  Önce üst yazı yazdırılmalıdır kontrülü")
+    public PostalananlarPage ktrlonceustyazi() {
+        islemMesaji().isDikkat("Önce üst yazı yazdırılmalıdır ");
+        return this;
+
+    }
+
+    @Step("Icerik Detay Posta Detay Butonu")
+    public PostalananlarPage icerikDetayPostaDetayi() {
+        btnIcerikPostaDetayi.click();
         return this;
     }
 
@@ -134,7 +383,32 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak seç.")
+    @Step("Etiket Bastir Popup Kapat")
+    public PostalananlarPage btnPopupEtiketBastirKapat() {
+        btnEtiketPopupKapat.click();
+        return this;
+    }
+
+    @Step("Evrak'ın \"{konu}\" adlı konu ile geldiği görünür. Geldiği yer:\"{gidecegiYer}\" Evrak tarihi:\"{evrakTarihi}\"")
+    public PostalananlarPage evrakGeldigiGorme(String konu, String gidecegiYer, String evrakTarihi) {
+        boolean durum = $$("[id='mainInboxForm:inboxDataTable_data'] > tr").filterBy(Condition.text(konu)).first().shouldBe(visible).exists() == true;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrakların listelendiği görülür.")
+    public PostalananlarPage tabloEvrakGeldigiGorme() {
+        tablePostalananlar.filterBy(Condition.text("Konu:"))
+                .filterBy(Condition.text("Gideceği Yer:"))
+                .filterBy(Condition.text("Evrak Tarihi:"));
+
+        takeScreenshot();
+        return this;
+    }
+
+
+    @Step("Evrak seç")
     public PostalananlarPage evrakSec(String konu, String gidecegiYer, String evrakTarihi, String no) {
 
         tablePostalananlar
@@ -167,7 +441,6 @@ public class PostalananlarPage extends MainPage {
 
     @Step("GonderimGuncelleme")
     public PostalananlarPage btnGuncelle() {
-
         btnGuncelle.click();
         return this;
     }
@@ -214,11 +487,31 @@ public class PostalananlarPage extends MainPage {
     /**
      * @return
      */
-        @Step("Postalanan Evrak Sayisi")
-        public String evSay() {
+    @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
+    public String evSay() {
         return $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
     }
 
+    @Step("Postalanan Evrak Detayları , Sayisi ve kontrolü")
+    public Boolean evSayisiKontrol(String evsay) {
+        String evsayisi = $x("//tbody/tr[3]/td[3]/label").getAttribute("outerText");
+        Assert.assertEquals(evsayisi, evsay);
+        return true;
+    }
+
+    @Step("Postalanan Evrak Icerik icindeki Evrak Sayisi")
+    public String icerikEvrakSay() {
+        return $x("//*[@id='inboxItemInfoForm:evrakDetayPanelGrid']/tbody/tr[3]/td[3]/label").getAttribute("innerText");
+    }
+
+    @Step("Kurdele Butonuna Tıkla")
+    public PostalananlarPage btnKurdele2(String konu) {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnKurdele2 = $(By.id("mainInboxForm:inboxDataTable:"+ data + ":btnImzasiz"));
+
+        btnKurdele2.click();
+        return this;
+    }
     @Step("Kurdele Butonuna Tıkla")
     public PostalananlarPage btnKurdele() {
 
@@ -228,7 +521,9 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Imza Popup kapat")
     public PostalananlarPage btnImzaciPopupKapat() {
-        btnImzaciPopupKapat.click();
+        btnImzaciPopupKapat.exists();
+        btnImzaciPopupKapat.scrollTo();
+        clickJs(btnImzaciPopupKapat);
         return this;
     }
 
@@ -237,7 +532,14 @@ public class PostalananlarPage extends MainPage {
         btnTamEkran.click();
         return this;
     }
+    @Step("Tam Ekran görünüme tıkla")
+    public PostalananlarPage btnTamEkran2(String konu) {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnTamEkran2 = $(By.id("mainInboxForm:inboxDataTable:"+ data+":tamEkranModuButton"));
 
+        btnTamEkran2.click();
+        return this;
+    }
     @Step("Tam Ekran görünümü kapat")
     public PostalananlarPage btnTamEkranKapat() {
         btnTamEkranKapat.click();
@@ -246,19 +548,69 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Icerik Goster butonuna tıkla")
     public PostalananlarPage btnIcerikGoster() throws InterruptedException {
+
         btnIcerikGoster.click();
         Thread.sleep(1000);
         return this;
     }
 
-    @Step("Icerik içinde Ilgileri Tabına tıklama")
+    @Step("Icerik Goster butonuna tıkla")
+    public PostalananlarPage btnIcerikGoster2(String konu) throws InterruptedException {
+        String data = filter().findRowsWith(Condition.text(konu)).first().getAttribute("data-ri");
+        SelenideElement btnIcerikGoster2 = $(By.id("mainInboxForm:inboxDataTable:"+data+":detayGosterButton"));
+
+        btnIcerikGoster2.click();
+        Thread.sleep(1000);
+        return this;
+    }
+
+
+    @Step("Tablodan evrak seçimi \"{konu}\"")
+    public PostalananlarPage filtretablodankonuileEvrakSeç(String konu) {
+        filter().findRowsWith(text(konu)).first().click();
+        return this;
+    }
+
+    @Step("\"{Konu}\" Kontrol değerlerine göre postaları filtrele, tarih ve no kontrol, İç süret ve Dış süret Filtrelenen postanın Icerik Goster butonuna tıkla ")
+    public PostalananlarPage btnFiltrenenPostaIcerikGoster(String Konu) throws InterruptedException {
+        filter().findRowsWith(Condition.text(Konu)).first().click();
+        String idAtr;
+        idAtr = filter().findRowsWith(Condition.text(Konu)).first().getAttribute("data-ri");
+        System.out.println(idAtr);
+        String IcerikId = "mainInboxForm:inboxDataTable:" + idAtr + ":detayGosterButton";
+        SelenideElement filteredIcerikGoster = $(By.id(IcerikId));
+        String TarihId = "//*[@id='mainInboxForm:inboxDataTable:" + idAtr + ":evrakTable']/tbody/tr[1]/td[3]";
+        SelenideElement filteredTarihId = $x(TarihId);
+        filteredTarihId.getAttribute("innerText");
+        SelenideElement icSuret = $x("//a[text() = 'İç Suret']");
+        icSuret.exists();
+        SelenideElement disSuret = $x("//a[text() = 'Dış Suret']");
+        disSuret.exists();
+        filteredIcerikGoster.click();
+        Thread.sleep(1000);
+        return this;
+    }
+
+    @Step("İç ve Dış Suret - PDF kontrol")
+    public PostalananlarPage icDisSuretKtrl() {
+        SelenideElement icSuret = $x("//a[text() = 'İç Suret']");
+        SelenideElement disSuret = $x("//a[text() = 'Dış Suret']");
+        SelenideElement Pdfktrl = $x("//a[text() = 'EK-1    TS2235_PDF']");
+        icSuret.exists();
+        disSuret.exists();
+        Pdfktrl.exists();
+        return this;
+
+    }
+
+    @Step("Icerik içinde Ilgileri Tabına tıklama ve kontrol (kontrol için 500ms delay bulunmakta)")
     public PostalananlarPage btnIcerikIlgileriTab() throws InterruptedException {
         btnIlgileriIcerik.click();
         Thread.sleep(500);
         return this;
     }
 
-    @Step("Icerik içinde Ekleri Tabına tıklama")
+    @Step("Icerik içinde Ekleri Tabına tıklama ve kontrolü")
     public PostalananlarPage btnIcerikEkleriTab() {
         btnEkleriIcerik.click();
         return this;
@@ -271,7 +623,7 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Filtereden Postaladıklarımı işaretle")
+    @Step("Filtereden Postaladıklarım checkini işaretle")
     public PostalananlarPage btnFiltrePostaladiklarim() {
 
         btnRadioPostaladiklarim.click();
@@ -280,16 +632,53 @@ public class PostalananlarPage extends MainPage {
 
     @Step("Filtreden başlangıç tarihi girişi")
     public PostalananlarPage btnFiltreBaslangicTarihi(String date) {
-
         btnFiltreBaslangicTarihi.setValue(date);
+        return this;
+    }
+
+    @Step("Icerik Posta Detay Tuzel Kisi Tebligat Tarih kontrol ve Guncelle \"{date}\"")
+    public PostalananlarPage btnIcerikPDTuzelKisiTebTarGnc(String date) {
+        btnIcerikPDTebligatTarihGnc.setValue(date);
         return this;
     }
 
     @Step("Filtre sekmesini aç")
     public PostalananlarPage btnFiltreSpan() {
-
         btnFiltreSpan.click();
         return this;
+    }
+
+    @Step("Icerik içindeki posta detayi butonu ,Postalanan yerler kontrülü ve iç sayfa tüzel kisi guncelleme")
+    public PostalananlarPage btnIcerikPostaDetayTuzelKisiGnc() {
+        btnIcerikPostaDetayiTuzelKisiGuncelle.click();
+        return this;
+    }
+
+    @Step("Icerik içindeki posta detayi butonu iç sayfa tuzel kisi posta kodu kontrol ve guncelleme \"{postaKodu}\"")
+    public PostalananlarPage btnIcerikPosDetTuzKisPosKodGnc(String postaKodu) {
+        btnIcerikPDPostaKodGnc.setValue(postaKodu);
+        return this;
+
+    }
+
+    @Step("Icerik içindeki posta detayi buton tuzel kisi posta açıklama kontrol ve güncelle \"{aciklama}\"")
+    public PostalananlarPage btnIcerikPDTuzelKisiPosAcikGnc(String aciklama) {
+        btnIcerikPDPostaAciklama.setValue(aciklama);
+        return this;
+
+    }
+
+    @Step("Icerik Posta Detay Pop up Guncelleme kaydet")
+    public PostalananlarPage btnIcerikPDPopupKaydet() {
+        btnIcerkPDGuncellemeKaydet.click();
+        return this;
+    }
+
+    @Step("Tuzel Kisi Guncelle")
+    public PostalananlarPage btnTuzelKisiGuncelle() {
+        btnTuzelKisiGuncelle.click();
+        return this;
+
     }
 
     @Step("Imza Dialog Ekranını göster")
@@ -306,10 +695,85 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
-    @Step("Etiket Bastir")
+    @Step("Popup Evrak yazdirma, pdf açma ve kapatma")
+    public PostalananlarPage popupEvrakyazpdfackapat() {
+        popupEvrakYazdirma.click();
+        switchTo().window(1);
+        closeNewWindow();
+        switchTo().window(0);
+        popupkapatma();
+        return this;
+    }
+
+    @Step("Popup Etiket Icerik text kontrol")
+    public PostalananlarPage etiketIcerikText() {
+        String etiketIceriktext = popupEtiketText.getValue();
+        Allure.addAttachment("Etiket Icerik", etiketIceriktext);
+        return this;
+    }
+
+    @Step("Evrak Yazdır Popup içi Üst Veri Pdf yazdırma,Yazışma kontrolü ve kırmızı alan içerik kontrolü, Ekran görüntüsü ve text output alma")
+    public PostalananlarPage popupYazpdfkontrolveKapatma() throws InterruptedException {
+        popupEvrakYazdirma.click();
+        switchTo().window(1);
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+        takeScreenshot();
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        pdftab.sendKeys(Keys.PAGE_DOWN);
+        takeScreenshot();
+        pdftab.sendKeys(Keys.CONTROL, "A");
+        Thread.sleep(500);
+
+        pdftab.contextClick();
+        Thread.sleep(1000);
+        pdftab.sendKeys(Keys.CONTROL ,"C");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.CONTROL ,"c");
+
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+
+        System.out.println(result);
+        Allure.addAttachment("PDF", result);
+        closeNewWindow();
+        switchTo().window(0);
+
+        SelenideElement ustyazi = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakUstVeri_data']/tr/td[2]/div");
+        String pdf = ustyazi.getAttribute("innerText");
+        System.out.println(pdf);
+
+        return this;
+
+    }
+
+    @Step("Evrak yazdırma popup kapatma")
+    public PostalananlarPage popupkapatma() {
+        SelenideElement popupkapat = $x("//*[@id='postaDetayYazdirForm:dlgPostaDetayYazdir']/div[1]/a/span");
+        popupkapat.click();
+        return this;
+    }
+
+    @Step("Etiket Bastir ve kontrol")
     public PostalananlarPage etiketBastir() {
 
         postalananEvrakEtiketYazdir.click();
+
         return this;
     }
 
@@ -319,6 +783,7 @@ public class PostalananlarPage extends MainPage {
         tuzelKisiGuncelle.click();
         return this;
     }
+
     @Step("Kullanıcı Guncelle")
     public PostalananlarPage kullaniciGuncelle() {
 
@@ -326,5 +791,62 @@ public class PostalananlarPage extends MainPage {
         return this;
     }
 
+    @Step("Tek imzacısının doğru olarak geldiği görülür")
+    public PostalananlarPage tekImzaciKontrol(String imzaci) {
 
+        ElementsCollection trParafImzaAkisListesi = $$("[id='mainInboxForm:imzaListesiDataTable_data'] tr");
+
+        trParafImzaAkisListesi
+                .filterBy(text(imzaci))
+                .filterBy(text("İmza"))
+                .get(0)
+                .shouldBe(exist);
+        return this;
+    }
+
+    @Step("Sağda evrak ekleri, ilgi bilgileri, evrak geçmişi, evrak notları tablarının geldiği kontrolu")
+    public PostalananlarPage sagTabKontrol() {
+
+        SelenideElement tavEvrakEkleri = $(By.xpath("//a[text()='Evrak Ekleri']"));
+        SelenideElement tavEvrakGeçmişi = $(By.xpath("//a[text()='Evrak Geçmişi']"));
+        SelenideElement tavEvrakNotlari = $(By.xpath("//a[text()='Evrak Notları']"));
+
+        Assert.assertEquals(tavEvrakEkleri.isDisplayed(), true, "Evrak Ekleri");
+        Assert.assertEquals(tavEvrakGeçmişi.isDisplayed(), true, "Evrak Geçmişi");
+        Assert.assertEquals(tavEvrakNotlari.isDisplayed(), true, "Evrak Notları");
+
+        return this;
+    }
+
+    @Step("İç-dış evrak ikonu kontrolu")
+    public PostalananlarPage icDisEvrakIkonuKontrolu() {
+
+        Assert.assertEquals(btnIcDısEvrakIkonu.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Evrak birim postacı ile login ")
+    public PostalananlarPage birimLogin(String user, String pass) {
+        System.out.println(user);
+        System.out.println(pass);
+        return this;
+    }
+
+    @Step("Postalanan evrak içinde Posta arama \"{}\" ")
+    public PostalananlarPage t2076PostaArama(String konu) {
+
+        return this;
+    }
+
+    @Step("Postalananlar Evraklar listesinde evrakın listelenmediği kontrolu")
+    public PostalananlarPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
 }

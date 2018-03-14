@@ -1,6 +1,7 @@
 package tests.TuzelKisiYonetimi;
 
 import common.BaseTest;
+import common.ReusableSteps;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -8,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.ustMenuPages.*;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /****************************************************
  * Tarih: 2017-11-24
@@ -25,8 +27,6 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
     @BeforeMethod
     public void beforeTests(Method method) {
-
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
 
         login();
         tuzelKisiYonetimiPage = new TuzelKisiYonetimiPage();
@@ -433,9 +433,10 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .switchToDefaultWindow();
     }
 
+
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1132: Tüzel kişinin pasif yapılması ve kontrolü")
-    public void TS1132() throws InterruptedException {
+    @Test(enabled = true, description = "TS1132b: Tüzel kişinin pasif yapılması ve kontrolü")
+    public void TS1132b() throws InterruptedException {
 
         String vergiNo = "34378564433";
         String ad = "Ts1132 TüzelKişi";
@@ -454,7 +455,7 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         sikKullanilanlarPage
                 .openPage()
-                .dagitimdaVarIseKaldir(ad) //Seçili geldiği durumlarda seçili kişiyi kaldırır.
+                .dagitimdaVarIseKaldir() //Seçili geldiği durumlarda seçili kişiyi kaldırır.
                 .datigimlarTipSec(tip)
                 .dagitimlarDoldur(ad)
                 .dagitimlarKaydet()
@@ -492,28 +493,29 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
-        evrakOlusturPage
+        //Upgrade sonrası burası kaldırıldı.
+/*        evrakOlusturPage
                 .editorTabAc()
                 .geregiAlanindaGoruntulenmemeKontrolu(ad)
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad);*/
 
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Tüzel Kişi")
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(ad)
-                .geldigiTuzelKisiGoruntulenmemeKontrolu(vergiNo);
+                .geldigiAlanindaTuzelKisiGoruntulenmemeKontrolu(ad, "Tüzel Kişi Ad")
+                .geldigiAlanindaTuzelKisiGoruntulenmemeKontrolu(vergiNo,"Tüzel Kişi Vergi No");
 
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Tüzel Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(ad)
+                .geregiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi")
 
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(ad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(ad, "Tüzel Kişi");
 
         sikKullanilanlarPage
                 .openPage()
@@ -521,8 +523,8 @@ public class TuzelKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1458: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
-    public void TS1458() throws InterruptedException {
+    @Test(enabled = true, description = "TS1458b: Pasif yapılan tüzel kişinin aktif yapılması ve kontrolü")
+    public void TS1458b() throws InterruptedException {
 
         String vergiNo = "55665732323";
         String ad = "Ts1458";
@@ -580,12 +582,13 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
 
-        evrakOlusturPage
+        //Upgrade sonrası burası kaldırıldı.
+/*        evrakOlusturPage
                 .editorTabAc()
-                .bilgiDoldur(tamAd)
+                .bilgiDoldur(tamAd, "Ad")
                 .secilenBilgiSil()
                 .geregVeBilgiAlanindanSil()
-                .geregiDoldur(tamAd);
+                .geregiDoldur(tamAd, "Ad");*/
 
         gelenEvrakKayitPage
                 .openPage()
@@ -601,4 +604,79 @@ public class TuzelKisiYonetimiTest extends BaseTest {
                 .bilgiSecimTipiSecByText("Tüzel Kişi")
                 .bilgiAlanindaGoruntulenmeKontrolu(ad, soyad);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2246: Medya şirketi tipinde tüzel kişi ekleme")
+    public void TS2246() {
+
+        /*String vergiNo = createRandomNumber(10);
+        String kisaAd = createRandomText(7);
+        String ad = kisaAd + " Medya Şirketi";
+        String tuzelKisiTipi = "MEDYA ŞİRKETİ";
+        String adres = "Gültepe Mahallesi";
+        String ulke = "TÜRKİYE";
+        String il = "İst";
+        String ilce = "Kağ";
+        String eposta = kisaAd + "medyasirketi@turksat.com.tr";
+        String webAdres = "www." + kisaAd + "medyasirketi.com";
+        String telNo = "5391111111";
+        String faksNo = "2121111111";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        tuzelKisiYonetimiPage
+                .openPage()
+                .yeniTuzelKisiEkle()
+                .tuzelKisiTipiSec(tuzelKisiTipi)
+                .medyaSirketiAlanKontrolleri()
+                .vergiNoDoldur(vergiNo)
+                .adDoldur(ad)
+                .kisaAdDoldur(kisaAd)
+
+                .karasalTVSec("T1")
+                .karasalTVYayindaSec(true)
+                .kabloTVSec("TEK")
+                .kabloTVYayindaSec(true)
+                .istegeBagliTvSec(true)
+                .platformIsletmecisiSe(true)
+
+                .yeniIletisimEkle()
+
+                .mobilTelNoDoldur(telNo)
+                .telNoDoldur(telNo)
+                .faks1NoDoldur(faksNo)
+                .faks2NoDoldur(faksNo)
+                .adresDoldur(adres)
+                .ulkeSec(ulke)
+
+                .ilSec(il)
+                .ilceSec(ilce)
+                .ePostaDoldur(eposta)
+                .webAdresDoldur(webAdres)
+                .iletisimBilgisiKaydet()
+
+                .tuzelKisiKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+           evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .geregiDoldur(ad, "Ad")
+                .secilenGeregiSil()
+                .geregiDoldur(kisaAd, "Kısa Ad")
+                .secilenGeregiSil()
+                .geregiVergiNoDoldur(vergiNo, "Vergi Kimlik No");*/
+
+        List<String> medyaKisi = new ReusableSteps().medyaSirketiTuzelKisiEkleme();
+
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .geregiDoldur(medyaKisi.get(0), "Ad")
+                .secilenGeregiSil()
+                .geregiDoldur(medyaKisi.get(1), "Kısa Ad")
+                .secilenGeregiSil()
+                .geregiVergiNoDoldur(medyaKisi.get(2), "Vergi Kimlik No");
+
+    }
+
 }

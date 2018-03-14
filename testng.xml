@@ -4,7 +4,16 @@
 <!--<suite thread-count="5" name="Test Suite" parallel="classes" verbose="1">-->
 
 
-<suite name="AAAAAA" parallel="classes" verbose="1">
+<suite name="Evrak Not" parallel="classes" verbose="1">
+    <!--<method-selectors>
+        <method-selector>
+            <selector-class name="tests.BirimIcerikSablonu.BirimIcerikSablonuTest">
+                <include name="">
+
+                </include>
+            </selector-class>
+        </method-selector>
+    </method-selectors>-->
 
     <!--thread-count="10"-->
     <!--<listeners>-->
@@ -14,19 +23,19 @@
     <!--<suite-file path="testSuite1.xml"></suite-file>-->
     <!--<suite-file path="testSuite2.xml"></suite-file>-->
     <!--</suite-files>-->
-    <!--<test name="GercekKisiYonetimiTest">
+    <test name="Evrak Not">
         <classes>
-            <class name="tests.GercekKisiYonetimi.GercekKisiYonetimiTest"/>
+            <class name="tests.EvrakNot.EvrakNotTest"/>
         </classes>
     </test>
-    <test name="TuzelKisiYonetimiTest">
+    <!--<test name="TuzelKisiYonetimiTest">
         <classes>
             <class name="tests.TuzelKisiYonetimi.TuzelKisiYonetimiTest"/>
         </classes>
     </test>-->
-    <test name="All">
+    <!--<test name="All">
         <packages>
             <package name="tests.*"/>
         </packages>
-    </test>
+    </test>-->
 </suite>

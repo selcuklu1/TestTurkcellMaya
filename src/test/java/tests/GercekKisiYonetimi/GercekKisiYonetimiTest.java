@@ -30,9 +30,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
     @BeforeMethod
     public void beforeTests(Method method) {
 
-        log.info(method.getName() + "Nolu test senaryosu başladı.");
-
         login();
+//test deneme
         gercekKisiYonetimPage = new GercekKisiYonetimPage();
         evrakOlusturPage = new EvrakOlusturPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
@@ -60,7 +59,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
         String bilgiSecimTipi = "Gerçek Kişi";
         String geregiSecimTipi = "Gerçek Kişi";
         String evrakBilgileriListKisiKurumTipi = "Gerçek Kişi";
-        String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği / bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
+        String gercekKisiMesaj = "Seçtiğiniz gerçek kişi gereği/bilgi listesinde ekli olduğu için bu gerçek kişiyi seçemezsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
         gercekKisiYonetimPage
@@ -153,7 +152,7 @@ public class GercekKisiYonetimiTest extends BaseTest {
                 .filtreSorgulamaPaneliAc()
                 .filtreDurumSec("PASIFLER")
                 .ara()
-                .pasiflerTumListeKayitKontrolu();
+                .pasiflerListesiKayitKontrolu();
 
         String getTbleTCNO = gercekKisiYonetimPage.getTbleTCNO();
 
@@ -418,8 +417,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1132: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
-    public void TS1132() throws InterruptedException {
+    @Test(enabled = true, description = "TS1132a: Gerçek kişinin pasif yapılması ve ekranlardan kontrolü")
+    public void TS1132a() throws InterruptedException {
 
         String TCNO = "43534543543";
         String ad = "Ts1132";
@@ -470,24 +469,24 @@ public class GercekKisiYonetimiTest extends BaseTest {
         gidenEvrakKayitPage
                 .openPage()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi");
 
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .geregiSecimTipiSecByText("Gerçek Kişi")
-                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad)
+                .geregiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi")
 
                 .bilgiSecimTipiSecByText("Gerçek Kişi")
-                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad);
+                .bilgiAlanindaGoruntulenmemeKontrolu(adSoyad, "Gerçek Kişi");
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1458: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
-    public void TS1458() throws InterruptedException {
+    @Test(enabled = true, description = "TS1458a: Pasif yapılan gerçek kişinin aktif yapılması ve ekranlardan kontrolü")
+    public void TS1458a() throws InterruptedException {
 
         String TCKN = "21861197500";
         String ad = "Ts1458";
