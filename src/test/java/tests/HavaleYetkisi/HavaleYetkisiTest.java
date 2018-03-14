@@ -10,8 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.altMenuPages.EvrakDetayiPage;
-import pages.pageComponents.IslemMesajlari;
-import pages.pageComponents.tabs.AltTabs;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.RolYonetimiPage;
@@ -47,7 +45,7 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
 
-    @Step("Havale işlemleri Tüm birimleri görebilme aksiyonlu rol oluşturma")
+    @Step("Havale İşlemleri Tüm Birimleri Görebilme aksiyonlu rol oluşturma")
     public void preTS2253(String yenirolad, String eklenecekAksiyon) throws InterruptedException {
 
         String degerKod = createRandomNumber(8);
@@ -109,8 +107,8 @@ public class HavaleYetkisiTest extends BaseTest {
 
     }
 
-    @Step("PreContion : Havale işlemleri Tüm birimleri görebilme aksiyonlu rol oluşturma")
-    public void preconTümBirimleriGorebilmeEkle(String[] rolAdi, String eklenecekAksiyon) throws InterruptedException {
+    @Step("PreContion : \"{eklenecekAksiyon}\" aksiyonlu rollere eklendi")
+    public void preconRollereAksiyonEkleme(String[] rolAdi, String eklenecekAksiyon) throws InterruptedException {
 
         String kullaniciAdi = "username21g";
 
@@ -152,7 +150,7 @@ public class HavaleYetkisiTest extends BaseTest {
         rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
         mainPage.profilEkraniKapat();
 
-        preconTümBirimleriGorebilmeEkle(rolAdi, aksiyonAdi);
+        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
         login(TestData.user21g);
         rolYonetimiPage
@@ -194,7 +192,7 @@ public class HavaleYetkisiTest extends BaseTest {
         rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
         mainPage.profilEkraniKapat();
 
-        preconTümBirimleriGorebilmeEkle(rolAdi, aksiyonAdi);
+        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
         login(TestData.user21g);
         rolYonetimiPage
@@ -218,7 +216,9 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
+    @Test(enabled = true
+            ,dependsOnMethods = {"TS2250"}
+            , description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
     public void TS0597() throws InterruptedException {
 
         login(TestData.user21g);
@@ -344,6 +344,21 @@ public class HavaleYetkisiTest extends BaseTest {
         String konu2 = "TS0614 " + createRandomNumber(8);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Username21g TEST";
+        String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
+        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
+
+
+        String menuName = "Profil";
+        mainPage
+                .userMenuAc()
+                .userMenuKontrol(menuName)
+                .userMenuMenuSec(menuName);
+
+        rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
+        mainPage.profilEkraniKapat();
+
+        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
 
         reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);

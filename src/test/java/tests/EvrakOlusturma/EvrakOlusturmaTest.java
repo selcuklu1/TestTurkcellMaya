@@ -143,5 +143,9 @@ public class EvrakOlusturmaTest extends BaseTest {
         evrakOlusturPage
                 .pdfKontrol
                 .PDFIcerikKontrol(icerik);
+
+        evrakOlusturPage
+                .bilgilerTabiAc();
+
     }
 }

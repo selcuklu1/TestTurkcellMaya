@@ -285,6 +285,8 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .evrakSecGerialGelmedigiGorme(false)
                 .evrakSecIcerikGoster(konuKodu,true)
                 .evrakIcerikGosterGerialGelmedigiGorme(false);
+
+        ///CAN ŞEKER DENEME
     }
 
 }

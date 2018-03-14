@@ -419,7 +419,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("3. Dağıtım yerleri kapat")
-    public ImzaBekleyenlerPage ucuncuDagitimYerleriKapat() {
+    public ImzaBekleyenlerPage ucuncuDagitimYerleriKapat() throws InterruptedException {
         dagitimYerleriRow3.scrollIntoView(true).click();
         return this;
     }
