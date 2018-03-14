@@ -2043,7 +2043,7 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Koordineli seç")
+        @Step("Koordineli kutucuğuna tıkla")
         public BilgilerTab koordineliTikla() {
             chkKoordineli.click();
             return this;

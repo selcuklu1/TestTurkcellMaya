@@ -366,7 +366,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak önizleme ekranı kontrolu")
+    @Step("Evrak içerik ekranı kontrolu")
     public ImzaBekleyenlerPage evrakIcerikKontrol() {
         Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
         return this;
@@ -419,7 +419,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
     @Step("3. Dağıtım yerleri kapat")
-    public ImzaBekleyenlerPage ucuncuDagitimYerleriKapat() {
+    public ImzaBekleyenlerPage ucuncuDagitimYerleriKapat() throws InterruptedException {
         dagitimYerleriRow3.scrollIntoView(true).click();
         return this;
     }

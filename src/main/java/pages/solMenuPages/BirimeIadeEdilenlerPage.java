@@ -80,6 +80,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlVeHavaleEt = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='teslimAlHavale']");
+    SelenideElement btnTopluTeslimAlVeHavaleEt = $("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class='ui-button-icon-left ui-icon document-delivery-publish']");
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
 
@@ -165,6 +166,16 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
         return this;
     }
+
+    @Step("Birim İade Edilenler Evraklar listesinden İki evrak seçilir")
+    public BirimeIadeEdilenlerPage ilkIkiEvrakCheckBoxSec(){
+        if (tblEvraklar.get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        if (tblEvraklar.get(1).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
 
     @Step("Onaylayacak Kişi doldur: {onaylanacakKisi} - {birim}")
     public BirimeIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi, String birim) {
@@ -506,9 +517,27 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Listeden bir evrakda checkbox seçilir")
+    public BirimeIadeEdilenlerPage evrakSecCheckboxIlkSec(){
+        tblEvraklar.first().$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
+    @Step("Evrak üzerindeki \"İçerik Göster\"e tıklanır")
+    public BirimeIadeEdilenlerPage evrakSecICerikGoster(){
+    $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton")).click();
+        return this;
+    }
+    
     @Step("Havale yap")
     public BirimeIadeEdilenlerPage havaleYap() {
         btnTeslimAlVeHavaleEt.click();
+        return this;
+    }
+
+    @Step("Teslim Al ve Havale Et")
+    public BirimeIadeEdilenlerPage topluTeslimAlveHavaleEt(){
+        btnTopluTeslimAlVeHavaleEt.click();
         return this;
     }
 

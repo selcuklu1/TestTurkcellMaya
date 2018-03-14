@@ -59,7 +59,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
 
     SelenideElement lblSayfa = $("[class='ui-inbox-header-title']");
 
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:uiRepeat:4:panelGrid'] [class='ui-button-icon-left ui-icon havaleEt']");
+    SelenideElement btnHavaleYap2 = $("[class='ui-button-icon-left ui-icon havaleEt']");
 
     //havale alan kontrolleri
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
@@ -194,6 +195,18 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak üzerine tıklanır")
+    public BirimHavaleEdilenlerPage ilkEvrakSec(){
+        tblEvraklar.first().click();
+        return this;
+    }
+    
+    @Step("Evrak üzerindeki \"İçerik Göster\"e tıklanır")
+    public BirimHavaleEdilenlerPage ilkIcerikGosterSec(){
+        $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton")).click();
+        return this;
+    }
+    
     @Step("Evrak Önizleme geldiği görülür. ")
     public BirimHavaleEdilenlerPage evrakOnizlemeKontrolu() {
         formEvrakOnizleme.isDisplayed();
@@ -289,6 +302,12 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Havale Yap button tıkla")
     public BirimHavaleEdilenlerPage havaleYap() {
         btnHavaleYap.click();
+        return this;
+    }
+
+    @Step("Havale Yap button tıkla")
+    public BirimHavaleEdilenlerPage icerikGosterHavaleYap(){
+        btnHavaleYap2.click();
         return this;
     }
 

@@ -387,7 +387,7 @@ public class MainPage extends BaseLibrary {
         return this;
     }
 
-    @Step("Iade Et")
+    @Step("Not Alanı Doldur")
     public MainPage notAlaniDoldur(String konu) {
         new EvrakPageButtons().notAlaniDoldur(konu);
         return this;

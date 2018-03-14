@@ -65,10 +65,15 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement txtIcerikKisiKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
     SelenideElement txtIcerikKullanıcıListeKontrol = $(By.id("inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement txtIcerikAciklamaKontrol = $(By.id("inboxItemInfoForm:havaleAciklama"));
+    SelenideElement txtTeslimAlinmayiIcerikAciklamaKontrol = $(By.id("inboxItemInfoForm:aciklamaInputText"));
     SelenideElement btnIcerikDosyaEkleKontrol = $(By.id("inboxItemInfoForm:fileUploadHavaleEk"));
+    SelenideElement btnTeslimAlinmayiIcerikDosyaEkleKontrol = $(By.id("inboxItemInfoForm:fileUploadTeslimAlHavaleEk"));
     SelenideElement txtIcerikIslemSureKontrol = $(By.id("inboxItemInfoForm:islemSuresiTarih_input"));
+    SelenideElement txtTeslimAlinmayiIcerikIslemSureKontrol = $(By.id("inboxItemInfoForm:islemSuresiTarihTeslimAlHavaleEt_input"));
     SelenideElement btnIcerikHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
     SelenideElement btnIcerikHavaleGonder = $("[class$='havaleGonderButonClass']");
+    SelenideElement btnIcerikTeslimAlGonder = $(By.xpath("//*[contains(text(),'Teslim Al Gönder')]"));
+    SelenideElement btnIcerikVazgec = $(By.id("inboxItemInfoForm:teslimAlHavaleEtVazgecButton"));
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
@@ -420,6 +425,41 @@ public class EvrakDetayiPage extends MainPage {
         boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
         Assert.assertEquals(durum9,true);
         Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        return this;
+    }
+
+    @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
+    public EvrakDetayiPage icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {
+        Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
+        Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikKisiKontrol.isDisplayed(), true, "Kisi Alanı Görüntülendi");
+        Allure.addAttachment("Kisi Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtIcerikKullanıcıListeKontrol.isDisplayed(), true, "Kullanıcı Liste Alanı Görüntülendi");
+        Allure.addAttachment("Kullanıcı Liste Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtTeslimAlinmayiIcerikAciklamaKontrol.isDisplayed(), true, "Aciklama Alanı Görüntülendi");
+        Allure.addAttachment("Aciklama Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(btnTeslimAlinmayiIcerikDosyaEkleKontrol.isDisplayed(), true, "Dosya Ekle Alanı Görüntülendi");
+        Allure.addAttachment("Dosya Ekle Alanı Görüntülendi : ", "");
+
+        Assert.assertEquals(txtTeslimAlinmayiIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
+        Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
+
+        boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9,true);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+
+        boolean durum8 =btnIcerikTeslimAlGonder.isDisplayed();
+        Assert.assertEquals(durum8,true);
+        Allure.addAttachment("Teslim Al Gonder buttonun geldiği görülür","Teslim Al Gönder");
+
+        boolean durum10 =btnIcerikVazgec.isDisplayed();
+        Assert.assertEquals(durum10,true);
+        Allure.addAttachment("Vazgeç buttonun geldiği görülür","Vazgeç");
+
         return this;
     }
 

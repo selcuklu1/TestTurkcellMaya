@@ -23,6 +23,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     ReusableSteps reusableSteps;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
@@ -43,6 +44,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         evrakDetayiPage = new EvrakDetayiPage();
         evrakOnizleme = new EvrakOnizleme();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
     @Test(enabled = true, description = "TS2295: Toplu havale ekranı alan kontrolü")
@@ -163,8 +165,104 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         evrakOnizleme
                 .teslimAlVeHavaleEtGeldigiGorme()
-                .teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+                .teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true,true);
 
+        teslimAlinmayiBekleyenlerPage
+                .evrakSec()
+                .evrakSecCheckboxIlkSec()
+                .topluTeslimAlVeHavaleEt()
+                .topluHavaleEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        teslimAlinmayiBekleyenlerPage
+                .ilkEvrakIcerikGoster()
+                .teslimAlVeHavaleEt();
+
+        evrakDetayiPage
+                .icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluTeslimAlVeHavaleEt()
+                .topluHavaleEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+        .havaleYapEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
+                .ilkEvrakIcerikGoster()
+                .havaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        teslimAlinanlarPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluHavale()
+                .havaleYapEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .ilkEvrakSec()
+                .havaleYap();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        birimHavaleEdilenlerPage
+                .ilkIcerikGosterSec()
+                .icerikGosterHavaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        birimeIadeEdilenlerPage
+                .evrakSecCheckboxIlkSec()
+                .topluTeslimAlveHavaleEt();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        birimeIadeEdilenlerPage
+                .evrakSecICerikGoster()
+                .teslimAlVeHavaleEt();
+
+        evrakDetayiPage
+                .icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluTeslimAlveHavaleEt();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
     }
 
 
@@ -285,6 +383,8 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .evrakSecGerialGelmedigiGorme(false)
                 .evrakSecIcerikGoster(konuKodu,true)
                 .evrakIcerikGosterGerialGelmedigiGorme(false);
+
+        ///CAN ŞEKER DENEME
     }
 
 }

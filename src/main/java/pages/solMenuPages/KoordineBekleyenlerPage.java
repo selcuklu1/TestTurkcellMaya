@@ -53,7 +53,7 @@ public class KoordineBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak önizleme ekranı kontrolu")
+    @Step("Evrak içerik ekranı kontrolu")
     public KoordineBekleyenlerPage evrakIcerikKontrol() {
         Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
         return this;

@@ -391,7 +391,7 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    @Step("Evrak Üzerinde Iade Et Ikon kontrolu")
     public ParafBekleyenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
 
         boolean durum = tblParafBekleyenEvraklar
