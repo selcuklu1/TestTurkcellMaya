@@ -2123,6 +2123,9 @@ public class EvrakIadesi extends BaseTest {
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        imzaBekleyenlerPage
+                .evrakOlmadigiGorme(konu);
+
         iadeEttiklerimPage
                 .openPage()
                 .evrakSec(konu)

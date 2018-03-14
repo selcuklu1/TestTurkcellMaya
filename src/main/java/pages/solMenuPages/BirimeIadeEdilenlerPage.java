@@ -134,7 +134,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    @Step("Evrak Üzerinde Iade Et Not kontrolu {konu}")
     public BirimeIadeEdilenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
         boolean durum = tblEvraklar
                 .filterBy(Condition.text(konu))
@@ -142,12 +142,13 @@ public class BirimeIadeEdilenlerPage extends MainPage {
                 .$("[class$='document-typeIade']").isDisplayed();
 
 
-        Assert.assertEquals(durum, true, "Iade Et Button kontrolü:");
-        Allure.addAttachment("Iade Et Button Kontrolü", "");
+        Assert.assertEquals(durum, true, "Iade Et Not kontrolü:");
+        Allure.addAttachment("Iade Et Not Kontrolü", "");
+        takeScreenshot();
         return this;
     }
 
-    @Step("Evrak Üzerinde Iade Notu kontrolu")
+    @Step("Evrak Üzerinde Iade Notu kontrolu {konu}")
     public BirimeIadeEdilenlerPage konuyaGoreEvrakNotuKontrolu(String konu) {
         boolean durum = tblEvraklar
                 .filterBy(Condition.text(konu))
