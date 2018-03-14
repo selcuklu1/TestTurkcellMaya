@@ -30,6 +30,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     ElementsCollection btnTeslimAlVeKapat = $$("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] table td[class='buttonMenuContainerDefault']");
     SelenideElement btnTeslimAlVeKapat2 = $("[class='ui-button-icon-left ui-icon teslimAlHavale']");
+    SelenideElement btnTopluTeslimAlVeHavaleEt = $("[class='ui-button-icon-left ui-icon document-delivery-publish']");
     BelgenetElement txtTeslimAlVeHavaleEtBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbTeslimAlVeHavaleEtBirimBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
     BelgenetElement txtTeslimAlVeHavaleEtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -272,6 +273,27 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak üzerindeki İçerik Göster'e tıklanır ")
+    public TeslimAlinmayiBekleyenlerPage ilkEvrakIcerikGoster(){
+        $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton")).click();
+        return this;
+    }
+
+    @Step("Teslim Alınmayı Bekleyneler Evraklar listesinden İki evrak seçilir")
+    public TeslimAlinmayiBekleyenlerPage ilkIkiEvrakCheckBoxSec(){
+        if (tableEvraklar.get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+        tableEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        if (tableEvraklar.get(1).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+        tableEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
+    @Step("Listeden bir evrakda checkbox seçilir")
+    public TeslimAlinmayiBekleyenlerPage evrakSecCheckboxIlkSec(){
+        tblEvraklar.first().$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
     @Step("Evrak geldiği görünür")
     public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih, String geldigiYer) {
         boolean durum = tblEvraklar
@@ -295,6 +317,20 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Teslim Al ve Havale Et")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEt() {
         btnTeslimAlVeKapat2.click();
+        return this;
+    }
+
+    @Step("Üst tarafındaki Teslim Al ve Havale Yap butonuna basılır")
+    public TeslimAlinmayiBekleyenlerPage topluTeslimAlVeHavaleEt(){
+        btnTopluTeslimAlVeHavaleEt.click();
+        return this;
+    }
+
+    @Step("Havale ekranın açıldığı görülür")
+    public TeslimAlinmayiBekleyenlerPage topluHavaleEkranGeldigiGorulur(){
+        boolean durum = $(By.id("mainPreviewForm:topluTeslimAlHavaleEtOnizlemeTab")).isDisplayed();
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 
