@@ -101,6 +101,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement btnTeslimAlveHavaleEt=$("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class$='document-delivery-publish']");
     SelenideElement btnTopluHavale = $("[class='ui-button-icon-left ui-icon document-charge']");
 
+    SelenideElement btnIcerikEkleri = $("[class$='kullaniciEkleri']");
+    SelenideElement btnIcerikIlgileri = $("[class$='kullaniciIlgileri']");
+    ElementsCollection tblIcerikEkleri = $$("[id='inboxItemInfoForm:ekListesiDataTable_data'] tr");
+    ElementsCollection tblIcerikIlgileri = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] tr");
+
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
 //        ustMenu("Teslim Alınmayı Bekleyenler");
@@ -594,6 +599,39 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
     }
+
+    @Step("Evrak Detay Ekleri Tab Seç")
+    public TeslimAlinmayiBekleyenlerPage icerikEkleriSec() {
+        btnIcerikEkleri.click();
+        return this;
+    }
+
+    @Step("Evrak Detay Bilgileri Tab Seç")
+    public TeslimAlinmayiBekleyenlerPage icerikIlgileriSec() {
+        btnIcerikIlgileri.click();
+        return this;
+    }
+
+    @Step("Icerik Ekleri Ek Kontrolleri {ek1} {ek2} {ek3}")
+    public TeslimAlinmayiBekleyenlerPage icerikEkleriEkKontrol(String ek1, String ek2, String ek3) {
+        tblIcerikEkleri.filterBy(Condition.text(ek1)).shouldHaveSize(1);
+        tblIcerikEkleri.filterBy(Condition.text(ek2)).shouldHaveSize(1);
+        tblIcerikEkleri.filterBy(Condition.text(ek3)).shouldHaveSize(1);
+        Allure.addAttachment(ek1 + " " + ek2 + " " + ek3, "gelmektedir");
+        return this;
+    }
+
+    @Step("Icerik Ekleri Ek Kontrolleri {ek1} {ek2}")
+    public TeslimAlinmayiBekleyenlerPage icerikIlgileriEkKontrol(String ek1, String ek2) {
+        boolean durum1 = tblIcerikIlgileri.filterBy(Condition.text(ek1)).size() > 0;
+        boolean durum2 = tblIcerikIlgileri.filterBy(Condition.text(ek2)).size() > 0;
+        Assert.assertEquals(durum1,true);
+        Assert.assertEquals(durum2,true);
+        Allure.addAttachment(ek1 + " " + ek2, "gelmektedir");
+        return this;
+    }
+
+
 
     @Step("Evrak Detay ekranı açılır\n")
     public TeslimAlinmayiBekleyenlerPage ekranKontrolEvrakDetayi() {
