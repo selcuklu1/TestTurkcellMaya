@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.bouncycastle.crypto.engines.AESLightEngine;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -98,6 +99,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
     SelenideElement btnTeslimAlPopup=$(By.id("teslimAlEvetButton"));
     SelenideElement btnTeslimAlveHavaleEt=$("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class$='document-delivery-publish']");
+    SelenideElement btnTopluHavale = $("[class='ui-button-icon-left ui-icon document-charge']");
 
     public TeslimAlinmayiBekleyenlerPage openPage() {
         solMenu(SolMenuData.BirimEvraklari.TeslimAlinmayiBekleyenler);
@@ -119,6 +121,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Assert.assertEquals(durum2,teslimAlveHavaleEt);
         return this;
     }
+
+@Step("Teslim Al butonu tıklanır.")
+    public TeslimAlinmayiBekleyenlerPage teslimAl(){
+        SelenideElement btnTeslimAl = $("[class='ui-button-icon-left ui-icon document-delivery']");
+
+        btnTeslimAl.click();
+        return this;
+    }
+
 
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
@@ -150,6 +161,21 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Konuya göre evrak işaretlenir : \"{konu}\" ")
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreEvrakIsaratle(String konu) {
+        tblEvraklar.filterBy(Condition.text(konu))
+                .first()
+                .$("[class='ui-chkbox ui-widget']")
+                .click();
+        return this;
+    }
+
+    @Step("Toplu havale tıklanır")
+    public TeslimAlinmayiBekleyenlerPage topluHavale() {
+        btnTopluHavale.click();
+        return this;
+    }
+
     @Step("Evrak Önizleme geldiği görülür. ")
     public TeslimAlinmayiBekleyenlerPage evrakOnizlemeKontrolu() {
         formEvrakOnizleme.isDisplayed();
@@ -164,12 +190,40 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     }
 
     @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
-    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
-        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
         if (shoulBeDisplay)
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         else
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeHavaleYapBirimAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public TeslimAlinmayiBekleyenlerPage evrakOnizlemeHavaleYapKisiAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
         return this;
     }
 
@@ -988,6 +1042,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldur(String birim) {
         txtTeslimAlVeHavaleEtBirim.selectLov(birim);
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+    @Step("Havale alanında birim temizlenir.")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleSil() {
+        txtTeslimAlVeHavaleEtBirim.clearAllSelectedItems();
         return this;
     }
 
