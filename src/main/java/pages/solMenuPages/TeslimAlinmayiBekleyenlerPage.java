@@ -257,7 +257,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Birim alanını doldur: {birimAd} - {birim} ")
+    @Step("Default gereği için gönder ifadesinin geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage birimSecilenDefaultGeregiGeldigiGorme(){
+    Assert.assertEquals($(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu")).getSelectedText(),"GEREĞİ İÇİN GÖNDER");
+        return this;
+    }
+
+    @Step("Kullanıcı Listesi alanını doldur: {kullaniciListesi} - {birim} ")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKullaniciListesiDoldur(String kullaniciListesi, String birim) {
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(Condition.text(kullaniciListesi)).first().click();
@@ -286,7 +292,8 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     @Step("Kişi alanını doldur: {kisiAd} - {birim} ")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtKisiDoldur(String kisiAd, String birim) {
         txtTeslimAlVeHavaleEtKisi.type(kisiAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
-        txtTeslimAlVeHavaleEtKisi.type(kisiAd).getSelectableItems().filterBy(Condition.text(birim)).first().click();
+        txtTeslimAlVeHavaleEtKisi.closeTreePanel();
+        txtTeslimAlVeHavaleEtKisi.type(kisiAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
         return this;
     }
 
@@ -302,9 +309,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Birim alanını doldur: {birimAd} - {birim} ")
-    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlVeHavaleEtKisiDoldur(String birimAd, String birim) {
-        txtEvrakDetayTeslimAlVeHavaleEtKisi.type(birimAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+    @Step("Kişi alanını doldur: {kisiAd} - {birim} ")
+    public TeslimAlinmayiBekleyenlerPage evrakDetayTeslimAlVeHavaleEtKisiDoldur(String kisiAd, String birim) {
+        txtEvrakDetayTeslimAlVeHavaleEtKisi.type(kisiAd).getDetailItems().filterBy(Condition.text(birim)).first().click();
+        return this;
+    }
+
+    @Step("Default gereği için gönder ifadesinin geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage birimSecilenGeregiIcinGonderGeldigiGorme(){
+        Assert.assertEquals($(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovSecilenTable:0:selectOneMenu")).getSelectedText(),"GEREĞİ İÇİN GÖNDER");
         return this;
     }
 
@@ -388,6 +401,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale ekranının geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEtEkranGeldigiGorme(){
+        Assert.assertEquals($(By.id("mainPreviewForm:evrakOnizlemeTab")).isDisplayed(),true);
+        return this;
+    }
+
     @Step("Üst tarafındaki Teslim Al ve Havale Yap butonuna basılır")
     public TeslimAlinmayiBekleyenlerPage topluTeslimAlVeHavaleEt(){
         btnTopluTeslimAlVeHavaleEt.click();
@@ -446,6 +465,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage evrakNoIleEvrakIcerikGosterSec(String evrakNo) {
         tblEvraklar
                 .filterBy(Condition.text(evrakNo)).get(0).$$("[id$='detayGosterButton']").first().click();
+        return this;
+    }
+
+    @Step("Evrak içeriğinin geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage icerikGosterIcerikGeldigiGorme(boolean gorunum){
+        Assert.assertEquals($(By.id("inboxItemInfoForm")).isDisplayed(),gorunum);
         return this;
     }
 
