@@ -719,11 +719,11 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
-                .popUps();
-//                .popUpsv2();
+                .popUpsv2();
+//                .popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 //                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
