@@ -245,12 +245,23 @@ public class HavaleEttiklerimPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi silinir")
+    public HavaleEttiklerimPage havaleYapKisiSil() {
+        txtHavaleYapKisi.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Kişi listesinde \"{kisi}\" seçmeye dene")
     public HavaleEttiklerimPage havaleYapKisiSecmeyeDene(String kisi) {
         txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(Condition.text(kisi)).first().click();
         return this;
     }
 
+    @Step("Kişi listesinde \"{kisi}\" seçilir")
+    public HavaleEttiklerimPage havaleYapKisiSec(String kisi) {
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
 
     @Step("Kullanıcı listesi doldur")
     public HavaleEttiklerimPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {

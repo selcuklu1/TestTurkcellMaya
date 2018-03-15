@@ -666,6 +666,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi doldur")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiSil() {
+        txtHavaleYapKisi.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Kişi alanında \"{kisi}\" seçmeye dene")
     public TeslimAlinmayiBekleyenlerPage havaleYapKisiKisiSecmeyeDene(String kisi) {
         txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
@@ -1035,6 +1041,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldurExactName(String birim) {
+        txtTeslimAlVeHavaleEtBirim.selectExactLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
     @Step("Havale alanında birim temizlenir.")
     public TeslimAlinmayiBekleyenlerPage birimeHavaleSil() {
         txtTeslimAlVeHavaleEtBirim.clearAllSelectedItems();
