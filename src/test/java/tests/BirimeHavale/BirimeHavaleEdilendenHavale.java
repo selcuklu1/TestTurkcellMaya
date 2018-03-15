@@ -96,11 +96,11 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 //                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-        evrakNo = gelenEvrakKayitPage.popUps();
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -147,10 +147,6 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .openPage()
                 .tabloEvrakNoSec(konu)
                 .evrakAlanVeAdetKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,gerekicin,evrakTarihi,evrakSayiSag,1);
-
-
-
-
 
     }
 
@@ -218,11 +214,11 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 //                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-        evrakNo = gelenEvrakKayitPage.popUps();
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
