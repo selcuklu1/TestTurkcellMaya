@@ -195,6 +195,15 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın Gelen Evraklar listesinde doğru bilgilerle listelendiği görülür: Konu:{konu}, Geldiği yer:{yer}, Kayıt tarihi:{tarih}, Evrak tarihi / no / Gereği için")
+    public GelenEvraklarPage evrakGeldigiGorme(String konu, String yer, String tarih){
+        boolean durum = tableEvraklar.filterBy(text(konu))
+                .filterBy(text(yer))
+                .filterBy(text(tarih)).size()==1;
+        Assert.assertEquals(durum,true);
+        return this;
+    }
+
     @Step("Tablodan rapor seç")
     public GelenEvraklarPage gizlilikRaporSecTakibeEkle(String konu, String yer, String tarih, String no) {
         SelenideElement evrak = filter().findRowsWith(text(konu))
