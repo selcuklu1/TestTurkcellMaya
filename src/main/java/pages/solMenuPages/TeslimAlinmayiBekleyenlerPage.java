@@ -111,6 +111,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evraklar listesinde 'Teslim al' ve 'Teslim al ve havale et' ikonlarını ile evrakların listelendiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage teslimAlVeTeslimAlVeHavaleEtGeldigiGorme(boolean teslimAl,boolean teslimAlveHavaleEt){
+        boolean durum = $("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class='ui-button-icon-left ui-icon document-delivery']").isDisplayed();
+        Assert.assertEquals(durum,teslimAl);
+        boolean durum2 = $("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class='ui-button-icon-left ui-icon document-delivery-publish']").isDisplayed();
+        Assert.assertEquals(durum2,teslimAlveHavaleEt);
+        return this;
+    }
+
     @Step("Tablodan rapor seç")
     public TeslimAlinmayiBekleyenlerPage gizlilikRaporSec(String konu, String yer, String tarih, String no) {
         SelenideElement evrak = filter().findRowsWith(text(konu), text(yer), text(tarih), text(no))

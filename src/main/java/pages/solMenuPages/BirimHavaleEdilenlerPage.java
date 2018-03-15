@@ -238,7 +238,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     }
 
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no:{konu} ile İçerik Göster tıklanır")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;

@@ -57,6 +57,12 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Üzerinde toplu havale ile evrakların listelendiği görülür.")
+    public TeslimAlinanlarPage ustEvraklarTopluHavaleGeldigiGorme(){
+        Assert.assertEquals(btntopluHavale.isDisplayed(),true);
+        return this;
+    }
+
     @Step("Toplu Havale Tıklanır")
     public TeslimAlinanlarPage topluHavale(){
         btntopluHavale.click();

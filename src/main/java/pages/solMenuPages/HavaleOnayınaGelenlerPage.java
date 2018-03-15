@@ -120,7 +120,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    @Step("Evrakın ekranın sağında önizlemede geldiği görülür.")
     public HavaleOnayınaGelenlerPage evrakOnizlemeGeldigiGorme(boolean gorulen){
         boolean durum = $(By.id("mainPreviewForm:evrakOnizlemeTab")).isDisplayed();
         Assert.assertEquals(durum,gorulen);

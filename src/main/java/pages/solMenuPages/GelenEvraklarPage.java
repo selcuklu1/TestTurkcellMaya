@@ -353,7 +353,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu{konu}")
     public GelenEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tableEvraklar
@@ -1047,6 +1047,12 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage ekranKontrolEvrakDetayi() {
         Assert.assertEquals(tabEvrakDetayi.isDisplayed(), true, "Evrak Detay sayfası");
         Allure.addAttachment("Evrak Detay sayfası", "açılmaktadır");
+        return this;
+    }
+
+    @Step("Evrak içeriğinin geldiği görülür.")
+    public GelenEvraklarPage evrakIcerikGeldigiGorme(){
+        Assert.assertEquals($(By.id("inboxItemInfoForm")).isDisplayed(),true);
         return this;
     }
 
