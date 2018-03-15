@@ -810,7 +810,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 //                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet();
