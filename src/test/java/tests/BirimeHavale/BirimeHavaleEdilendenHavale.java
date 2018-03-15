@@ -115,8 +115,8 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .havaleYapKontrol()
-                .havaleYap()
+                .icerikHavaleYapKontrol()
+                .icerikGosterHavaleYap()
                 .havaleAlanKontrolleri()
 
                 .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)
@@ -233,8 +233,8 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .havaleYapKontrol()
-                .havaleYap()
+                .icerikHavaleYapKontrol()
+                .icerikGosterHavaleYap()
                 .havaleAlanKontrolleri()
 
                 .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)

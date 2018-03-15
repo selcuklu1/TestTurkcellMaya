@@ -325,6 +325,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Yap button kontrol")
+    public BirimHavaleEdilenlerPage icerikHavaleYapKontrol() {
+        Assert.assertEquals(btnHavaleYap2.isDisplayed(), true, "Havale Yap Button Kontrol");
+        Allure.addAttachment("Havale Yap Button Kontrol", "");
+        return this;
+    }
+
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
