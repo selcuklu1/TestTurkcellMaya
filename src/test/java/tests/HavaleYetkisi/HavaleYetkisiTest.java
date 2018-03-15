@@ -101,6 +101,7 @@ public class HavaleYetkisiTest extends BaseTest {
         teslimAlinanlarPage
 //                .tabloKonuyaGoreEvrakAc(konu)
 //                .evrakOnizlemeButonTikla("Havale Yap")
+               .birimeHavaleSil()
                 .birimeHavaleDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
 //                .havaleYapKisiDoldur("Username22n TEST")
 //                .havaleYapAciklamaDoldur("Havale Yap acikalama")
@@ -130,6 +131,8 @@ public class HavaleYetkisiTest extends BaseTest {
 //                .evrakOnizlemeButonTikla("Havale Yap")
 //                .havaleYapBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
 //                .havaleYapAciklamaDoldur("Havale Yap acikalama")
+                .birimeHavaleSil()
+                .birimeHavaleDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .teslimAl();
 
     }
@@ -255,12 +258,12 @@ public class HavaleYetkisiTest extends BaseTest {
 
 //        login(TestData.user21g);
 
-//        login(TestData.username27);
+        login(TestData.username27);
 
-//        String konu = "TS0614 " + createRandomNumber(8);
-//        String konu2 = "TS0614 " + createRandomNumber(8);
-        String konu = "TS0614 14502163";
-        String konu2 = "TS0614 16215340";
+        String konu = "TS0614 " + createRandomNumber(8);
+        String konu2 = "TS0614 " + createRandomNumber(8);
+//        String konu = "TS0614 15603241";
+//        String konu2 = "TS0614 14361052";
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Username27 TEST";
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
@@ -271,6 +274,7 @@ public class HavaleYetkisiTest extends BaseTest {
         String btnBirim = "Birim";
         String btnTumu = "Tümü";
         String ustBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String ustBirim2 = "BİLİŞİM HİZMETLERİ VE UYDU PAZARLAMA GENEL MÜDÜR YARDIMCISI";
 
 //        String menuName = "Profil";
 //        mainPage
@@ -284,7 +288,9 @@ public class HavaleYetkisiTest extends BaseTest {
 //        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
         reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
+
         login(TestData.username27);
+
         reusableSteps.gelenEvraklarEvrakOlustur(konu2, kurum, birim);
 
         gelenEvraklarPage
@@ -358,7 +364,7 @@ public class HavaleYetkisiTest extends BaseTest {
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnBirim, true)
                 .evrakOnizlemeHavaleYapBirimAlaniButonTikla(btnBirim)
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
-                .birimeHavaleDoldur(ustBirim)
+                .birimeHavaleDoldur(ustBirim2)
                 .konuyaGoreIcerikGoster(konu);
 
         evrakDetayiPage
@@ -368,7 +374,7 @@ public class HavaleYetkisiTest extends BaseTest {
                 .havaleYapBirimAlanindaButonKontrolu(btnBirim, true)
                 .havaleYapBirimAlanindaButonTikla(btnBirim)
                 .havaleYapBirimAlanindaButonKontrolu(btnTumu, true)
-                .havaleYapAlanindaBirimSec(ustBirim)
+                .havaleYapAlanindaBirimSec(ustBirim2)
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
@@ -377,11 +383,75 @@ public class HavaleYetkisiTest extends BaseTest {
                 .konuyaGoreEvrakIsaratle(konu2)
                 .secilenTeslimAlVeHavaleEt()
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnBirim, true)
-                .birimeHavaleDoldur(ustBirim);
+                .evrakOnizlemeHavaleYapBirimAlaniButonTikla(btnBirim)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
+                .birimeHavaleDoldur(ustBirim2);
 
         teslimAlveHavaleEtBirimeHavaleYap();
-        
-//31. adımdan devam edilecek.
+
+        teslimAlinanlarPage
+                .openPage()
+                .konuyaGoreEvrakSec(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnHavaleYap)
+                .evrakOnizlemeButonTikla(btnHavaleYap)
+                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, true)
+                .evrakOnizlemeHavaleYapBirimAlaniButonTikla(btnBirim)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
+                .birimeHavaleDoldur(ustBirim2)  //ygdnın ustunu yaz
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .butonKontrolu(btnHavaleYap, true)
+                .btnTikla(btnHavaleYap)
+                .havaleYapBirimAlanindaButonKontrolu(btnBirim, true)
+                .havaleYapBirimAlanindaButonTikla(btnBirim)
+                .havaleYapBirimAlanindaButonKontrolu(btnTumu, true)
+                .havaleYapAlanindaBirimSec(ustBirim2)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinanlarPage
+                .konuyaGoreEvrakIsaratle(konu)
+                .konuyaGoreEvrakIsaratle(konu2)
+                .topluHavale()
+                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, true)
+                .evrakOnizlemeHavaleYapBirimAlaniButonTikla(btnBirim)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
+                .birimeHavaleDoldur(ustBirim2);
+
+        teslimAldiklarimBirimeHavaleYap();
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .konuyaGoreTablodanEvrakSecme(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnHavaleYap)
+                .evrakOnizlemeButonTikla(btnHavaleYap)
+                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, true)
+                .evrakSecIcerikGoster(konu, true);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .butonKontrolu(btnHavaleYap, true)
+                .btnTikla(btnHavaleYap)
+                .havaleYapBirimAlanindaButonKontrolu(btnBirim, true)
+                .havaleYapBirimAlanindaButonTikla(btnBirim)
+                .havaleYapBirimAlanindaButonKontrolu(btnTumu, true)
+                .havaleYapAlanindaBirimSec(ustBirim2)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        birimHavaleEdilenlerPage
+                .konuyaGoreTablodanEvrakSecme(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnHavaleYap)
+                .evrakOnizlemeButonTikla(btnHavaleYap)
+                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, true)
+                .evrakOnizlemeHavaleYapBirimAlaniButonTikla(btnBirim)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
+                .dagitimBilgileriBirimDoldur(ustBirim2);
 
     }
 

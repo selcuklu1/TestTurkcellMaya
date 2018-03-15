@@ -1035,6 +1035,11 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }
+    @Step("Havale alanında birim temizlenir.")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleSil() {
+        txtTeslimAlVeHavaleEtBirim.clearAllSelectedItems();
+        return this;
+    }
 
     @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
     public TeslimAlinmayiBekleyenlerPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {

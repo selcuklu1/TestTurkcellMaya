@@ -460,6 +460,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public BirimHavaleEdilenlerPage dagitimBilgileriBirimDoldur(String birim) {
+        txtComboLovBirim.selectLov(birim);
+        return this;
+    }
+
+
     @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
     public BirimHavaleEdilenlerPage eklenenBirimKontrolu(String birim) {
         Assert.assertEquals(txtEklenenBirim.isDisplayed(), true, "Birim Eklendi");

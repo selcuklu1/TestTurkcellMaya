@@ -486,6 +486,13 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
+    @Step("Birime havale alanında birimler silinir.")
+    public TeslimAlinanlarPage birimeHavaleSil() {
+        cmbBirimeHavale.clearAllSelectedItems();
+        return this;
+    }
+
+
     @Step("Birime havale alanında girilen \"{description}\" 'ın görüntülenmeme kontrolu: {birim}")
     public TeslimAlinanlarPage birimeHavaleAlanindaGoruntulenmemeKontrolu(String birim, String description) {
 
