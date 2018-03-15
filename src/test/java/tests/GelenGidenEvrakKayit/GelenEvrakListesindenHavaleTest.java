@@ -173,10 +173,11 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-//                .onizlemeHavaleBilgisiKontrol()
+                .onizlemeHavaleBilgisiKontrol()
                 .onizlemeGeriAlKontrol()
                 .havaleBilgisiSec()
                 .kisiKontrol(kullanici)
+                .evrakNoIleEvrakSec(konu)
                 .geriAlSec()
                 .notAlaniKontrol()
                 .geriAlNotDoldur(konu)
