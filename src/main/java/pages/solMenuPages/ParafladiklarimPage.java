@@ -100,9 +100,21 @@ public class ParafladiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("Geri al tıklanır")
+    @Step("Geri al Geri Al tıklanır")
     public ParafladiklarimPage geriAlGeriAl() {
         btnGeriAlGeriAl.click();
+        return this;
+    }
+
+    @Step("Imzaladıklarım Evraklar listesinde evrakın listelenmediği kontrolu")
+    public ParafladiklarimPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
+
+        boolean durum = tblParafladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
+
         return this;
     }
 

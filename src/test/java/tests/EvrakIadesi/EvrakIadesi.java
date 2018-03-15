@@ -2016,6 +2016,9 @@ public class EvrakIadesi extends BaseTest {
                 .geriAlGeriAl()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        parafladiklarimPage
+                .konuyaGoreEvrakGelmemeKontrolu(konu);
+
         parafBekleyenlerPage
                 .openPage()
                 .konuyaGoreEvrakDetayGoster(konu);
