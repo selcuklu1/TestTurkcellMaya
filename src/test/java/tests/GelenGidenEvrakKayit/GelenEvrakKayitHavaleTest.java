@@ -509,8 +509,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
         String evrakNo = gelenEvrakKayitPage.popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         birimHavaleEdilenlerPage
                 .openPage()
