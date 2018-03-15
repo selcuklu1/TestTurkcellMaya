@@ -56,6 +56,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
     SelenideElement chkHavaleYapEvrakOnayliKapat = $(By.id("mainPreviewForm:j_idt30591_input"));
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
+    SelenideElement btnHavaleYap2 = $("[class='ui-button-icon-left ui-icon havaleEt']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
     ElementsCollection tblVekaletVerenAlan = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
 
@@ -528,11 +529,20 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+
     @Step("Havele Yap Gönder butonu")
     public GelenEvraklarPage havaleYapGonder() {
         btnHavaleYapGonder.click();
         return this;
     }
+
+
+    @Step("Havele Yap Gönder butonu")
+    public GelenEvraklarPage havaleyap() {
+        btnHavaleYap2.click();
+        return this;
+    }
+
 
     public GelenEvraklarPage havaleYapEvrakOnayliKapatChecked(Boolean secim) {
         chkHavaleYapEvrakOnayliKapat.setSelected(secim);

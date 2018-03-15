@@ -11,6 +11,8 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.BirimYonetimiPage;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.RolYonetimiPage;
 
@@ -20,12 +22,14 @@ public class HavaleYetkisiTest extends BaseTest {
     MainPage mainPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
     ReusableSteps reusableSteps;
+    GelenEvrakKayitPage gelenEvrakKayitPage;
     GelenEvraklarPage gelenEvraklarPage;
     EvrakDetayiPage evrakDetayiPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    BirimYonetimiPage birimYonetimiPage;
 
     String[] rolAdi;
 
@@ -42,6 +46,8 @@ public class HavaleYetkisiTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         birimHavaleEdilenlerPage = new BirimHavaleEdilenlerPage();
+        birimYonetimiPage = new BirimYonetimiPage();
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
     }
 
 
@@ -333,49 +339,26 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0614 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
+    @Test(enabled = true, description = "TS0615 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
     public void TS0615() throws InterruptedException{
 
+        String konuKodu = "TS0615"+createRandomNumber(15);
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
 
-        login(TestData.user21g);
-
-        String konu = "TS0614 " + createRandomNumber(8);
-//        String konu = "TS0597 16403152";
-        String konu2 = "TS0614 " + createRandomNumber(8);
-        String kurum = "BÜYÜK HARFLERLE KURUM";
-        String birim = "Username21g TEST";
-        String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
-        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
-
-
-        String menuName = "Profil";
-        mainPage
-                .userMenuAc()
-                .userMenuKontrol(menuName)
-                .userMenuMenuSec(menuName);
-
-        rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
-        mainPage.profilEkraniKapat();
-
-        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
-
-
-        reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
-
-        String btnHavaleYap = "Havale Yap";
-        String btnTeslimAlveHavaleYap = "Teslim Al ve Havale Et";
-        String btnBirim = "Birim";
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKodu,"Büyük Harflerle Kurum","Zübeyde Tekin");
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakAc(konu)
-                .evrakOnizlemeKontrolu()
-                .evrakOnizlemeButonKontrolu(btnHavaleYap)
-                .evrakOnizlemeButonTikla(btnHavaleYap)
-                .evrakOnizlemeButonKontrolu(btnBirim, false)
-                .konuyaGoreEvrakIcerikGoster(konu);
+                .evrakNoyaGoreEvrakSec(konuKodu)
+                .havaleYap()
+                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, false)
+
+        ;
 
     }
+
+
+
 
 }
