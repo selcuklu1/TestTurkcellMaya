@@ -115,7 +115,7 @@ public class GelenEvraklarPage extends MainPage {
 
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement tblIlkEvrakIcerikGoster = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
-    ElementsCollection tblGelenEvrakListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
+    ElementsCollection tblGelenEvrakListesi = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tblIkinciEvrak = $(By.id("mainInboxForm:inboxDataTable:1:evrakTable"));
 
     BelgenetElement cmbOnayAkisi = comboLov(By.cssSelector("[id^='windowCevapEvrakForm:evrakBilgileriList'][id$='akisLov:LovText']"));
@@ -235,6 +235,12 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi doldur")
+    public GelenEvraklarPage havaleYapKisiDoldur2(String kisi) {
+        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
     @Step("Kullanıcı listesi doldur")
     public GelenEvraklarPage havaleYapKullaniciListesiDoldur(String kullaniciListesi) {
 //        txtHavaleYapKullaniciListesi.selectLov(kullaniciListesi);
@@ -258,6 +264,15 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage evrakNoyaGoreEvrakSec(String evrakNo) {
         tblGelenEvrakListesi.filterBy(Condition.text(evrakNo))
                 .first()
+                .click();
+        return this;
+    }
+
+    @Step("Konuya göre evrak işaretlenir : \"{konu}\" ")
+    public GelenEvraklarPage konuyaGoreEvrakIsaratle(String konu) {
+        tblGelenEvrakListesi.filterBy(Condition.text(konu))
+                .first()
+                .$("[class='ui-chkbox ui-widget']")
                 .click();
         return this;
     }
@@ -353,7 +368,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Gelen Evraklar sayfasında evrakın geldiği kontrolu ve seçme")
+    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu{konu}")
     public GelenEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tableEvraklar
@@ -687,7 +702,7 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Gelen evraklar listesinden İki evrak seçilir")
-    public GelenEvraklarPage ilkIkiEvrakCheckBoxSec(){
+    public GelenEvraklarPage ilkIkiEvrakCheckBoxSec() {
         tableEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         tableEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
@@ -739,78 +754,78 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
-    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim,boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi,boolean aciklama,boolean dosyaYukleme, boolean islemsuresi, boolean gonder, boolean havaleOnayinaGonder) {
-        boolean durum =txtHavaleYapBirim.isDisplayed();
-        Assert.assertEquals(durum,birim);
-        Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür","Birim");
+    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim, boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi, boolean aciklama, boolean dosyaYukleme, boolean islemsuresi, boolean gonder, boolean havaleOnayinaGonder) {
+        boolean durum = txtHavaleYapBirim.isDisplayed();
+        Assert.assertEquals(durum, birim);
+        Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür", "Birim");
 
-        boolean durum2 =txtHavaleYapKisi.isDisplayed();
-        Assert.assertEquals(durum2,kisi);
-        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür","Kişi");
+        boolean durum2 = txtHavaleYapKisi.isDisplayed();
+        Assert.assertEquals(durum2, kisi);
+        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür", "Kişi");
 
-        boolean durum3 =txtHavaleYapKullaniciListesi.isDisplayed();
-        Assert.assertEquals(durum3,kullaniciListesi);
-        Allure.addAttachment("Havale edilecek Kullanıcı Listesi alanın geldiği görülür","Kullanıcı Listesi");
+        boolean durum3 = txtHavaleYapKullaniciListesi.isDisplayed();
+        Assert.assertEquals(durum3, kullaniciListesi);
+        Allure.addAttachment("Havale edilecek Kullanıcı Listesi alanın geldiği görülür", "Kullanıcı Listesi");
 
-        boolean durum4 =txtHavaleYapOnaylayacakKisi.isDisplayed();
-        Assert.assertEquals(durum4,kullaniciListesi);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylacak kişi");
+        boolean durum4 = txtHavaleYapOnaylayacakKisi.isDisplayed();
+        Assert.assertEquals(durum4, kullaniciListesi);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür", "Onaylacak kişi");
 
-        boolean durum5 =txtHavaleYapAciklama.isDisplayed();
-        Assert.assertEquals(durum5,aciklama);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Açıklama");
+        boolean durum5 = txtHavaleYapAciklama.isDisplayed();
+        Assert.assertEquals(durum5, aciklama);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür", "Açıklama");
 
         boolean durum6 = btnHavaleYapDosyaEkle.isDisplayed();
-        Assert.assertEquals(durum6,dosyaYukleme);
-        Allure.addAttachment("Dosya Yükleme alanı geldiği görülür","Dosya yükleme");
+        Assert.assertEquals(durum6, dosyaYukleme);
+        Allure.addAttachment("Dosya Yükleme alanı geldiği görülür", "Dosya yükleme");
 
-        boolean durum7 =txtHavaleYapIslemSuresi.isDisplayed();
-        Assert.assertEquals(durum7,islemsuresi);
-        Allure.addAttachment("İşlem süresi alanının geldiği görülür","İşlem Süresi");
+        boolean durum7 = txtHavaleYapIslemSuresi.isDisplayed();
+        Assert.assertEquals(durum7, islemsuresi);
+        Allure.addAttachment("İşlem süresi alanının geldiği görülür", "İşlem Süresi");
 
-        boolean durum8 =btnHavaleYapGonder.isDisplayed();
-        Assert.assertEquals(durum8,gonder);
-        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+        boolean durum8 = btnHavaleYapGonder.isDisplayed();
+        Assert.assertEquals(durum8, gonder);
+        Allure.addAttachment("Gonder buttonun geldiği görülür", "Gonder");
 
-        boolean durum9 =btnHavaleYapHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,havaleOnayinaGonder);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 = btnHavaleYapHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9, havaleOnayinaGonder);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür", "Havale Onayına Gönder");
         return this;
     }
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
-    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim,boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi,boolean aciklama,boolean dosyaYukleme, boolean gonder, boolean havaleOnayinaGonder) {
-        boolean durum =txtHavaleYapBirim.isDisplayed();
-        Assert.assertEquals(durum,birim);
-        Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür","Birim");
+    public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim, boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi, boolean aciklama, boolean dosyaYukleme, boolean gonder, boolean havaleOnayinaGonder) {
+        boolean durum = txtHavaleYapBirim.isDisplayed();
+        Assert.assertEquals(durum, birim);
+        Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür", "Birim");
 
-        boolean durum2 =txtHavaleYapKisi.isDisplayed();
-        Assert.assertEquals(durum2,kisi);
-        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür","Kişi");
+        boolean durum2 = txtHavaleYapKisi.isDisplayed();
+        Assert.assertEquals(durum2, kisi);
+        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür", "Kişi");
 
-        boolean durum3 =txtHavaleYapKullaniciListesi.isDisplayed();
-        Assert.assertEquals(durum3,kullaniciListesi);
-        Allure.addAttachment("Havale edilecek Kullanıcı Listesi alanın geldiği görülür","Kullanıcı Listesi");
+        boolean durum3 = txtHavaleYapKullaniciListesi.isDisplayed();
+        Assert.assertEquals(durum3, kullaniciListesi);
+        Allure.addAttachment("Havale edilecek Kullanıcı Listesi alanın geldiği görülür", "Kullanıcı Listesi");
 
-        boolean durum4 =txtHavaleYapOnaylayacakKisi.isDisplayed();
-        Assert.assertEquals(durum4,kullaniciListesi);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylacak kişi");
+        boolean durum4 = txtHavaleYapOnaylayacakKisi.isDisplayed();
+        Assert.assertEquals(durum4, kullaniciListesi);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür", "Onaylacak kişi");
 
-        boolean durum5 =txtHavaleYapAciklama.isDisplayed();
-        Assert.assertEquals(durum5,aciklama);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Açıklama");
+        boolean durum5 = txtHavaleYapAciklama.isDisplayed();
+        Assert.assertEquals(durum5, aciklama);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür", "Açıklama");
 
         boolean durum6 = btnHavaleYapDosyaEkle.isDisplayed();
-        Assert.assertEquals(durum6,dosyaYukleme);
-        Allure.addAttachment("Dosya Yükleme alanı geldiği görülür","Dosya yükleme");
+        Assert.assertEquals(durum6, dosyaYukleme);
+        Allure.addAttachment("Dosya Yükleme alanı geldiği görülür", "Dosya yükleme");
 
-        boolean durum8 =btnHavaleYapGonder.isDisplayed();
-        Assert.assertEquals(durum8,gonder);
-        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+        boolean durum8 = btnHavaleYapGonder.isDisplayed();
+        Assert.assertEquals(durum8, gonder);
+        Allure.addAttachment("Gonder buttonun geldiği görülür", "Gonder");
 
-        boolean durum9 =btnHavaleYapHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,havaleOnayinaGonder);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 = btnHavaleYapHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9, havaleOnayinaGonder);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür", "Havale Onayına Gönder");
         return this;
     }
 
@@ -1050,6 +1065,12 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak içeriğinin geldiği görülür.")
+    public GelenEvraklarPage evrakIcerikGeldigiGorme(){
+        Assert.assertEquals($(By.id("inboxItemInfoForm")).isDisplayed(),true);
+        return this;
+    }
+
     @Step("İçerik Evrak Havale Yap Butonu Tıklandı")
     public GelenEvraklarPage icerikHavaleYap() {
         btnIcerikHavaleYap.click();
@@ -1058,7 +1079,7 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
     public GelenEvraklarPage icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {
-        boolean durum =txtHavaleYapBirim.isDisplayed();
+        boolean durum = txtHavaleYapBirim.isDisplayed();
         Assert.assertEquals(txtIcerikBirimKontrol.isDisplayed(), true, "Birim Alanı Görüntülendi");
         Allure.addAttachment("Birim Kontrol Alanı Görüntülendi : ", "");
 
@@ -1077,13 +1098,13 @@ public class GelenEvraklarPage extends MainPage {
         Assert.assertEquals(txtIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
         Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
 
-        boolean durum8 =btnIcerikHavaleGonder.isDisplayed();
-        Assert.assertEquals(durum8,true);
-        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+        boolean durum8 = btnIcerikHavaleGonder.isDisplayed();
+        Assert.assertEquals(durum8, true);
+        Allure.addAttachment("Gonder buttonun geldiği görülür", "Gonder");
 
-        boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,true);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 = btnIcerikHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9, true);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür", "Havale Onayına Gönder");
         return this;
     }
 
@@ -1102,14 +1123,43 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
-    public GelenEvraklarPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
-        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+    public GelenEvraklarPage evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
         if (shoulBeDisplay)
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         else
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
         return this;
     }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public GelenEvraklarPage evrakOnizlemeHavaleYapBirimAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public GelenEvraklarPage evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public GelenEvraklarPage evrakOnizlemeHavaleYapKisiAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
 
     @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
     public GelenEvraklarPage evrakOnizlemeButonTikla(String btnText) {
@@ -1505,28 +1555,28 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Kullanıcı listesi alanından bir kullanıcı seçerek doldur")
-    public GelenEvraklarPage icerikGosterKullaniciListesiDoldur(String kullaniciListesi){
+    public GelenEvraklarPage icerikGosterKullaniciListesiDoldur(String kullaniciListesi) {
         txtIcerikGosterKullaniciListesi.selectLov(kullaniciListesi);
         return this;
     }
 
     @Step("Gönder butonunu tıkla")
-    public GelenEvraklarPage icerikGosterGonder(){
+    public GelenEvraklarPage icerikGosterGonder() {
         $(By.id("inboxItemInfoForm:havaleDagitimLovPanel")).parent().$$("button")
                 .filterBy(Condition.text("Gönder")).first().pressEnter();
         return this;
     }
 
     @Step("Havale ekranın açıldığı görülür")
-    public GelenEvraklarPage icerikHavaleYapEkranGeldigiGorme(){
+    public GelenEvraklarPage icerikHavaleYapEkranGeldigiGorme() {
         boolean durum = $(By.id("inboxItemInfoForm:havaleDagitimLovPanel")).isDisplayed();
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
 
     @Step("İçerik goster tıklanır")
-    public GelenEvraklarPage ilkIcerikGoster(){
+    public GelenEvraklarPage ilkIcerikGoster() {
         tblIlkEvrakIcerikGoster.click();
         return this;
     }
@@ -1777,8 +1827,17 @@ public class GelenEvraklarPage extends MainPage {
     @Step("Iade Edilecek Kullanıcı/Birim Kontrolü")
     public GelenEvraklarPage onizlemeIadeEdilecekKullaniciKontrolu(String kisi) {
         boolean durum = lblIadeEdilecekKullanici.filterBy(Condition.text(kisi)).size() == 1;
+
+
+        Assert.assertEquals(durum, true, "Iade Edilecek Kullanıcı Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı Kontrolü", "");
+
+        Assert.assertEquals(durum, true, "Iade Edilecek Kullanıcı/Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü", "");
+
         Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı/Birim Kontrolü");
         Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü","");
+
         return this;
     }
 
