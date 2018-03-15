@@ -178,7 +178,7 @@ public class DataTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
-                .popUps();
+                .popUpsv2();
 
 
 //        gelenEvrakKayitPage
