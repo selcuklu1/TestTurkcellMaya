@@ -50,7 +50,7 @@ public class KontrolBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak seç")
+    @Step("Kontrol Et Panel Kontrolü")
     public KontrolBekleyenlerPage kontrolEtPanelKontrolu(String user,String tip) {
         boolean durum = tableKontrolListesi
                 .filterBy(text(tip))
@@ -58,6 +58,7 @@ public class KontrolBekleyenlerPage extends MainPage {
                 .size() > 0;
         Assert.assertEquals(durum,true,tip + ":"  + user + " listelendi");
         Allure.addAttachment(tip + ":"  + user + " listelendi","");
+        takeScreenshot();
         return this;
     }
 

@@ -25,7 +25,7 @@ public class TeslimAlinanlarPage extends MainPage {
     SelenideElement dateTxtTarih = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt353"));
     SelenideElement cmbTopluSecim = $(By.id("mainInboxForm:inboxDataTable:j_idt657_button"));
     SelenideElement tblRapor = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
-    SelenideElement btnHavaleYap = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:5:cmdbutton"));
+    SelenideElement btnHavaleYap = $("[class='ui-button-icon-left ui-icon havaleEt']");
     ElementsCollection tblEvraklar = $$("[id^='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     BelgenetElement txtHavaleYapKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -420,6 +420,21 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Evrak seç")
     public TeslimAlinanlarPage evrakSec() {
         tblIlkEvrak.click();
+        return this;
+    }
+
+    @Step("Evrak üzerindeki \"İçerik Göster\"e tıklanır")
+    public TeslimAlinanlarPage ilkEvrakIcerikGoster(){
+    $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton")).click();
+        return this;
+    }
+
+    @Step("Teslim Alınanlar Evraklar listesinden İki evrak seçilir")
+    public TeslimAlinanlarPage ilkIkiEvrakCheckBoxSec(){
+        if (tblEvraklar.get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        if (tblEvraklar.get(1).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
         return this;
     }
 

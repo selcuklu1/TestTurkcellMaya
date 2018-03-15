@@ -85,7 +85,7 @@ public class IadeEttiklerimPage extends MainPage {
         boolean durum = tblParafImzacilarListesi.get(0).$$("td[role='gridcell']").get(3).getText().equals("");
         Assert.assertEquals(tarih,true,"Tarih Boş Kontrolü");
         Assert.assertEquals(durum,true,"Durum Boş Kontrolü");
-        Allure.addAttachment("Paraf/Imzacılar Listesinde tarih ve durum :" , " sonuç:" + tarih +" " + durum);
+        Allure.addAttachment("Paraf/Imzacılar Listesinde tarih ve durum boş kontrolü :" , " sonuç:" + tarih +" " + durum);
         return this;
     }
 

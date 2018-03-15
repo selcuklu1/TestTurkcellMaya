@@ -231,7 +231,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("İade et")
+    @Step("İade Et İade Et")
     public ImzaBekleyenlerPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
@@ -366,7 +366,7 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak önizleme ekranı kontrolu")
+    @Step("Evrak içerik ekranı kontrolu")
     public ImzaBekleyenlerPage evrakIcerikKontrol() {
         Assert.assertEquals(evrakIcerikEkranKontrol.isDisplayed(), true);
         return this;
