@@ -173,7 +173,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .onizlemeHavaleBilgisiKontrol()
+//                .onizlemeHavaleBilgisiKontrol()
                 .onizlemeGeriAlKontrol()
                 .havaleBilgisiSec()
                 .kisiKontrol(kullanici)
@@ -323,7 +323,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu)
-                .onizlemeHavaleBilgisiKontrol()
+//                .onizlemeHavaleBilgisiKontrol()
                 .onizlemeGeriAlKontrol()
                 .havaleBilgisiSec()
                 .kisiKontrol(kullanici)
