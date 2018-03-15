@@ -517,7 +517,6 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment("Arşivde Kayıtlı Ekle" , "gelmektedir");
         Allure.addAttachment("Dosya Ekle" , "gelmektedir");
         Allure.addAttachment("Açıklama Ekle" , "gelmektedir");
-        takeScreenshot();
         return this;
     }
 

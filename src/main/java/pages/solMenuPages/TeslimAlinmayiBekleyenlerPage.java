@@ -596,7 +596,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Icerik Ekleri Ek Kontrolleri {ek1} {ek2} {ek3}")
+    @Step("Icerik Ekleri Ek Kontrolleri {ek1} {ek2}")
     public TeslimAlinmayiBekleyenlerPage icerikIlgileriEkKontrol(String ek1, String ek2) {
         boolean durum1 = tblIcerikIlgileri.filterBy(Condition.text(ek1)).size() > 0;
         boolean durum2 = tblIcerikIlgileri.filterBy(Condition.text(ek2)).size() > 0;
