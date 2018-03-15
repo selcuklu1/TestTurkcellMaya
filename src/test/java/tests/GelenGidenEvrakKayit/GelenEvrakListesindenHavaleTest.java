@@ -729,7 +729,15 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
-                .rapordaEvraklarıListele(konu1)
+                .rapordaEvraklarıListele(konu1);
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdilenEvrakRaporAlanKontrolu()
+                .havaleEdilenBirimDoldur(birim)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
                 .rapordaEvraklarıListele(konu2);
 
@@ -753,7 +761,15 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
-                .rapordaEvraklarıListele(konu1)
+                .rapordaEvraklarıListele(konu1);
+
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdenKullaniciDoldur(kisi)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
                 .rapordaEvraklarıListele(konu2)
                 .rapordaEvraklarıListeleDetayTikla(konu2)
