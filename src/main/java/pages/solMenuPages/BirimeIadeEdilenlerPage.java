@@ -74,7 +74,9 @@ public class BirimeIadeEdilenlerPage extends MainPage {
 
     BelgenetElement havaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
-    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+//    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+    SelenideElement birimTopluTeslimAlGonder = $("button[id='mainPreviewForm:btnTopluTeslimAlGonder']");
+
     SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
     SelenideElement tabHavale = $("[id='mainPreviewForm:evrakOnizlemeTab']");
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
