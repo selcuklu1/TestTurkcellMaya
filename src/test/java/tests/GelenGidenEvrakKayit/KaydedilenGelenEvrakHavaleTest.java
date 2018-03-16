@@ -609,7 +609,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
-                .geriAl()
+                .geriAl();
 //                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
