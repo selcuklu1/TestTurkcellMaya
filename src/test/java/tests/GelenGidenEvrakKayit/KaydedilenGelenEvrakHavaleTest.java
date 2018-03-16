@@ -282,7 +282,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .havaleOnayIkonKontrolu()
                 .havaleOnay()
                 .eklenenKisiKontrolu(kisi)
-                .havaleOnayiBirimDoldur(birim)
+//                .havaleOnayiBirimDoldur(birim)
                 .eklenenBirimKontrolu(birim)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
                 .eklenenBirimKontrolu(birim)
@@ -593,8 +593,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
-                .geriAl()
-                .islemMesaji().basariliOlmali();
+                .geriAl();
+//                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
