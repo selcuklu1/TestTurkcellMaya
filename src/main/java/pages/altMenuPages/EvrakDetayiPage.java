@@ -75,6 +75,9 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIcerikTeslimAlGonder = $(By.xpath("//*[contains(text(),'Teslim Al Gönder')]"));
     SelenideElement btnIcerikVazgec = $(By.id("inboxItemInfoForm:teslimAlHavaleEtVazgecButton"));
 
+    BelgenetElement txtIcerikHavaleYapKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
+
+
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
     private BilgileriTab bilgileriTab = new BilgileriTab();
@@ -372,6 +375,13 @@ public class EvrakDetayiPage extends MainPage {
         txtHavaleYapBirim.selectLov(birim);
         return this;
     }
+
+    @Step("Evrak Detayi ekranında Havale Yap alanında Kisi \"{kisi}\" seçilir. ")
+    public EvrakDetayiPage havaleYapAlanindaKisiSec(String kisi) {
+        txtIcerikHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
 
 
     @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
