@@ -79,11 +79,18 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewevrakArama = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:evrakAramaText']"));
 
     //Arşivde Kayıtlı Evrak Ekle alt sekmesinde bulunanlar
+    SelenideElement btnArsivdeKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:arsivdenEkEkleTabId']");
     SelenideElement dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihBas = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
     SelenideElement dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihSon = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihSonId_input"));
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraKonu = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraKonuInputTextId"));
     SelenideElement txtEvrakEkTabViewKullanici = $(By.id("evrakBilgileriForm:evrakEkTabView:kisiyeLov_id:LovText"));
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
+
+    //Dosya Ekle Ekle alt sekmesinde bulunanlar
+    SelenideElement btnDosyaEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:dosyaEkleTab']");
+
+    //Web Adresini Ekle alt sekmesinde bulunanlar
+    SelenideElement btnWebAdresiniEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:webAdresindenEkEkle']");
 
     // Havale işlemleri sekmesinde bulunanlar
     ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
@@ -119,6 +126,11 @@ public class GelenEvrakKayitPage extends MainPage {
     ElementsCollection tblVekaletAlanVeren = $$("tbody[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin_data'] tr[data-ri]");
 
     //İlgi Bilgileri sekmesinde bulunanlar
+    SelenideElement btnIlgiBilgileriDosyaEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:dosyaEkleTab']");
+    SelenideElement btnIlgiBilgileriAciklamaEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:aciklamaEkleTab']");
+    SelenideElement btnIlgiBilgileriSistemdeKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
+    SelenideElement btnIlgiBilgileriArsivdenKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEkleTabId']");
+
     //Dosya Ekle alt sekmesinde bulunanlar
     SelenideElement btnIlgiBilgileri = $(By.id("evrakBilgileriForm:ilgiBilgileriPanel_toggler"));
     SelenideElement ilgiBilgileriDosyaPath = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:fileUploadButtonB_input"));
@@ -280,6 +292,23 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+
+    @Step("Tab Kontrolleri")
+    public GelenEvrakKayitPage tabKontrolu() {
+        Assert.assertEquals(btnFizikselEkEkle.getText().equals("Fiziksel Ek Ekle"),true,"Fiziksel Ekle Kontrolü");
+        Assert.assertEquals(btnSistemdeKayitliEvrakEkle.getText().equals("Sistemde Kayıtlı Evrak Ekle"),true,"Sistemde Kayıtlı Evrak Ekle Kontrolü");
+        Assert.assertEquals(btnDosyaEkle.getText().equals("Dosya Ekle"),true,"Dosya Ekle Kontrolü");
+        Assert.assertEquals(btnArsivdeKayitliEvrakEkle.getText().equals("Arşivde Kayıtlı Evrak Ekle"),true,"Arsivde Kayitli Ekle Kontrolü");
+        Assert.assertEquals(btnWebAdresiniEkle.getText().equals("Web Adresini Ekle"),true,"Web Adresini Ekle Kontrolü");
+
+        Allure.addAttachment("Fiziksel Ekle" , "gelmektedir");
+        Allure.addAttachment("Sistemde Kayıtlı Evrak" , "gelmektedir");
+        Allure.addAttachment("Dosya Ekle" , "gelmektedir");
+        Allure.addAttachment("Arşivde Kayıtlı Ekle" , "gelmektedir");
+        Allure.addAttachment("Web Adresini Ekle" , "gelmektedir");
+        takeScreenshot();
+        return this;
+    }
     @Step("Havale İşlemleri tabı tıklanır.")
     public GelenEvrakKayitPage havaleIslemleriTabAc(){
         boolean durum = $(By.id("evrakBilgileriForm:havaleDagitimLovPanel")).shouldBe(visible).exists();
@@ -296,6 +325,7 @@ public class GelenEvrakKayitPage extends MainPage {
         Allure.addAttachment(sayfa,"açılmaktadır");
         return this;
     }
+
 
 
     @Step("Otomatik havale seçilir")
@@ -430,9 +460,36 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Ilgi Bilgileri Sistemde Kayitli Evrakekle")
+    @Step("Evrak Ekleri Alan Kontrolleri")
+    public GelenEvrakKayitPage evrakEkleriAlanKontrolleri() {
+        Assert.assertEquals(dateTxtEvrakEkTabViewEkIslemleriEvrakTarihBas.isDisplayed(),true,"Evrak Tarihi Başlangıç");
+        Assert.assertEquals(dateTxtEvrakEkTabViewEkIslemleriEvrakTarihSon.isDisplayed(),true,"Evrak Tarihi Bitiş");
+        Assert.assertEquals(cmbEvrakEkTabViewekIslemleriEvrakAramaAranacakYer.isDisplayed(),true,"Evrak Aranacağı Yer");
+        Assert.assertEquals(txtEvrakEkTabViewevrakArama.isDisplayed(),true,"Evrak Arama");
+        Allure.addAttachment("Evrak Tarihi Başlangıç ve Bitiş"," alanları gelmektedir");
+        Allure.addAttachment("Evrak Aranacağı Yer"," alanları gelmektedir");
+        Allure.addAttachment("Evrak Arama"," alanları gelmektedir");
+        takeScreenshot();
+        return this;
+    }
+
+
+    @Step("Ilgi Bilgileri Sistemde Kayitli Evrak ekle")
     public GelenEvrakKayitPage ilgiBilgileriSistemdeKayitliEvrakEkle() {
         clickJs(btnilgiBilgileriSistemdeKayitliEvrakEkle);
+        return this;
+    }
+
+    @Step("Ilgili Bilgileri Sistemde Kayıtlı Alan Kontrolleri")
+    public GelenEvrakKayitPage ilgiBilgileriSistemdeKayitliAlanKontrolleri() {
+        Assert.assertEquals(dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBas.isDisplayed(), true, "Evrak Tarihi Başlangıç");
+        Assert.assertEquals(datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon.isDisplayed(), true, "Evrak Tarihi Bitiş");
+        Assert.assertEquals(cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer.isDisplayed(), true, "Evrak Aranacağı Yer");
+        Assert.assertEquals(txtIlgiIslemleriTabViewEvrakArama.isDisplayed(), true, "Evrak Arama");
+        Allure.addAttachment("Evrak Tarihi Başlangıç ve Bitiş", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Aranacağı Yer", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Arama", " alanları gelmektedir");
+        takeScreenshot();
         return this;
     }
 
@@ -446,6 +503,20 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Ilgi Bilgileri Evrak Filtreleme")
     public GelenEvrakKayitPage ilgiliBilgiFiltreAc() {
         clickJs(btnIlgiBilgileri);
+        return this;
+    }
+
+    @Step("Ilgili Bilgileri Alan Kontrolleri")
+    public GelenEvrakKayitPage ilgiBilgileriAlanKontrolleri() {
+        Assert.assertEquals(btnIlgiBilgileriSistemdeKayitliEvrakEkle.getText().equals("Sistemde Kayıtlı Evrak Ekle"),true,"Sistemde Kayıtlı Evrak Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriArsivdenKayitliEvrakEkle.getText().equals("Arşivde Kayıtlı Evrak Ekle"),true,"Arsivde Kayitli Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriDosyaEkle.getText().equals("Dosya Ekle"),true,"Dosya Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriAciklamaEkle.getText().equals("Metin Ekle"),true,"Açıklama Ekle Kontrolü");
+
+        Allure.addAttachment("Sistemde Kayıtlı Evrak" , "gelmektedir");
+        Allure.addAttachment("Arşivde Kayıtlı Ekle" , "gelmektedir");
+        Allure.addAttachment("Dosya Ekle" , "gelmektedir");
+        Allure.addAttachment("Açıklama Ekle" , "gelmektedir");
         return this;
     }
 
@@ -1497,9 +1568,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("EkBilgiler dosya ekleme excel adi kontrol : \"{excelAdi}\" ")
-    public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String excelAdi) {
-        $(byText(excelAdi)).shouldBe(Condition.visible);
+    @Step("EkBilgiler dosya ekleme dosya adi kontrol : \"{dosyaAdi}\" ")
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
 //        String text = lblDosyaAdi.text();
 //        System.out.println(text);
 //        Assert.assertEquals(text, excelAdi);
@@ -1685,10 +1756,32 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Eklenen Dosya Kontrolü")
+    public GelenEvrakKayitPage eklenenDosyaKontrolu() {
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Dosya Ekle Tabı tabloda \"{dosyaAdi}\" \"{ekMetni}\" kontrolü")
+    public GelenEvrakKayitPage dosyaEkleTabTabloKontrolu(String dosyaAdi,String ekMetni) {
+        tblDosyaEkle
+                .filterBy(Condition.text(dosyaAdi)).filterBy(Condition.text(ekMetni)).shouldHaveSize(1);
+//        Assert.assertEquals(status, true);
+        return this;
+    }
+
     @Step("Ilgi Bilgileri Dosya Ekle Tabı tabloda \"{dosyaAdi}\" kontrolü")
     public GelenEvrakKayitPage ilgiBilgileridosyaEkleTabloKontrolu(String dosyaAdi) {
         boolean durum = tblIlgiliBilgilerDosyaEkle
                 .filterBy(Condition.text(dosyaAdi)).size() > 0;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+
+    @Step("Ilgi Bilgileri Dosya Ekle Tabı tabloda \"{dosyaAdi}\" \"{ekMetni}\" kontrolü")
+    public GelenEvrakKayitPage ilgiBilgileridosyaEkleTabloKontrolu(String dosyaAdi,String ekMetni) {
+        boolean durum = tblIlgiliBilgilerDosyaEkle
+                .filterBy(Condition.text(dosyaAdi)).filterBy(Condition.text(ekMetni)).size() > 0;
         Assert.assertEquals(durum, true);
         return this;
     }

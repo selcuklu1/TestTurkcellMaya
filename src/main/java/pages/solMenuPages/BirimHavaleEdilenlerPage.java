@@ -163,6 +163,20 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" ")
+    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum,String evrakTarihi) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
         tblKaydedilenGelenEvraklar
@@ -265,7 +279,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     }
 
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no:{konu} ile İçerik Göster tıklanır")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
@@ -308,6 +322,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Havale Yap button tıkla")
     public BirimHavaleEdilenlerPage icerikGosterHavaleYap(){
         btnHavaleYap2.click();
+        return this;
+    }
+
+    @Step("Havale Yap button kontrol")
+    public BirimHavaleEdilenlerPage icerikHavaleYapKontrol() {
+        Assert.assertEquals(btnHavaleYap2.isDisplayed(), true, "Havale Yap Button Kontrol");
+        Allure.addAttachment("Havale Yap Button Kontrol", "");
         return this;
     }
 
@@ -367,6 +388,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Not alanını doldur: {not}")
     public BirimHavaleEdilenlerPage geriAlNotAlaniniDoldur(String not) {
         tctGeriAlNot.setValue(not);
+        return this;
+    }
+
+    @Step("Not girme alnı ve Geri Al butonunun geldiği görülür.")
+    public BirimHavaleEdilenlerPage notGirmeAlaniveGeriAlmaGeldigiGorme(boolean not,boolean geriAl){
+        Assert.assertEquals(tctGeriAlNot.isDisplayed(),not);
+        Assert.assertEquals(btnGeriAlGeriAl.isDisplayed(),geriAl);
         return this;
     }
 

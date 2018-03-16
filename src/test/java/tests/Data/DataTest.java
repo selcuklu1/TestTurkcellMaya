@@ -157,7 +157,7 @@ public class DataTest extends BaseTest {
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
-        String digerBirim = "Birim Deneme";
+        String digerBirim = "AD MÜDÜRLÜĞÜ";
         String digerDetails = "YGD";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
@@ -178,7 +178,7 @@ public class DataTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
-                .popUps();
+                .popUpsv2();
 
 
 //        gelenEvrakKayitPage
@@ -192,7 +192,7 @@ public class DataTest extends BaseTest {
                 .havaleYap()
                 .evrakHavaleEkranKontrol()
                 .dagitimBilgileriBirimDoldurWithDetails(digerBirim, digerDetails)
-                .teslimAlGonder();
+                .teslimAlVeGonder();
 
 
         teslimAlinmayiBekleyenlerPage
