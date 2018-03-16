@@ -77,6 +77,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
 
     @Step("Birim Havale Edilenler sayfası aç")
@@ -183,6 +184,28 @@ public class BirimHavaleEdilenlerPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrak Geçmiş Tab Kontrolü")
+    public BirimHavaleEdilenlerPage evrakGecmisTabKontrolu() {
+        boolean durum = $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab Kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tabı gelmektedir.","");
+        return this;
+    }
+
+    @Step("Evrak geçmişi alanına tıklanır")
+    public BirimHavaleEdilenlerPage secilenEvrakEvrakGecmisi() {
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol")
+    public BirimHavaleEdilenlerPage evrakGecmisi(String teslimAlinan, String islemSureci, String evrakTarihSaat) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() >= 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
