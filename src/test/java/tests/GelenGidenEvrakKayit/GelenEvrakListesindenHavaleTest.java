@@ -112,7 +112,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
                 .icerikHavaleIslemleriKisiDoldur(kullanici,details)
-                .eklenenIcerikKisiKontrolu(kisi)
+                .eklenenIcerikKisiKontrolu(kullanici)
                 .icerikDagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikOnaylayanKontrolu(onaylayacakKisi)
                 .icerikHavaleOnayinaGonder2()
