@@ -429,7 +429,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         aciklamaGir(aciklama);
         kullanildigiBirimSec(kullanildigiBirim);
         altBirimlerGorsunSec(altBirimlerGorsun);
-        dagitimElemanlari.forEach((k,v)-> dagitimElemanlariEkle(k, v));
+        dagitimElemanlari.forEach(this::dagitimElemanlariEkle);
         kaydet().islemMesaji().basariliOlmali();
         return this;
     }

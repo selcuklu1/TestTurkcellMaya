@@ -9,9 +9,6 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.testng.Assert;
 import pages.MainPage;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.*;
@@ -123,7 +120,7 @@ public class PDFOnizleme extends MainPage{
     }
 
     @Step("PDF Önizleme {conditions} bulunmalı")
-    public PDFOnizleme checkTextAndCloseWindow(Condition... conditions) {
+    public void checkTextAndCloseWindow(Condition... conditions) {
         SelenideElement page = getPage(0).scrollIntoView(true);
         //setScale100();
         for (Condition condition : conditions) {
@@ -134,7 +131,6 @@ public class PDFOnizleme extends MainPage{
 
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
-        return this;
     }
 
     @Step("PDF Önizleme {conditions} bulunmalı")
@@ -149,8 +145,9 @@ public class PDFOnizleme extends MainPage{
         return this;
     }
 
+    @SafeVarargs
     @Step("PDF Önizleme {conditions} bulunmalı")
-    public PDFOnizleme checkTextByPages(List<Condition>... conditionInPage) {
+    public final PDFOnizleme checkTextByPages(List<Condition>... conditionInPage) {
         ElementsCollection pages = viewer.$$(".page").shouldHaveSize(conditionInPage.length);
         for (int i = 0; i < conditionInPage.length; i++) {
             SelenideElement page = pages.get(i);
@@ -170,20 +167,18 @@ public class PDFOnizleme extends MainPage{
         SelenideElement page = viewer.$$(".page")
                 .shouldHave(sizeGreaterThan(0))
                 .get(pageNumber - 1).scrollIntoView(true);
-        for (int i = 0; i < conditions.length; i++) {
-            if (i == 0)
-                page.shouldHave(conditions[i]);
-            else
-                Assert.assertTrue(page.has(conditions[i]), String.format("PDF %s sayfada %s olmalı",i,conditions[i]));
-            takeScreenshot();
+
+        page.shouldHave(conditions[0]);
+        for (int i = 1; i < conditions.length; i++) {
+            Assert.assertTrue(page.has(conditions[i]), String.format("PDF %s sayfada %s olmalı", i, conditions[i]));
         }
+        takeScreenshot();
         return this;
     }
 
-    public PDFOnizleme closeAndReturnToMainWindow(){
+    public void closeAndReturnToMainWindow(){
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
-        return this;
     }
 
     //Firefox scroll error yüzünden kullanılıyor 6.03.2018

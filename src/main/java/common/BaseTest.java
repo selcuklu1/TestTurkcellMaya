@@ -324,7 +324,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setPlatform(Platform.WINDOWS);
             capabilities.setVersion("151");*/
 
-            Map<String, Object> prefs = new HashMap<String, Object>();
+            Map<String, Object> prefs = new HashMap<>();
             prefs.put("download.default_directory", downloadPath);
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("prefs", prefs);

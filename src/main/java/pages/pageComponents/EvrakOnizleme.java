@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.GelenEvraklarPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;

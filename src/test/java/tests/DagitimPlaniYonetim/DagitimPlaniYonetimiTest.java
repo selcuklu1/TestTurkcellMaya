@@ -1,8 +1,6 @@
 package tests.DagitimPlaniYonetim;
 
 import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import common.ReusableSteps;
 import data.User;
@@ -79,7 +77,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .kullanildigiBirimSec(user.getBirimAdi())
                 .altBirimlerGorsunSec(true);
 
-        dagitimPlanElemanlari.forEach((k, v) -> page.dagitimElemanlariEkle(k, v));
+        dagitimPlanElemanlari.forEach(page::dagitimElemanlariEkle);
         page.kaydet().islemMesaji().basariliOlmali();
     }
 
@@ -123,8 +121,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String oldAciklama = page.getAciklama().text();
         String newAd = oldAd.equals(ad) ? ad + "_guncellenen": ad;
         String newAciklama = oldAciklama.equals(aciklama) ? aciklama + "_guncellenen": aciklama;*/
-        String newAd = ad;
-        String newAciklama = aciklama;
         //page.adiGir(newAd).aciklamaGir(newAciklama);
 
         String dagitimTipi = "Kullanıcı";
@@ -147,8 +143,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.dagitimElemanlariEkle(yeniDagitimTipi, yeniDagitimYeri);
         page.kaydet().islemMesaji().basariliOlmali();
 
-        evrakOlusturSayfadaAktifKontrolu(newAd);
-        gidenEvrakSayfadaAktifKontrolu(newAd);
+        evrakOlusturSayfadaAktifKontrolu(ad);
+        gidenEvrakSayfadaAktifKontrolu(ad);
     }
 
     @Test(description = "TS1478: Kopyalama", enabled = true)
@@ -158,7 +154,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String kullanildigiBirim = "Optiim Birim";
         String dagitimElemanlariTipi = "Birim";
         String dagitimElemanlari = "Optiim Birim";
-        boolean altBirimlerGorsun = true;
         String newAd = adi + "-KOPYA-" + getSysDate();
 
         User user = optiim;
@@ -168,7 +163,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .ara()
                 .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
         page.kopyala();
-        checkFields(page, adi, aciklama, kullanildigiBirim, altBirimlerGorsun, dagitimElemanlariTipi, dagitimElemanlari);
+        checkFields(page, adi, aciklama, kullanildigiBirim, true, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
                 .kaydet().islemMesaji().basariliOlmali();
 
@@ -742,8 +737,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User birimDagitimPlanUser = ztekin1;
 
         String konu = "TS1942_" + getSysDate();
-        String dagitimPlanAdi = konu;
-        System.out.println("Dağınım Planı: " + dagitimPlanAdi);
+        System.out.println("Dağınım Planı: " + konu);
         String aciklama = "Dağıtım Elemanları: 2 kullanıcı + 1 birim";
 
         String[][] dagitimElemanlari = new String[][]{
@@ -758,13 +752,13 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         login(parafci);
         DagitimPlaniYonetimiPage dagitimPlaniYonetimiPage = new DagitimPlaniYonetimiPage()
                 .openPage()
-                .dagitimPlaniOlustur(dagitimPlanAdi, aciklama, parafci.getBirimAdi(), true, dagitimElemanlari);
+                .dagitimPlaniOlustur(konu, aciklama, parafci.getBirimAdi(), true, dagitimElemanlari);
 
-        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, dagitimPlanAdi, parafci, imzaci);
+        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, konu, parafci, imzaci);
 
 
         dagitimPlaniYonetimiPage.openPage()
-                .bulVeGuncelleTikla(dagitimPlanAdi)
+                .bulVeGuncelleTikla(konu)
                 .dagitimPlaniListesindeAra(text(silenecekDagitimPlanUser.getFullname()))
                 .sil(text(silenecekDagitimPlanUser.getFullname()))
                 .dagitimElemanlariEkle(BIRIM.getOptionText(), birimDagitimPlanUser.getBirimAdi())
@@ -840,7 +834,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .kullanildigiBirimSec(user.getBirimAdi())
                 .altBirimlerGorsunSec(true);
 
-        dagitimPlanElemanlari.forEach((k, v) -> page.dagitimElemanlariEkle(k, v));
+        dagitimPlanElemanlari.forEach(page::dagitimElemanlariEkle);
         page.kaydet().islemMesaji().basariliOlmali();
 
         new EvrakOlusturPage().openPage().bilgileriTab()
