@@ -346,6 +346,7 @@ public class EvrakPageButtons extends MainPage {
     @Step("Kullanıcıya Iade Et butonu tıklanır)")
     public MainPage kullaniciyaIadeEt() {
         btnKullaniciyaIadeEt.click();
+        takeScreenshot();
         return this;
     }
 
@@ -414,15 +415,13 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
-    SelenideElement btnDosyaEkle = $("[id='inboxItemInfoForm:fileUploadIadeEk']");
     @Step("Dosya ekle")
     public EvrakPageButtons dosyaEkle(String path,String dosyaAdi) throws InterruptedException{
-        btnDosyaEkle.click();
         havaleDosyaEkle(path);
         havaleDosyaEkleDosyaAdiKontrol(dosyaAdi);
         return this;
     }
-    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadHavaleEk_input']"));
+    SelenideElement dosyaPath = $(By.xpath("//input[@id='inboxItemInfoForm:fileUploadIadeEk_input']"));
     @Step("Evrak Ekleri Dosya Ekleme : \"{pathToFile}\" ")
     public EvrakPageButtons havaleDosyaEkle(String pathToFile) throws InterruptedException {
         uploadFile(dosyaPath, pathToFile);

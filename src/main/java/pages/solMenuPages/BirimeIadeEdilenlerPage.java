@@ -74,12 +74,15 @@ public class BirimeIadeEdilenlerPage extends MainPage {
 
     BelgenetElement havaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
-    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+//    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+    SelenideElement birimTopluTeslimAlGonder = $("button[id='mainPreviewForm:btnTopluTeslimAlGonder']");
+
     SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
     SelenideElement tabHavale = $("[id='mainPreviewForm:evrakOnizlemeTab']");
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
     SelenideElement tblIlkEvrak = $(By.id("mainInboxForm:inboxDataTable:0:evrakTable"));
     SelenideElement btnTeslimAlVeHavaleEt = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='teslimAlHavale']");
+    SelenideElement btnTopluTeslimAlVeHavaleEt = $("[id='mainInboxForm:inboxDataTable:inboxIslemlerToolbar'] [class='ui-button-icon-left ui-icon document-delivery-publish']");
     BelgenetElement cmbBirimeHavale = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
     By cmbBirimeHavaleBy = By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText");
 
@@ -134,7 +137,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Üzerinde Iade Et Button kontrolu")
+    @Step("Evrak Üzerinde Iade Et Not kontrolu {konu}")
     public BirimeIadeEdilenlerPage konuyaGoreEvrakIadeEtKontrolu(String konu) {
         boolean durum = tblEvraklar
                 .filterBy(Condition.text(konu))
@@ -142,12 +145,13 @@ public class BirimeIadeEdilenlerPage extends MainPage {
                 .$("[class$='document-typeIade']").isDisplayed();
 
 
-        Assert.assertEquals(durum, true, "Iade Et Button kontrolü:");
-        Allure.addAttachment("Iade Et Button Kontrolü", "");
+        Assert.assertEquals(durum, true, "Iade Et Not kontrolü:");
+        Allure.addAttachment("Iade Et Not Kontrolü", "");
+        takeScreenshot();
         return this;
     }
 
-    @Step("Evrak Üzerinde Iade Notu kontrolu")
+    @Step("Evrak Üzerinde Iade Notu kontrolu {konu}")
     public BirimeIadeEdilenlerPage konuyaGoreEvrakNotuKontrolu(String konu) {
         boolean durum = tblEvraklar
                 .filterBy(Condition.text(konu))
@@ -165,6 +169,16 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         $("[class='ui-button-icon-left ui-icon teslimAlHavale']").click();
         return this;
     }
+
+    @Step("Birim İade Edilenler Evraklar listesinden İki evrak seçilir")
+    public BirimeIadeEdilenlerPage ilkIkiEvrakCheckBoxSec(){
+        if (tblEvraklar.get(0).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(0).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        if (tblEvraklar.get(1).$$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']").size()==0)
+            tblEvraklar.get(1).$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
 
     @Step("Onaylayacak Kişi doldur: {onaylanacakKisi} - {birim}")
     public BirimeIadeEdilenlerPage onaylanacakKisiDoldur(String onaylanacakKisi, String birim) {
@@ -402,7 +416,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisi}\" seç")
+    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisiliste}\" seç")
     public BirimeIadeEdilenlerPage havaleKisiListesi(String kisiliste) {
         txtHavaleIslemleriKisiListesi.openTreePanel();
         txtHavaleIslemleriKisiListesi.closeTreePanel();
@@ -506,9 +520,27 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Listeden bir evrakda checkbox seçilir")
+    public BirimeIadeEdilenlerPage evrakSecCheckboxIlkSec(){
+        tblEvraklar.first().$("[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").click();
+        return this;
+    }
+
+    @Step("Evrak üzerindeki \"İçerik Göster\"e tıklanır")
+    public BirimeIadeEdilenlerPage evrakSecICerikGoster(){
+    $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton")).click();
+        return this;
+    }
+    
     @Step("Havale yap")
     public BirimeIadeEdilenlerPage havaleYap() {
         btnTeslimAlVeHavaleEt.click();
+        return this;
+    }
+
+    @Step("Teslim Al ve Havale Et")
+    public BirimeIadeEdilenlerPage topluTeslimAlveHavaleEt(){
+        btnTopluTeslimAlVeHavaleEt.click();
         return this;
     }
 

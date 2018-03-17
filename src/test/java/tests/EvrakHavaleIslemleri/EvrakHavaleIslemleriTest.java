@@ -3,6 +3,7 @@ package tests.EvrakHavaleIslemleri;
 import common.BaseTest;
 import common.ReusableSteps;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
@@ -23,6 +24,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
+    BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     ReusableSteps reusableSteps;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
@@ -43,18 +45,17 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         evrakOlusturPage = new EvrakOlusturPage();
         evrakDetayiPage = new EvrakDetayiPage();
         evrakOnizleme = new EvrakOnizleme();
+        birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
     }
 
-    @Test(enabled = true, description = "TS2295: Toplu havale ekranı alan kontrolü")
-    public void TS2295() {
-
+    @Step("TS2295 Pre Condition oluşturmakta")
+    public EvrakHavaleIslemleriTest TS2295PreCondition(){
         String konuKodu = "TS2295-"+createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullanici = "Zübeyde Tekin";
         String birim = "Yazılım Geliştirme Direktörlüğü";
         String dikkatMesaji = "Evrak seçilmemiştir!";
 
-        login(usernameZTEKIN,passwordZTEKIN);
         //Pre Condition oluşturulmakta
         gelenEvrakKayitPage.gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
         login(usernameZTEKIN,passwordZTEKIN);
@@ -64,6 +65,18 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         login(usernameZTEKIN,passwordZTEKIN);
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKodu,kurum,birim);
         //
+
+        return this;
+    }
+
+    @Test(enabled = true, description = "TS2295: Toplu havale ekranı alan kontrolü")
+    public void TS2295() {
+
+        String dikkatMesaji = "Evrak seçilmemiştir!";
+
+        login(usernameZTEKIN,passwordZTEKIN);
+
+        TS2295PreCondition();
 
         gelenEvraklarPage
                 .openPage()
@@ -77,13 +90,15 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .teslimAlVeTeslimAlVeHavaleEtGeldigiGorme(true,true)
                 .teslimAlveHavaleEt()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
         teslimAlinanlarPage
                 .openPage()
+                .ustEvraklarTopluHavaleGeldigiGorme()
                 .topluHavale()
-                .islemMesaji().isDikkat(dikkatMesaji);
+                .islemMesaji().dikkatOlmali(dikkatMesaji);
     }
 
     @Test(enabled = true, description = "TS2198: Havale İşlemi Yapılabilecek Ekranların kontrolü")
@@ -163,8 +178,104 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         evrakOnizleme
                 .teslimAlVeHavaleEtGeldigiGorme()
-                .teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+                .teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true,true);
 
+        teslimAlinmayiBekleyenlerPage
+                .evrakSec()
+                .evrakSecCheckboxIlkSec()
+                .topluTeslimAlVeHavaleEt()
+                .topluHavaleEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        teslimAlinmayiBekleyenlerPage
+                .ilkEvrakIcerikGoster()
+                .teslimAlVeHavaleEt();
+
+        evrakDetayiPage
+                .icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluTeslimAlVeHavaleEt()
+                .topluHavaleEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
+                .openPage()
+                .evrakSec()
+                .havaleYap()
+        .havaleYapEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
+                .ilkEvrakIcerikGoster()
+                .havaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        teslimAlinanlarPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluHavale()
+                .havaleYapEkranGeldigiGorulur();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        birimHavaleEdilenlerPage
+                .openPage()
+                .ilkEvrakSec()
+                .havaleYap();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        birimHavaleEdilenlerPage
+                .ilkIcerikGosterSec()
+                .icerikGosterHavaleYap();
+
+        evrakDetayiPage
+                .havaleYapEkranGeldigiGorme()
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .evrakSec()
+                .havaleYap();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        birimeIadeEdilenlerPage
+                .evrakSecCheckboxIlkSec()
+                .topluTeslimAlveHavaleEt();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        birimeIadeEdilenlerPage
+                .evrakSecICerikGoster()
+                .teslimAlVeHavaleEt();
+
+        evrakDetayiPage
+                .icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        birimeIadeEdilenlerPage
+                .openPage()
+                .ilkIkiEvrakCheckBoxSec()
+                .topluTeslimAlveHavaleEt();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
     }
 
 
@@ -227,6 +338,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         gelenEvraklarPage
                 .openPage()
                 .konuyaGoreEvrakIcerikGoster(konuKodu)
+                .evrakIcerikGeldigiGorme()
                 .icerikHavaleYap()
                 .icerikHavaleAlanKontrolleri()
                 .icerikGosterKullaniciListesiDoldur("TS1590")
@@ -285,6 +397,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .evrakSecGerialGelmedigiGorme(false)
                 .evrakSecIcerikGoster(konuKodu,true)
                 .evrakIcerikGosterGerialGelmedigiGorme(false);
+
     }
 
 }

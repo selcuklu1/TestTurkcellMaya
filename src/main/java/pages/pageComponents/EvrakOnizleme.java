@@ -36,6 +36,8 @@ public class EvrakOnizleme extends MainPage {
     BelgenetElement txtHavaleYapKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
+    SelenideElement btnHavaleYapTeslimAlGonder = $(By.xpath("//*[contains(text(),'Teslim Al Gönder')]"));
+    SelenideElement btnHavaleYapVazgec = $(By.xpath("//*[contains(text(),'Vazgeç')]"));
 
 
     public EvrakNotlari getEvrakNotlari() {
@@ -115,7 +117,7 @@ public class EvrakOnizleme extends MainPage {
     }
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
-    public EvrakOnizleme teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim, boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi, boolean aciklama, boolean dosyaYukleme, boolean islemsuresi, boolean gonder, boolean havaleOnayinaGonder) {
+    public EvrakOnizleme teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim,boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi,boolean aciklama,boolean dosyaYukleme,boolean havaleOnayinaGonder,boolean teslimAlGonder,boolean vazgec) {
         boolean durum =txtHavaleYapBirim.isDisplayed();
         Assert.assertEquals(durum,birim);
         Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür","Birim");
@@ -132,29 +134,69 @@ public class EvrakOnizleme extends MainPage {
         Assert.assertEquals(durum4,kullaniciListesi);
         Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylacak kişi");
 
-        boolean durum5 =txtHavaleYapAciklama.isDisplayed();
+        boolean durum5 =$(By.id("mainPreviewForm:aciklamaInputText")).isDisplayed();
         Assert.assertEquals(durum5,aciklama);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Açıklama");
+        Allure.addAttachment("Açıklama alanı geldiği görülür","Açıklama");
 
-        boolean durum6 = btnHavaleYapDosyaEkle.isDisplayed();
+        boolean durum6 = $(By.id("mainPreviewForm:fileUploadTeslimAlHavaleEk")).isDisplayed();
         Assert.assertEquals(durum6,dosyaYukleme);
         Allure.addAttachment("Dosya Yükleme alanı geldiği görülür","Dosya yükleme");
 
-        boolean durum7 =txtHavaleYapIslemSuresi.isDisplayed();
+        boolean durum8 = $$(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]")).first().isDisplayed();
+        Assert.assertEquals(durum8,havaleOnayinaGonder);
+        Allure.addAttachment("Havale Onayına Gonder buttonun geldiği görülür","Havale Onayına Gonder");
+
+        boolean durum9 =btnHavaleYapTeslimAlGonder.isDisplayed();
+        Assert.assertEquals(durum9,teslimAlGonder);
+        Allure.addAttachment("Teslim Al Gönder buttonun geldiği görülür","Teslim Al Gönder");
+
+        boolean duru10 =btnHavaleYapVazgec.isDisplayed();
+        Assert.assertEquals(duru10,vazgec);
+        Allure.addAttachment("Vazgeç buttonun geldiği görülür","Vazgeç");
+        return this;
+    }
+
+    @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
+    public EvrakOnizleme teslimveHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(boolean birim, boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi, boolean aciklama, boolean dosyaYukleme, boolean islemsuresi, boolean havaleOnayinaGonder, boolean teslimAlGonder,boolean vazgec) {
+        boolean durum =txtHavaleYapBirim.isDisplayed();
+        Assert.assertEquals(durum,birim);
+        Allure.addAttachment("Havale edilecek Birim alanının geldiği görülür","Birim");
+
+        boolean durum2 =txtHavaleYapKisi.isDisplayed();
+        Assert.assertEquals(durum2,kisi);
+        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür","Kişi");
+
+        boolean durum3 =txtHavaleYapKullaniciListesi.isDisplayed();
+        Assert.assertEquals(durum3,kullaniciListesi);
+        Allure.addAttachment("Havale edilecek Kullanıcı Listesi alanın geldiği görülür","Kullanıcı Listesi");
+
+        boolean durum4 =txtHavaleYapOnaylayacakKisi.isDisplayed();
+        Assert.assertEquals(durum4,kullaniciListesi);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylacak kişi");
+
+        boolean durum5 =$(By.id("mainPreviewForm:aciklamaInputText")).isDisplayed();
+        Assert.assertEquals(durum5,aciklama);
+        Allure.addAttachment("Açıklama alanı geldiği görülür","Açıklama");
+
+        boolean durum6 = $(By.id("mainPreviewForm:fileUploadTeslimAlHavaleEk")).isDisplayed();
+        Assert.assertEquals(durum6,dosyaYukleme);
+        Allure.addAttachment("Dosya Yükleme alanı geldiği görülür","Dosya yükleme");
+
+        boolean durum7 =$(By.id("mainPreviewForm:islemSuresiTarihTeslimAlHavaleEt_input")).isDisplayed();
         Assert.assertEquals(durum7,islemsuresi);
         Allure.addAttachment("İşlem süresi alanının geldiği görülür","İşlem Süresi");
 
-        boolean durum8 =btnHavaleYapGonder.isDisplayed();
-        Assert.assertEquals(durum8,gonder);
-        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+        boolean durum8 = $$(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]")).first().isDisplayed();
+        Assert.assertEquals(durum8,havaleOnayinaGonder);
+        Allure.addAttachment("Havale Onayına Gonder buttonun geldiği görülür","Havale Onayına Gonder");
 
-        boolean durum9 =btnHavaleYapHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,havaleOnayinaGonder);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 =btnHavaleYapTeslimAlGonder.isDisplayed();
+        Assert.assertEquals(durum9,teslimAlGonder);
+        Allure.addAttachment("Teslim Al Gönder buttonun geldiği görülür","Teslim Al Gönder");
 
-        boolean duru10 =btnHavaleYapHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(duru10,havaleOnayinaGonder);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean duru10 =btnHavaleYapVazgec.isDisplayed();
+        Assert.assertEquals(duru10,vazgec);
+        Allure.addAttachment("Vazgeç buttonun geldiği görülür","Vazgeç");
         return this;
     }
 

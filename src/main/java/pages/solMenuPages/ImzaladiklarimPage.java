@@ -87,6 +87,7 @@ public class ImzaladiklarimPage extends MainPage {
     public ImzaladiklarimPage geriAlEkranKontrolu() {
         Assert.assertEquals(tabEvrakOnizleme.isDisplayed(), true,"Geri Al Ekran Kontrolü");
         Allure.addAttachment("Geri Al Ekran Kontrolü","");
+        takeScreenshot();
         return this;
     }
 

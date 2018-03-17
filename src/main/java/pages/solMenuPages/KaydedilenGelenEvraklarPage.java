@@ -6,8 +6,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -34,7 +32,6 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
     ElementsCollection tblKaydedilenGelenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     SelenideElement tblIlkRapor = $(By.id("mainInboxForm:inboxDataTable:0:detayGosterButton"));
     ElementsCollection tblKaydedilenGelenEvraklar2 = $$("tbody[id$='mainInboxForm:inboxDataTable_data'] tr[role='row']");
-    static final Logger logger = LogManager.getLogger("KaydedilenGelenEvraklarPage");
 
 //    Evrak Detayları Sayfası
 
@@ -397,7 +394,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Havale Onayına Gönder")
     public KaydedilenGelenEvraklarPage havaleOnayinaGonder() {
-        btnHavaleOnayinaGonder.click();
+//        btnHavaleOnayinaGonder.click();
+        clickJs(btnHavaleOnayinaGonder);
         return this;
     }
 

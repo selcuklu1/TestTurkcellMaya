@@ -1,12 +1,14 @@
 package tests.GelenGidenEvrakKayit;
 
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.EvrakOlusturPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
 /****************************************************
@@ -25,6 +27,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
     GelenEvraklarPage gelenEvraklarPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerim;
     HavaleOnayinaSunduklarimPage havaleOnayinaSunduklarimPage;
+    EvrakOlusturPage evrakOlusturPage;
     //    User optiim = new User("optiim", "123");
     User yakyol = new User("yakyol", "123");
     User mbozdemir = new User("mbozdemir", "123");
@@ -61,6 +64,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         gelenEvraklarPage = new GelenEvraklarPage();
         havaleOnayiVerdiklerim = new HavaleOnayiVerdiklerimPage();
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
+        evrakOlusturPage = new EvrakOlusturPage();
     }
 
     public String getDocPath1() {
@@ -193,8 +197,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
 
@@ -261,7 +265,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet()
@@ -408,91 +412,109 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         String ekMetni = "test otomasyon" + getSysDateForKis();
         String fileName = "test.txt";
         String pathToFileText = getUploadPath() + "test.txt";
+        String sayfa = "Gelen Evrak Kayıt";
+        String evrakSayiSag = createRandomNumber(5);
 
         testStatus(testid, "Test Başladı");
         gelenEvrakKayitPage
-                .openPage()
+                .openPage();
+
+        evrakOlusturPage
+                .sayfaKontrol(sayfa);
+
+        gelenEvrakKayitPage
                 .konuKoduDoldur(konuKodu)
+                .konuKoduKontrol(konuKodu)
                 .konuDoldur(konu)
                 .evrakTuruSec(evrakTuru)
+                .evrakTuruKontrolu(evrakTuru)
                 .evrakTarihiDoldur(evrakTarihi)
+                .evrakTarihiKontrol(evrakTarihi)
                 .evrakDiliSec(evrakDili)
+                .evrakDiliKontrol(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)
+                .gizlilikDerecesiKontrol(gizlilikDerecesi)
                 .kisiKurumSec(kisiKurum)
+                .kisiKurumKontrol(kisiKurum)
                 .geldigiKurumDoldurLovText(geldigiKurum)
-                .evrakSayiSagDoldur()
+                .geldigiKurumKontrol(geldigiKurum)
+                .evrakSayiSagDoldur(evrakSayiSag)
+                .evrakSayiSagKontrol(evrakSayiSag)
                 .evrakGelisTipiSec(evrakGelisTipi)
+                .evrakGelisTipiKontrol(evrakGelisTipi)
                 .ivedilikSec(ivedilik)
+                .ivedilikKontrol(ivedilik)
 
                 .havaleAlanKontrolleri()
 //                .havaleIslemleriKisiDoldur(kisi)
-////                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+//                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
+
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
 
                 .ekBilgiFiltreAc()
+                .tabKontrolu()
+
                 .evrakEkleriDosyaEkleme(pathToFileText)
                 .evrakEkleriDosyaEkleDosyaAdiKontrol(fileName)
+
                 .evrakEkleriDosyaEkleEkMetinDoldur(ekMetni)
                 .evrakEkTabViewEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-1")
+                .dosyaEkleTabTabloKontrolu("Ek-1",ekMetni)
 
                 .ekBilgiFizikselEkEkle()
                 .evrakEkTabFizikselEkMetniDoldur(ekMetni)
                 .fizikselEkTabViewAciklamaEkle()
-                .dosyaEkleTabTabloKontrolu("Ek-2")
+                .dosyaEkleTabTabloKontrolu("Ek-2",ekMetni)
 
                 .sistemdeKayitliEvrakEkle()
-                //        evrak tarihi
-                //        evrakın aranacağı yer
-                //        evrak arama alanlarının geldiği görülür
-                .evrakEkTabEvrakAramaDoldur("1")
+                .evrakEkleriAlanKontrolleri()
+
+                .evrakEkTabEvrakAramaDoldur("TS-435")
                 .dokumanAraButton()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .ekEkleButton1()
                 .dosyaEkleTabTabloKontrolu("Ek-3")
-
-
-//                .evrakEkleriDosyaEkleme(fileName)
-
+                .eklenenDosyaKontrolu()
+                //TODO: Burada dosya adı gelmemektedir. Bir bug bulunmaktadır.
+//              Dosya adının evrak olarak geldiği, açıklamada ... tarihli ... sayılı yazınız. ifadesinin doğru tarih ve sayıyla geldiği görülür."
+//              13/03/2018 tarihli 54354354-11023 sayılı yazınız.
                 .ilgiliBilgiFiltreAc()
-//        dosya ekle
-//        metin ekle
-//        sistemde kayıttlı evrak ekle
-//        arşivde kayıtlı evrak ekle alanlarının geldiği görülür.
+                .ilgiBilgileriAlanKontrolleri()
+
                 .ilgiIslemleriTabDosyaEkle()
                 .ilgiBilgileriDosyaEkleme(pathToFileText)
                 .ilgiBilgileriDosyaEkleDosyaAdiKontrol(fileName)
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(ekMetni)
                 .ilgiBilgileriTabViewEkle()
-                .ilgiBilgileridosyaEkleTabloKontrolu("a")
+                .ilgiBilgileridosyaEkleTabloKontrolu("a",ekMetni)
 
 
                 .ilgiBilgileriSistemdeKayitliEvrakEkle()
-                //        evrak tarihi
-                //        evrakın aranacağı yer
-                //        evrak arama alanlarının geldiği görülür
-                .ilgiBilgileriSistemdeKayitliEvrakEkleArama("1")
-                .ilgiBilgileridokumanAraButton();
+                .ilgiBilgileriSistemdeKayitliAlanKontrolleri()
+                .ilgiBilgileriSistemdeKayitliEvrakEkleArama("TS-435")
+                .ilgiBilgileridokumanAraButton()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         gelenEvrakKayitPage
                 .ilgiBilgileriEkEkleButton1()
                 .ilgiBilgileridosyaEkleTabloKontrolu("b")
+                //TODO: Burada dosya adı gelmemektedir. Bir bug bulunmaktadır.
+//              Dosya adının evrak olarak geldiği, açıklamada ... tarihli ... sayılı yazınız. ifadesinin doğru tarih ve sayıyla geldiği görülür."
+//              13/03/2018 tarihli 54354354-11023 sayılı yazınız.
+                .kaydet();
 
-                .kaydet()
-                .popUpsv2();
+        String evrakNo = gelenEvrakKayitPage.popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         birimHavaleEdilenlerPage
                 .openPage()
-//        Geldiği yer
-//        Konu
-//        Gideceği yer
-//        Evrak tarihi / no alanlarının doğru biçimde olacak şekilde evrakın listelendiği görülür.
-
+                .evrakAlanKontrolleri(konu,geldigiKurum,birim,evrakTarihi,evrakNo)
                 .evrakNoIleTablodanEvrakSecme(konu)
                 .evrakOnizlemeKontrol()
                 .birimEvrakEkleri("Evrak Ekleri")
@@ -504,12 +526,21 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .evrakAlanKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,evrakTarihi,evrakSayiSag,"G")
                 .evrakNoIleEvrakSec(konu)
                 .evrakOnizlemeKontrol()
                 .teslimEvrakEkleri("Evrak Ekleri")
                 .teslimEvrakEkleriKontrol("EK-1", "EK-2", "EK-3")
                 .teslimEvrakEkleri("İlgi Bilgileri")
-                .teslimIlgiBilgileriEvrakEkleriKontrol("a", "b");
+                .teslimIlgiBilgileriEvrakEkleriKontrol("a", "b")
+
+                .evrakSecIcerikGoster(konu,true)
+                .icerikEkleriSec()
+                .icerikEkleriEkKontrol("EK-1", "EK-2", "EK-3")
+                .icerikIlgileriSec()
+                .icerikIlgileriEkKontrol("a", "b");
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -571,8 +602,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .gelenEvrakKayitKaydetEvet2()
                 .popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali();
 
         havaleOnayinaSunduklarimPage
                 .openPage()
@@ -688,11 +719,11 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
-                .popUps();
-//                .popUpsv2();
+                .popUpsv2();
+//                .popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 //                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
@@ -779,7 +810,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 //                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet();
@@ -787,15 +818,25 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         evrakNo = gelenEvrakKayitPage.popUps();
 
 
+//        login(mbozdemir);
+//        birimHavaleEdilenlerPage
+//                .openPage()
+//                .evrakNoIleTablodanEvrakSecme(konu)
+//                .evrakSecIcerikGoster(konu, true)
+//                .havaleGeriAl()
+//                .notAlanınıDoldur(konu)
+//                .geriAl();
+//                .islemMesaji().basariliOlmali();
+
         login(mbozdemir);
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .evrakSecIcerikGoster(konu, true)
-                .havaleGeriAl()
-                .notAlanınıDoldur(konu)
-                .geriAl();
-//                .islemMesaji().basariliOlmali();
+                .onizlemeHavaleGeriAl()
+                .onizlemeNotAlanıKontrol(konu)
+                .onizlemeNotAlanınıDoldur(konu)
+                .onizlemeGeriAl()
+                .islemMesaji().basariliOlmali();
 
         testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
@@ -820,6 +861,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .buttonGonder()
                 .islemMesaji().basariliOlmali();
 
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu)

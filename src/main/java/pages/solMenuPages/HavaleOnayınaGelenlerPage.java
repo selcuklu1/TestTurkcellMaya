@@ -120,7 +120,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Ekranın sağında geri al butonunun gelmediği görülür.")
+    @Step("Evrakın ekranın sağında önizlemede geldiği görülür.")
     public HavaleOnayınaGelenlerPage evrakOnizlemeGeldigiGorme(boolean gorulen){
         boolean durum = $(By.id("mainPreviewForm:evrakOnizlemeTab")).isDisplayed();
         Assert.assertEquals(durum,gorulen);
@@ -393,9 +393,8 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     }
 
 
-    @Step("Dagitim Onayla Evet")
+    @Step("Dagitim Onayla Evet : Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz?")
     public HavaleOnayınaGelenlerPage dagitimOnaylaEvet() {
-        System.out.println("dagitimonaylasize" + dagitimOnaylaEvet.size());
         dagitimOnaylaEvet.last().click();
         return this;
     }
