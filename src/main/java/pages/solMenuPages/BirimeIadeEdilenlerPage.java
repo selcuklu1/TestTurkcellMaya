@@ -416,7 +416,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisi}\" seç")
+    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisiliste}\" seç")
     public BirimeIadeEdilenlerPage havaleKisiListesi(String kisiliste) {
         txtHavaleIslemleriKisiListesi.openTreePanel();
         txtHavaleIslemleriKisiListesi.closeTreePanel();
