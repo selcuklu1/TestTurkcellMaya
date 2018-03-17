@@ -393,9 +393,8 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
     }
 
 
-    @Step("Dagitim Onayla Evet")
+    @Step("Dagitim Onayla Evet : Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz?")
     public HavaleOnayınaGelenlerPage dagitimOnaylaEvet() {
-        System.out.println("dagitimonaylasize" + dagitimOnaylaEvet.size());
         dagitimOnaylaEvet.last().click();
         return this;
     }
