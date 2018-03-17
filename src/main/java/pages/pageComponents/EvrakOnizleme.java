@@ -564,6 +564,18 @@ public class EvrakOnizleme extends MainPage {
             return this;
         }
 
+        @Step("Postala")
+        public EvrakPostala postala(boolean dialogEvet) {
+            postalaButton.pressEnter();
+            //$("div[id^='mainPreviewForm:postalaDogrulaDialogForm']")
+            if (dialogEvet)
+                $("button[id='mainPreviewForm:postalaDogrulaDialogForm:evetButton_id']").click();
+            else
+                $("button[id='mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id']").click();
+            return this;
+        }
+
+
         @Step("Doğrulama Uyarı")
         public EvrakPostala dogrulamaUyari(String text, boolean evet) {
             $(byText(text)).shouldBe(visible);

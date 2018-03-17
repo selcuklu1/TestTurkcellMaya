@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.tabs.AltTabs;
+import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
@@ -50,7 +51,7 @@ public class EvrakPostalamaTest extends BaseTest {
     PostalananEvrakRaporuPage postalananEvrakRaporuPage;
     pages.newPages.EvrakOlusturPage evrakOlusturPage2;
     AltTabs altTabs;
-    Map dagitimPlanElemanlari;
+    LinkedHashMap<GeregiSecimTipi, String> dagitimPlanElemanlari;
     EvrakOnizleme.EvrakPostala evrakPostala;
 
 
@@ -568,22 +569,20 @@ public class EvrakPostalamaTest extends BaseTest {
         dagitimPlanElemanlari.put(KULLANICI, "Optiim Test");
         dagitimPlanElemanlari.put(KURUM, "Başbakan");
 
-
-        evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage();
-        evrakOlusturPage2.openPage()
-                .bilgileriTab()
+        evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage().openPage();
+        BilgilerTab bilgilerTab = evrakOlusturPage2.bilgileriTab()
                 .konuKoduSec(konuKodu1)
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
                 .gizlilikDerecesiSec(GizlilikDerecesi.NORMAL)
                 .ivedilikSec(Ivedilik.NORMAL)
                 .evrakTuruSec("Resmi Yazışma")
-                .geregiSec(GERCEK_KISI, dagitimPlanElemanlari.get(GERCEK_KISI).toString(), "APS")
-                .geregiSec(DAGITIM_PLANLARI, dagitimPlanElemanlari.get(DAGITIM_PLANLARI).toString(), "Adi Posta")
-                .geregiSec(BIRIM, dagitimPlanElemanlari.get(BIRIM).toString())
-                .geregiSec(TUZEL_KISI, dagitimPlanElemanlari.get(TUZEL_KISI).toString(), "Adi Posta")
-                .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI).toString())
-                .geregiSec(KURUM, dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
+                .geregiSec(GERCEK_KISI, dagitimPlanElemanlari.get(GERCEK_KISI), "APS")
+                .geregiSec(DAGITIM_PLANLARI, dagitimPlanElemanlari.get(DAGITIM_PLANLARI), "Adi Posta")
+                .geregiSec(BIRIM, dagitimPlanElemanlari.get(BIRIM))
+                .geregiSec(TUZEL_KISI, dagitimPlanElemanlari.get(TUZEL_KISI), "Adi Posta")
+                .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI))
+                .geregiSec(KURUM, dagitimPlanElemanlari.get(KURUM), "Adi Posta");
 
         /*evrakOlusturPage2.bilgileriTab().geregiSec(GERCEK_KISI, "OptiimTest")
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı", "OptiimTest")
@@ -610,7 +609,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı","Optiim İş")
                 .shouldBe(enabled).getSelectedOption().shouldHave(text("Adi Posta"));*/
 
-        evrakOlusturPage2.bilgileriTab().onayAkisiTemizle()
+        bilgilerTab.onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
@@ -1136,7 +1135,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .ekMetniDoldur(ekleri)
                 .ekleButonaTikla();
         SelenideElement row = evrakOlusturPage2.ekleriTab().getEkListesiTablosu().findRows(text(ekleri)).shouldHaveSize(1).getFoundRow();
-        checkDagitimElemanlariComboboxValues(comboBox(row, ".ui-selectcheckboxmenu").getComboBoxValues(), new ArrayList<>(dagitimPlanElemanlari.values()));
+        checkDagitimElemanlariComboboxValues(comboBox(row, ".ui-selectcheckboxmenu").getComboBoxValues(), new ArrayList<String>(dagitimPlanElemanlari.values()));
     }
 
     @Step("Dağıtım yerlerinin doğru olarak listelendiği görülür")

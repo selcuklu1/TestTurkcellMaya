@@ -68,7 +68,7 @@ public class BaseTest extends BaseLibrary {
         WebDriverRunner.addListener(new DriverEventListener());
 
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
-        Configuration.remote = "http://localhost:4444/wd/hub";
+        //Configuration.remote = "http://localhost:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
@@ -111,9 +111,7 @@ public class BaseTest extends BaseLibrary {
             //Configuration.browserCapabilities.setCapability("browser.helperApps.neverAsk.saveToDisk", neverAsk);
         }*/
 
-
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-        //getBrowserName();
         System.out.println("remote: " + Configuration.remote);
         System.out.println("browser: " + Configuration.browser);
         System.out.println("url: " + Configuration.baseUrl);
@@ -124,7 +122,7 @@ public class BaseTest extends BaseLibrary {
         AllureEnvironmentUtils.create();
     }
 
-    @BeforeSuite
+    @BeforeSuite(enabled = true)
     public void beforeSuite(ITestContext context) {
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
@@ -134,7 +132,7 @@ public class BaseTest extends BaseLibrary {
         ((TestRunner) context).getTest().setName("Tests");
     }
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, enabled = true)
     public void beforeMethod(ITestContext context, Method test) {
         /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
@@ -168,7 +166,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("///////////////////////////////////////////////////////");
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, enabled = true)
     public void afterMethod(ITestResult testResult) {
         int SUCCESS = 1;
         int FAILURE = 2;
