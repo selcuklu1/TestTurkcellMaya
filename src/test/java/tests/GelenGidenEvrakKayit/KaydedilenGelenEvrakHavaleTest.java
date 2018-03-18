@@ -572,7 +572,6 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .popUpsv2();
 
 
-        testStatus(testid, "Test Başladı");
         kaydedilenGelenEvraklarPage
                 .openPage()
                 .sayfaKontrol(sayfa1)
@@ -586,6 +585,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .gonder()
                 .islemMesaji().basariliOlmali();
 
+        testStatus(testid, "Test Başladı");
         birimHavaleEdilenlerPage
                 .openPage()
                 .sayfaKontrol(sayfa2)
@@ -594,7 +594,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
-                .geriAl();
+                .icerikGeriAl();
 //                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
@@ -609,7 +609,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
-                .geriAl();
+                .icerikGeriAl();
 //                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
@@ -630,14 +630,6 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-//        kaydedilenGelenEvraklarPage
-//                .openPage()
-                //TODO Aslında evrak buraya düşmüyor, düşmesi gereken yer:
-                //İşlem Bekleyen Evraklar - Gelen Evraklar olmalı. Destek Bekleyen Konularda cevap bekleniyor.
-                //Bu hali ile fail ediyor.
-//                .tabloEvrakNoileEvrakKontrolu(konu1)
-//                .tabloEvrakNoileEvrakKontrolu(konu2);
-
         gelenEvraklarPage
                 .openPage()
                 .tabloEvrakNoSec(konu1)
