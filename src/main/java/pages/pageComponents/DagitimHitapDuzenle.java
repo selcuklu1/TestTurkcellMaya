@@ -9,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -144,35 +145,53 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Hitap']]//textarea");
     }
 
-    @Step("\"Özel Hitap\" alanı aranır")
+    @Step("\"Özel Hitap\" checkbox aranır")
     public SelenideElement getOzelHitapCheckbox() {
         //return container.$x("descendant::input[3]");
         return container.$x("descendant::tr[td/label[normalize-space(.)='Özel Hitap']]//input");
     }
 
-    @Step("\"Özel Hitap\" alanın değeri {secilir} seçilir")
+    @Step("\"Özel Hitap\" checkbox değeri {secilir} seçilir")
     public DagitimHitapDuzenle ozelHitapSec(boolean secilir) {
         checkboxSelect(getOzelHitapCheckbox(), secilir);
         return this;
     }
 
-    @Step("\"Adres Hitapta Görünsün\" alanı aranır")
+    @Step("\"Özel Hitap\" checkbox değeri {secilir} kontrolü")
+    public DagitimHitapDuzenle ozelHitapKontolu(boolean secili) {
+        if (secili)
+            getOzelHitapCheckbox().shouldBe(selected);
+        else
+            getOzelHitapCheckbox().shouldNotBe(selected);
+        return this;
+    }
+
+    @Step("\"Adres Hitapta Görünsün\" checkbox aranır")
     public SelenideElement getAdresHitaptaGorunsunCheckbox() {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres Hitapta Görünsün']]//input");
     }
 
-    @Step("\"Adres Hitapta Görünsün\" alanın değeri {secilir} seçilir")
+    @Step("\"Adres Hitapta Görünsün\" checkbox değeri {secilir} seçilir")
     public DagitimHitapDuzenle adresHitaptaGorunsunSec(boolean secilir) {
         checkboxSelect(getAdresHitaptaGorunsunCheckbox(), secilir);
         return this;
     }
 
-    @Step("\"Adres Dağıtımda Görünsün\" alanı aranır")
+    @Step("\"Adres Hitapta Görünsün\" checkbox değeri {secilir} kontrolü")
+    public DagitimHitapDuzenle adresHitaptaGorunsunKontolu(boolean secili) {
+        if (secili)
+            getAdresHitaptaGorunsunCheckbox().shouldBe(selected);
+        else
+            getAdresHitaptaGorunsunCheckbox().shouldNotBe(selected);
+        return this;
+    }
+
+    @Step("\"Adres Dağıtımda Görünsün\" checkbox aranır")
     public SelenideElement getAdresDagitimdaGorunsunCheckbox() {
         return container.$x("descendant::tr[td/label[normalize-space(.)='Adres Dağıtımda Görünsün']]//input");
     }
 
-    @Step("\"Adres Dağıtımda Görünsün\" alanın değeri {secilir} seçilir")
+    @Step("\"Adres Dağıtımda Görünsün\" checkbox değeri {secilir} seçilir")
     public DagitimHitapDuzenle adresDagitimdaGorunsunSec(boolean secilir) {
         checkboxSelect(getAdresDagitimdaGorunsunCheckbox(), secilir);
         return this;
@@ -226,20 +245,38 @@ public class DagitimHitapDuzenle extends MainPage {
         return container.$x("descendant::button[.='İptal']");
     }
 
+    @Step("İptal")
+    public DagitimHitapDuzenle iptal() {
+        /*if (getKaydetButton("").isDisplayed())
+            getKaydetButton("").click();
+        else
+            //Uzun özel hitap ya da adres girince Kaydet butonu ekran dışında kalıyor ve sadece JS jquery ile çalışıyor. Scroll yok - Belgenet Defect.
+            ((JavascriptExecutor) getWebDriver())
+                    .executeScript("$(\"div[id$='hitapDuzenlemeDialog'] button:contains('Kaydet')\").trigger('click')");*/
+
+        clickJs(getIptalButton());
+        container.should(disappear);
+        return this;
+    }
     /*public ElementsCollection getDagitimPlaniDetayRows(){
         return container.$$("tr[data-ri][role=row]");
     }*/
 
     @Step("Dağıtım Planı eleman listesinin sırası kontrolü")
-    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu(Map<String, String> dagitimPlanElemanlari) {
+    public DagitimHitapDuzenle dagitimPlaniDetaySirasiKontrolu(LinkedHashMap<String, String> dagitimPlanElemanlari) {
         //ElementsCollection rows = getDagitimPlaniDetayRows();
         ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
 
         Assert.assertEquals(rows.size(), dagitimPlanElemanlari.size(), "Dağıtım Plan Elemanların sayısı dağıtım plan seçilen sayısı ile aynı olmalı");
         List<String> values = new ArrayList<>(dagitimPlanElemanlari.values());
-        for (int i = 0; i < rows.size(); i++) {
-            Assert.assertTrue(rows.get(i).has(text(values.get(i))));
-            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),"checkbox is checked");
+
+        rows.get(0).$("tr td:nth-child(3)").shouldHave(exactTextCaseSensitive(values.get(0)));
+        Assert.assertTrue(rows.get(0).$("div.ui-chkbox-box").is(isChecked),values.get(0) + " checkbox seçili olmalı");
+
+        for (int i = 1; i < rows.size(); i++) {
+            //Assert.assertTrue(rows.get(i).$("tr:nth-child(1) td:nth-child(3)").has(exactTextCaseSensitive(values.get(i))), "Actual: " + rows.get(i).$("tr:nth-child(1) td:nth-child(3)").text() + ", expected: " + values.get(i));
+            Assert.assertEquals(rows.get(i).$("tr td:nth-child(3").text(), values.get(i), "Dağıtım yerleri kontrolü");
+            Assert.assertTrue(rows.get(i).$("div.ui-chkbox-box").is(isChecked),values.get(i) + " checkbox seçili olmalı");
         }
 
         return this;

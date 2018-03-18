@@ -15,7 +15,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 public class EvrakOlusturPage extends MainPage {
@@ -2493,7 +2492,7 @@ public class EvrakOlusturPage extends MainPage {
                     $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                     clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                     break;
-                } else {
+                } else if($("#imzalaForm\\:imzalaButton").exists()){
                     $("#imzalaForm\\:imzalaButton").click();
                     break;
                 }

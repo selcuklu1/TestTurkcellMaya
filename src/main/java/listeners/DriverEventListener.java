@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 public class DriverEventListener extends BaseLibrary implements WebDriverEventListener {
 
@@ -163,7 +164,7 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         waitForLoadingJS(driver);
         if (log) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            System.out.println(timestamp + "    Change value: " + keysToSend + "    element: " + element.toString());
+            System.out.println(timestamp + "    Change value: " + Arrays.toString(keysToSend) + "    element: " + element.toString());
         }
     }
 

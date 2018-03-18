@@ -32,7 +32,7 @@ class ComboBox {
 
 
             By ulLocator = new ComboBoxHelper().getComboBoxHtmlList(proxy);
-            return (BelgenetElement) ElementFinder.wrap(BelgenetElement.class, null, ulLocator, 0);
+            return ElementFinder.wrap(BelgenetElement.class, null, ulLocator, 0);
         }
     }
 

@@ -494,7 +494,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     @Step("Postala")
     public PostalanacakEvraklarPage evrakPostalaPostala(boolean secim) {
         btnEvrakPostalaPostala.pressEnter();
-        if (secim = true) {
+        if (secim) {
             $(By.id("mainPreviewForm:postalaDogrulaDialogForm:evetButton_id")).pressEnter();
         } else {
             $(By.id("mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id")).pressEnter();
@@ -1288,7 +1288,7 @@ public class PostalanacakEvraklarPage extends MainPage {
             icerikPostalananYerTD.click();
             icerikPostalananYerTD.sendKeys(Keys.PAGE_DOWN);
 
-        } catch (ElementNotFound e) {
+        } catch (ElementNotFound ignored) {
 
         }
         ;

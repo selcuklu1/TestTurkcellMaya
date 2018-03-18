@@ -17,6 +17,7 @@ import pages.pageComponents.UstYazi;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.alanlar.*;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -620,8 +621,8 @@ public class BilgilerTab extends MainPage {
 
     @Step("Onay Akışı doldurulur")
     public BilgilerTab onayAkisiSec(String... texts) {
-        for (int i = 0; i < texts.length; i++) {
-            getOnayAkisiCombolov().selectLov(texts[0]);
+        for (String text : texts) {
+            getOnayAkisiCombolov().selectLov(text);
         }
         getOnayAkisiCombolov().closeTreePanel();
         return this;
@@ -674,7 +675,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
     public BilgilerTab onayAkisiSecilenKullaniciKontrolEt(String[][] kullaniciTipi) {
-        Allure.addAttachment("Seçlenmesi gereken kullanicilar", kullaniciTipi.toString());
+        Allure.addAttachment("Seçlenmesi gereken kullanicilar", Arrays.deepToString(kullaniciTipi));
         Allure.addAttachment("Mevcut seçlen kullanicilar", getOnayAkisiCombolov().getSelectedItems().last().text());
         for (String[] kullanici : kullaniciTipi) {
             getOnayAkisiCombolov().getSelectedItems().last().shouldHave(text(kullanici[0] + "-" + kullanici[1]));
@@ -901,7 +902,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Anlık onay seçilen Kullanıcıları kontrol et")
     public BilgilerTab secilenAnlikOnayAkisKullanicilariKontrolEt(String[][] kullaniciTipi) {
-        Allure.addAttachment("Seçlen olmalı kullanicilar", kullaniciTipi.toString());
+        Allure.addAttachment("Seçlen olmalı kullanicilar", Arrays.deepToString(kullaniciTipi));
         Allure.addAttachment("Mevcut seçlen kullanicilar", getAnlikOnayAkisKullanicilarCombolov().getSelectedItems().texts().toString());
 
         for (String[] kullanici : kullaniciTipi) {

@@ -252,9 +252,9 @@ public class UstMenuData {
     }
 
     public interface UstMenuDataInterface {
-        public String getName();
+        String getName();
 
-        public String getGroupName();
+        String getGroupName();
     }
 
 }

@@ -71,8 +71,7 @@ public class SearchFiltreleme extends BaseLibrary {
 
     @Step("Get select element with label")
     public SelenideElement getFilterSelect(String label) {
-        SelenideElement selectElement = getFilterElement(label).$("select");
-        return selectElement;
+        return getFilterElement(label).$("select");
     }
 
     @Step("Get combolov element with label")
@@ -83,8 +82,7 @@ public class SearchFiltreleme extends BaseLibrary {
 
     @Step("Get button elements of labeled field")
     public ElementsCollection getFilterFieldButtons(String label) {
-        ElementsCollection elements = getFilterElement(label).$$("button");
-        return elements;
+        return getFilterElement(label).$$("button");
     }
 
     @Step("\"Sorgulama ve Filtreleme\"de \"{name}\"'butonu bul")

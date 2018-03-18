@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.tabs.AltTabs;
+import pages.pageComponents.tabs.BilgilerTab;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.GizlilikDerecesi;
 import pages.pageData.alanlar.Ivedilik;
@@ -50,7 +51,7 @@ public class EvrakPostalamaTest extends BaseTest {
     PostalananEvrakRaporuPage postalananEvrakRaporuPage;
     pages.newPages.EvrakOlusturPage evrakOlusturPage2;
     AltTabs altTabs;
-    Map dagitimPlanElemanlari;
+    LinkedHashMap<GeregiSecimTipi, String> dagitimPlanElemanlari;
     EvrakOnizleme.EvrakPostala evrakPostala;
 
 
@@ -560,7 +561,7 @@ public class EvrakPostalamaTest extends BaseTest {
         System.out.println("Konu: " + konu);
 
         login(user1);
-        dagitimPlanElemanlari = new LinkedHashMap<GeregiSecimTipi, String>();
+        dagitimPlanElemanlari = new LinkedHashMap<>();
         dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
         dagitimPlanElemanlari.put(DAGITIM_PLANLARI, "OPTİİM DAĞITIM 1");
         dagitimPlanElemanlari.put(BIRIM, "ARAŞTIRMA-GELİŞTİRME ALTTTT");
@@ -568,22 +569,20 @@ public class EvrakPostalamaTest extends BaseTest {
         dagitimPlanElemanlari.put(KULLANICI, "Optiim Test");
         dagitimPlanElemanlari.put(KURUM, "Başbakan");
 
-
-        evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage();
-        evrakOlusturPage2.openPage()
-                .bilgileriTab()
+        evrakOlusturPage2 = new pages.newPages.EvrakOlusturPage().openPage();
+        BilgilerTab bilgilerTab = evrakOlusturPage2.bilgileriTab()
                 .konuKoduSec(konuKodu1)
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
                 .gizlilikDerecesiSec(GizlilikDerecesi.NORMAL)
                 .ivedilikSec(Ivedilik.NORMAL)
                 .evrakTuruSec("Resmi Yazışma")
-                .geregiSec(GERCEK_KISI, dagitimPlanElemanlari.get(GERCEK_KISI).toString(), "APS")
-                .geregiSec(DAGITIM_PLANLARI, dagitimPlanElemanlari.get(DAGITIM_PLANLARI).toString(), "Adi Posta")
-                .geregiSec(BIRIM, dagitimPlanElemanlari.get(BIRIM).toString())
-                .geregiSec(TUZEL_KISI, dagitimPlanElemanlari.get(TUZEL_KISI).toString(), "Adi Posta")
-                .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI).toString())
-                .geregiSec(KURUM, dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
+                .geregiSec(GERCEK_KISI, dagitimPlanElemanlari.get(GERCEK_KISI), "APS")
+                .geregiSec(DAGITIM_PLANLARI, dagitimPlanElemanlari.get(DAGITIM_PLANLARI), "Adi Posta")
+                .geregiSec(BIRIM, dagitimPlanElemanlari.get(BIRIM))
+                .geregiSec(TUZEL_KISI, dagitimPlanElemanlari.get(TUZEL_KISI), "Adi Posta")
+                .geregiSec(KULLANICI, dagitimPlanElemanlari.get(KULLANICI))
+                .geregiSec(KURUM, dagitimPlanElemanlari.get(KURUM), "Adi Posta");
 
         /*evrakOlusturPage2.bilgileriTab().geregiSec(GERCEK_KISI, "OptiimTest")
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı", "OptiimTest")
@@ -610,7 +609,7 @@ public class EvrakPostalamaTest extends BaseTest {
                 .getSecilenGeregiPostaTipi("Değeri \"Adi Posta\" ve değiştirilebilir modda olmalı","Optiim İş")
                 .shouldBe(enabled).getSelectedOption().shouldHave(text("Adi Posta"));*/
 
-        evrakOlusturPage2.bilgileriTab().onayAkisiTemizle()
+        bilgilerTab.onayAkisiTemizle()
                 .anlikOnayAkisKullanicilariTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(user1, OnayKullaniciTipi.IMZALAMA)
@@ -641,11 +640,11 @@ public class EvrakPostalamaTest extends BaseTest {
         evrakOnizleme.new IlgiBilgileri().openTab().getDataTable().findRows(text(metni)).shouldHaveSize(1);
 
         evrakPostala = evrakOnizleme.evrakPostala();
-        gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM).toString(), "Elektronik Gönderilmiştir");
-        gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI).toString(), "Elektronik Gönderilmiştir");
-        gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI).toString(), "Adi Posta");
-        gidisSekliKontrol(KURUM.getOptionText(), dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
-        gidisSekliKontrol(GERCEK_KISI.getOptionText(), dagitimPlanElemanlari.get(GERCEK_KISI).toString(), "APS");
+        gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI), "Adi Posta");
+        gidisSekliKontrol(KURUM.getOptionText(), dagitimPlanElemanlari.get(KURUM), "Adi Posta");
+        gidisSekliKontrol(GERCEK_KISI.getOptionText(), dagitimPlanElemanlari.get(GERCEK_KISI), "APS");
 
         evrakPostala.yazdir();
         evrakPostala.getYazdirUstVerilerListesi().findRows(text(konu)).shouldHaveSize(1).getFoundRow().shouldBe(visible);
@@ -813,7 +812,7 @@ public class EvrakPostalamaTest extends BaseTest {
         String evrakNo = postalanacakEvraklarPage.filter().findRowsWith(text(konu)).first().text().split("No:")[1];
         evrakNo = evrakNo.split("Miat")[0].trim();
 
-        title[0] = dagitimPlanElemanlari.get(GERCEK_KISI).toString();
+        title[0] = dagitimPlanElemanlari.get(GERCEK_KISI);
         /*dagitimPlanElemanlari = new LinkedHashMap<GeregiSecimTipi, String>();
         dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
         dagitimPlanElemanlari.put(DAGITIM_PLANLARI, "OPTİİM DAĞITIM 1");
@@ -828,16 +827,16 @@ public class EvrakPostalamaTest extends BaseTest {
         EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
         evrakPostala = evrakOnizleme.evrakPostala();
         gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
-        gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM).toString(), "Elektronik Gönderilmiştir");
-        gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI).toString(), "Elektronik Gönderilmiştir");
-        gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI).toString(), "Adi Posta");
-        gidisSekliKontrol(KURUM.getOptionText(), dagitimPlanElemanlari.get(KURUM).toString(), "Adi Posta");
-        gidisSekliKontrol(GERCEK_KISI.getOptionText(), dagitimPlanElemanlari.get(GERCEK_KISI).toString(), "APS");
+        gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI), "Elektronik Gönderilmiştir");
+        gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI), "Adi Posta");
+        gidisSekliKontrol(KURUM.getOptionText(), dagitimPlanElemanlari.get(KURUM), "Adi Posta");
+        gidisSekliKontrol(GERCEK_KISI.getOptionText(), dagitimPlanElemanlari.get(GERCEK_KISI), "APS");
 
-        evrakPostala.postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(BIRIM).toString()))
+        evrakPostala.postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(BIRIM)))
                 .ayrintiAlanDoldur("Posta Kodu", "1111")
                 .aciklamaGir(BIRIM.getOptionText() + " açıklama")
-                .postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(TUZEL_KISI).toString()))
+                .postalanacakYerlerdeAra(text(dagitimPlanElemanlari.get(TUZEL_KISI)))
                 .ayrintiAlanDoldur("Posta Kodu", "1112")
                 .aciklamaGir(TUZEL_KISI.getOptionText() + " açıklama");
 
@@ -1185,7 +1184,7 @@ public class EvrakPostalamaTest extends BaseTest {
     public void editorTab() throws IOException, InterruptedException {
         evrakOlusturPage2.editorTab().openTab().getEditor().type("Editör tekst");
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         //params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);

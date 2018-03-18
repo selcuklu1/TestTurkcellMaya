@@ -10,7 +10,6 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;

@@ -1,6 +1,5 @@
 package tests.EvrakDogrulama;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;

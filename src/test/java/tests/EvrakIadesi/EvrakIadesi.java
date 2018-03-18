@@ -1,6 +1,5 @@
 package tests.EvrakIadesi;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;

@@ -1,7 +1,5 @@
 package tests.EvrakOlusturma;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
