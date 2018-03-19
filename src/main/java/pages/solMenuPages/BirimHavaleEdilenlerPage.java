@@ -100,6 +100,29 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakBilgileriIleEvragıGeldigiGorme(String evrakNo,String geldigiYer, String gidecegiYer,String evrakTarihi) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(geldigiYer))
+                .filterBy(Condition.text(gidecegiYer))
+                .filterBy(Condition.text(evrakTarihi))
+                .size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakBilgileriIleEvragıGeldigiGorme(String evrakNo,String gidecegiYer,String evrakTarihi) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(gidecegiYer))
+                .filterBy(Condition.text(evrakTarihi))
+                .size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Filtrele alanını aç")
     public BirimHavaleEdilenlerPage filtreleAc() {
         f.click();

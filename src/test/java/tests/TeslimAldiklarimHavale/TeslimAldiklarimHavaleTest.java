@@ -13,6 +13,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.pageComponents.EvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
@@ -32,6 +33,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     TeslimAlinanlarPage teslimAlinanlarPage;
+    EvrakOnizleme evrakOnizleme;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
@@ -60,6 +62,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         havaleOnayinaSunduklarimPage = new HavaleOnayinaSunduklarimPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         havaleEdilenEvrakRaporuPage = new HavaleEdilenEvrakRaporuPage();
+        evrakOnizleme = new EvrakOnizleme();
     }
 
     @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
@@ -95,8 +98,12 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
-                .havaleYap()
-                .havaleYapAlanlarGeldigiGorme()
+                .havaleYap();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
                 .havaleYapKullaniciListesiSecmeyeDene("TS1590")
                 .havaleYapBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ")
                 .secilenBirimDefaultGeregiIcinGonderGorme()
@@ -105,19 +112,20 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
+                .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Büyük Harflerle Kurum","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",evrakTarihi)
                 .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
 
         login(usernameYAKYOL, passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakGeldigiGorunur(konuKoduRandomTS1597);
+                .evrakGeldigiGorunur(konuKoduRandomTS1597,evrakTarihi,"Büyük Harflerle Kurum");
 
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakGeldigiGorunur(konuKoduRandomTS1597);
+                .evrakGeldigiGorunur(konuKoduRandomTS1597,evrakTarihi,"Büyük Harflerle Kurum");
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -129,9 +137,14 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
-                .havaleYap()
-                .havaleYapEkranGeldigiGorulur()
+                .havaleYap();
+
+        evrakOnizleme
+                .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
+
+        teslimAlinanlarPage
                 .havaleYapKullaniciListesiSecmeyeDene("TS1590")
+                .havaleYapKullaniciListesiSecGeregiIcinGonderGeldigiGorme()
                 .kisiListesiSecilenGuncelle()
                 .kisiListesiSecilenGrupDetaySeciliGeldigiGorme()
                 .grupDetayKullaniciIsaretKaldir()
@@ -141,13 +154,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
+                .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Yasemin Çakıl Akyol",evrakTarihi);
 
         login(usernameYAKYOL, passwordYAKYOL);
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS1597);
+                .evrakGeldigiGorme(konuKoduRandomTS1597,kurum,evrakTarihi);
 
         login(usernameMBOZDEMIR, passwordZTEKIN);
 
@@ -165,6 +178,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
+                .evrakOnizlemeKontrol()
                 .havaleYap()
                 .havaleYapEkranGeldigiGorulur()
                 .havaleYapBirimDoldur(birim)
@@ -176,7 +190,9 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
+                .evrakOnizlemeGeldigiGorme(true)
                 .iadeEt()
+                .iadeEtnotVeDosyaEkleGeldigiGorme(true,true)
                 .iadeEtNotDoldur(not)
                 .iadeEtIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -200,7 +216,9 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinanlarPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
+                .evrakOnizlemeKontrol()
                 .havaleYap()
+                .havaleYapEkranGeldigiGorulur()
                 .havaleYapOnaylanacakKisiDoldur(kisi, birim2)
                 .havaleYaphavaleOnayinaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -209,6 +227,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS1597)
                 .geriAlSec()
+                .geriAlNotGerialGeldigiGorme(true,true)
                 .geriAlNotDoldur(not)
                 .geriAlGeriAl();
 
