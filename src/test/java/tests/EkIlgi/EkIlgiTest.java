@@ -705,8 +705,7 @@ public class EkIlgiTest extends BaseTest {
         String kurum = "Başbakanlık";
         String kurumPostalanakYerler = "BAŞBAKANLIĞA";
 
-
-        String evrakSayisi1 = "234234234234234234-010.01-10910";
+        String evrakSayisi1 = "6345202-010.01-11217";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -725,7 +724,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-     /*   login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+/*        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -905,18 +904,18 @@ public class EkIlgiTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakKontroluAllPages("TS1493_EkIlgi_20180223122232")
-                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180223122232")
+                .konuyaGoreEvrakKontroluAllPages("TS1493_EkIlgi_20180319172927") //evrakKonusu
+                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180319172927") //evrakKonusu
                 .tabEvrakEkleriAc()
 
-                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Sistemden eklenen evrak")
-                .evrakSecIcerikGoster(evrakKonusu, true);
+                .teslimEvrakEkleriKontrol("Ekleri_Dosya1_20180319172927", "Sistemden eklenen evrak") //ekleriAciklamaDosya1
+                .evrakSecIcerikGoster("TS1493_EkIlgi_20180319172927", true);
 
-/*        evrakDetayiPage
+        evrakDetayiPage
                 .evrakGoster()
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");*/
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
 
 
     }
