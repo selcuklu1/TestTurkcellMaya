@@ -58,6 +58,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
     ElementsCollection tblVekaletVerenAlan = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
+    ElementsCollection tblVekaletPopUp = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin_data'] tr[data-ri]");
 
     BelgenetElement txtKullaniciListesi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovText"));
     SelenideElement btnKullaniciListesiGrupDetayEvet = $(By.id("mainPreviewForm:kendinedeGonderilsinViewDialogYes"));
@@ -157,7 +158,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement btnIcerikHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
     SelenideElement btnIcerikHavaleGonder = $("[class$='havaleGonderButonClass']");
     ElementsCollection btnOnizlemeHavaleOnayinaGonder = $$("button[id^='mainPreviewForm:j_idt']");
-
+    BelgenetElement txtOnaylayacakKisi = comboLov(By.id("mainPreviewForm:onaylayacakKisiLov:LovSecilen"));
 
     SelenideElement btnEvrakKapatmaOnayAkisiEkle = $x("//table[@id='mainPreviewForm:evrakKapatOnayAkisPanelGrid']//span[contains(@class, 'add-icon')]/..");
     SelenideElement txtEvrakKapatOnayAkisiAdi = $(By.id("mainPreviewForm:akisAdiText_id"));
@@ -196,11 +197,11 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrakın Gelen Evraklar listesinde doğru bilgilerle listelendiği görülür: Konu:{konu}, Geldiği yer:{yer}, Kayıt tarihi:{tarih}, Evrak tarihi / no / Gereği için")
-    public GelenEvraklarPage evrakGeldigiGorme(String konu, String yer, String tarih){
+    public GelenEvraklarPage evrakGeldigiGorme(String konu, String yer, String tarih) {
         boolean durum = tableEvraklar.filterBy(text(konu))
                 .filterBy(text(yer))
-                .filterBy(text(tarih)).size()==1;
-        Assert.assertEquals(durum,true);
+                .filterBy(text(tarih)).size() == 1;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
@@ -1082,8 +1083,8 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak içeriğinin geldiği görülür.")
-    public GelenEvraklarPage evrakIcerikGeldigiGorme(){
-        Assert.assertEquals($(By.id("inboxItemInfoForm")).isDisplayed(),true);
+    public GelenEvraklarPage evrakIcerikGeldigiGorme() {
+        Assert.assertEquals($(By.id("inboxItemInfoForm")).isDisplayed(), true);
         return this;
     }
 
@@ -1455,6 +1456,21 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Onaylayacak Kisi alanında \"{kisi}\" seçilir.")
+    public GelenEvraklarPage havaleIslemleriOnaylayacakKisiSec(String kisi) {
+        txtComboLovOnaylayacakKisi.openTreePanel().getSelectableItems().filterBy(Condition.text(kisi)).first().click();
+        return this;
+    }
+
+    @Step("Havale İşlemleri Onaylayacak Kisi alanında \"{kisi}\" seçilir.")
+    public GelenEvraklarPage vekaletVarPopupSeçim(String kisi) {
+
+        tblVekaletPopUp
+                .filterBy(text(kisi)).first()
+                .$("button")
+                .click();
+        return this;
+    }
 
     /*    @Step("Havale İşlemleri Birim alanında \"{kisi}\" kontrol")*/
     public GelenEvraklarPage havaleIslemleriBirimTemizle(String kisi) {
@@ -1699,6 +1715,15 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Önizleme Onaylayacak kişi alanına \"{kisi}\" eklenir.")
+    public GelenEvraklarPage evrakOnzilemeOnaylayanKisiKontrolu(String kisi) {
+        boolean durum = txtOnaylayacakKisi.getText().contains(kisi);
+
+        Assert.assertEquals(durum, true, "Onaylayan Kisi Eklendi");
+        Allure.addAttachment("Onaylayacak Kisi Eklendi:", kisi);
+        return this;
+    }
+
     @Step("İçerikten Havale Onayına Gönder")
     public GelenEvraklarPage icerikHavaleOnayinaGonder2() {
         btnIcerikHavaleOnayinaGonder.click();
@@ -1852,8 +1877,8 @@ public class GelenEvraklarPage extends MainPage {
         Assert.assertEquals(durum, true, "Iade Edilecek Kullanıcı/Birim Kontrolü");
         Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü", "");
 
-        Assert.assertEquals(durum,true,"Iade Edilecek Kullanıcı/Birim Kontrolü");
-        Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü","");
+        Assert.assertEquals(durum, true, "Iade Edilecek Kullanıcı/Birim Kontrolü");
+        Allure.addAttachment("Iade Edilecek Kullanıcı/Birim Kontrolü", "");
 
         return this;
     }
