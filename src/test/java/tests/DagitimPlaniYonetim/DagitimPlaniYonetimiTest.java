@@ -1,12 +1,15 @@
 package tests.DagitimPlaniYonetim;
 
 import com.codeborne.selenide.Selectors;
+import com.codeborne.selenide.testng.TextReport;
+import com.codeborne.selenide.testng.annotations.Report;
 import common.BaseTest;
 import common.ReusableSteps;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.DagitimHitapDuzenle;
@@ -34,6 +37,8 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  */
 //@Test(suiteName = "Dağıtım Plan Yönetimi")
 @Feature("Dağıtım Planı Yönetimi")
+@Listeners({TextReport.class})
+@Report
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim");
