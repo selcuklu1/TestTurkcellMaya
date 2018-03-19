@@ -265,7 +265,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
                 .havaleAlanKontrolleri()
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet()
@@ -509,8 +509,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
         String evrakNo = gelenEvrakKayitPage.popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -719,11 +719,11 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 
                 .kaydet()
                 .gelenEvrakKayitKaydetEvet2()
-                .popUps();
-//                .popUpsv2();
+                .popUpsv2();
+//                .popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 //                .islemMesaji().basariliOlmali();
 
         login(mbozdemir);
@@ -810,7 +810,7 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
 //                .dagitimBilgileriOnaylayanWithDetails(onaylayacakKisi, onayKisiDetails)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .dagitimBilgileriBirimOpsiyon(bilgi)
-                .dagitimBilgileriKullaniciListesiDoldur("OPTİİM")
+                .dagitimBilgileriKullaniciListesiDoldur("TS2994")
                 .dagitimBilgileriBirimOpsiyon(gerek)
                 .dagitimBilgileriBirimOpsiyon(koordinasyon)
                 .kaydet();

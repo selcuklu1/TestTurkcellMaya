@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.bouncycastle.crypto.engines.AESLightEngine;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -738,6 +737,12 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi doldur")
+    public TeslimAlinmayiBekleyenlerPage havaleYapKisiSil() {
+        txtHavaleYapKisi.clearAllSelectedItems();
+        return this;
+    }
+
     @Step("Kişi alanında \"{kisi}\" seçmeye dene")
     public TeslimAlinmayiBekleyenlerPage havaleYapKisiKisiSecmeyeDene(String kisi) {
         txtHavaleYapKisi.type(kisi).getTitleItems().filterBy(text(kisi)).first().click();
@@ -1075,6 +1080,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Allure.addAttachment("EvrakTarihi", evrakTarihi);
         Allure.addAttachment("GeldigiKurum", geldigiKurum);
         Allure.addAttachment("EvrakNo", evrakNo);
+        takeScreenshot();
         return this;
     }
 
@@ -1114,6 +1120,14 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }
+
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldurExactName(String birim) {
+        txtTeslimAlVeHavaleEtBirim.selectExactLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
     @Step("Havale alanında birim temizlenir.")
     public TeslimAlinmayiBekleyenlerPage birimeHavaleSil() {
         txtTeslimAlVeHavaleEtBirim.clearAllSelectedItems();

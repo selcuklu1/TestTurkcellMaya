@@ -135,8 +135,12 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Kisi doldur")
     public TeslimAlinanlarPage havaleYapKisiDoldur(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
-        txtHavaleYapKisi.selectLov(kisi);
-        txtHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+    @Step("Kisi sil")
+    public TeslimAlinanlarPage havaleYapKisiSil() {
+        txtHavaleYapKisi.clearAllSelectedItems();
         return this;
     }
 
@@ -494,6 +498,12 @@ public class TeslimAlinanlarPage extends MainPage {
     @Step("Birime havale alanında \"{birim}\" seçilir")
     public TeslimAlinanlarPage birimeHavaleDoldur(String birim) {
         cmbBirimeHavale.selectLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+    @Step("Birime havale alanında \"{birim}\" seçilir")
+    public TeslimAlinanlarPage birimeHavaleDoldurExactName(String birim) {
+        cmbBirimeHavale.selectExactLov(birim);
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }

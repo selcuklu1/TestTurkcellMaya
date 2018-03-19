@@ -99,7 +99,7 @@ public class GalenControl {
                 , null
                 , params);
 
-        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
+        List<GalenTestInfo> galenTests = new LinkedList<>();
 
         // Create a GalenTestInfo object
         GalenTestInfo galenTest = GalenTestInfo.fromString(testName);

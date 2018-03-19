@@ -244,6 +244,13 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi silinir")
+    public GelenEvraklarPage havaleYapKisiSil() {
+        txtHavaleYapKisi.clearAllSelectedItems();
+        return this;
+    }
+
+
     @Step("Kisi doldur")
     public GelenEvraklarPage havaleYapKisiDoldur2(String kisi) {
         txtHavaleYapKisi.selectLov(kisi);
@@ -377,7 +384,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu{konu}")
+    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu : {konu}")
     public GelenEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tableEvraklar
@@ -1516,6 +1523,7 @@ public class GelenEvraklarPage extends MainPage {
         Allure.addAttachment("EvrakTarihi", evrakTarihi);
         Allure.addAttachment("GeldigiKurum", geldigiKurum);
         Allure.addAttachment("EvrakNo", evrakNo);
+        takeScreenshot();
         return this;
     }
 
@@ -1867,7 +1875,14 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Birime havale alanında \"{birim}\" seçilir")
     public GelenEvraklarPage birimeHavaleDoldur(String birim) {
-        txtComboLovBirim.selectLov(birim);
+        txtComboLovBirim.selectExactLov(birim);
+        Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
+    @Step("Havale alanında birim silinir")
+    public GelenEvraklarPage birimeHavaleSil() {
+        txtComboLovBirim.clearAllSelectedItems();
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }

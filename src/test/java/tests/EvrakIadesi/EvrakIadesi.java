@@ -1,6 +1,5 @@
 package tests.EvrakIadesi;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -2303,14 +2302,6 @@ public class EvrakIadesi extends BaseTest {
                 .versiyonAktifPasifKontrolu(konu, "Pasif Belge")
                 .versiyonlariSecKarsilastir(konu,yeniKonu)
                 .versiyonlariKarsilastirma();
-
-
-
-
-
-
-
-
 
     }
 

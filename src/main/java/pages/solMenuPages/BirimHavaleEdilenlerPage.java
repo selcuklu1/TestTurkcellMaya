@@ -12,7 +12,6 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -50,6 +49,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
 
+    SelenideElement btnIcerikGeriAl = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-text']");
+
     //Birim
     ElementsCollection birimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
@@ -77,6 +78,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
 
     @Step("Birim Havale Edilenler sayfası aç")
@@ -206,6 +208,28 @@ public class BirimHavaleEdilenlerPage extends MainPage {
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrak Geçmiş Tab Kontrolü")
+    public BirimHavaleEdilenlerPage evrakGecmisTabKontrolu() {
+        boolean durum = $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab Kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tabı gelmektedir.","");
+        return this;
+    }
+
+    @Step("Evrak geçmişi alanına tıklanır")
+    public BirimHavaleEdilenlerPage secilenEvrakEvrakGecmisi() {
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol")
+    public BirimHavaleEdilenlerPage evrakGecmisi(String teslimAlinan, String islemSureci, String evrakTarihSaat) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() >= 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -348,6 +372,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Yap button kontrol")
+    public BirimHavaleEdilenlerPage icerikHavaleYapKontrol() {
+        Assert.assertEquals(btnHavaleYap2.isDisplayed(), true, "Havale Yap Button Kontrol");
+        Allure.addAttachment("Havale Yap Button Kontrol", "");
+        return this;
+    }
+
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
@@ -370,6 +401,12 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Içerik Geri Al Butonu tıkla")
+    public BirimHavaleEdilenlerPage icerikGeriAl() {
+        btnIcerikGeriAl.click();
         return this;
     }
 

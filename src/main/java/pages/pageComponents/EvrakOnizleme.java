@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.GelenEvraklarPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -605,6 +604,18 @@ public class EvrakOnizleme extends MainPage {
             postalaButton.pressEnter();
             return this;
         }
+
+        @Step("Postala")
+        public EvrakPostala postala(boolean dialogEvet) {
+            postalaButton.pressEnter();
+            //$("div[id^='mainPreviewForm:postalaDogrulaDialogForm']")
+            if (dialogEvet)
+                $("button[id='mainPreviewForm:postalaDogrulaDialogForm:evetButton_id']").click();
+            else
+                $("button[id='mainPreviewForm:postalaDogrulaDialogForm:hayirButton_id']").click();
+            return this;
+        }
+
 
         @Step("Doğrulama Uyarı")
         public EvrakPostala dogrulamaUyari(String text, boolean evet) {

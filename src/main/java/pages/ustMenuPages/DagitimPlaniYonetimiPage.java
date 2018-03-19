@@ -356,6 +356,20 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
+    /*@Step("\"{dagitimElemanlariTipi}\" dağıtım elemanı eklenir")
+    public DagitimPlaniYonetimiPage dagitimElemaniEkle(String dagitimElemanlariTipi, String dagitimElemani, String evraktaGorunecekHitap) {
+
+        dagitimElemanlariTipiSec(dagitimElemanlariTipi);
+        dagitimElemanlariSec(dagitimElemani);
+
+        getDagitimHitapDuzenlemeSilButton(dagitimElemani, "bulunur").shouldBe(visible);
+        getDagitimHitapDuzenlemeGuncelleButton(dagitimElemani,"bulunur").shouldBe(visible);
+        ekle();
+        dagitimPlaniDataTable.findRows(text(dagitimElemanlariTipi), text(dagitimElemani)).shouldHaveSize(1);
+        getSilButton().shouldBe(visible);
+        getGuncelleButton().shouldBe(visible);
+        return this;
+    }*/
 
     @Step("\"{dagitimElemanlariTipi}\" dağıtım elemanı eklenir")
     public DagitimPlaniYonetimiPage dagitimElemanlariEkle(String dagitimElemanlariTipi, String... dagitimElemanlari) {
@@ -415,7 +429,7 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         aciklamaGir(aciklama);
         kullanildigiBirimSec(kullanildigiBirim);
         altBirimlerGorsunSec(altBirimlerGorsun);
-        dagitimElemanlari.forEach((k,v)-> dagitimElemanlariEkle(k, v));
+        dagitimElemanlari.forEach(this::dagitimElemanlariEkle);
         kaydet().islemMesaji().basariliOlmali();
         return this;
     }
