@@ -2,6 +2,7 @@ package tests.VekaletIslemleri;
 
 import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import common.ReusableSteps;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
@@ -23,6 +24,7 @@ import java.text.ParseException;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
@@ -41,6 +43,7 @@ public class VekaletIslemleriTest extends BaseTest {
     ParafladiklarimPage parafladiklarimPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     KullaniciYonetimiPage kullaniciYonetimiPage;
+    ReusableSteps reusableSteps;
 
     String aciklama = "";
     String redNedeni = "";
@@ -81,6 +84,7 @@ public class VekaletIslemleriTest extends BaseTest {
         mainPage = new MainPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         kullaniciYonetimiPage = new KullaniciYonetimiPage();
+        reusableSteps = new ReusableSteps();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -156,7 +160,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS0025b : Onaya göndererek Vekalet Verme işleminde onayın Red edilmesi")
     public void TS0025b() throws InterruptedException {
 
-        login(TestData.username22n, TestData.passwor22n);
+        login(TestData.username22n, TestData.password22n);
 
 //        String aciklama = "onay 20171206220943 evrak";
 
@@ -190,14 +194,14 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
 //            ,priority = 2
-            , dependsOnMethods = {"TS0025b"}
+//            , dependsOnMethods = {"TS0025b"}
             , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
         vekaletVer();
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //emre
-        login(TestData.username22n, TestData.passwor22n);
+        login(TestData.username22n, TestData.password22n);
 
 //        String aciklama = "onay 20180109134612 evrak";
         vekaletOnaylariPage
@@ -736,6 +740,36 @@ public class VekaletIslemleriTest extends BaseTest {
                 .ozelUnvanSec()
                 .aciklamaDoldur(aciklama)
                 .uygula();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true
+//            ,dependsOnMethods = {"TS2208"}
+            , description = "TS2205 : Vekalet alan kullanıcının havale onayında seçilmesi")
+    public void TS2205() throws InterruptedException{
+
+//        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+//
+//        String konu = "TS2205 " + createRandomNumber(8);
+////        String konu = "TS0614 15603241";
+//        String kurum = "BÜYÜK HARFLERLE KURUM";
+//        String birim = "Usernameva TEST";
+//
+//        reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
+
+        login(TestData.usernameva,TestData.passwordva);
+
+        mainPage.vekaletVarUyariPopUp()
+                .birimSec(Condition.exactText("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"));
+
+        String vekaletVeren = "usernameVV TEST";
+        gelenEvraklarPage
+                .openPage()
+//                .konuyaGoreEvrakOnizlemedeAc(konu)
+                .evrakOnizlemeButonTikla("Havale Yap")
+                .havaleIslemleriOnaylayacakKisiSec(vekaletVeren)
+                .vekaletVarPopupSeçim(vekaletVeren)
+                .evrakOnzilemeOnaylayanKisiKontrolu(vekaletVeren);
 
 
     }

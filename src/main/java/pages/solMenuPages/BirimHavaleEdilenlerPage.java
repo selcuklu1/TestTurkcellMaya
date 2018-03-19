@@ -49,6 +49,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
 
+    SelenideElement btnIcerikGeriAl = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-text']");
+
     //Birim
     ElementsCollection birimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
@@ -376,6 +378,12 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Içerik Geri Al Butonu tıkla")
+    public BirimHavaleEdilenlerPage icerikGeriAl() {
+        btnIcerikGeriAl.click();
         return this;
     }
 

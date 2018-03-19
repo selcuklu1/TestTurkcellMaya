@@ -2303,14 +2303,6 @@ public class EvrakIadesi extends BaseTest {
                 .versiyonlariSecKarsilastir(konu,yeniKonu)
                 .versiyonlariKarsilastirma();
 
-
-
-
-
-
-
-
-
     }
 
 }
