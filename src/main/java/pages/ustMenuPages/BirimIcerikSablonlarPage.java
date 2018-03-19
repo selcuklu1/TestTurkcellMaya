@@ -136,7 +136,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
             $(".textLayer").shouldHave(textCaseSensitive(baslik));
             $(".textLayer").shouldHave(textCaseSensitive(text));
             $(".textLayer").shouldHave(textCaseSensitive("(@BIRIM)"));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         } finally {
             switchTo().window(1).close();
         }
@@ -392,7 +392,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
     public BirimIcerikSablonlarPage detayButonaTikla(SelenideElement row) {
         try {
             row.$("[id$='sablonListesiDetayButton_id']").sendKeys("\n");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         row.$("[id$='sablonListesiDetayButton_id']").click();
         return this;

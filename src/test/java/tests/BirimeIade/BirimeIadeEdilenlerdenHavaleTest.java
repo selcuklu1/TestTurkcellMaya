@@ -523,8 +523,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
-                .evrakTeslimAlHavaletEt()
                 .evrakOnizlemeKontrol()
+                .evrakTeslimAlHavaletEt()
                 .havaleKisiListesi(kullanici)
                 .eklenenOnizlemeOnaylayanKontrolu(kullanici)
                 .birimTeslimAlGonder()

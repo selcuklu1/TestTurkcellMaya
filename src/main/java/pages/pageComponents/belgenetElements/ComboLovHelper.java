@@ -191,7 +191,7 @@ public class ComboLovHelper extends BaseLibrary {
         List<String> texts = null;
         if ($$(lovSecilenItemTitle).size() > 0)
             texts = $$(lovSecilenItemTitle).texts();
-        Allure.addAttachment("Value", texts.toString());
+        Allure.addAttachment("Value", texts != null ? texts.toString() : "");
         return $$(lovSecilenItemTitle);
     }
 
@@ -200,7 +200,7 @@ public class ComboLovHelper extends BaseLibrary {
         List<String> texts = null;
         if ($$(lovSecilenItemDetail).size() > 0)
             texts = $$(lovSecilenItemDetail).texts();
-        Allure.addAttachment("Value", texts.toString());
+        Allure.addAttachment("Value", texts != null ? texts.toString() : "");
         return $$(lovSecilenItemDetail);
     }
 
@@ -406,14 +406,13 @@ public class ComboLovHelper extends BaseLibrary {
                 title.click();
                 break;
             }
-            if (isSelected) break;
         }
         if (!isSelected)
             throw new RuntimeException("\"" + value + "\" değeri seçilemedi. Alan: " + lovText);
 
         closeTreePanel();
 
-        Assert.assertTrue(isSelected, "Bir değer seçilemedi");
+        //Assert.assertTrue(isSelected, "Bir değer seçilemedi");
 //        Assert.assertEquals($$(lovSecilenItemTitle).size(),getSelectedTitles.size() + 1, "Bir seçenek eklenmesi bekleniyor");
 
         try {
@@ -572,7 +571,8 @@ public class ComboLovHelper extends BaseLibrary {
         //ElementsCollection collection1 = collection;
         for (String t : text) {
             //regex vs türkçe karakterleri
-            collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
+            collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[<(\\[{\\\\^\\-=$!|\\]})‌​?*+.>]", "\\\\$0") + "\\b"));
+            //collection = collection.filterBy(matchText("(?i)(?u)(?m)\\b" + t.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"));
         }
 
         Allure.addAttachment("Filtered items " + collection.size(), collection.texts().toString());

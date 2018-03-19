@@ -222,9 +222,9 @@ public class SolMenuData {
     }
 
     public interface SolMenuDataInterface {
-        public String getGroupId();
+        String getGroupId();
 
-        public String getMenuText();
+        String getMenuText();
     }
 }
 

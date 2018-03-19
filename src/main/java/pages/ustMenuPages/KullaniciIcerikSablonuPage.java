@@ -8,12 +8,9 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.SearchTable;
-import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import static com.codeborne.selenide.Selenide.$;
 
 public class KullaniciIcerikSablonuPage extends MainPage
 {

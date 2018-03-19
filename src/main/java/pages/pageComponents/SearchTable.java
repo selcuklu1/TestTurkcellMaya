@@ -385,7 +385,7 @@ public class SearchTable extends MainPage {
     public SearchTable findRows(Condition... conditions) {
         foundRow = null;
         foundRows = null;
-        String rowCssLocator = this.rowCssLocator;
+        String rowCssLocator = SearchTable.rowCssLocator;
 
         boolean searchByColumn = (columnIndex > 0);
 

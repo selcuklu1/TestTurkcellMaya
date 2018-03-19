@@ -205,7 +205,7 @@ public class EditorTab extends MainPage {
         private SelenideElement note;
         private ElementsCollection notes;
 
-        private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
+        private List<EvrakNot> createdNotes = new ArrayList<>();
 
         public SelenideElement getNotesTable() {
             return page.$("div[id*='evrakNotlariTable']");
@@ -296,8 +296,7 @@ public class EditorTab extends MainPage {
             Pattern p = Pattern.compile("\\d+");
             Matcher m = p.matcher(text);
             Assert.assertTrue(m.find(), "\"" + text + "\" tekst içinde numara bulunamadı");
-            int number = Integer.parseInt(m.group());
-            return number;
+            return Integer.parseInt(m.group());
         }
 
         @Step("Yeni not oluşturulur, açıklama maksimum uzunluk ve not tipi değerleri kontrolleri")

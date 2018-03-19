@@ -307,12 +307,11 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 "sayfanın altında eklerin girildiği isimlerle listelendiği görülür.");
 
         sleep(3000);
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
         params.put("ilgi_a", "İlgileri Tab " + konu);
-        params.put("ilgi_b", "Metni Tab " + konu);
         params.put("ilgi_b", "Metni Tab " + konu);
         params.put("imzaci1Isim", user2.getFullname());
         params.put("imzaci1Gorev", user2.getGorev());

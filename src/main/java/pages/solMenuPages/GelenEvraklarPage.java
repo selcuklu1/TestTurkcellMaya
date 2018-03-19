@@ -1523,6 +1523,7 @@ public class GelenEvraklarPage extends MainPage {
         Allure.addAttachment("EvrakTarihi", evrakTarihi);
         Allure.addAttachment("GeldigiKurum", geldigiKurum);
         Allure.addAttachment("EvrakNo", evrakNo);
+        takeScreenshot();
         return this;
     }
 

@@ -130,6 +130,13 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .gonder()
                 .islemMesaji().basariliOlmali();
 
+        birimHavaleEdilenlerPage
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .evrakGecmisTabKontrolu()
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(onaylayacakKisi, islemSureci, evrakTarihiSaat)
+                .evrakGecmisi(birim, islemSureci, evrakTarihiSaat);
+
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
 
         teslimAlinmayiBekleyenlerPage
@@ -153,10 +160,10 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2304: Havale işleminin sistem loglarından kontrolü")
     public void TS2304() throws InterruptedException {
-        String testid = "TS-2303";
+        String testid = "TS-2304";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
-        String konu = "TS-2303-" + getSysDate();
+        String konu = "TS-2304-" + getSysDate();
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
@@ -228,7 +235,6 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .teslimAlveHavaleEtTeslimAlGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid, "Test Başladı");
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
@@ -247,10 +253,8 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 
                 .gonder()
                 .islemMesaji().basariliOlmali();
+
         testStatus(testid, "Test Başladı");
-
-
-
         sistemLoglariPage
                 .openPage()
                 .ekranSistemLoglarıKontrol()
