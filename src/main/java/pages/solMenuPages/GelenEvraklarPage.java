@@ -384,7 +384,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu{konu}")
+    @Step("Evraklardan biri üzerinde içerik göster butonunu tıkla Konu : {konu}")
     public GelenEvraklarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tableEvraklar

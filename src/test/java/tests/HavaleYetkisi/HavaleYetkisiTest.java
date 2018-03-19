@@ -253,7 +253,6 @@ public class HavaleYetkisiTest extends BaseTest {
         }
     }
 
-
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0614 : Tüm birimlere havale yetkisinin verilmesi")
     public void TS0614() throws InterruptedException {
@@ -363,8 +362,8 @@ public class HavaleYetkisiTest extends BaseTest {
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, true)
                 .havaleYapBirimDoldur(ustBirim);
 
-        birimeHavaleYap(konu,ustBirim);
-        birimeHavaleYap(konu2,ustBirim);
+//        birimeHavaleYap(konu,ustBirim);
+//        birimeHavaleYap(konu2,ustBirim);
 
         login(TestData.username27YGD);
 
@@ -475,8 +474,8 @@ public class HavaleYetkisiTest extends BaseTest {
 
         login(TestData.username27);
 
-        String konu = "TS0614 " + createRandomNumber(8);
-        String konu2 = "TS0614 " + createRandomNumber(8);
+        String konu = "TS0596 " + createRandomNumber(8);
+        String konu2 = "TS0596 " + createRandomNumber(8);
 //        String konu = " TS0614 10143265";
 //        String konu2 = "TS0614 11365042";
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -678,7 +677,7 @@ public class HavaleYetkisiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,dependsOnMethods = {"TS2250"}
+            ,dependsOnMethods = {"TS2250"}
             , description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
     public void TS0597() throws InterruptedException {
 
@@ -745,17 +744,17 @@ public class HavaleYetkisiTest extends BaseTest {
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
-
-        havaleEttiklerimPage //commentlenebilir.
-                .konuyaGoreEvrakIsaratle(konu)
+        havaleEttiklerimPage
+                .openPage()
+                .konuyaGoreEvrakSec(konu)
                 .evrakOnizlemeKontrolu()
                 .evrakOnizlemeButonKontrolu(btnHavaleYap)
                 .evrakOnizlemeButonTikla(btnHavaleYap)
                 .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, false);
 
 
-        birimeHavaleYap(konu,birim1);
-        birimeHavaleYap(konu2,birim1);
+//        birimeHavaleYap(konu,birim1);
+//        birimeHavaleYap(konu2,birim1);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -827,39 +826,40 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS0614 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
+    @Test(enabled = false, description = "TS0615 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
     public void TS0615() throws InterruptedException {
 
 
         login(TestData.user21g);
 
-        String konu = "TS0614 " + createRandomNumber(8);
+        String konu = "TS0615 " + createRandomNumber(8);
 //        String konu = "TS0597 16403152";
-        String konu2 = "TS0614 " + createRandomNumber(8);
+        String konu2 = "TS0615 " + createRandomNumber(8);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Username21g TEST";
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
         String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
+        String btnHavaleYap = "Havale Yap";
+        String btnTeslimAlveHavaleYap = "Teslim Al ve Havale Et";
+        String btnBirim = "Birim";
 
 
-        String menuName = "Profil";
-        mainPage
-                .userMenuAc()
-                .userMenuKontrol(menuName)
-                .userMenuMenuSec(menuName);
 
-        rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
-        mainPage.profilEkraniKapat();
-
-        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
+//        String menuName = "Profil";
+//        mainPage
+//                .userMenuAc()
+//                .userMenuKontrol(menuName)
+//                .userMenuMenuSec(menuName);
+//
+//        rolAdi = mainPage.profildenRolAdiAlma(guncelBirim);
+//        mainPage.profilEkraniKapat();
+//
+//        preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
 
         reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
 
-        String btnHavaleYap = "Havale Yap";
-        String btnTeslimAlveHavaleYap = "Teslim Al ve Havale Et";
-        String btnBirim = "Birim";
 
         gelenEvraklarPage
                 .openPage()

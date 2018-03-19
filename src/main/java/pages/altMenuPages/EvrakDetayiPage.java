@@ -170,7 +170,7 @@ public class EvrakDetayiPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
     public EvrakDetayiPage havaleYapBirimAlanindaButonTikla(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='inboxItemInfoForm:birimLovContainer']//span[text()='" + btnText + "']"));
         btnEvrakOnizleme.click();
