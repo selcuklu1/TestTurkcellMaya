@@ -137,6 +137,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeMethod(alwaysRun = true, enabled = true)
     public void beforeMethod(ITestContext context, Method test) {
+        String testResults="";
         /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
         else
@@ -149,24 +150,21 @@ public class BaseTest extends BaseLibrary {
 
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("");
+        testResults += "\n///////////////////////////////////////////////////////" + "\n";
         //System.out.println("Total Test Classes: " + ((TestRunner) context).getTestClasses().size());
-        System.out.println("Total Tests: " + context.getAllTestMethods().length);
-        System.out.println("Passed Tests: " + context.getPassedTests().size());
-        System.out.println("Failed Tests: " + context.getFailedTests().size());
-        System.out.println("Left Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString());
-        System.out.println("");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST CLASS: " + test.getDeclaringClass().getSimpleName());
-        System.out.println("");
-        System.out.println("TEST: " + testName);
-        System.out.println("");
-        System.out.println("STATUS: Started");
-        System.out.println("");
-        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "\nTotal Tests: " + context.getAllTestMethods().length;
+        testResults += "\nPassed Tests: " + context.getPassedTests().size();
+        testResults += "\nFailed Tests: " + context.getFailedTests().size();
+        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString() + "\n";
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\nTEST CLASS: " + test.getDeclaringClass().getSimpleName() + "\n";
+        testResults += "\nTEST: " + testName + "\n";
+        testResults += "\nSTATUS: Started: " + "\n";
+        testResults += "\nTEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\n///////////////////////////////////////////////////////";
+        log.info(testResults);
+
     }
 
     @AfterMethod(alwaysRun = true, enabled = true)
