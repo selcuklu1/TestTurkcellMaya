@@ -159,12 +159,14 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(Condition condition) {
+    public MainPage birimSec(Condition condition, boolean... selectAnyway) {
         SelenideElement currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
                 .shouldHave(matchText(".*"));
         //String currentBirim = $("#kullaniciBirimAd").shouldBe(visible).shouldHave(matchText(".*")).text();
 
-        if (currentBirim.has(condition))
+        if (currentBirim.has(condition)
+                && $("#birimlerimMenusuContainer a.ui-menuitem-selected").has(condition)
+                && !(selectAnyway.length > 0 ? selectAnyway[0] : false))
             return this;
 
         $$("#leftMenuForm #birimlerimMenusuContainer a")
