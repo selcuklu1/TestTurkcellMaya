@@ -412,16 +412,17 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("{dagitimElemanlari} Ek güncellir")
+   /* @Step("{dagitimElemanlari} Ek güncellir")
     public DagitimHitapDuzenle ekGuncelleEvraktaGorunecekHitapKontolsuz(String dagitimElemanlari, String ek) {
         getEkOfDagitimHitapInput(dagitimElemanlari + " alanın eki " + ek + " yap", value(dagitimElemanlari)).setValue(ek);
         return this;
     }
+   */
 
     @Step("{dagitimElemanlari} Ek güncellir ve Evrakta Görünecek Hitap kontrol edilir")
     public DagitimHitapDuzenle ekGuncelle(String dagitimElemanlari, String ek) {
         getEkOfDagitimHitapInput(dagitimElemanlari + " alanın eki " + ek + " yap", value(dagitimElemanlari)).setValue(ek);
-        getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari, ek)).shouldHave(textCaseSensitive(dagitimElemanlari + ek));
+        //getEvraktaGorunecekHitap(String.format("Görünecek Hitap \"%s%s\" olmalı", dagitimElemanlari, ek)).shouldHave(textCaseSensitive(dagitimElemanlari + ek));
         return this;
     }
 

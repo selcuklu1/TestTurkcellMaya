@@ -101,12 +101,10 @@ public class BirimYonetimiTest extends BaseTest {
                 .ara()
                 .birimKayitKontrolu(birimAdi);
 
-//TODO: Burada defect var. Seçilme durumu istenmiş ama seçilemiyor.
+//TODO: Burası değiştirildi excelde
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecByText("Birim")
-                //.geldigiBirimDoldur(birimAdi)
-                //.evrakSayisiSolAlanKontrolu(idariBirimKimlikKodu) //TS2337_Birim_20180215132100
                 .geregiAlanindaBiriminGeldigiVeSecilemedigiKontrolu(birimAdi, "Birim Adı"); //TS2337_Birim_20180215155258
 
         gidenEvrakKayitPage
