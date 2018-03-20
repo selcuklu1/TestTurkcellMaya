@@ -52,17 +52,18 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void driverSetUp() {
-
-        log.info("Setup started");
-        System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
-        System.out.println("default charset=" + Charset.defaultCharset());
-        System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
-        System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
-        System.out.println("locale default: " + Locale.getDefault());
+        String sysProperties = "";
+        sysProperties += "Setup started";
+        sysProperties += "\nfile.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding"));
+        sysProperties += "\ndefault charset=" + Charset.defaultCharset();
+        sysProperties += "\njava.specification.version" + System.getProperty("java.specification.version");
+        sysProperties += "\njava.runtime.version" + System.getProperty("java.runtime.version");
+        sysProperties += "\nlocale default:" + Locale.getDefault();
 
         turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
-        System.out.println("locale: " + Locale.getDefault());
+        sysProperties += "\nlocale: " + Locale.getDefault();
+
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
@@ -112,13 +113,15 @@ public class BaseTest extends BaseLibrary {
         }*/
 
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-        System.out.println("remote: " + Configuration.remote);
-        System.out.println("browser: " + Configuration.browser);
-        System.out.println("url: " + Configuration.baseUrl);
+
+        sysProperties += "\nremote: " + Configuration.remote;
+        sysProperties += "\nbrowser: " + Configuration.browser;
+        sysProperties += "\nurl: " + Configuration.baseUrl;
+
         /*System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
-
+        log.info(sysProperties);
         AllureEnvironmentUtils.create();
     }
 
