@@ -165,9 +165,15 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcı listesi seçmeye dene")
+    @Step("Kullanıcı listesi alanından {kullaniciListesi} adlı kullanıcı listesi seçilir")
     public TeslimAlinanlarPage havaleYapKullaniciListesiSecmeyeDene(String kullaniciListesi) {
         txtHavaleYapKullaniciListesi.type(kullaniciListesi).getTitleItems().filterBy(text(kullaniciListesi)).first().click();
+        return this;
+    }
+
+    @Step("Kullanıcı listesi Default gereği için gönder ifadesinin geldiği görülür.")
+    public TeslimAlinanlarPage havaleYapKullaniciListesiSecGeregiIcinGonderGeldigiGorme() {
+        Assert.assertEquals($(By.id("mainPreviewForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:selectOneMenu")).getSelectedText(),"GEREĞİ İÇİN GÖNDER");
         return this;
     }
 

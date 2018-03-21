@@ -26,6 +26,28 @@ class ComboBox {
         }
     }
 
+    class OpenPanel implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+
+            ComboBoxHelper helper = new ComboBoxHelper();
+            helper.setLocators(proxy);
+            helper.openPanel();
+            return (BelgenetElement) proxy;
+        }
+    }
+
+    class ClosePanel implements Command<BelgenetElement> {
+        @Override
+        public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {
+
+            ComboBoxHelper helper = new ComboBoxHelper();
+            helper.setLocators(proxy);
+            helper.closePanel();
+            return (BelgenetElement) proxy;
+        }
+    }
+
     class GetComboBoxList implements Command<BelgenetElement> {
         @Override
         public BelgenetElement execute(SelenideElement proxy, WebElementSource locator, Object[] args) throws IOException {

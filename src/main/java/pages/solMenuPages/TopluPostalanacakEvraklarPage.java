@@ -1,9 +1,6 @@
 package pages.solMenuPages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -252,6 +249,7 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
 
     @Step("Posta tipi seç.")
     public TopluPostalanacakEvraklarPage postaTipiSec(String[] postaTipleri) {
+
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", lblPostaTipiSeciniz);
 
         lblPostaTipiSeciniz.click();
@@ -277,6 +275,22 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
         }
         lblPostaTipiSeciniz.click();
 //        $x("//tbody").click();
+        return this;
+    }
+
+    @Step("Posta tipi seç.")
+    public TopluPostalanacakEvraklarPage postaTipiSec2(String[] postaTipleri) {
+
+        BelgenetElement postaTipiCombobox = comboBox(By.xpath("//label[.='Posta Tipi Seçiniz ...']/ancestor::div[contains(@class,'ui-selectcheckboxmenu')][1]"));
+        for (String postaTipi: postaTipleri) {
+            postaTipiCombobox.selectComboBox(postaTipi, false);
+        }
+
+        $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:selectedPostaTipsDisplayListDataListId"))
+                .$$("li.ui-datalist-item")
+                .shouldHave(CollectionCondition.texts(postaTipleri));
+
+        postaTipiCombobox.closePanel();
 
         return this;
     }

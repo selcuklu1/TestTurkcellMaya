@@ -992,6 +992,13 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Not girilebileck, dosya ekleyebilecek iade ekranının geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage iadeEtnotVeDosyaEkleGeldigiGorme(boolean not,boolean dosyaEkle){
+        Assert.assertEquals(txtNot.isDisplayed(),not);
+        Assert.assertEquals(btnOnizlemeIadeEtDosyaEkle.isDisplayed(),dosyaEkle);
+        return this;
+    }
+    
     public TeslimAlinmayiBekleyenlerPage onizlemeIadeEtDosyaEkle() {
         btnOnizlemeIadeEtDosyaEkle.click();
         return this;

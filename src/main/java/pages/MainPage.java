@@ -165,7 +165,7 @@ public class MainPage extends BaseLibrary {
         //String currentBirim = $("#kullaniciBirimAd").shouldBe(visible).shouldHave(matchText(".*")).text();
 
         if (currentBirim.has(condition)
-                && $("#birimlerimMenusuContainer a.ui-menuitem-selected").has(condition)
+                && (!$("#birimlerimMenusuContainer a.ui-menuitem-selected").exists() || $("#birimlerimMenusuContainer a.ui-menuitem-selected").has(condition))
                 && !(selectAnyway.length > 0 ? selectAnyway[0] : false))
             return this;
 
@@ -205,7 +205,7 @@ public class MainPage extends BaseLibrary {
     }
 
     public MainPage evrakOlusturSayfayiKapat() {
-        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        $$("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
         islemPenceresiKaydetPopup("Evet");
         return this;
     }
