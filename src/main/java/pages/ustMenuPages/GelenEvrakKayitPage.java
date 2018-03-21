@@ -404,7 +404,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havalenin geldiği görünür :{otomatikHavale}")
+    @Step("Otomatik havalenin geldiği görülür :{otomatikHavale}")
     public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
         boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size() == 1;
