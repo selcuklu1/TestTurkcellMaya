@@ -205,7 +205,7 @@ public class MainPage extends BaseLibrary {
     }
 
     public MainPage evrakOlusturSayfayiKapat() {
-        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        $$("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
         islemPenceresiKaydetPopup("Evet");
         return this;
     }
