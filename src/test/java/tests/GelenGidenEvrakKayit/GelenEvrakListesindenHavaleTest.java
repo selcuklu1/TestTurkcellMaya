@@ -2,6 +2,7 @@ package tests.GelenGidenEvrakKayit;
 
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
  * Yazan: Serdar Kayis
  ****************************************************/
 
+@Feature("Gelen Evrak Listesinden Havale")
 public class GelenEvrakListesindenHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
