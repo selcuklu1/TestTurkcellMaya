@@ -401,7 +401,8 @@ public class TopluPostalanacakEvraklarPage extends MainPage {
                 .filterBy(Condition.text(konu))
                 .first();
 
-        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
+//        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRow);
+
 
         SelenideElement currentRowCheckBox = currentRow.$(By.xpath(".//div[contains(@class, 'ui-chkbox ui-widget')]"));
         Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", currentRowCheckBox);

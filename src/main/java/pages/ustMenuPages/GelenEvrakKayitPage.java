@@ -1402,6 +1402,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("PopUp kontrolleri")
     public String popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
+        String basariMesaji = "İşlem başarılıdır!";
 
         String text;
         Selenide.sleep(5000);
@@ -1422,6 +1423,7 @@ public class GelenEvrakKayitPage extends MainPage {
         }
         if (mukerrerPopUp.isDisplayed()) {
             clickJs(mukerrerPopUpEvet);
+            islemMesaji().basariliOlmali(basariMesaji);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
         basariliPopUp.shouldBe(Condition.visible);
@@ -1850,7 +1852,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() {
-        comboKonuKodu.clearLastSelectedItem();
+        comboKonuKodu.clearAllSelectedItems();
         return this;
     }
 

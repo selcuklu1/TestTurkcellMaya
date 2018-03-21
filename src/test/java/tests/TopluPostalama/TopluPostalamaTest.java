@@ -1261,7 +1261,7 @@ public class TopluPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1675 : Toplu Postaladıklarım İzleme / Alan Kontrolleri (UC_POSTAYÖNETİMİ_004)")
     public void TS1675() {
-
+        useFirefox();
         MainPage mainPage = new MainPage();
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
         PostaListesiPage postaListesiPage = new PostaListesiPage();
@@ -1289,7 +1289,6 @@ public class TopluPostalamaTest extends BaseTest {
                 "TC1675 " + getSysDate(), "TC1675 " + createRandomNumber(9)
         };
 
-
         String tur = "İmzalama";
         String geregiTipi = "Gerçek Kişi";
         String basariMesaji = "İşlem başarılıdır!";
@@ -1310,8 +1309,8 @@ public class TopluPostalamaTest extends BaseTest {
         };
 //        //endregion
 
-        topluPostalanacakEvraklar(konu,geregi,geregiTipi);
-//        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
+        topluPostalanacakEvraklar(konu, geregi, geregiTipi);
+
 ////        region Test Datası
 //        for (int i = 0; i < 2; i++) {
 //            evrakOlusturPage
@@ -1380,7 +1379,7 @@ public class TopluPostalamaTest extends BaseTest {
 
         postaListesiPage.postaDetayiPostala();
         //endregion
-        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
+//        Allure.addAttachment("Test Datası", "Test Datası oluşturuldu.");
 //        String postaListesi = "TC1811 20180112161120";
 
         topluPostaladiklarimPage
@@ -1398,7 +1397,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .topluPostaladiklarimTabloKontrolu(posta_listesi2)
                 .temizle()
 
-                .evrakSayisiDoldur(evrakNo1675[0])
+                .evrakSayisiDoldur(evrakNo[0])
                 .filtrele()
                 .topluPostaladiklarimTabloKontrolu(evrakNo1675[0])
                 .temizle()
@@ -1408,7 +1407,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .temizle()
 
                 .postaListesiAdiDoldur(postaListesi)
-                .evrakSayisiDoldur(evrakNo1675[0])
+                .evrakSayisiDoldur(evrakNo[0])
                 .postaTarihiDoldur(getSysDateForKis())
                 .filtrele()
                 .topluPostaladiklarimTabloKontrolu(postaListesi)
