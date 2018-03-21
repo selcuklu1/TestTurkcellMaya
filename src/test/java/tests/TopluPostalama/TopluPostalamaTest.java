@@ -1399,7 +1399,7 @@ public class TopluPostalamaTest extends BaseTest {
 
                 .evrakSayisiDoldur(evrakNo[0])
                 .filtrele()
-                .topluPostaladiklarimTabloKontrolu(evrakNo1675[0])
+                .topluPostaladiklarimTabloKontrolu(evrakNo[0])
                 .temizle()
                 .evrakSayisiDoldur(number)
                 .filtrele()
