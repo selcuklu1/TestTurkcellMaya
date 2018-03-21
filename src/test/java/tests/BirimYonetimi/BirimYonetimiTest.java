@@ -15,6 +15,8 @@ import pages.ustMenuPages.*;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.switchTo;
+
 /****************************************************
  * Tarih: 2018-02-15
  * Proje: Türksat Functional Test Automation
@@ -714,5 +716,142 @@ public class BirimYonetimiTest extends BaseTest {
         birimYonetimiPage
                 .openPage()
                 .dataResetlemeBirimPasifIseAktifYap(birimAdi);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1119: Birim iletişim bilgilerinin değiştirilmesi")
+    public void TS1119(){
+
+        login("ztekin","123");
+        String birim = "TS1119";
+        String iletisim1 = "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1";
+        String iletisim2 = "Tel: 0312 222 22 22";
+        String iletisim3 = "Web: www.turksat.com.tr";
+        String basariMesaji = "İşlem başarılıdır!";
+        String mobilTel = "0212 536 12 52";
+        String telNo = " 0568 255 12 45";
+        String isNo = " 0212 555 55 25";
+        String faksNo1 = " 0212 585 58 96";
+        String faksNo2 = "0212 587 12 21";
+        String adres = "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1";
+        String il = "ankara";
+        String ilce = "gölbaşı";
+        String eposta = "turksat@turksat.com";
+        String webAdresi = "www.turksat.com.tr";
+        String eskiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+
+        birimYonetimiPage
+                .openPage()
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birim)
+                .ara()
+                .birimKayitKontrolu(birim)
+                .iletisimBilgisi(birim)
+                .birimYonetimiİletisimBilgisiAlanKontrolleri()
+                .guncelle()
+                .iletisimPopupGeldigiGorme()
+                .iletisimBilgisiSatır1Doldur(iletisim1)
+                .iletisimBilgisiSatır2Doldur(iletisim2)
+                .iletisimBilgisiSatır3Doldur(iletisim3)
+                .iletisimKaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        birimYonetimiPage
+                .iletisimGuncelle()
+                .yeniİletisimPopupGeldigiGorme()
+                .mobilTel(mobilTel)
+                .telefonNo(telNo)
+                .isTelefonNo(isNo)
+                .faksNo1(faksNo1)
+                .faksNo2(faksNo2)
+                .adres(adres)
+                .ilDoldur(il)
+                .ilceDoldur(ilce)
+                .eposta(eposta)
+                .webAdresi(webAdresi)
+                .iletisimBilgileriKaydet()
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        mainPage
+                .birimSec(Condition.text(birim))
+                .currentBirimKontrol(Condition.text(birim));
+
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc();
+
+        evrakOlusturPage
+                .editorTabKontrol();
+
+        evrakOlusturPage
+                .iletisimBilgileriGeldigiGorme(iletisim1,iletisim2,iletisim3)
+                .pdfGoster();
+        switchTo().window(1);
+
+        evrakOlusturPage
+                .pdfİletisimBilgileriGeldigiGorme(iletisim1,iletisim2,iletisim3);
+        switchTo().window(0);
+        mainPage
+                .birimSec(Condition.text(eskiBirim))
+                .currentBirimKontrol(Condition.text(eskiBirim));
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1459: Birim bilgisi güncelleme ")
+    public void TS1459(){
+        login("ztekin","123");
+
+        testStatus("TS1459", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+        String geregiTipi = "Birim";
+        String birimAdi = birim.get(0);
+        String birimKisaAdi = birim.get(1);
+        String idariBirimKimlikKodu = birim.get(2);
+        String basariMesaji = "İşlem başarılıdır!";
+
+
+        birimYonetimiPage
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimKayitKontrolu(birimAdi)
+                .birimGüncelle(birimAdi)
+                .birimAdGuncelle(birimAdi)
+                .birimIdariKoduGuncelle(idariBirimKimlikKodu)
+                .kaydet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+        birimYonetimiPage
+                .birimYonetimiPageKontrol1();
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiGeldigiGorme(birimAdi)
+                .bilgiGeldigiGorme(birimAdi);
+
+        evrakOlusturPage
+                .editorTabAc();
+        mainPage
+                .evrakOlusturSayfayiKapat();
+        gelenEvrakKayitPage
+                .openPage()
+                .kisiKurumSecimi(geregiTipi)
+                .geldigiBirimDoldur(birimAdi)
+                .geldigiBirimGoruntulenmeKontrolu(birimAdi)
+                .solEvrakKontrol(idariBirimKimlikKodu);
+        mainPage
+                .evrakOlusturSayfayiKapat();
+        gidenEvrakKayitPage
+                .openPage()
+                .geregiGeldigiGorme(birimAdi)
+                .bilgiGeldigiGorme(birimAdi);
+
+        olurYazisiOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .bilgiGeldigiGorme(birimAdi)
+                .geregiGeldigiGorme(birimAdi);
+        olurYazisiOlusturPage
+                .editorTabAc();
     }
 }

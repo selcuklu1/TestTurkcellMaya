@@ -304,6 +304,38 @@ public class EvrakOlusturPage extends MainPage {
         return editorTab.editorTabKontrol();
     }
 
+    @Step("Editörün sol alt kısmında güncellenen iletişim bilgilerinin geldiği görülür")
+    public EvrakOlusturPage iletisimBilgileriGeldigiGorme(String iletisim1, String iletisim2, String iletisim3) {
+        boolean durum = $$("[id$='editorFooter']")
+                .filterBy(Condition.text(iletisim1))
+                .filterBy(Condition.text(iletisim2))
+                .filterBy(Condition.text(iletisim3)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF'in sol alt kısmında güncellenen iletişim bilgilerinin geldiği görülür")
+    public EvrakOlusturPage pdfİletisimBilgileriGeldigiGorme(String iletisim1, String iletisim2, String iletisim3) {
+        boolean durum = $$("[id$='viewer']")
+                .filterBy(Condition.text(iletisim1))
+                .filterBy(Condition.text(iletisim2))
+                .filterBy(Condition.text(iletisim3)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF Önizleme butonu tıklanır")
+    public EvrakOlusturPage pdfGoster() {
+        clickJs(btnPDFOnizleme);
+        int i=0;
+        while(i<200){
+            sleep(i);
+            i++;
+        }
+        return this;
+    }
     @Step("Editör Tab Kontrol")
     public EditorTab editorTabKontrolInbox() {
         return editorTab.editorTabKontrolInbox();
@@ -350,6 +382,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement cmbKonuKodu = comboLov("input[id$='konuKoduLov:LovText']");
         SelenideElement btnKonuKoduTree = $("button[id$='konuKoduLov:treeButton']");
         SelenideElement txtKonu = $("textarea[id$='konuTextArea']");
+        BelgenetElement cmbGeregiDoldur = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+        BelgenetElement cmbBilgiDoldur = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:LovText"));
         BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
         SelenideElement btnKaldiralacakKlasorlerTree = $("button[id$='eklenecekKlasorlerLov:treeButton']");
         SelenideElement cmbEvrakTuru = $("select[id$='evrakTuruCombo']");
@@ -559,6 +593,23 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab konuAlanıDoluGeldigiGorme(String konu) {
             Assert.assertEquals(txtKonu.getValue(), konu);
             takeScreenshot();
+            return this;
+        }
+
+
+        @Step("Bilgi alanında Güncellenen Birim adının Geldiği kontrolü")
+        public BilgilerTab bilgiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbBilgiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbBilgiDoldur.closeTreePanel();
+            return this;
+
+        }
+        @Step("Geregi alanında Güncellenen Birim adının Geldiği kontrolü")
+        public BilgilerTab geregiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbGeregiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbGeregiDoldur.closeTreePanel();
             return this;
         }
 

@@ -81,7 +81,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .onayAkisiTemizle()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici)
-                .kullanicilarDoldur(kullanici2)
+                .kullanicilarDoldurWithDetailBirim(kullanici2, "BHUPGMY")
                 .kullan();
 
         kararYazisiOlusturPage
@@ -122,7 +122,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .evrakImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+        login(TestData.userMbozdemir); //mbozdemir
 
         imzaBekleyenlerPage
                 .openPage()

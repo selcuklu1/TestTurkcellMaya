@@ -318,6 +318,13 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Kişi kurum combosundan Birim seç")
+    public GelenEvrakKayitPage kisiKurumSecimi(String birimSec) {
+        cmbEvrakBilgileriListKisiKurum.shouldBe(visible);
+        cmbEvrakBilgileriListKisiKurum.selectOption(birimSec);
+        return this;
+    }
+
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public GelenEvrakKayitPage sayfaKontrol(String sayfa) {
         Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
@@ -397,7 +404,7 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Otomatik havalenin geldiği görünür :{otomatikHavale}")
+    @Step("Otomatik havalenin geldiği görülür :{otomatikHavale}")
     public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
         boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size() == 1;
@@ -1999,6 +2006,20 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Geldiği birim alanında \"{geldigiBirim}\" seç ")
     public GelenEvrakKayitPage geldigiBirimDoldur(String geldigiBirim) {
         cmbGeldigiBirim.selectLov(geldigiBirim);
+        return this;
+    }
+
+    @Step("Kisi Kurum  alanında \" {birim}\" güncel bilgileriyle  geldiği görülür.")
+    public GelenEvrakKayitPage geldigiBirimGoruntulenmeKontrolu(String birim) {
+
+        cmbGeldigiBirim.getSelectedItems().last().shouldHave(text(birim));
+
+        return this;
+    }
+
+    @Step("Evrak numara alanının güncel idari birim kodu ile geldiği görülür.")
+    public GelenEvrakKayitPage solEvrakKontrol(String evrakKodu) {
+        txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakKodu));
         return this;
     }
 
