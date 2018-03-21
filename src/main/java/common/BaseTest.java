@@ -169,6 +169,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod(alwaysRun = true, enabled = true)
     public void afterMethod(ITestResult testResult) {
+        String testResults="";
         int SUCCESS = 1;
         int FAILURE = 2;
         int SKIP = 3;
@@ -195,26 +196,23 @@ public class BaseTest extends BaseLibrary {
 
         /*if (testResult.getStatus() == ITestResult.FAILURE)
             takeScreenshot();*/
-
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST: " + testResult.getMethod().getMethodName());
-        System.out.println("");
-        System.out.println("STATUS: " + result);
-        System.out.println("");
-        System.out.println("DESCRIPTION: " + testResult.getMethod().getDescription());
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "\nTEST: " + testResult.getMethod().getMethodName() + "\n";
+        testResults += "\nSTATUS: " + result + "\n";
+        testResults += "\nDESCRIPTION: " + testResult.getMethod().getDescription() + "\n";
         if (testResult.getThrowable() != null) {
-            System.out.println("");
-            System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+            testResults += "\nERROR: " + testResult.getThrowable().getMessage() + "\n";
         }
         //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
         //login da WebDriverRunner.clearBrowserCache(); eklendi
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
+        log.info(testResults);
         WebDriverRunner.closeWebDriver();
     }
 
