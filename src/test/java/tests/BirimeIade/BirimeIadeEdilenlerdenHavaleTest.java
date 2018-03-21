@@ -2,6 +2,7 @@ package tests.BirimeIade;
 
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-
+@Feature("Birime Iade Edilenlerden Havale")
 public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;

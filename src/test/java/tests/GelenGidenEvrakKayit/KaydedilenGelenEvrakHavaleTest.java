@@ -3,6 +3,7 @@ package tests.GelenGidenEvrakKayit;
 import common.BaseTest;
 import data.TestData;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,7 @@ import pages.ustMenuPages.HavaleEdilenEvrakRaporuPage;
  * Yazan: Serdar Kayis
  ****************************************************/
 
+@Feature("Kaydedilen Gelen Evrak Havale")
 public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;

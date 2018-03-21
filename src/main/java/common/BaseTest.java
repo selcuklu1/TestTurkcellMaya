@@ -52,17 +52,18 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void driverSetUp() {
-
-        log.info("Setup started");
-        System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
-        System.out.println("default charset=" + Charset.defaultCharset());
-        System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
-        System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
-        System.out.println("locale default: " + Locale.getDefault());
+        String sysProperties = "";
+        sysProperties += "Setup started";
+        sysProperties += "\nfile.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding"));
+        sysProperties += "\ndefault charset=" + Charset.defaultCharset();
+        sysProperties += "\njava.specification.version" + System.getProperty("java.specification.version");
+        sysProperties += "\njava.runtime.version" + System.getProperty("java.runtime.version");
+        sysProperties += "\nlocale default:" + Locale.getDefault();
 
         turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
-        System.out.println("locale: " + Locale.getDefault());
+        sysProperties += "\nlocale: " + Locale.getDefault();
+
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
@@ -112,13 +113,15 @@ public class BaseTest extends BaseLibrary {
         }*/
 
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-        System.out.println("remote: " + Configuration.remote);
-        System.out.println("browser: " + Configuration.browser);
-        System.out.println("url: " + Configuration.baseUrl);
+
+        sysProperties += "\nremote: " + Configuration.remote;
+        sysProperties += "\nbrowser: " + Configuration.browser;
+        sysProperties += "\nurl: " + Configuration.baseUrl;
+
         /*System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
-
+        log.info(sysProperties);
         AllureEnvironmentUtils.create();
     }
 
@@ -134,6 +137,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeMethod(alwaysRun = true, enabled = true)
     public void beforeMethod(ITestContext context, Method test) {
+        String testResults="";
         /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
         else
@@ -146,28 +150,26 @@ public class BaseTest extends BaseLibrary {
 
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("");
+        testResults += "\n///////////////////////////////////////////////////////" + "\n";
         //System.out.println("Total Test Classes: " + ((TestRunner) context).getTestClasses().size());
-        System.out.println("Total Tests: " + context.getAllTestMethods().length);
-        System.out.println("Passed Tests: " + context.getPassedTests().size());
-        System.out.println("Failed Tests: " + context.getFailedTests().size());
-        System.out.println("Left Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString());
-        System.out.println("");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST CLASS: " + test.getDeclaringClass().getSimpleName());
-        System.out.println("");
-        System.out.println("TEST: " + testName);
-        System.out.println("");
-        System.out.println("STATUS: Started");
-        System.out.println("");
-        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "\nTotal Tests: " + context.getAllTestMethods().length;
+        testResults += "\nPassed Tests: " + context.getPassedTests().size();
+        testResults += "\nFailed Tests: " + context.getFailedTests().size();
+        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString() + "\n";
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\nTEST CLASS: " + test.getDeclaringClass().getSimpleName() + "\n";
+        testResults += "\nTEST: " + testName + "\n";
+        testResults += "\nSTATUS: Started: " + "\n";
+        testResults += "\nTEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\n///////////////////////////////////////////////////////";
+        log.info(testResults);
+
     }
 
     @AfterMethod(alwaysRun = true, enabled = true)
     public void afterMethod(ITestResult testResult) {
+        String testResults="";
         int SUCCESS = 1;
         int FAILURE = 2;
         int SKIP = 3;
@@ -194,26 +196,23 @@ public class BaseTest extends BaseLibrary {
 
         /*if (testResult.getStatus() == ITestResult.FAILURE)
             takeScreenshot();*/
-
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST: " + testResult.getMethod().getMethodName());
-        System.out.println("");
-        System.out.println("STATUS: " + result);
-        System.out.println("");
-        System.out.println("DESCRIPTION: " + testResult.getMethod().getDescription());
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "\nTEST: " + testResult.getMethod().getMethodName() + "\n";
+        testResults += "\nSTATUS: " + result + "\n";
+        testResults += "\nDESCRIPTION: " + testResult.getMethod().getDescription() + "\n";
         if (testResult.getThrowable() != null) {
-            System.out.println("");
-            System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+            testResults += "\nERROR: " + testResult.getThrowable().getMessage() + "\n";
         }
         //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
         //login da WebDriverRunner.clearBrowserCache(); eklendi
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
+        log.info(testResults);
         WebDriverRunner.closeWebDriver();
     }
 

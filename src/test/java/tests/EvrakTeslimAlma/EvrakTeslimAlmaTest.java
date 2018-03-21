@@ -1,6 +1,7 @@
 package tests.EvrakTeslimAlma;
 
 import common.BaseTest;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ import pages.ustMenuPages.SistemLoglariPage;
  * Yazan: Serdar Kayis
  ****************************************************/
 
+@Feature("Evrak Teslim Alma")
 public class EvrakTeslimAlmaTest extends BaseTest {
     static final Logger logger = LogManager.getLogger("EvrakTeslimAlmaTest");
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;

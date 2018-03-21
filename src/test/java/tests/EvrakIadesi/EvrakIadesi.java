@@ -2,6 +2,7 @@ package tests.EvrakIadesi;
 
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -20,7 +21,7 @@ import static com.codeborne.selenide.Condition.text;
  * Class: "Evrak Iadesi" konulu senaryoları içerir
  * Yazan: Serdar Kayis
  ****************************************************/
-
+@Feature("Evrak Iadesi")
 public class EvrakIadesi extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
