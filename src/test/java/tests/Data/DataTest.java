@@ -2,6 +2,7 @@ package tests.Data;
 
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +27,7 @@ import static com.codeborne.selenide.Condition.*;
  * Class: "tests.Data" konulu senaryoları içerir
  * Yazan: Samed Solak
  ****************************************************/
-
+@Feature("Data")
 public class DataTest extends BaseTest {
 
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");

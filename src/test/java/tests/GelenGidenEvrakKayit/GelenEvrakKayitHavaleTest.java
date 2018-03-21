@@ -3,6 +3,7 @@ package tests.GelenGidenEvrakKayit;
 import common.BaseTest;
 import data.TestData;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +19,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
  * Yazan: Serdar Kayis
  ****************************************************/
 
+@Feature("Gelen Evrak Kayıt Havale")
 public class GelenEvrakKayitHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
