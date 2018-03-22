@@ -285,16 +285,27 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-           /* FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);*/
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setAcceptInsecureCerts(true);
             capabilities.setVersion(Configuration.browserVersion);
-            WebDriver driver = Configuration.remote == null ?
+
+            EventFiringWebDriver driver;
+            if (Configuration.remote == null){
+                WebDriver firefox = new FirefoxDriver();
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            } else {
+                WebDriver firefox = new RemoteWebDriver(new URL(Configuration.remote), firefoxOptions);
+                firefox.get("https://www.google.com.tr/");
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            }
+
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());*/
                     //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
