@@ -671,7 +671,7 @@ login(TestData.gsahin);
 
         evrakOlustur();
         login(TestData.username22n,TestData.password22n);
-//        String evrakNo = "13968";
+//        String evrakNo = "14036";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";

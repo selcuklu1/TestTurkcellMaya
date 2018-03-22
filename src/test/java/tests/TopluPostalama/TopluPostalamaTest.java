@@ -3,6 +3,7 @@ package tests.TopluPostalama;
 
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
+import common.ReusableSteps;
 import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Severity;
@@ -1268,6 +1269,7 @@ public class TopluPostalamaTest extends BaseTest {
         TopluPostaladiklarimPage topluPostaladiklarimPage = new TopluPostaladiklarimPage();
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage();
+        ReusableSteps reusableSteps = new ReusableSteps();
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
         //region Parameters
@@ -1281,12 +1283,12 @@ public class TopluPostalamaTest extends BaseTest {
         String adres = "adres " + getSysDateForKis();
 
         String[] konu = new String[]{
-                "TC1675 " + getSysDate(), "1675 " + createRandomNumber(9)
+                "TC1675 " + getSysDate(), "1675 " + createRandomNumber(11)
         };
         String[] evrakNo1675 = new String[2];
 
         String[] konu2 = new String[]{
-                "TC1675 " + getSysDate(), "TC1675 " + createRandomNumber(9)
+                "TC1675 " + getSysDate(), "TC1675 " + createRandomNumber(11)
         };
 
         String tur = "İmzalama";
@@ -1425,11 +1427,14 @@ public class TopluPostalamaTest extends BaseTest {
                 .topluPostaladiklarimEvrakSec(konu[0])
                 .postaDetayiAlanKontrolleri(postaListesi, adres, gramaj1, hesaplananTutar);
 
-
+//        logout();
 //        1811 in stepleri tekrar ediliyor
 
         //region Test Datası
+
         for (int i = 0; i < 2; i++) {
+            login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+
             evrakOlusturPage
                     .openPage()
                     .bilgilerTabiAc()
@@ -1461,6 +1466,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .sorgula()
                 .evrakSec(konu2[0], true)
                 .evrakSec(konu2[1], true)
+//                .postaTipiSec2(konu2)
                 .postaListesineAktar()
                 .listeAdiDoldur(konu2[0])
                 .listeOlustur()
@@ -2366,6 +2372,7 @@ public class TopluPostalamaTest extends BaseTest {
             mainPage
                     .evrakImzala();
 
+            logout();
             login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
             imzaladiklarimPage
@@ -2382,7 +2389,7 @@ public class TopluPostalamaTest extends BaseTest {
         topluPostalanacakEvraklarPage
                 .openPage()
                 .tarihAraligiSec(getSysDateForKis(), getSysDateForKis())
-                .postaTipiSec(postaTipleri)
+                .postaTipiSec2(postaTipleri)
                 .sorgula()
                 .evrakSec(konu[0], true)
                 .evrakSec(konu[1], true)
