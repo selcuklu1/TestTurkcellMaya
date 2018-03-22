@@ -50,6 +50,8 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtKullaniciBirimAtamaBirim = $(By.xpath("//form[@id='kullaniciBirimEditorForm']//table//tbody//tr//td//div"));
     // Kullanıcı Listesi
     SelenideElement btnKullaniciListesiGuncelle = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
+    SelenideElement strKullaniciSayisi = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable']/table/tfoot/tr[2]/td"));
+
 
     // Görevli Olduğu Birimler
 
@@ -277,6 +279,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Alt Birimler Dahil Seç")
     public KullaniciYonetimiPage altBirimlerDahilSec(boolean value) {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
@@ -296,7 +299,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
+    @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür")
     public KullaniciYonetimiPage kullaniciListesiGeldigiGorme() {
         $("[id='kullaniciYonetimiListingForm:filterPanel'] a").click();
         boolean durum = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr").size() == 0;
@@ -563,5 +566,23 @@ public class KullaniciYonetimiPage extends MainPage {
         islemOnayi("Evet");
 
         return this;
+    }
+
+    @Step("Birimin set edilmiş olduğu kontrolu")
+    public KullaniciYonetimiPage birimKontrol(String birim) {
+        cmlBirim.getSelectedTitles().last().shouldHave(text(birim));
+
+        return this;
+    }
+
+    @Step("Birimin set edilmiş olduğu kontrolu : {kullaniciSayisi}")
+    public String kullaniciSayisiniAl() {
+
+        String kullaniciSayisi = strKullaniciSayisi.getText();
+
+        String[] parts = kullaniciSayisi.split(": ");// "004: 034556"
+        String part1 = parts[1]; // 034556
+
+        return parts[1];
     }
 }
