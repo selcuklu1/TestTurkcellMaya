@@ -213,7 +213,14 @@ public class BaseTest extends BaseLibrary {
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
         log.info(testResults);
-        WebDriverRunner.closeWebDriver();
+
+        try {
+            Selenide.close();
+            //WebDriverRunner.getWebDriver().quit();
+            //WebDriverRunner.closeWebDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterClass(alwaysRun = true)
