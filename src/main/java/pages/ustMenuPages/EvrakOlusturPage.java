@@ -3441,6 +3441,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dağıtım yerlerinde birim ve kullanıcı seçimlerini kaldır")
+        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir() {
+            chkDagitimYerleriBirimEk2.setSelected(true);
+            chkDagitimYerleriKullaniciEk2.setSelected(true);
+
+            return this;
+        }
+
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
         public EkleriTab dagitimYerlerindeKullaniciSecEK3() {
             chkDagitimYerleriBirimEk3.setSelected(true);
@@ -4457,17 +4465,15 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
             String pdfDagitim2 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
-            String pdfDagitim2Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
-            String pdfDagitim = pdfDagitim2 + " " + pdfDagitim2Devam;
-            Assert.assertEquals(pdfDagitim.contains(ekler), true);
+            Assert.assertEquals(pdfDagitim2.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
-            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
-            String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[23]")).getText();
-            String pdfDagitim = pdfDagitim3 + " " + pdfDagitim3Devam;
+            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
+            String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
+            String pdfDagitim = pdfDagitim3 + "" + pdfDagitim3Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }

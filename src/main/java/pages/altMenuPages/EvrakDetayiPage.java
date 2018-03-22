@@ -606,7 +606,7 @@ public class EvrakDetayiPage extends MainPage {
 
     @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
     public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
-        String pdfDagitim = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[30]")).getText();
+        String pdfDagitim = $(By.xpath("//*[@id='viewer']/div/div[2]/div[30]")).getText();
         Assert.assertEquals(pdfDagitim.contains(ekler), true);
         return this;
     }
