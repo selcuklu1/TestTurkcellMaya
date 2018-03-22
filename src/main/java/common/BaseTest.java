@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
@@ -304,6 +305,10 @@ public class BaseTest extends BaseLibrary {
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
             //C:\drivers
+
+            if (WebDriverRunner.hasWebDriverStarted())
+                WebDriverRunner.clearBrowserCache();
+
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
