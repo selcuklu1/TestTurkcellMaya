@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
@@ -213,7 +214,14 @@ public class BaseTest extends BaseLibrary {
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
         log.info(testResults);
-        WebDriverRunner.closeWebDriver();
+
+        try {
+            Selenide.close();
+            //WebDriverRunner.getWebDriver().quit();
+            //WebDriverRunner.closeWebDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterClass(alwaysRun = true)
@@ -286,7 +294,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion(Configuration.browserVersion);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
                     //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
@@ -297,6 +305,10 @@ public class BaseTest extends BaseLibrary {
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
             //C:\drivers
+
+            if (WebDriverRunner.hasWebDriverStarted())
+                WebDriverRunner.getWebDriver().quit();
+
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
