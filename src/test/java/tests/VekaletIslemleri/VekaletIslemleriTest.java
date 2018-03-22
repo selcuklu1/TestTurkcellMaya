@@ -485,24 +485,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String geldigiKurum = "Esk Kurum 071216 2";
         //region Test Datası
-        gelenEvrakKayitPage
-                .openPage()
-//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
-                .konuKoduDoldur(konuKodu)
-                .evrakTuruSec(evrakTuru)
-                .evrakDiliSec(evrakDili)
-                .evrakTarihiDoldur(getSysDateForKis())
-                .gizlilikDerecesiSec(gizlilikDerecesi)
-                .kisiKurumSec("Kurum")
-                .geldigiKurumDoldurLovText2(geldigiKurum)
-                .evrakSayiSagDoldur()
-                .evrakGelisTipiSec(evrakGelisTipi)
-                .ivedilikSec(ivedilik)
-                .dagitimBilgileriKisiSec("YASEMİN")
-                .kaydet();
-        String evrakNO2212 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
-        //endregion
+        String evrakNO2212 = gelenEvrakKayit(evrakGelisTipi,geldigiKurum);
 
         String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
         String kullanici = "YAZILIM GELİŞTİRME";
@@ -529,6 +512,29 @@ public class VekaletIslemleriTest extends BaseTest {
                 .openPage()
                 .tabloEvrakNoKontrol(evrakNO2212, true);
 
+    }
+
+    @Step("Testte kullanılmak üzere Gelen Evrak Kayit datası oluşturuldu.")
+    private String gelenEvrakKayit(String evrakGelisTipi, String geldigiKurum) {
+        gelenEvrakKayitPage
+                .openPage()
+//                .evrakBilgileriUstYaziEkle("C:\\Users\\Emre_Sencan\\Pictures\\pdf.pdf")
+                .konuKoduDoldur(konuKodu)
+                .evrakTuruSec(evrakTuru)
+                .evrakDiliSec(evrakDili)
+                .evrakTarihiDoldur(getSysDateForKis())
+                .gizlilikDerecesiSec(gizlilikDerecesi)
+                .kisiKurumSec("Kurum")
+                .geldigiKurumDoldurLovText2(geldigiKurum)
+                .evrakSayiSagDoldur()
+                .evrakGelisTipiSec(evrakGelisTipi)
+                .ivedilikSec(ivedilik)
+                .dagitimBilgileriKisiSec("YASEMİN")
+                .kaydet();
+        String evrakNO2212 = gelenEvrakKayitPage.popUps();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        //endregion
+        return evrakNO2212;
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -606,7 +612,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .tabloEvrakNoKontrol(evrakNO11, true);
     }
 
-    @Step("Test datası oluşturuldu.")
+    @Step("Testte kullanılmak üzere kullanıcıya vekalet verildi.")
     private void vekaletVer() throws InterruptedException {
         TS0025a();
     }

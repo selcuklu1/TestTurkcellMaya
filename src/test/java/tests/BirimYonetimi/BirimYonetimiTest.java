@@ -5,6 +5,7 @@ import common.BaseTest;
 import common.ReusableSteps;
 import data.TestData;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +24,8 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Class: "Birim Yönetimi" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
+
+@Feature("Birim Yönetimi")
 public class BirimYonetimiTest extends BaseTest {
 
     BirimYonetimiPage birimYonetimiPage;

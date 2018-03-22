@@ -1647,6 +1647,26 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    public GelenEvrakKayitPage havaleIslemleriBirimStatusKontrol(String kisi, boolean status) {
+        boolean durum = txtHavaleIslemleriBirim.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum, status, "Birim Kontrolü:" + kisi);
+        Allure.addAttachment("Birim Kontrolü", kisi);
+        txtHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public GelenEvrakKayitPage havaleIslemleriBirimAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//div[@id='evrakBilgileriForm:dagitimBilgileriBirimLov:lovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
     @Step("Alanların güncellenebilirlik kontrolü")
     public GelenEvrakKayitPage evrakDetaylariAlanGuncellenebilirlikKontrolü() {
         txtEvrakBilgileriListKonuKodu.shouldBe(Condition.enabled);
