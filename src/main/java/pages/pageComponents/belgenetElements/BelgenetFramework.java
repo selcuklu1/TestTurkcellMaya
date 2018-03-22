@@ -48,6 +48,8 @@ public class BelgenetFramework {
         Commands.getInstance().add("selectComboBox", new ComboBox().new SelectComboBox());
         Commands.getInstance().add("getComboBoxValues", new ComboBox().new GetComboBoxValues());
         Commands.getInstance().add("getComboBoxHtmlList", new ComboBox().new GetComboBoxList());
+        Commands.getInstance().add("openPanel", new ComboBox().new OpenPanel());
+        Commands.getInstance().add("closePanel", new ComboBox().new ClosePanel());
         //endregion
     }
 }

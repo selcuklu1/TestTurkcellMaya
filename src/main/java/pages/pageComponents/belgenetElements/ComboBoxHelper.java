@@ -17,6 +17,16 @@ class ComboBoxHelper extends BaseLibrary {
     private By liLocator;
     private By ulLocator;
 
+    void openPanel(){
+        if($x(panelXpath).is(not(visible)))
+            $(btnTrigger).click();
+    }
+
+    void closePanel(){
+        if($x(panelXpath).is(visible))
+            $(btnTrigger).click();
+    }
+
     void selectComboBox(SelenideElement proxy, String text, boolean js) {
         setLocators(proxy);
 
@@ -32,7 +42,7 @@ class ComboBoxHelper extends BaseLibrary {
     private void jsClick(String text) {
         WebElement li = WebDriverRunner.getWebDriver()
                 .findElement(
-                        By.xpath(panelXpath + " //li[text()[contains(normalize-space(),'" + text + "')]]"));
+                        By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]"));
 
         executeJavaScript("arguments[0].click()", li);
     }
@@ -40,7 +50,9 @@ class ComboBoxHelper extends BaseLibrary {
     //ul.ui-selectonemenu-items
 
     private void click(String text) {
-        $(btnTrigger).click();
+        if($x(panelXpath).is(not(visible)))
+            $(btnTrigger).click();
+
         $$(liLocator)
                 .filterBy(exactText(text))
                 .get(0).doubleClick();
@@ -65,7 +77,7 @@ class ComboBoxHelper extends BaseLibrary {
         return $$(liLocator);
     }
 
-    private void setLocators(SelenideElement proxy) {
+    void setLocators(SelenideElement proxy) {
         //Get id without _label. This id is parent Div element id
         String id = proxy.attr("id");
         if (id.contains("_label"))
@@ -83,5 +95,4 @@ class ComboBoxHelper extends BaseLibrary {
         liLocator = By.cssSelector("[id='" + id + "_panel'] li");
         ulLocator = By.cssSelector("[id='" + id + "_panel'] ul");
     }
-
 }

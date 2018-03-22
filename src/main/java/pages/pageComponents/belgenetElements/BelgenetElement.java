@@ -130,6 +130,8 @@ public interface BelgenetElement extends SelenideElement {
     BelgenetElement comboBox(By locator);
 
     BelgenetElement selectComboBox(String text, boolean... js);
+    BelgenetElement openPanel();
+    BelgenetElement closePanel();
     //BelgenetElement getComboBoxHtmlList();
     //endregion
 
