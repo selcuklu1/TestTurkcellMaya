@@ -6,11 +6,12 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
+import pages.pageComponents.belgenetElements.Belgenet;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 /****************************************************
@@ -24,7 +25,7 @@ public class EvrakAramaPage extends MainPage {
     //Evrak Arama Tab
     SelenideElement radiobtnGidenEvrak = $(By.xpath("//table[@id='menuYonetimiTabView:hizliEvrakAramaForm:evrakTipiRadioId']//td[3]//div[2]"));
     SelenideElement cmbEvrakınAranacagiYer = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:evrakAramaAranacakYer_id"));
-    BelgenetElement cmbAramaKriteri = comboLov(By.id("menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_label"));
+    SelenideElement cmbAramaKriteri = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_input"));
     SelenideElement txtAramaKriteri = $("[id='menuYonetimiTabView:hizliEvrakAramaForm:aramaKriterInputAlani'] input");
     SelenideElement btnAra = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:hizliEvrakAraButton"));
     ElementsCollection tblListe = $$("[id='menuYonetimiTabView:hizliEvrakAramaForm:evrakAramaDataTableSolr_data'] tr[role='row']");
@@ -56,7 +57,12 @@ public class EvrakAramaPage extends MainPage {
 
     @Step("Arama Kriteri seç")
     public EvrakAramaPage aramaKriteriSec(String aramaKriteriTxt) {
-        cmbAramaKriteri.selectComboBox(aramaKriteriTxt);
+        SelenideElement element = $x("//label[@id='menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_label']//..//div[contains(@class,'ui-selectonemenu-trigger ui-state-default ui-corner-right')]");
+        SelenideElement panel = $(By.id("menuYonetimiTabView:hizliEvrakAramaForm:gidenEvrakSelectOneMenuId_panel"));
+
+        element.click();
+        panel.$$("li").filterBy(Condition.text(aramaKriteriTxt)).first().click();
+
         return this;
     }
 
