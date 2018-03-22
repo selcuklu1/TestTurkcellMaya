@@ -5,6 +5,7 @@ import common.BaseTest;
 import common.ReusableSteps;
 import data.TestData;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +24,8 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Class: "Birim Yönetimi" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
+
+@Feature("Birim Yönetimi")
 public class BirimYonetimiTest extends BaseTest {
 
     BirimYonetimiPage birimYonetimiPage;
@@ -37,6 +40,7 @@ public class BirimYonetimiTest extends BaseTest {
     TeslimAlinanlarPage teslimAlinanlarPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
+    BirimlerdekiKisilerRaporuPage birimlerdekiKisilerRaporuPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -53,6 +57,7 @@ public class BirimYonetimiTest extends BaseTest {
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
+        birimlerdekiKisilerRaporuPage = new BirimlerdekiKisilerRaporuPage();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -325,7 +330,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .birimSec(Condition.text(birimAdi))
                 .evrakIslemleriIslemYaptiklarimMenuKontrol()
 
-             .birimSec(Condition.text("Optiim Birim"));
+                .birimSec(Condition.text("Optiim Birim"));
 
 
         testStatus("TS1461", "Data Resetleme: Rol Silme ve Birimi pasife alma");
@@ -720,9 +725,9 @@ public class BirimYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1119: Birim iletişim bilgilerinin değiştirilmesi")
-    public void TS1119(){
+    public void TS1119() {
 
-        login("ztekin","123");
+        login("ztekin", "123");
         String birim = "TS1119";
         String iletisim1 = "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1";
         String iletisim2 = "Tel: 0312 222 22 22";
@@ -784,12 +789,12 @@ public class BirimYonetimiTest extends BaseTest {
                 .editorTabKontrol();
 
         evrakOlusturPage
-                .iletisimBilgileriGeldigiGorme(iletisim1,iletisim2,iletisim3)
+                .iletisimBilgileriGeldigiGorme(iletisim1, iletisim2, iletisim3)
                 .pdfGoster();
         switchTo().window(1);
 
         evrakOlusturPage
-                .pdfİletisimBilgileriGeldigiGorme(iletisim1,iletisim2,iletisim3);
+                .pdfİletisimBilgileriGeldigiGorme(iletisim1, iletisim2, iletisim3);
         switchTo().window(0);
         mainPage
                 .birimSec(Condition.text(eskiBirim))
@@ -799,8 +804,8 @@ public class BirimYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1459: Birim bilgisi güncelleme ")
-    public void TS1459(){
-        login("ztekin","123");
+    public void TS1459() {
+        login("ztekin", "123");
 
         testStatus("TS1459", "Birim Oluşturma");
         //1109 senaryosu yerine pre. con. koşuluyor
@@ -853,5 +858,46 @@ public class BirimYonetimiTest extends BaseTest {
                 .geregiGeldigiGorme(birimAdi);
         olurYazisiOlusturPage
                 .editorTabAc();
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1959: Birimlerdeki Kişiler Raporunun birim yönetiminden kontrolü")
+    public void TS1959() {
+
+        String defaultBirim = "Optiim Birim";
+        String birimAdi = "TS1959_Birim";
+        String kullanici1 = "Ts1959 USER1";
+        String kullanici2 = "Ts1959 USER2";
+
+        login();
+
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimdekiKullanicilarTikla();
+
+        kullaniciYonetimiPage
+                .birimKontrol(birimAdi)
+                .altBirimlerDahilSec(true)
+                .ara()
+                .kullaniciListesiGeldigiGorme();
+
+        String kullaniciSayisi1 = kullaniciYonetimiPage.kullaniciSayisiniAl();
+
+        birimlerdekiKisilerRaporuPage
+                .openPage()
+                .birimKontrol(defaultBirim)
+                .birimDoldur(birimAdi)
+                .altBirimlerDahilSec(true)
+                .durumSec("Sadece Aktifler")
+                .sorgula()
+                .kullaniciListesiGeldigiGorme();
+
+        String kullaniciSayisi2 = birimlerdekiKisilerRaporuPage.kullaniciSayisiniAl();
+
+        birimlerdekiKisilerRaporuPage
+                .kullaniciSayilarininAyniOldugunuGorme(kullaniciSayisi1, kullaniciSayisi2);
+
     }
 }

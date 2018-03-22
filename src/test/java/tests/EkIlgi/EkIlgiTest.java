@@ -1,5 +1,6 @@
 package tests.EkIlgi;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -13,6 +14,8 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
 
 import java.lang.reflect.Method;
+
+import static com.codeborne.selenide.Selenide.switchTo;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -719,12 +722,12 @@ public class EkIlgiTest extends BaseTest {
 
         String ilgileriAciklamaDosya3 = "İlgileri_Dosya3_" + getSysDate();
 
-        String ilgileriEvrakSayisi1 = "6345202-010.01-11057";
+        String ilgileriEvrakSayisi1 = "6345202-010.01-13903";
         String ilgileriEvrakSayisi2 = "6345202-010.01-11845";
 
         String basariMesaji = "İşlem başarılıdır!";
 
-/*        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -763,7 +766,7 @@ public class EkIlgiTest extends BaseTest {
                 .fizikselEkMetniEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(fizikselEkAciklama, "Açıklama")
                 .dagitimYerleriAcEk2()
-                .dagitimYerlerindeBirimKurumKullaniciKaldir()
+                .dagitimYerlerindeBirimKullaniciKaldir()
 
                 //Sistemde kayıtlı evrak ekle
                 //evrak sayisi1
@@ -795,8 +798,8 @@ public class EkIlgiTest extends BaseTest {
                 .PDFEk2Kontrolu(fizikselEkAciklama)
                 .PDFEk3Kontrolu(evrakSayisi1)
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "k-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kullanici, "Ek-1 konulmadı, Ek-2konulmadı");
 
         closeNewWindow();
         switchTo().window(0);
@@ -898,18 +901,18 @@ public class EkIlgiTest extends BaseTest {
                 .tabloKonuyaGoreEvrakKontrol(evrakKonusu, true)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .tabEvrakEkleriAc()
-                .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");*/
+                .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");
 
         login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .konuyaGoreEvrakKontroluAllPages("TS1493_EkIlgi_20180319172927") //evrakKonusu
-                .konuyaGoreEvrakOnizlemedeAc("TS1493_EkIlgi_20180319172927") //evrakKonusu
+                .konuyaGoreEvrakKontroluAllPages(evrakKonusu) //evrakKonusu //TS1493_EkIlgi_20180319172927
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu) //evrakKonusu //TS1493_EkIlgi_20180319172927
                 .tabEvrakEkleriAc()
 
-                .teslimEvrakEkleriKontrol("Ekleri_Dosya1_20180319172927", "Sistemden eklenen evrak") //ekleriAciklamaDosya1
-                .evrakSecIcerikGoster("TS1493_EkIlgi_20180319172927", true);
+                .teslimEvrakEkleriKontrol(ekleriAciklamaDosya1, "Sistemden eklenen evrak") //Ekleri_Dosya1_20180319172927 //ekleriAciklamaDosya1
+                .evrakSecIcerikGoster(evrakKonusu, true); //TS1493_EkIlgi_20180319172927
 
         evrakDetayiPage
                 .evrakGoster()
