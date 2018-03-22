@@ -286,12 +286,12 @@ public class BaseTest extends BaseLibrary {
     public void useFirefox() {
         try {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);
+            firefoxOptions.setCapability(CapabilityType.VERSION, Configuration.browserVersion);
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);
+            capabilities.setVersion(Configuration.browserVersion);*/
 
             EventFiringWebDriver driver;
             if (Configuration.remote == null){
@@ -299,7 +299,7 @@ public class BaseTest extends BaseLibrary {
                 driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
             } else {
                 WebDriver firefox = new RemoteWebDriver(new URL(Configuration.remote), firefoxOptions);
-                firefox.get("https://www.google.com.tr/");
+                //firefox.get("https://www.google.com.tr/");
                 driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
             }
 
