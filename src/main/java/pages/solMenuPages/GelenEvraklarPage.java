@@ -1756,11 +1756,11 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Evrak Önizleme Onaylayacak kişi alanına \"{kisi}\" eklenir.")
-    public GelenEvraklarPage evrakOnzilemeOnaylayanKisiKontrolu(String kisi) {
-        boolean durum = txtOnaylayacakKisi.getText().contains(kisi);
+    public GelenEvraklarPage evrakOnzilemeOnaylayanKisiKontrolu(String kisi,String title) {
+        boolean durum = txtOnaylayacakKisi.getText().contains(kisi+title);
 
         Assert.assertEquals(durum, true, "Onaylayan Kisi Eklendi");
-        Allure.addAttachment("Onaylayacak Kisi Eklendi:", kisi);
+        Allure.addAttachment("Onaylayacak Kisi Eklendi:", kisi+title);
         return this;
     }
 

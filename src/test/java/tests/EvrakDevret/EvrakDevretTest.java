@@ -319,7 +319,7 @@ public class EvrakDevretTest extends BaseTest {
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         kullaniciEvrakDevretPage
-                .aciklamaDoldur(createRandomText(255))
+                .aciklamaDoldur(createRandomText(500))
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }

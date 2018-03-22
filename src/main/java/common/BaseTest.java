@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
@@ -116,6 +117,7 @@ public class BaseTest extends BaseLibrary {
 
         sysProperties += "\nremote: " + Configuration.remote;
         sysProperties += "\nbrowser: " + Configuration.browser;
+        sysProperties += "\nbrowser.version: " + Configuration.browserVersion;
         sysProperties += "\nurl: " + Configuration.baseUrl;
 
         /*System.out.println("Upload path: " + getUploadPath());
@@ -213,7 +215,14 @@ public class BaseTest extends BaseLibrary {
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
         log.info(testResults);
-        WebDriverRunner.closeWebDriver();
+
+        try {
+            Selenide.close();
+            //WebDriverRunner.getWebDriver().quit();
+            //WebDriverRunner.closeWebDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterClass(alwaysRun = true)
@@ -277,16 +286,27 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-           /* FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);*/
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.VERSION, Configuration.browserVersion);
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);
-            WebDriver driver = Configuration.remote == null ?
+            capabilities.setVersion(Configuration.browserVersion);*/
+
+            EventFiringWebDriver driver;
+            if (Configuration.remote == null){
+                WebDriver firefox = new FirefoxDriver();
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            } else {
+                WebDriver firefox = new RemoteWebDriver(new URL(Configuration.remote), firefoxOptions);
+                //firefox.get("https://www.google.com.tr/");
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            }
+
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());*/
                     //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
@@ -297,6 +317,10 @@ public class BaseTest extends BaseLibrary {
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
             //C:\drivers
+
+            if (WebDriverRunner.hasWebDriverStarted())
+                WebDriverRunner.getWebDriver().quit();
+
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));

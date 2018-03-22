@@ -501,6 +501,15 @@ public class TeslimAlinanlarPage extends MainPage {
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
         return this;
     }
+
+    public TeslimAlinanlarPage havaleIslemleriBirimStatusKontrol(String kisi, boolean status) {
+        boolean durum = cmbBirimeHavale.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum, status, "Birim Kontrolü:" + kisi);
+        Allure.addAttachment("Birim Kontrolü", kisi);
+        cmbBirimeHavale.closeTreePanel();
+        return this;
+    }
+
     @Step("Birime havale alanında \"{birim}\" seçilir")
     public TeslimAlinanlarPage birimeHavaleDoldurExactName(String birim) {
         cmbBirimeHavale.selectExactLov(birim);

@@ -131,8 +131,10 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement btnBirimAktifYap = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [class$='to-active-status-icon']"));
     SelenideElement btnBirimPasifYap = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [class$='to-passive-status-icon']"));
     SelenideElement tblPasifKayitlarBulunamadi = $(By.xpath("//*[@id=\"birimYonetimiListingForm:pasifBirimlerDataTable_data\"]/tr/td"));
-
     SelenideElement btnGuncelle = $(By.id("birimYonetimiEditorForm:updateIletisimBilgisiButton"));
+    SelenideElement btnBirimdekiKullanicilar = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [id$='showBirimdekiKullanicilar']"));
+
+
 
     // Hüseyin TÜMER
 
@@ -1128,4 +1130,9 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Birimdeki Kullanıcılar tıkla")
+    public BirimYonetimiPage birimdekiKullanicilarTikla() {
+        btnBirimdekiKullanicilar.click();
+        return this;
+    }
 }
