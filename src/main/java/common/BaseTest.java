@@ -307,8 +307,8 @@ public class BaseTest extends BaseLibrary {
             //C:\drivers
 
             if (WebDriverRunner.hasWebDriverStarted())
-                WebDriverRunner.clearBrowserCache();
-
+                WebDriverRunner.getWebDriver().quit();
+            
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
