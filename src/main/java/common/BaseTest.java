@@ -294,7 +294,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion(Configuration.browserVersion);
             WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
                     //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
@@ -308,7 +308,7 @@ public class BaseTest extends BaseLibrary {
 
             if (WebDriverRunner.hasWebDriverStarted())
                 WebDriverRunner.getWebDriver().quit();
-            
+
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
