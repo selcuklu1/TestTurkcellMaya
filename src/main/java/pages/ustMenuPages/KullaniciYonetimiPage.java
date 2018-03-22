@@ -71,6 +71,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
     ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[data-ri]");
+    SelenideElement kullaniciYonetimkontrol = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
 
 
     //Kullancı birim atama
@@ -154,6 +155,19 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Sistemin Kullanıcı Yönetimi ekranını açtığı Kontrolu")
+    public KullaniciYonetimiPage kullaniciYönetimiekranıKontrol() {
+
+        Assert.assertEquals(kullaniciYonetimkontrol.isDisplayed(), true, "Kullanıcı  Geldigi Görülür");
+        return this;
+    }
+
+    @Step("Kullanıcı biriminin listelendiği kontrolu")
+    public KullaniciYonetimiPage birimKullanicikontrol() {
+
+        Assert.assertEquals(kullaniciYonetimkontrol.isDisplayed(), true, "Birimin Geldigi Görülür");
+        return this;
+    }
 
     @Step("Kullanıcı birim atama ekranında bağ tipi combosunun geldiği görülür.")
     public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme() {
@@ -304,6 +318,13 @@ public class KullaniciYonetimiPage extends MainPage {
         takeScreenshot();
         return this;
     }
+
+    @Step("Seçilen kullanıcıyı güncelle")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle2() {
+        $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton")).pressEnter();
+        return this;
+    }
+
 
     public String adCek() {
         String ad = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
@@ -546,6 +567,11 @@ public class KullaniciYonetimiPage extends MainPage {
 
         islemOnayi("Evet");
 
+        return this;
+    }
+
+    public KullaniciYonetimiPage gorevListesiSonSayfaTikla(){
+        clickJs($("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']"));
         return this;
     }
 
