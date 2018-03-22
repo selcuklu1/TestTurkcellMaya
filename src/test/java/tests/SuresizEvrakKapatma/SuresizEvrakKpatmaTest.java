@@ -364,6 +364,77 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
     }
 
+    @Test(enabled = true, description = "TS2166 : Evrak Kapatma - Alan Kontrolleri")
+    public void TS2166() {
+
+        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
+        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
+
+        String konuKoduRandom = "TS2066-" + createRandomText(15);
+        String konuKoduRandom2 = "TS2066-" + createRandomText(15);
+        String uyariMesaji = " Zorunlu alanları doldurunuz";
+        String kaldirilacakKlasör = "diğer";
+        String konuKodu = "Diğer";
+        String randomSayi = createRandomText(251);
+        String kullanici = "Zübeyde Tekin";
+        String kullanicihkandur = "Hamza Kandur";
+        String kullanicimbozdemir = "Mehmet BOZDEMİR";
+        String kapat = "Kapatma";
+        String sureliKapatma = "Süreli Kapatma";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login("ztekin", "123");
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom, "BÜYÜK HARFLERLE KURUM", kullanici);
+        login("ztekin", "123");
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom2, "BÜYÜK HARFLERLE KURUM", kullanici);
+
+        testStatus("TS2166","Test Başlamıştır.");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom, "", "", "")
+                .kapatKontrol()
+                .evrakKapat()
+                .kapatmaTipiTikla()
+                .evrakKapatEvrakKapat()
+                .islemMesaji().isUyari(uyariMesaji);
+
+        gelenEvraklarPage
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .kaldirilicakKlasorlerKisiselKlasorlerimSec()
+                .kisiselKlasorlerimSecKaldirilicakKlasorlerDataGeldigiGorme()
+                .evrakKapatEvrakKapat()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .evrakSec(konuKoduRandom2,"","","")
+                .kapatKontrol()
+                .evrakKapat()
+                .evrakKapatmaEkranGeldigiGorme()
+                .kapatmaTipiTikla()
+                .evrakKapatKonuKodu(konuKodu)
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .evrakKapatNotDoldur(randomSayi)
+                .onayAkisiDoldur(" Zübeyde Tekin")
+                .onayAkisiSil()
+                .evrakKapatmaOnayAkisiEkle()
+                .evrakKapatOnayAkisiAdiDoldur("TS2166")
+                .evrakKapatOnayAkisiKullaniciSec(kullanicimbozdemir)
+                .evrakKapatOnayAkisiKullaniciTipiSec(kullanicimbozdemir,"Kapatma Parafı")
+                .evrakKapatOnayAkisiKullan()
+                .islemMesaji().isUyari(uyariMesaji);
+        gelenEvraklarPage
+                .evrakKapatOnayAkisiKullaniciSec(kullanicihkandur)
+                .evrakKapatOnayAkisiKullaniciTipiSec(kullanicihkandur,"Kapatma İmzası")
+                .evrakKapatOnayAkisiKullan()
+                .evrakKapatKapatmaOnayinaSun()
+                .islemMesaji().isBasarili();
+
+    }
+
     @Test(enabled = true, description = "TS2169 : Kapatılan evrakın Personel ve Açık Evrak İstatistiği raporunda kontrolü")
     public void TS2169() {
 

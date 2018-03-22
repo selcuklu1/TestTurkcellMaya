@@ -97,10 +97,11 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
     BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
-    SelenideElement txtEvrakKapatOnayAkisi = $(By.id("mainPreviewForm:akisLov_id:LovText"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
+    BelgenetElement txtEvrakKapatOnayAkisi = comboLov(By.id("mainPreviewForm:akisLov_id:LovText"));
 
     SelenideElement btnEvrakKapatKapat2 = $x("//div[contains(@class, 'kapatButtonDirekt')]//span[text() = 'Evrak Kapat']/..");
+    SelenideElement getBtnOnayAkisiSil = $("[id='mainPreviewForm:akisLov_id:LovSecilen'] button");
     ElementsCollection btnEvrakKapatEvrakKapat = $$("[id='mainPreviewForm:evrakOnizlemeTab'] [class='form-buttons kapatButtonDirekt'] button");
     SelenideElement chkEvrakKapatKisiselKlasorler = $(By.id("mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId_input"));
     SelenideElement btnOnayAkisi = $("[id='mainPreviewForm:evrakKapatOnayAkisPanelGrid'] td:nth-child(4) button");
@@ -454,6 +455,13 @@ public class GelenEvraklarPage extends MainPage {
 
     public GelenEvraklarPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme ekranınında sağ üstünde \"Evrak Kapat\" butonunun geldiği görülür.")
+    public GelenEvraklarPage kapatKontrol() {
+        Assert.assertEquals(btnEvrakKapat.isDisplayed(), true, "Kapat Button kontrol");
+        Allure.addAttachment("Kapat Button kontrol", "");
         return this;
     }
 
@@ -872,6 +880,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Kapat butonu tıklanır")
     public GelenEvraklarPage evrakKapat() {
         btnEvrakKapat.click();
         return this;
@@ -882,6 +891,12 @@ public class GelenEvraklarPage extends MainPage {
         boolean durum = $$(By.id("mainPreviewForm:evrakKapatFieldsetId")).size() == 1;
         Assert.assertEquals(durum, true);
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Kapatma Tipi lixboxı tıklanır.")
+    public GelenEvraklarPage kapatmaTipiTikla() {
+        cmbEvrakKapatKapatmaTipi.click();
         return this;
     }
 
@@ -906,7 +921,7 @@ public class GelenEvraklarPage extends MainPage {
         chkEvrakKapatKisiselKlasorler.setSelected(secilen);
         return this;
     }
-
+    @Step("Evrak Kapat tıklanır")
     public GelenEvraklarPage evrakKapatEvrakKapat() {
         btnEvrakKapatEvrakKapat.get(1).pressEnter();
         return this;
@@ -933,8 +948,33 @@ public class GelenEvraklarPage extends MainPage {
     }
 
     @Step("Kaldırılacak klasor doldur")
+    public GelenEvraklarPage onayAkisiDoldur(String onay) {
+        txtEvrakKapatOnayAkisi.selectLov(onay);
+        return this;
+    }
+
+    public GelenEvraklarPage onayAkisiSil() {
+        clickJs(getBtnOnayAkisiSil);
+        return this;
+    }
+
+    @Step("Kaldırılacak klasor doldur")
     public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerDoldur(String text) {
         txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
+        return this;
+    }
+
+    @Step("Kaldırılacak Klasörler alanında \"Kişisel Kalsörlerim\" CheckBox ı işaretlenir ve LOV  tıklanır.")
+    public GelenEvraklarPage kaldirilicakKlasorlerKisiselKlasorlerimSec(){
+        clickJs($("div[id='mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
+        return this;
+    }
+
+    @Step("LOV  tıklanır. Kişisel Kalsörlerimin listelendiği ve seçilebildiği görülür.")
+    public GelenEvraklarPage kisiselKlasorlerimSecKaldirilicakKlasorlerDataGeldigiGorme(){
+        clickJs($(By.id("mainPreviewForm:klasorLov_id:treeButton")));
+        boolean durum = $$("[id='mainPreviewForm:klasorLov_id:lovTree'] ul li").size()>0;
+        Assert.assertEquals(durum,true);
         return this;
     }
 

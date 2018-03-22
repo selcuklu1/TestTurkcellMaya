@@ -864,6 +864,95 @@ public class BirimYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1116: Tanımlı kullanıcısı olan birimin pasif yapılması")
+    public void TS1116() throws InterruptedException {
+
+        login("alkanseker", "123");
+
+        testStatus("TS1116", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdi = birim.get(0);
+        String amirAdi = "Alkan Ako SEKER";
+        String gorev = "Genel Müdür";
+        String basariMesaji = "İşlem başarılıdır!";
+
+
+        birimYonetimiPage
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimGüncelle(birimAdi)
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Vekaleten Amir Yardımcısı")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet();
+
+        kullaniciYonetimiPage
+                .openPage()
+                .TCKimlikNoDoldur("20987987455")
+                .ara()
+                .kullaniciListesiGuncelle()
+                .rolListeriEkle()
+                .yeniRolIliskilendirmeKullaniciBirimDoldur(birimAdi)
+                .yeniRolIliskilendirmeKullaniciRolSec("ENTERPRİSE")
+                .yeniRolIliskilendirmeKaydet()
+                .kaydet();
+
+
+        testStatus("TS1116 ", "Test Başlamıştır");
+        login("alkanseker", "123");
+
+        birimYonetimiPage
+                .openPage()
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .biriminListelendigiKontrolu()
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .biriminListelendigiKontrolu()
+                .birimPasifYap(birimAdi)
+                .biriminOnaydialoguKontrolu()
+                .popupIslemOnayiAciklamaDoldur("Ts için yazılmıştır")
+                .popupIslemOnayiEvet()
+                .islemMesaji().isDikkat("Birimde tanımlı kullanıcılar bulunmaktadır. Lütfen kullanıcıları başka birime taşıyınız ya da siliniz.");
+
+        Thread.sleep(500);
+
+        birimYonetimiPage
+
+                .popupIslemOnayiHayir()
+                .birimdekikullanıcılarbutonunatıkla();
+        Thread.sleep(1000);
+
+        kullaniciYonetimiPage
+                .kullaniciYönetimiekranıKontrol()
+                .birimKullanicikontrol()
+                .kullaniciListesiGeldigiGorme()
+                .kullaniciListesiGuncelle2()
+                .rolSil(birimAdi)
+                .gorevListesiSonSayfaTikla()
+                .gorevliOlduguBirimSil(birimAdi)
+                .kaydet()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+        birimYonetimiPage
+                .openPage()
+                .birimPasifYap(birimAdi)
+                .biriminOnaydialoguKontrolu()
+                .islemOnayiAciklamaDoldur("TS1116 işlemleri ")
+                .popupIslemOnayiEvet()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1959: Birimlerdeki Kişiler Raporunun birim yönetiminden kontrolü")
     public void TS1959() {
 
@@ -901,6 +990,5 @@ public class BirimYonetimiTest extends BaseTest {
 
         birimlerdekiKisilerRaporuPage
                 .kullaniciSayilarininAyniOldugunuGorme(kullaniciSayisi1, kullaniciSayisi2);
-
     }
 }
