@@ -3,6 +3,7 @@ package tests.OnayAkisindakiEvrakiSil;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -22,6 +23,8 @@ import java.lang.reflect.Method;
  * Class: "Onay akışındaki evraki sil" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
+
+@Feature("Onay Akışındaki Evrakı Sil")
 public class OnayAkisindakiEvrakiSilTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -87,6 +90,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         kararYazisiOlusturPage
                 .editorTabAc();
 
+        Selenide.sleep(2000);
         editor
                 .type("TS0983 nolu senaryonun testi için bir editör metni girildi.");
 
