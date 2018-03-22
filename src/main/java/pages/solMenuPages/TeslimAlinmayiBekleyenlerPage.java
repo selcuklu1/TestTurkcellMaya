@@ -815,6 +815,21 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden evrak önizlemede aç")
+    public TeslimAlinmayiBekleyenlerPage konuyaGoreTeslimAlveHavaleEt(String konu) {
+
+//        new TeslimAlinmayiBekleyenlerPage().searchTable()
+//                .findRowAndSelect(text(konu))
+//                .icerikGoster();
+
+        tblEvraklar
+                .filterBy(Condition.text(konu))
+                .first()
+                .$("[id$='teslimAlVeHavaleEtButton']").click();
+
+        return this;
+    }
+
     @Step("Teslim Alınmayı Bekleyenler Evraklar Listesinden Evrak Üzerinden Teslim Alma")
     public TeslimAlinmayiBekleyenlerPage konuyaGoreTeslimAl(String konu) {
         tblEvraklar
@@ -1118,6 +1133,15 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
     public TeslimAlinmayiBekleyenlerPage birimeHavaleDoldur(String birim) {
         txtTeslimAlVeHavaleEtBirim.selectLov(birim);
         Allure.addAttachment("Birimin Sonuçlarda görüntülendiği görülür", "");
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında \"{kisi}\" kontrol")
+    public TeslimAlinmayiBekleyenlerPage havaleIslemleriBirimStatusKontrol(String kisi, boolean status) {
+        boolean durum = txtTeslimAlVeHavaleEtBirim.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum, status, "Birim Kontrolü:" + kisi);
+        Allure.addAttachment("Birim Kontrolü", kisi);
+        txtTeslimAlVeHavaleEtBirim.closeTreePanel();
         return this;
     }
 

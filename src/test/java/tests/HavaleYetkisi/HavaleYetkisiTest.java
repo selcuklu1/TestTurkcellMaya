@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
+import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciYonetimiPage;
 import pages.ustMenuPages.RolYonetimiPage;
 
@@ -113,7 +114,7 @@ public class HavaleYetkisiTest extends BaseTest {
 
 
     @Step("Birime havale edilen evrak oluşturulur.")
-    public void birimeHavaleYap(String konu,String birim) {
+    public void birimeHavaleYap(String konu, String birim) {
 
         havaleEttiklerimPage
                 .konuyaGoreEvrakSec(konu)
@@ -166,10 +167,12 @@ public class HavaleYetkisiTest extends BaseTest {
     @Test(enabled = true, description = "Havale İşlemleri Tüm Birimleri Görebilme aksiyonunu kaldırma")
     public void TS2253() throws InterruptedException {
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
-        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+//        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+        String guncelBirim = "Optiim Birim";
         String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
 
         login(TestData.user21g);
+//        login(TestData.usernameUn30,TestData.passwordUn30);
 //        login(TestData.userMbozdemir);
 
 //        preTS2253(rolad, aksiyonAdi);
@@ -186,6 +189,7 @@ public class HavaleYetkisiTest extends BaseTest {
         preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
         login(TestData.user21g);
+//        login(TestData.usernameUn30,TestData.passwordUn30);
         rolYonetimiPage
                 .openPage()
                 .rolYonetimiSayfaKontrolu();
@@ -579,8 +583,8 @@ public class HavaleYetkisiTest extends BaseTest {
                 .havaleYapKisiSec(farkliBirimKisi)
                 .havaleYapKisiSil();
 
-        birimeHavaleYap(konu,farkliBirim);
-        birimeHavaleYap(konu2,farkliBirim);
+        birimeHavaleYap(konu, farkliBirim);
+        birimeHavaleYap(konu2, farkliBirim);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -677,7 +681,7 @@ public class HavaleYetkisiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS2250"}
+            , dependsOnMethods = {"TS2250"}
             , description = "TS0597 : Tüm kullanıcılara havale yetkisi olmayan kullanıcının ekran kontrolü. ")
     public void TS0597() throws InterruptedException {
 
@@ -826,24 +830,23 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = false, description = "TS0615 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
+    @Test(enabled = true, description = "TS0615 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
     public void TS0615() throws InterruptedException {
 
 
-        login(TestData.user21g);
+        login(TestData.usernameUn30, TestData.passwordUn30);
 
         String konu = "TS0615 " + createRandomNumber(8);
-//        String konu = "TS0597 16403152";
+//        String konu = "TS0615 15631042";
         String konu2 = "TS0615 " + createRandomNumber(8);
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String birim = "Username21g TEST";
+        String birim = "Username30 TEST";
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
         String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
         String btnHavaleYap = "Havale Yap";
         String btnTeslimAlveHavaleYap = "Teslim Al ve Havale Et";
-        String btnBirim = "Birim";
-
+        String btnTumu = "Tumu";
 
 
 //        String menuName = "Profil";
@@ -859,16 +862,99 @@ public class HavaleYetkisiTest extends BaseTest {
 
 
         reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birim);
+        login(TestData.usernameUn30, TestData.passwordUn30);
+
+        reusableSteps.gelenEvraklarEvrakOlustur(konu2, kurum, birim);
 
 
+        String farkliBirim = "TS2200 Alt Birim";
         gelenEvraklarPage
                 .openPage()
                 .tabloKonuyaGoreEvrakAc(konu)
                 .evrakOnizlemeKontrolu()
                 .evrakOnizlemeButonKontrolu(btnHavaleYap)
                 .evrakOnizlemeButonTikla(btnHavaleYap)
-                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnBirim, false)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false)
                 .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .butonKontrolu(btnHavaleYap, true)
+                .btnTikla(btnHavaleYap)
+                .havaleYapBirimAlanindaButonKontrolu(btnTumu, false)
+                .havaleYapBirimAlanindaButonKontrolu(farkliBirim, false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        String opti̇i̇mBi̇ri̇m = "OPTİİM BİRİM";
+        birimeHavaleYap(konu, opti̇i̇mBi̇ri̇m);
+        birimeHavaleYap(konu2, opti̇i̇mBi̇ri̇m);
+
+        teslimAlinmayiBekleyenlerPage
+                .openPage()
+                .konuyaGoreTeslimAlveHavaleEt(konu)
+                .evrakOnizlemeKontrolu()
+//                .evrakOnizlemeButonKontrolu(btnTeslimAlveHavaleYap)
+//                .evrakOnizlemeButonTikla(btnTeslimAlveHavaleYap)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false);
+
+        teslimAlinmayiBekleyenlerPage
+                .konuyaGoreEvrakSec(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnTeslimAlveHavaleYap)
+                .evrakOnizlemeButonTikla(btnTeslimAlveHavaleYap)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false)
+                .konuyaGoreIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .butonKontrolu(btnTeslimAlveHavaleYap, true)
+                .btnTikla(btnTeslimAlveHavaleYap)
+                .havaleYapBirimAlanindaButonKontrolu(btnTumu, false)
+                .havaleYapBirimAlanindaButonKontrolu(farkliBirim,false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinmayiBekleyenlerPage
+                .konuyaGoreEvrakIsaratle(konu)
+                .konuyaGoreEvrakIsaratle(konu2)
+                .secilenTeslimAlVeHavaleEt()
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false);
+
+        teslimAlveHavaleEtBirimeHavaleYap(opti̇i̇mBi̇ri̇m);
+
+        teslimAlinanlarPage
+                .openPage()
+                .konuyaGoreEvrakSec(konu)
+                .evrakOnizlemeKontrolu()
+                .evrakOnizlemeButonKontrolu(btnHavaleYap)
+                .evrakOnizlemeButonTikla(btnHavaleYap)
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim,false)
+                .konuyaGoreEvrakIcerikGoster(konu);
+
+        evrakDetayiPage
+                .sayfaAcilmali()
+                .butonKontrolu(btnHavaleYap, true)
+                .btnTikla(btnHavaleYap)
+                .havaleYapBirimAlanindaButonKontrolu(btnTumu, false)
+                .havaleYapBirimAlanindaButonKontrolu(farkliBirim,false)
+                .evrakDetayiSayfasiKapat()
+                .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+        teslimAlinanlarPage
+                .konuyaGoreEvrakIsaratle(konu)
+                .konuyaGoreEvrakIsaratle(konu2)
+                .topluHavale()  //Teslim al ve Havale et butonu yok.
+                .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim,false);
+
+        new GelenEvrakKayitPage().openPage().havaleIslemleriBirimAlaniButonKontrolu(btnTumu,false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim,false);
 
     }
 
