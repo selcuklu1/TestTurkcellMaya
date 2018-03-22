@@ -167,13 +167,11 @@ public class HavaleYetkisiTest extends BaseTest {
     @Test(enabled = true, description = "Havale İşlemleri Tüm Birimleri Görebilme aksiyonunu kaldırma")
     public void TS2253() throws InterruptedException {
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
-//        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
-        String guncelBirim = "Optiim Birim";
+        String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
+//        String guncelBirim = "TS2200 Alt Birim";
         String mesaj = "Rolün aksiyonunu silmek istediğinize emin misiniz?";
 
         login(TestData.user21g);
-//        login(TestData.usernameUn30,TestData.passwordUn30);
-//        login(TestData.userMbozdemir);
 
 //        preTS2253(rolad, aksiyonAdi);
 
@@ -189,7 +187,7 @@ public class HavaleYetkisiTest extends BaseTest {
         preconRollereAksiyonEkleme(rolAdi, aksiyonAdi);
 
         login(TestData.user21g);
-//        login(TestData.usernameUn30,TestData.passwordUn30);
+
         rolYonetimiPage
                 .openPage()
                 .rolYonetimiSayfaKontrolu();

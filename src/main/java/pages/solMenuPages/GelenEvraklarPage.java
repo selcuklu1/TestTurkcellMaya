@@ -19,7 +19,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class GelenEvraklarPage extends MainPage {
 
-    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[data-ri]");
+    ElementsCollection tableEvraklar = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[data-ri]");
     ElementsCollection tableEvraklar2 = $$("tbody[id='mainInboxForm:inboxDataTable_data'] tr[role='row']");
     SelenideElement tblEvraklar = $("table[id='mainInboxForm:inboxDataTable:0:evrakTable'] tr:nth-child(3)");
     SelenideElement cmbFiltrele = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:j_idt349_input"));

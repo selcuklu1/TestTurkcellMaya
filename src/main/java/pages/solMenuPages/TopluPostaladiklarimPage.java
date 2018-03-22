@@ -443,7 +443,11 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Gonderildiği Yeri \"{gonderildigiYer}\" seç")
     public TopluPostaladiklarimPage gonderildigiYerSec(String gonderildigiYer) {
-        cmbGonderildigiYer.selectComboBox(gonderildigiYer);
+        SelenideElement element = $x("//div[@id='mainPreviewForm:tpbeGidecegiYerSelectOneMenuId']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
+        SelenideElement panel = $(By.id("mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_panel"));
+        element.click();
+        panel.$$("li").filterBy(text(gonderildigiYer)).first().click();
+//        cmbGonderildigiYer.selectComboBox(gonderildigiYer);
         return this;
     }
 
