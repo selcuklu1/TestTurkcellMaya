@@ -117,6 +117,7 @@ public class BaseTest extends BaseLibrary {
 
         sysProperties += "\nremote: " + Configuration.remote;
         sysProperties += "\nbrowser: " + Configuration.browser;
+        sysProperties += "\nbrowser.version: " + Configuration.browserVersion;
         sysProperties += "\nurl: " + Configuration.baseUrl;
 
         /*System.out.println("Upload path: " + getUploadPath());
