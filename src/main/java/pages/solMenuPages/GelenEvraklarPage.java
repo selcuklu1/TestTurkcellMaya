@@ -39,6 +39,9 @@ public class GelenEvraklarPage extends MainPage {
 
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
+    SelenideElement btnbirimtumuyap = $("[id='mainPreviewForm:birimLovContainer'] div[id^='mainPreviewForm'] [class$='ui-icon-close']");
+    SelenideElement btnbirimtumuyap2 = $("[id='inboxItemInfoForm:birimLovContainer'] div[id^='inboxItemInfoForm'] [class$='ui-icon ui-icon-close']");
+
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtComboLovBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
@@ -56,6 +59,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement txtHavaleYapIslemSuresi = $(By.id("mainPreviewForm:islemSuresiTarih_input"));
     SelenideElement chkHavaleYapEvrakOnayliKapat = $(By.id("mainPreviewForm:j_idt30591_input"));
     SelenideElement btnHavaleYapGonder = $("[id^='mainPreviewForm:j_idt'] [class$='havaleGonderButonClass']");
+    SelenideElement btnHavaleYap2 = $("[class='ui-button-icon-left ui-icon havaleEt']");
     SelenideElement btnHavaleYapHavaleOnayinaGonder = $(By.xpath("//*[contains(text(),'Havale Onayına Gönder')]"));
     ElementsCollection tblVekaletVerenAlan = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleIcin_data'] tr[role='row']");
     ElementsCollection tblVekaletPopUp = $$("[id='mainPreviewForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin_data'] tr[data-ri]");
@@ -568,11 +572,20 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+
     @Step("Havele Yap Gönder butonu")
     public GelenEvraklarPage havaleYapGonder() {
         btnHavaleYapGonder.click();
         return this;
     }
+
+
+    @Step("Havele Yap Gönder butonu")
+    public GelenEvraklarPage havaleyap() {
+        btnHavaleYap2.click();
+        return this;
+    }
+
 
     public GelenEvraklarPage havaleYapEvrakOnayliKapatChecked(Boolean secim) {
         chkHavaleYapEvrakOnayliKapat.setSelected(secim);
@@ -769,6 +782,34 @@ public class GelenEvraklarPage extends MainPage {
         btnHavaleYap.click();
         return this;
     }
+
+    @Step("Havale Yap tıklanır")
+    public GelenEvraklarPage evrakicerikgosterhavalebirimiyap() {
+        btnHavaleYap2.click();
+        return this;
+    }
+
+
+    @Step("Havale Yap tıklanır")
+    public GelenEvraklarPage havaleEtTumuGelmedigiKontrol() {
+        Assert.assertEquals($("[id='mainPreviewForm:birimLovContainer'] div[id^='mainPreviewForm'] [class$='ui-icon-close']").isDisplayed(),true);
+        return this;
+    }
+
+
+
+    @Step("Evrak İçerik Göster Havale Birimini Kontrol Etme")
+    public GelenEvraklarPage evrakicerikgosterhavalebirimikontrol() {
+        Assert.assertEquals($("[id='inboxItemInfoForm:birimLovContainer'] div[id^='inboxItemInfoForm'] [class$='ui-icon ui-icon-close']").isDisplayed(),true);
+        return this;
+    }
+
+    @Step("Tümü butonunu işaretle")
+    public GelenEvraklarPage evrakOnizlemeHavaleYapBirimAlaniButonTikla() {
+        btnbirimtumuyap.click();
+        return this;
+    }
+
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
     public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {

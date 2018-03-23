@@ -268,7 +268,7 @@ public class BaseTest extends BaseLibrary {
 
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
              *//*capabilities.setVersion("151");
-            capabilities.setPlatform(Platform.WINDOWS);*//*
+            capabilities.setPlatform(Platform.WINDOWS);//
             options.merge(capabilities);*/
             //caps.merge(options);
 
@@ -307,7 +307,7 @@ public class BaseTest extends BaseLibrary {
             /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
                     : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());*/
-                    //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
+            //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
             /*WebDriver driver = System.getProperty("hub") == null ?
