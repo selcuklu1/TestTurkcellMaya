@@ -964,6 +964,11 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    public GelenEvraklarPage evrakKapatKisiselKlasorlerimKaldir(){
+            clickJs($("[id='mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']"));
+        return this;
+    }
+
     @Step("Kaldırılacak Klasörler alanında \"Kişisel Kalsörlerim\" CheckBox ı işaretlenir ve LOV  tıklanır.")
     public GelenEvraklarPage kaldirilicakKlasorlerKisiselKlasorlerimSec(){
         clickJs($("div[id='mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']"));
