@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
@@ -52,24 +53,24 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(alwaysRun = true)
     public void driverSetUp() {
-
-        System.setProperty("webdriver.chrome.driver","C:\\ChromeDriver\\chromedriver.exe");
-        log.info("Setup started");
-        System.out.println("file.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding")));
-        System.out.println("default charset=" + Charset.defaultCharset());
-        System.out.println("java.specification.version" + System.getProperty("java.specification.version"));
-        System.out.println("java.runtime.version" + System.getProperty("java.runtime.version"));
-        System.out.println("locale default: " + Locale.getDefault());
+        String sysProperties = "";
+        sysProperties += "Setup started";
+        sysProperties += "\nfile.encoding: " + String.format("file.encoding: %s", System.getProperty("file.encoding"));
+        sysProperties += "\ndefault charset=" + Charset.defaultCharset();
+        sysProperties += "\njava.specification.version" + System.getProperty("java.specification.version");
+        sysProperties += "\njava.runtime.version" + System.getProperty("java.runtime.version");
+        sysProperties += "\nlocale default:" + Locale.getDefault();
 
         turkishLocal = new Locale("tr", "TR");
         if (!Locale.getDefault().equals(turkishLocal)) Locale.setDefault(turkishLocal);
-        System.out.println("locale: " + Locale.getDefault());
+        sysProperties += "\nlocale: " + Locale.getDefault();
+
 
         BelgenetFramework.setUp();
         WebDriverRunner.addListener(new DriverEventListener());
 
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
-        Configuration.remote = "http://localhost:4444/wd/hub";
+        //Configuration.remote = "http://localhost:4444/wd/hub";
 
         Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
@@ -112,20 +113,21 @@ public class BaseTest extends BaseLibrary {
             //Configuration.browserCapabilities.setCapability("browser.helperApps.neverAsk.saveToDisk", neverAsk);
         }*/
 
-
         //System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-        //getBrowserName();
-        System.out.println("remote: " + Configuration.remote);
-        System.out.println("browser: " + Configuration.browser);
-        System.out.println("url: " + Configuration.baseUrl);
+
+        sysProperties += "\nremote: " + Configuration.remote;
+        sysProperties += "\nbrowser: " + Configuration.browser;
+        sysProperties += "\nbrowser.version: " + Configuration.browserVersion;
+        sysProperties += "\nurl: " + Configuration.baseUrl;
+
         /*System.out.println("Upload path: " + getUploadPath());
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
-
+        log.info(sysProperties);
         AllureEnvironmentUtils.create();
     }
 
-    @BeforeSuite
+    @BeforeSuite(enabled = true)
     public void beforeSuite(ITestContext context) {
         if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
@@ -135,8 +137,9 @@ public class BaseTest extends BaseLibrary {
         ((TestRunner) context).getTest().setName("Tests");
     }
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, enabled = true)
     public void beforeMethod(ITestContext context, Method test) {
+        String testResults="";
         /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
         else
@@ -149,28 +152,26 @@ public class BaseTest extends BaseLibrary {
 
         final String desc = test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
         Allure.addAttachment("Annotations", desc);
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("");
+        testResults += "\n///////////////////////////////////////////////////////" + "\n";
         //System.out.println("Total Test Classes: " + ((TestRunner) context).getTestClasses().size());
-        System.out.println("Total Tests: " + context.getAllTestMethods().length);
-        System.out.println("Passed Tests: " + context.getPassedTests().size());
-        System.out.println("Failed Tests: " + context.getFailedTests().size());
-        System.out.println("Left Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString());
-        System.out.println("");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST CLASS: " + test.getDeclaringClass().getSimpleName());
-        System.out.println("");
-        System.out.println("TEST: " + testName);
-        System.out.println("");
-        System.out.println("STATUS: Started");
-        System.out.println("");
-        System.out.println("TEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "\nTotal Tests: " + context.getAllTestMethods().length;
+        testResults += "\nPassed Tests: " + context.getPassedTests().size();
+        testResults += "\nFailed Tests: " + context.getFailedTests().size();
+        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString() + "\n";
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\nTEST CLASS: " + test.getDeclaringClass().getSimpleName() + "\n";
+        testResults += "\nTEST: " + testName + "\n";
+        testResults += "\nSTATUS: Started: " + "\n";
+        testResults += "\nTEST ANNOTATIONS: " + test.getDeclaredAnnotation(org.testng.annotations.Test.class).toString();
+        testResults += "\n///////////////////////////////////////////////////////";
+        testResults += "\n///////////////////////////////////////////////////////";
+        log.info(testResults);
+
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, enabled = true)
     public void afterMethod(ITestResult testResult) {
+        String testResults="";
         int SUCCESS = 1;
         int FAILURE = 2;
         int SKIP = 3;
@@ -197,27 +198,31 @@ public class BaseTest extends BaseLibrary {
 
         /*if (testResult.getStatus() == ITestResult.FAILURE)
             takeScreenshot();*/
-
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("TEST: " + testResult.getMethod().getMethodName());
-        System.out.println("");
-        System.out.println("STATUS: " + result);
-        System.out.println("");
-        System.out.println("DESCRIPTION: " + testResult.getMethod().getDescription());
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "\nTEST: " + testResult.getMethod().getMethodName() + "\n";
+        testResults += "\nSTATUS: " + result + "\n";
+        testResults += "\nDESCRIPTION: " + testResult.getMethod().getDescription() + "\n";
         if (testResult.getThrowable() != null) {
-            System.out.println("");
-            System.out.println("ERROR: " + testResult.getThrowable().getMessage());
+            testResults += "\nERROR: " + testResult.getThrowable().getMessage() + "\n";
         }
         //        System.out.println("Test Annotations: " + testResult.getMethod().getMethod().getDeclaredAnnotation(org.testng.annotations.Test.class).toString());
-        System.out.println("///////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////");
+        testResults += "///////////////////////////////////////////////////////";
+        testResults += "///////////////////////////////////////////////////////";
 
         //Parallelde hatası vermemesi WebDriverRunner.closeWebDriver() eklendi.
         //login da WebDriverRunner.clearBrowserCache(); eklendi
         //Selenide.close();
         //WebDriverRunner.getAndCheckWebDriver().quit();
-        WebDriverRunner.closeWebDriver();
+        log.info(testResults);
+
+        try {
+            Selenide.close();
+            //WebDriverRunner.getWebDriver().quit();
+            //WebDriverRunner.closeWebDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterClass(alwaysRun = true)
@@ -263,7 +268,7 @@ public class BaseTest extends BaseLibrary {
 
             /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
              *//*capabilities.setVersion("151");
-            capabilities.setPlatform(Platform.WINDOWS);*//*
+            capabilities.setPlatform(Platform.WINDOWS);//
             options.merge(capabilities);*/
             //caps.merge(options);
 
@@ -281,17 +286,28 @@ public class BaseTest extends BaseLibrary {
 
     public void useFirefox() {
         try {
-           /* FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setCapability(CapabilityType.BROWSER_VERSION, Configuration.browserVersion);*/
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability(CapabilityType.VERSION, Configuration.browserVersion);
             //firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
             //firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, "firefox");
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            /*DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             capabilities.setAcceptInsecureCerts(true);
-            capabilities.setVersion(Configuration.browserVersion);
-            WebDriver driver = Configuration.remote == null ?
+            capabilities.setVersion(Configuration.browserVersion);*/
+
+            EventFiringWebDriver driver;
+            if (Configuration.remote == null){
+                WebDriver firefox = new FirefoxDriver();
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            } else {
+                WebDriver firefox = new RemoteWebDriver(new URL(Configuration.remote), firefoxOptions);
+                //firefox.get("https://www.google.com.tr/");
+                driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
+            }
+
+            /*WebDriver driver = Configuration.remote == null ?
                     new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());
-                    //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), capabilities)).register(new DriverEventListener());*/
+            //: new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities)).register(new DriverEventListener());
 
             //System.setProperty("webdriver.chrome.driver", "C:\\drivers\\geckodriver.exe");
             /*WebDriver driver = System.getProperty("hub") == null ?
@@ -301,6 +317,10 @@ public class BaseTest extends BaseLibrary {
                     new FirefoxDriver()
                     : new RemoteWebDriver(firefoxOptions);*/
             //C:\drivers
+
+            if (WebDriverRunner.hasWebDriverStarted())
+                WebDriverRunner.getWebDriver().quit();
+
             WebDriverRunner.setWebDriver(driver);
             /*WebDriverRunner.setWebDriver(new FirefoxDriver(firefoxOptions));
             System.out.println(getCapabilities().getCapability(CapabilityType.BROWSER_VERSION));
@@ -327,7 +347,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setPlatform(Platform.WINDOWS);
             capabilities.setVersion("151");*/
 
-            Map<String, Object> prefs = new HashMap<String, Object>();
+            Map<String, Object> prefs = new HashMap<>();
             prefs.put("download.default_directory", downloadPath);
             ChromeOptions options = new ChromeOptions();
             options.setExperimentalOption("prefs", prefs);

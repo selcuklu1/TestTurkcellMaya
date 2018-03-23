@@ -2,6 +2,7 @@ package tests.Data;
 
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +27,7 @@ import static com.codeborne.selenide.Condition.*;
  * Class: "tests.Data" konulu senaryoları içerir
  * Yazan: Samed Solak
  ****************************************************/
-
+@Feature("Data")
 public class DataTest extends BaseTest {
 
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN");
@@ -157,7 +158,7 @@ public class DataTest extends BaseTest {
 
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String details = "BHUPGMY";
-        String digerBirim = "Birim Deneme";
+        String digerBirim = "AD MÜDÜRLÜĞÜ";
         String digerDetails = "YGD";
 
         testStatus(testid, "PreCondition Evrak Oluşturma");
@@ -178,7 +179,7 @@ public class DataTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
-                .popUps();
+                .popUpsv2();
 
 
 //        gelenEvrakKayitPage
@@ -192,7 +193,7 @@ public class DataTest extends BaseTest {
                 .havaleYap()
                 .evrakHavaleEkranKontrol()
                 .dagitimBilgileriBirimDoldurWithDetails(digerBirim, digerDetails)
-                .teslimAlGonder();
+                .teslimAlVeGonder();
 
 
         teslimAlinmayiBekleyenlerPage

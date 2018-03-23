@@ -2,6 +2,7 @@ package tests.BirimeIade;
 
 import common.BaseTest;
 import data.User;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
-
+@Feature("Birime Iade Edilenlerden Havale")
 public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
@@ -174,7 +175,7 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .dagitimBilgileriBirimDoldur2(birim)
 //                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet()
-                .popUps();
+                .popUpsv2();
 
 
 //        gelenEvrakKayitPage
@@ -315,8 +316,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
 
         evrakNo1 = gelenEvrakKayitPage.popUpsv2();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu2 = "TS-463-" + getSysDate();
 
@@ -341,8 +342,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         String konu3 = "TS-463-" + getSysDate();
 
@@ -367,8 +368,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "PreCondition 1. Evrak Iade Et");
@@ -506,8 +507,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
                 .popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
 
         testStatus(testid, "PreCondition 1. Evrak Iade Et");
@@ -523,8 +524,8 @@ public class BirimeIadeEdilenlerdenHavaleTest extends BaseTest {
         birimeIadeEdilenlerPage
                 .openPage()
                 .evrakSec(konu)
-                .evrakTeslimAlHavaletEt()
                 .evrakOnizlemeKontrol()
+                .evrakTeslimAlHavaletEt()
                 .havaleKisiListesi(kullanici)
                 .eklenenOnizlemeOnaylayanKontrolu(kullanici)
                 .birimTeslimAlGonder()

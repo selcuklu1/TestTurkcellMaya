@@ -13,6 +13,7 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -228,7 +229,7 @@ public class UstYazi extends MainPage {
         private ElementsCollection notes;
         private SelenideElement notDialog = $("#evrakKisiselNotDialogFormId");
 
-        private List<EvrakNot> createdNotes = new ArrayList<EvrakNot>();
+        private List<EvrakNot> createdNotes = new ArrayList<>();
 
         public EvrakNot() {
             this.container = $("html");
@@ -337,8 +338,7 @@ public class UstYazi extends MainPage {
             Pattern p = Pattern.compile("\\d+");
             Matcher m = p.matcher(text);
             Assert.assertTrue(m.find(), "\"" + text + "\" tekst içinde numara bulunamadı");
-            int number = Integer.parseInt(m.group());
-            return number;
+            return Integer.parseInt(m.group());
         }
 
         @Step("Yeni not oluşturulur, açıklama maksimum uzunluk ve not tipi değerleri kontrolleri")
@@ -396,7 +396,7 @@ public class UstYazi extends MainPage {
         @Step("Not bulunur")
         public EvrakNot notuBul(Condition... aramaConditions) {
             notlariAra(aramaConditions);
-            Assert.assertEquals(notes.size(), 1, aramaConditions + " olan not sayıs 1 olmalı");
+            Assert.assertEquals(notes.size(), 1, Arrays.toString(aramaConditions) + " olan not sayıs 1 olmalı");
             //note = notes.shouldHaveSize(1).first().shouldBe(visible);
             note = notes.first().shouldBe(visible);
             return this;

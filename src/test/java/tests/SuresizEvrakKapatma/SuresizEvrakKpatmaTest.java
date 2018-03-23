@@ -1,6 +1,7 @@
 package tests.SuresizEvrakKapatma;
 
 import common.BaseTest;
+import data.TestData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
@@ -361,6 +362,77 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakTarihiDoldur(tarihBugun)
                 .ara()
                 .evrakListesiKontrol(gelenEvrakKonu, true);
+
+    }
+
+    @Test(enabled = true, description = "TS2166 : Evrak Kapatma - Alan Kontrolleri")
+    public void TS2166() {
+
+        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
+        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
+
+        String konuKoduRandom = "TS2066-" + createRandomText(15);
+        String konuKoduRandom2 = "TS2066-" + createRandomText(15);
+        String uyariMesaji = " Zorunlu alanları doldurunuz";
+        String kaldirilacakKlasör = "diğer";
+        String konuKodu = "Diğer";
+        String randomSayi = createRandomText(251);
+        String kullanici = "Zübeyde Tekin";
+        String kullanicihkandur = "Hamza Kandur";
+        String kullanicimbozdemir = "Mehmet BOZDEMİR";
+        String kapat = "Kapatma";
+        String sureliKapatma = "Süreli Kapatma";
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom, "BÜYÜK HARFLERLE KURUM", kullanici);
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+        gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom2, "BÜYÜK HARFLERLE KURUM", kullanici);
+
+        testStatus("TS2166","Test Başlamıştır.");
+
+        gelenEvraklarPage
+                .openPage()
+                .evrakSec(konuKoduRandom, "", "", "")
+                .kapatKontrol()
+                .evrakKapat()
+                .kapatmaTipiTikla()
+                .evrakKapatEvrakKapat()
+                .islemMesaji().isUyari(uyariMesaji);
+
+        gelenEvraklarPage
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .kaldirilicakKlasorlerKisiselKlasorlerimSec()
+                .kisiselKlasorlerimSecKaldirilicakKlasorlerDataGeldigiGorme()
+                .evrakKapatEvrakKapat()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        gelenEvraklarPage
+                .evrakSec(konuKoduRandom2,"","","")
+                .kapatKontrol()
+                .evrakKapat()
+                .evrakKapatmaEkranGeldigiGorme()
+                .evrakKapatKonuKodu(konuKodu)
+                .evrakKapatKisiselKlasorlerimKaldir()
+                .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .evrakKapatNotDoldur(randomSayi)
+                .onayAkisiDoldur(" Zübeyde Tekin")
+                .onayAkisiSil()
+                .evrakKapatmaOnayAkisiEkle()
+                .evrakKapatOnayAkisiAdiDoldur("TS2166")
+                .evrakKapatOnayAkisiKullaniciSec(kullanicimbozdemir)
+                .evrakKapatOnayAkisiKullaniciTipiSec(kullanicimbozdemir,"Kapatma Parafı")
+                .evrakKapatOnayAkisiKullan()
+                .islemMesaji().isUyari(uyariMesaji);
+        gelenEvraklarPage
+                .evrakKapatOnayAkisiKullaniciSec(kullanicihkandur)
+                .evrakKapatOnayAkisiKullaniciTipiSec(kullanicihkandur,"Kapatma İmzası")
+                .evrakKapatOnayAkisiKullan()
+                .evrakKapatKapatmaOnayinaSun()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
     }
 

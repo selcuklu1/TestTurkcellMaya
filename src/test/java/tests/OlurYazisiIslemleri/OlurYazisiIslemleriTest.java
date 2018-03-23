@@ -1,5 +1,6 @@
 package tests.OlurYazisiIslemleri;
 
+import com.codeborne.selenide.CollectionCondition;
 import common.BaseTest;
 import data.User;
 import galen.GalenControl;
@@ -273,8 +274,12 @@ public class OlurYazisiIslemleriTest extends BaseTest {
         //region İlişkili Evraklar. Sistemde kayıtlı evrak ekle, tercüme evrak ekle
         altTabs = olurYazisiOlusturPage.iliskiliEvraklarTab().openTab().altTabs();
         altTabs.getDosyaEkleTab().shouldBe(visible);
-        altTabs.sistemdeKayitliEvrakEkleTabiAc().evrakAraDoldur("a").dokumanAraTikla().islemMesaji().basariliOlmali();
-        String docSati = altTabs.getSistemdeKayitliEvrakListesi().findRows().shouldHaveSize(1).useFirstFoundRow().getColumnValue("Sayı").text();
+        altTabs.sistemdeKayitliEvrakEkleTabiAc().evrakAraDoldur("1")
+                .dokumanAraTikla()
+                .islemMesaji().basariliOlmali();
+        String docSati = altTabs.getSistemdeKayitliEvrakListesi()
+                .findRows().shouldHave(CollectionCondition.sizeGreaterThan(0))
+                .useFirstFoundRow().getColumnValue("Sayı").text();
         altTabs.getSistemdeKayitliEvrakListesi().foundRow().dokumanEkleTikla();
         olurYazisiOlusturPage.iliskiliEvraklarTab().getEkListesiTablosu().findRows(text(docSati)).shouldHaveSize(1);
 
@@ -307,12 +312,11 @@ public class OlurYazisiIslemleriTest extends BaseTest {
                 "sayfanın altında eklerin girildiği isimlerle listelendiği görülür.");
 
         sleep(3000);
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("birim", user1.getBirimAdi());
         params.put("sayi", konuKoduSayi);
         params.put("konu", konu);
         params.put("ilgi_a", "İlgileri Tab " + konu);
-        params.put("ilgi_b", "Metni Tab " + konu);
         params.put("ilgi_b", "Metni Tab " + konu);
         params.put("imzaci1Isim", user2.getFullname());
         params.put("imzaci1Gorev", user2.getGorev());

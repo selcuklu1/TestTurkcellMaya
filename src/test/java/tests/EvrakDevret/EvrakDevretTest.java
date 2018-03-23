@@ -1,5 +1,6 @@
 package tests.EvrakDevret;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
@@ -133,7 +134,9 @@ public class EvrakDevretTest extends BaseTest {
 //            , dependsOnMethods = {"TS2178"}
             , description = "TS2179 : Devredilen evrakların devralan kullanıcıda hareket/evrak geçmişinin kontrolü")
     public void TS2179() throws InterruptedException {
+
         remoteDownloadPath = useChromeWindows151("TS2179");
+
         login(mbozdemir);
 
         System.out.println(remoteDownloadPath);
@@ -243,7 +246,8 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrol(konu, true);
+                .searchTable().findRows(Condition.text(konu)).shouldHaveSize(1);
+//                .tabloKonuyaGoreEvrakKontrol(konu, true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -319,7 +323,7 @@ public class EvrakDevretTest extends BaseTest {
                 .islemMesaji().uyariOlmali(uyariMesaji);
 
         kullaniciEvrakDevretPage
-                .aciklamaDoldur(createRandomText(255))
+                .aciklamaDoldur(createRandomText(500))
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }

@@ -1,24 +1,16 @@
 package tests.KullaniciIcerikSablonu;
 
 import common.BaseTest;
-import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.pageComponents.tabs.EditorTab;
-import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
-import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.Selenide.switchTo;
 import static data.TestData.passwordZTEKIN;
 import static data.TestData.usernameZTEKIN;
-import pages.ustMenuPages.KullaniciIcerikSablonuPage;
 
 /****************************************************
  * Tarih: 2017-12-22

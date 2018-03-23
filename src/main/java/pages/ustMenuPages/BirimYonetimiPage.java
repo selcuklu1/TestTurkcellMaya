@@ -66,11 +66,35 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtSagUstLogoBoy = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Boy']"));
     SelenideElement txtSolUstGenislik = $(By.xpath("//label[normalize-space(text())='Sol Üst Logo Genişlik']"));
     SelenideElement txtSagUstLogoGenislik = $(By.xpath("//label[normalize-space(text())='Sağ Üst Logo Genişlik']"));
+    SelenideElement chkbirimingeldigi = $(By.id("birimYonetimiListingForm:birimTreeTable_node_0"));
 
     BelgenetElement txtBirim = comboLov("[id$='birimLov:LovText']");
+    BelgenetElement txtAltAntetİletisim = comboLov("[id$='iletisimBilgileriSatirlar_header']");
+    BelgenetElement txtİletisimBilgileri1 = comboLov("[id$='iletisimBilgisiSatir1Text']");
+    BelgenetElement txtİletisimBilgileri2 = comboLov("[id$='iletisimBilgisiSatir2Text']");
+    BelgenetElement txtİletisimBilgileri3 = comboLov("[id$='iletisimBilgisiSatir3Text']");
     SelenideElement btnAktiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
     SelenideElement btnPasiflerIlkGuncelle = $(By.id("birimYonetimiListingForm:pasifBirimlerDataTable:0:updateBirimButton"));
     SelenideElement btnYeniKepAdresBilgileriEkle = $(By.id("birimYonetimiEditorForm:kepBilgileriDataTable:addNewKepAdresiButton"));
+
+    SelenideElement txtiletisimBilgisi1= $(By.id("birimIletisimBilgileriSatirlarEditorForm:iletisimBilgisiSatir1Text"));
+    SelenideElement txtiletisimBilgisi2= $(By.id("birimIletisimBilgileriSatirlarEditorForm:iletisimBilgisiSatir2Text"));
+    SelenideElement txtiletisimBilgisi3= $(By.id("birimIletisimBilgileriSatirlarEditorForm:iletisimBilgisiSatir3Text"));
+    SelenideElement btnIletisimKaydet = $(By.id("birimIletisimBilgileriSatirlarEditorForm:saveIletisimBilgisiBirimButton"));
+    SelenideElement btnIletisimGuncelle = $(By.id("birimYonetimiEditorForm:iletisimBilgileriDataTable:0:updateIletisimBilgisiButton"));
+    SelenideElement txtMobilTel= $(By.id("birimIletisimBilgileriEditorForm:mobilInputBirim"));
+    SelenideElement txtTelNo= $(By.id("birimIletisimBilgileriEditorForm:telefonInputBirim"));
+    SelenideElement txtİsTelefonNo= $(By.id("birimIletisimBilgileriEditorForm:telefonIsInputBirim"));
+    SelenideElement txtFaksNo1= $(By.id("birimIletisimBilgileriEditorForm:fax1InputBirim"));
+    SelenideElement txtFaksNo2= $(By.id("birimIletisimBilgileriEditorForm:fax2InputBirim"));
+    SelenideElement txtAdres= $(By.id("birimIletisimBilgileriEditorForm:adresInputBirim"));
+    BelgenetElement txtİlSec = comboLov(By.id("birimIletisimBilgileriEditorForm:lovIl:LovText"));
+    BelgenetElement txtUlkeSec = comboLov(By.id("birimIletisimBilgileriEditorForm:lovUlke:LovSecilen"));
+    BelgenetElement txtİlceSec = comboLov(By.id("birimIletisimBilgileriEditorForm:lovIlce:LovText"));
+    SelenideElement txtEposta= $(By.id("birimIletisimBilgileriEditorForm:ePostaInputBirim"));
+    SelenideElement txtWebAdresi= $(By.id("birimIletisimBilgileriEditorForm:webAdresiInputBirim"));
+    SelenideElement btnIletisimbilgileriKaydet = $(By.id("birimIletisimBilgileriEditorForm:saveIletisimBilgisiBirimButton"));
+
 
     SelenideElement txtPopupKepAdresi = $(By.id("kepAdresBilgiEditorForm:kepAdresiInputTextId"));
     SelenideElement cmbPopupHizmetSaglayicisi = $(By.id("kepAdresBilgiEditorForm:kephs"));
@@ -82,6 +106,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement txtAntentBilgisi = $(By.id("birimYonetimiEditorForm:antetBilgisiInput"));
     ElementsCollection tblBirimYonetimiListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
     ElementsCollection tblPasifBirimListesi = $$("[id='birimYonetimiListingForm:pasifBirimlerDataTable'] > table > tbody > tr");// span[class='ui-chkbox-icon']");
+    SelenideElement islemOnayiAciklama = $(By.id("baseConfirmationDialog:explanationInput"));
+    SelenideElement onayDialogu = $(By.id("baseConfirmationDialog:dialog"));
     ElementsCollection tblAktifBirimListesi = $$("[id='birimYonetimiListingForm:birimTreeTable'] > table > tbody");// span[class='ui-chkbox-icon']");
     SelenideElement btnPasifYap = $("[id$='updateBirimStatusButton'] [class$='to-passive-status-icon']");
     SelenideElement btnAktifYap = $("[id$='updateBirimStatusButton'] [class$='to-active-status-icon']");
@@ -90,7 +116,6 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
     SelenideElement popupIslemOnaySorusu = $("[id='baseConfirmationDialog:form'] [class='content']");
 
-    SelenideElement btnbirimdekikullanicilar = $(By.id("birimYonetimiListingForm:birimTreeTable:0:showBirimdekiKullanicilar"));
 
     SelenideElement txtPopupIslemOnayAciklama = $(By.id("baseConfirmationDialog:explanationInput"));
     SelenideElement txtPopupIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
@@ -108,6 +133,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement btnBirimAktifYap = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [class$='to-active-status-icon']"));
     SelenideElement btnBirimPasifYap = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [class$='to-passive-status-icon']"));
     SelenideElement tblPasifKayitlarBulunamadi = $(By.xpath("//*[@id=\"birimYonetimiListingForm:pasifBirimlerDataTable_data\"]/tr/td"));
+    SelenideElement btnGuncelle = $(By.id("birimYonetimiEditorForm:updateIletisimBilgisiButton"));
+    SelenideElement btnBirimdekiKullanicilar = $(By.cssSelector("[id^='birimYonetimiListingForm:birimTreeTable'] [id$='showBirimdekiKullanicilar']"));
 
 
 
@@ -118,6 +145,7 @@ public class BirimYonetimiPage extends MainPage {
     BelgenetElement txtPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:postaBirimiLov:LovText"));
     BelgenetElement txtKepPostaBirimi = comboLov(By.id("birimYonetimiEditorForm:kepPostaBirimiLov:LovText"));
     SelenideElement btnBirimAmiriEkle = $(By.id("birimYonetimiEditorForm:birimKullaniciDataTable:addNewBirimKullaniciLinkButton"));
+    SelenideElement btnbirimdekikullanicilar = $(By.id("birimYonetimiListingForm:birimTreeTable:0:showBirimdekiKullanicilar"));
     BelgenetElement txtKullanici = comboLov(By.id("birimAmiriEditorForm:birimAmiriLov:LovText"));
     SelenideElement txtGorev = $(By.id("birimAmiriEditorForm:gorevAutoComplete_input"));
     SelenideElement cmbGizlilikDerecesi = $(By.id("birimAmiriEditorForm:birimGuvenlikKoduSelect"));
@@ -404,6 +432,13 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Birimin sonuçlarda listelendiği görülür")
+    public BirimYonetimiPage biriminListelendigiKontrolu() {
+
+        Assert.assertEquals(chkbirimingeldigi.isDisplayed(), true, "Birimin Geldigi Görülür");
+        return this;
+    }
+
     @Step("Birim doldur")
     public BirimYonetimiPage birimFiltreDoldur(String birim) {
         txtBirim.selectLov(birim);
@@ -564,6 +599,141 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Birimin İletişim Bilgisi Kaydet Güncelle butonu tıklanır")
+    public BirimYonetimiPage iletisimBilgisi(String birimAdi) {
+
+        tblBirimYonetimiListesi
+                .filterBy(Condition.text(birimAdi))
+                .first()
+                .$("[id$='updateBirimIletisimButton']")
+                .click();
+
+        return this;
+    }
+
+    @Step("Alt Antet İletişim Bilgileri Satırları ve İletişim Bilgileri alanları görülür")
+    public BirimYonetimiPage birimYonetimiİletisimBilgisiAlanKontrolleri() {
+
+        Assert.assertEquals(txtAltAntetİletisim.isDisplayed(), true, "Alt Antet İletişim Bilgileri Satırları");
+        Allure.addAttachment("Alt Antet alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtİletisimBilgileri1.isDisplayed(), true, "İletişim Bilgileri Satır 1");
+        Allure.addAttachment("İletisim bilgileri alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtİletisimBilgileri2.isDisplayed(), true, "İletişim Bilgileri Satır 2");
+        Allure.addAttachment("İletisim bilgileri alanı kontrolu başarılı", "");
+
+        Assert.assertEquals(txtİletisimBilgileri3.isDisplayed(), true, "İletişim Bilgileri Satır 3");
+        Allure.addAttachment("İletisim bilgileri alanı kontrolu başarılı", "");
+        return this;
+    }
+
+    @Step("Alt Antet İletişim Bilgileri Satırları alanında kalem (güncelle) butonu tıklanır")
+    public BirimYonetimiPage guncelle() {
+        btnGuncelle.click();
+        return this;
+    }
+    @Step("Yeni İletişim Bilgisi sayfasının pop-up olarak açıldığı görülür")
+    public BirimYonetimiPage iletisimPopupGeldigiGorme() {
+        boolean durum = $$("[id$='birimKullaniciUpdateDialog']").size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("İletisim Bilgisi Güncelle Satır 1 Doldur ")
+    public BirimYonetimiPage iletisimBilgisiSatır1Doldur(String text) {
+        txtiletisimBilgisi1.setValue(text);
+        return this;
+    }
+    @Step("İletisim Bilgisi Güncelle Satır 2 Doldur ")
+    public BirimYonetimiPage iletisimBilgisiSatır2Doldur(String text) {
+        txtiletisimBilgisi2.setValue(text);
+        return this;
+    }
+    @Step("İletisim Bilgisi Güncelle Satır 3 Doldur ")
+    public BirimYonetimiPage iletisimBilgisiSatır3Doldur(String text) {
+        txtiletisimBilgisi3.setValue(text);
+        return this;
+    }
+
+    @Step("İletisim Bilgileri Kaydet butonuna basılır.")
+    public BirimYonetimiPage iletisimKaydet() {
+        btnIletisimKaydet.click();
+        return this;
+    }
+
+    @Step("İletişim Bilgileri alanından kalem (güncelle) butonu tıklanır")
+    public BirimYonetimiPage iletisimGuncelle() {
+        btnIletisimGuncelle.click();
+        return this;
+    }
+    @Step("İletişim Bilgisi Güncelleme sayfasının pop-up olarak açıldığı görülür")
+    public BirimYonetimiPage yeniİletisimPopupGeldigiGorme() {
+        boolean durum = $$("[id$='birimSubEntityUpdateDialog']").size() == 1;
+        takeScreenshot();
+        return this;
+    }
+    @Step("Mobil Tel.No Doldur ")
+    public BirimYonetimiPage mobilTel(String text) {
+        txtMobilTel.setValue(text);
+        return this;
+    }
+    @Step("Telefon No Doldur")
+    public BirimYonetimiPage telefonNo(String text) {
+        txtTelNo.setValue(text);
+        return this;
+    }
+    @Step("İş Telefon No Doldur")
+    public BirimYonetimiPage isTelefonNo(String text) {
+        txtİsTelefonNo.setValue(text);
+        return this;
+    }
+    @Step("Faks Numarası 1 Doldur")
+    public BirimYonetimiPage faksNo1(String text) {
+        txtFaksNo1.setValue(text);
+        return this;
+    }
+    @Step("Faks Numarası 2 Doldur")
+    public BirimYonetimiPage faksNo2(String text) {
+        txtFaksNo2.setValue(text);
+        return this;
+    }
+    @Step("Adres Doldur")
+    public BirimYonetimiPage adres(String text) {
+        txtAdres.setValue(text);
+        return this;
+    }
+    @Step("Ülke doldur")
+    public BirimYonetimiPage ulkeDoldur(String ulke) {
+        txtUlkeSec.selectLov(ulke);
+        return this;
+    }
+    @Step("İl doldur")
+    public BirimYonetimiPage ilDoldur(String il) {
+        txtİlSec.selectLov(il);
+        return this;
+    }
+    @Step("İlce doldur")
+    public BirimYonetimiPage ilceDoldur(String ilce) {
+        txtİlceSec.selectLov(ilce);
+        return this;
+    }
+
+    @Step("Eposta  Doldur")
+    public BirimYonetimiPage eposta(String text) {
+        txtEposta.setValue(text);
+        return this;
+    } @Step("Web Adresi  Doldur")
+    public BirimYonetimiPage webAdresi(String text) {
+        txtWebAdresi.setValue(text);
+        return this;
+    }
+    @Step("İletişim Bilgileri Kaydet")
+    public BirimYonetimiPage iletisimBilgileriKaydet() {
+        btnIletisimbilgileriKaydet.click();
+        return this;
+    }
     @Step("Birimin pasif birimler sonuçlarından listelendiği görülür")
     public BirimYonetimiPage pasifBirimKayitKontrolu(String birimAdi) {
 
@@ -596,6 +766,19 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Onay dialogu kontrolu")
+    public BirimYonetimiPage biriminOnaydialoguKontrolu() {
+
+        Assert.assertEquals(onayDialogu.isDisplayed(), true, "Birimin Geldigi Görülür");
+        return this;
+    }
+
+    @Step("Açıklama alanı doldurulur: {aciklama}")
+    public BirimYonetimiPage islemOnayiAciklamaDoldur(String aciklama){
+        islemOnayiAciklama.setValue(aciklama);
+        return this;
+    }
+
     @Step("Birim pasif yap")
     public BirimYonetimiPage birimAktifYap(String birimAdi) {
 
@@ -620,6 +803,25 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+
+    @Step("Birim adı (Ad) Güncelle ")
+    public BirimYonetimiPage birimAdGuncelle(String text) {
+        txtAd.setValue(text);
+        return this;
+    }
+
+    @Step("İdari Birim Kimlik kodu Güncelle  ")
+    public BirimYonetimiPage birimIdariKoduGuncelle(String text) {
+        txtIdariKimlikKodu.setValue(text);
+        return this;
+    }
+
+    @Step("Birim Yönetimi ekranına geri dönüldüğü görülür.")
+    public BirimYonetimiPage birimYonetimiPageKontrol1() {
+        boolean durum = $$(By.id("window1Dialog")).size() == 1;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
 
     @Step("Pasif yap butonunun aktif olarak geldiği kontrolu")
     public BirimYonetimiPage pasifYapButonuKontrolu() {
@@ -732,7 +934,6 @@ public class BirimYonetimiPage extends MainPage {
         txtPopupIslemOnayiHayir.click();
         return this;
     }
-
     @Step("Birim Amiri ekle")
     public BirimYonetimiPage birimAmiriEkle() {
         clickJs(btnBirimAmiriEkle);
@@ -932,4 +1133,9 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Birimdeki Kullanıcılar tıkla")
+    public BirimYonetimiPage birimdekiKullanicilarTikla() {
+        btnBirimdekiKullanicilar.click();
+        return this;
+    }
 }

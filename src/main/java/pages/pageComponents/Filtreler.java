@@ -181,7 +181,7 @@ public class Filtreler extends BaseLibrary {
 //    End Function
 
     private SelenideElement getParentElement(SelenideElement element, String parentTag) {
-        SelenideElement p = executeJavaScript(
+        return executeJavaScript(
                 "function getParentElement(element, parentTag) {" +
                         "p = element.parentNode;\n" +
                         "    if(p.tagName === null) return null;" +
@@ -192,7 +192,6 @@ public class Filtreler extends BaseLibrary {
                         "" +
                         "", element, parentTag
         );
-        return p;
 //        SelenideElement p = element.parent();
 //        while (!p.getTagName().equalsIgnoreCase(parentTag))
 //            p = p.parent();

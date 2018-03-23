@@ -6,6 +6,7 @@ import data.TestData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -85,8 +86,7 @@ public class BaseLibrary extends ElementsContainer {
     }
 
     public static String getPCUsername() {
-        String userName = System.getProperty("user.name");
-        return userName;
+        return System.getProperty("user.name");
     }
 
     @Step("Browserdaki Cookieleri temizle")
@@ -169,7 +169,7 @@ public class BaseLibrary extends ElementsContainer {
     private void waitForJSreadyState() {
         Wait().until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(WebDriver driver) {
+            public Boolean apply(@NotNull WebDriver driver) {
                 return executeJavaScript("return document.readyState").equals("complete");
             }
         });
@@ -431,7 +431,7 @@ public class BaseLibrary extends ElementsContainer {
     //Random numara üretir.
     public String createRandomNumber(int length) {
         Random r = new Random();
-        List<Integer> digits = new ArrayList<Integer>();
+        List<Integer> digits = new ArrayList<>();
         String number = "";
 
         for (int i = 0; i < length - 1; i++) {
@@ -458,9 +458,8 @@ public class BaseLibrary extends ElementsContainer {
             char c = chars[random.nextInt(chars.length)];
             sb.append(c);
         }
-        String output = sb.toString();
 
-        return output;
+        return sb.toString();
     }
 
     //Random text üretir.
@@ -484,9 +483,8 @@ public class BaseLibrary extends ElementsContainer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
-        String sysDate = dtf.format(now);
 
-        return sysDate;
+        return dtf.format(now);
     }
 
     //dd.MM.yyyy HH:mm:ss formatına göre sysdate alır.
@@ -499,9 +497,8 @@ public class BaseLibrary extends ElementsContainer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
-        String sysDate = dtf.format(now);
 
-        return sysDate;
+        return dtf.format(now);
     }
 
 
@@ -510,18 +507,16 @@ public class BaseLibrary extends ElementsContainer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
-        String sysDate = dtf.format(now);
 
-        return sysDate;
+        return dtf.format(now);
     }
     //dd.MM.yyyy formatına göre / koyarak sysdate alır.
     public String getSysDateForKis2() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
-        String sysDate = dtf.format(now);
 
-        return sysDate;
+        return dtf.format(now);
     }
 
     //Bugün tarihinden sonraki bir yıl sonrayı alır.
@@ -531,8 +526,7 @@ public class BaseLibrary extends ElementsContainer {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, 1);
-        String sysAfterYear = dateFormat.format(cal.getTime());
-        return sysAfterYear;
+        return dateFormat.format(cal.getTime());
 
     }
 
@@ -557,9 +551,8 @@ public class BaseLibrary extends ElementsContainer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now));
-        String sysYear = dtf.format(now);
 
-        return sysYear;
+        return dtf.format(now);
     }
 
     // sistem ayını alır
@@ -567,9 +560,8 @@ public class BaseLibrary extends ElementsContainer {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(dtf.format(now));
-        String sysMonth = dtf.format(now);
 
-        return sysMonth;
+        return dtf.format(now);
     }
 
     //Dosyanın bilgisayara inip inmediğini kontrol eder.
@@ -608,7 +600,7 @@ public class BaseLibrary extends ElementsContainer {
 
     //Random tc yaratır mernis sorgusundan geçecek şekilde.
     public String createMernisTCKN() {
-        Vector<Integer> array = new Vector<Integer>();
+        Vector<Integer> array = new Vector<>();
         Random randomGenerator = new Random();
         array.add(new Integer(1 + randomGenerator.nextInt(9)));
 
@@ -648,9 +640,8 @@ public class BaseLibrary extends ElementsContainer {
     public String splitString(String str) {
         String[] parts = str.split(": ");// "004: 034556"
         String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556
 
-        return part2;
+        return parts[1];
     }
 
     /* columnInput ile gönderilen değer, columnIndex ile belirtilen sütunda
@@ -725,9 +716,8 @@ public class BaseLibrary extends ElementsContainer {
         Pattern y = Pattern.compile("\\d+");
         Matcher m = y.matcher(text);
         m.find();
-        String number = m.group();
-//        System.out.println("Get number from text: \"" + text + "\" number: " + number);
-        return number;
+        //        System.out.println("Get number from text: \"" + text + "\" number: " + number);
+        return m.group();
     }
 
     // Store the current window handle

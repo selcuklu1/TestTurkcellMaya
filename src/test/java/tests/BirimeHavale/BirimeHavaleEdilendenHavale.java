@@ -2,6 +2,7 @@ package tests.BirimeHavale;
 
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -10,6 +11,7 @@ import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.SistemLoglariPage;
 
+@Feature("Birime Havale Edilenden Havale")
 public class BirimeHavaleEdilendenHavale extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
@@ -96,11 +98,11 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 //                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-        evrakNo = gelenEvrakKayitPage.popUps();
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -115,8 +117,8 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .havaleYapKontrol()
-                .havaleYap()
+                .icerikHavaleYapKontrol()
+                .icerikGosterHavaleYap()
                 .havaleAlanKontrolleri()
 
                 .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)
@@ -129,6 +131,13 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 
                 .gonder()
                 .islemMesaji().basariliOlmali();
+
+        birimHavaleEdilenlerPage
+                .evrakNoIleTablodanEvrakSecme(konu)
+                .evrakGecmisTabKontrolu()
+                .secilenEvrakEvrakGecmisi()
+                .evrakGecmisi(onaylayacakKisi, islemSureci, evrakTarihiSaat)
+                .evrakGecmisi(birim, islemSureci, evrakTarihiSaat);
 
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
 
@@ -148,19 +157,15 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .tabloEvrakNoSec(konu)
                 .evrakAlanVeAdetKontrolleri(konu,geldigiKurum,evrakTarihi,evrakNo,gerekicin,evrakTarihi,evrakSayiSag,1);
 
-
-
-
-
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2304: Havale işleminin sistem loglarından kontrolü")
     public void TS2304() throws InterruptedException {
-        String testid = "TS-2303";
+        String testid = "TS-2304";
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
-        String konu = "TS-2303-" + getSysDate();
+        String konu = "TS-2304-" + getSysDate();
         String evrakTuru = "Resmi Yazışma";
         String evrakDili = "Türkçe";
         String evrakTarihi = getSysDateForKis();
@@ -218,11 +223,11 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 //                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
 
-        evrakNo = gelenEvrakKayitPage.popUps();
+        evrakNo = gelenEvrakKayitPage.popUpsv2();
 
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -232,13 +237,12 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
                 .teslimAlveHavaleEtTeslimAlGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        testStatus(testid, "Test Başladı");
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu)
                 .evrakNoIleTablodanEvrakSecme(konu)
-                .havaleYapKontrol()
-                .havaleYap()
+                .icerikHavaleYapKontrol()
+                .icerikGosterHavaleYap()
                 .havaleAlanKontrolleri()
 
                 .havaleIslemleriKisiSec(onaylayacakKisi,onayKisiDetails)
@@ -251,10 +255,8 @@ public class BirimeHavaleEdilendenHavale extends BaseTest {
 
                 .gonder()
                 .islemMesaji().basariliOlmali();
+
         testStatus(testid, "Test Başladı");
-
-
-
         sistemLoglariPage
                 .openPage()
                 .ekranSistemLoglarıKontrol()

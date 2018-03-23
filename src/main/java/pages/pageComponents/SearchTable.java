@@ -118,16 +118,21 @@ public class SearchTable extends MainPage {
     public int getColumnIndex(String columnName) {
         ElementsCollection columnheaders = getColumnHeaders();
         columnheaders.filterBy(exactText(columnName)).shouldHave(sizeGreaterThan(0));
-        int i = 0;
+        int i;
+        for (i = 0; i < columnheaders.size(); i++) {
+            if (columnheaders.get(i).has(exactText(columnName)))
+                break;
+        }
+        /*int i = 0;
         for (SelenideElement header : columnheaders) {
             if (header.has(exactText(columnName)))
                 break;
             else
                 i++;
-        }
+        }*/
         Assert.assertTrue(i < columnheaders.size(), "\"" + columnName + "\" isimli kolon bulunmalı");
         Allure.addAttachment("Kolon index", String.valueOf(i));
-        return ++i;
+        return i;
     }
 
     /**
@@ -385,7 +390,7 @@ public class SearchTable extends MainPage {
     public SearchTable findRows(Condition... conditions) {
         foundRow = null;
         foundRows = null;
-        String rowCssLocator = this.rowCssLocator;
+        String rowCssLocator = SearchTable.rowCssLocator;
 
         boolean searchByColumn = (columnIndex > 0);
 

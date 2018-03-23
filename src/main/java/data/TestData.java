@@ -18,8 +18,11 @@ public class TestData extends BaseLibrary {
     public static final User gsahin = new User("gsahin", "123", "Gökçe ŞAHİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
     public static final User username27 = new User("un27","123","Username27 TEST","TS2200 Alt Birim");
+    public static final User username27YGD = new User("un27","123","Username27 TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User userMbozdemir = new User("mbozdemir","123","Mehmet BOZDEMİR","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User user21g = new User("username21g","123","Username21g TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    public static final User uservv = new User("usernameVV","123","usernameVV TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    public static final User userva = new User("usernameVA","123","usernameVA TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
 
     //Default usernameOPTIIM
@@ -48,13 +51,22 @@ public class TestData extends BaseLibrary {
     public static final String passwordSCELIK = "123";
 
     public static final String username22n = "username22n";
-    public static final String passwor22n = "123";
+    public static final String password22n = "123";
+
+    public static final String usernamevv = "usernamevv";
+    public static final String passwordvv = "123";
+
+    public static final String usernameva = "usernameva";
+    public static final String passwordva = "123";
 
     public static final String username23t = "username23t";
     public static final String passwor23t = "123";
 
     public static final String username21g = "username21g";
     public static final String passwor21g = "123";
+
+    public static final String usernameUn30 = "un30";
+    public static final String passwordUn30 = "123";
 
     public static String docPathWindows = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
     public static String docDownloadPathWindows = "C:\\Users\\" + getPCUsername() + "\\Downloads\\";

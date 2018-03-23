@@ -12,6 +12,7 @@ import pages.pageComponents.*;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.matchText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -158,12 +159,14 @@ public class MainPage extends BaseLibrary {
     }
 
     @Step("Birim Seç")
-    public MainPage birimSec(Condition condition) {
+    public MainPage birimSec(Condition condition, boolean... selectAnyway) {
         SelenideElement currentBirim = $("#kullaniciBirimAd").shouldBe(visible)
                 .shouldHave(matchText(".*"));
         //String currentBirim = $("#kullaniciBirimAd").shouldBe(visible).shouldHave(matchText(".*")).text();
 
-        if (currentBirim.has(condition))
+        if (currentBirim.has(condition)
+                && (!$("#birimlerimMenusuContainer a.ui-menuitem-selected").exists() || $("#birimlerimMenusuContainer a.ui-menuitem-selected").has(condition))
+                && !(selectAnyway.length > 0 ? selectAnyway[0] : false))
             return this;
 
         $$("#leftMenuForm #birimlerimMenusuContainer a")
@@ -202,7 +205,7 @@ public class MainPage extends BaseLibrary {
     }
 
     public MainPage evrakOlusturSayfayiKapat() {
-        $$("[id='window1Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
+        $$("[id='window2Dialog'] span[class='ui-icon ui-icon-closethick']").first().click();
         islemPenceresiKaydetPopup("Evet");
         return this;
     }
@@ -439,16 +442,18 @@ public class MainPage extends BaseLibrary {
 
     @Step("Profil ekranında guncel birimin \"{guncelBirim}\" olanların Rol adları alınır.")
     public String[] profildenRolAdiAlma(String guncelBirim) {
-
+        int j= 0;
         ElementsCollection tblRolListesi = $$("div[class='ui-datatable-scrollable-body'] tbody[id$='data'] tr[data-ri]");
 
-        String [] rolAdi = new String[tblRolListesi.size()];
+        String [] rolAdi = new String[tblRolListesi.filterBy(text(guncelBirim)).size()];
 
         for (int i = 0; i < tblRolListesi.size(); i++) {
             String birim = tblRolListesi.get(i).$("td:nth-child(2)").text();
-            if (birim.equals(guncelBirim))
-                rolAdi[i] = tblRolListesi.get(i).$("td:nth-child(1)").text();
-            Allure.addAttachment("Rol Adı : ", rolAdi[i]);
+            if (birim.equals(guncelBirim)) {
+                rolAdi[j] = tblRolListesi.get(i).$("td:nth-child(1)").text();
+                j++;
+            }
+//            Allure.addAttachment("Rol Adı : ", rolAdi[i]);
         }
 
 //        $x("//span[text()='Profil']//..//..//div//a[@class='ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all']").click();

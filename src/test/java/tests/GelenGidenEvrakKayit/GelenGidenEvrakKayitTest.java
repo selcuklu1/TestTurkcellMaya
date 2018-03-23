@@ -1,6 +1,7 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Severity;
@@ -126,8 +127,9 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         evrakNO321 = gelenEvrakKayitPage.popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        waitForLoadingJS(WebDriverRunner.getWebDriver(),1000000);
+//
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali(basariMesaji);
 
         kaydedilenGelenEvraklarPage
                 .openPage()
@@ -214,8 +216,11 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
                 .ivedilikSec(ivedilik)
                 .dagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .kaydet();
-        evrakNO328 = gelenEvrakKayitPage.popUps();
         gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        evrakNO328 = gelenEvrakKayitPage.popUps();
+
+//        waitForLoadingJS(WebDriverRunner.getWebDriver(),1000000);
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()

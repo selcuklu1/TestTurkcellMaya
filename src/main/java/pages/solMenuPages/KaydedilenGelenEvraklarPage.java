@@ -394,7 +394,8 @@ public class KaydedilenGelenEvraklarPage extends MainPage {
 
     @Step("Havale Onayına Gönder")
     public KaydedilenGelenEvraklarPage havaleOnayinaGonder() {
-        btnHavaleOnayinaGonder.click();
+//        btnHavaleOnayinaGonder.click();
+        clickJs(btnHavaleOnayinaGonder);
         return this;
     }
 

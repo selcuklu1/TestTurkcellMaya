@@ -20,7 +20,7 @@ public class Chrome extends BaseTest implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
 //        System.setProperty("webdriver.gecko.driver","/Users/ilyas/Documents/WebDrivers/geckodriver-v0.19.0");
-        Map<String, Object> prefs = new HashMap<String, Object>();
+        Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", TestData.docPathWindows);
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);

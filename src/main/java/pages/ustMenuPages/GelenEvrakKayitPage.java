@@ -3,7 +3,6 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
@@ -79,11 +78,18 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement txtEvrakEkTabViewevrakArama = $(By.xpath("//*[@id='evrakBilgileriForm:evrakEkTabView:evrakAramaText']"));
 
     //Arşivde Kayıtlı Evrak Ekle alt sekmesinde bulunanlar
+    SelenideElement btnArsivdeKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:arsivdenEkEkleTabId']");
     SelenideElement dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihBas = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihBasId_input"));
     SelenideElement dateTxtEvrakEkTabViewArsivdenEvrakAraEkEkleTarihSon = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraEkEkleTarihSonId_input"));
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraKonu = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraKonuInputTextId"));
     SelenideElement txtEvrakEkTabViewKullanici = $(By.id("evrakBilgileriForm:evrakEkTabView:kisiyeLov_id:LovText"));
     SelenideElement txtEvrakEkTabViewArsivdenEvrakAraSayi = $(By.id("evrakBilgileriForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
+
+    //Dosya Ekle Ekle alt sekmesinde bulunanlar
+    SelenideElement btnDosyaEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:dosyaEkleTab']");
+
+    //Web Adresini Ekle alt sekmesinde bulunanlar
+    SelenideElement btnWebAdresiniEkle = $("a[href='#evrakBilgileriForm:evrakEkTabView:webAdresindenEkEkle']");
 
     // Havale işlemleri sekmesinde bulunanlar
     ElementsCollection chkOtomatikHavale = $$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class='ui-chkbox ui-widget'] [class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']");
@@ -111,7 +117,7 @@ public class GelenEvrakKayitPage extends MainPage {
     SelenideElement kullaniciListesiSeç = $("select[id^='evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovSecilenTable']");
 
     BelgenetElement cmbHavaleIslemleriOnaylayacakKisi = comboLov(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovText"));
-    SelenideElement txtEklenenOnaylayan =$(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovSecilen"));
+    SelenideElement txtEklenenOnaylayan = $(By.id("evrakBilgileriForm:onaylayacakKisiLov:LovSecilen"));
 
     BelgenetElement cmbDagitimBilgileriKisi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement cmbDagitimBilgileriKullaniciListesi = comboLov(By.id("evrakBilgileriForm:dagitimBilgileriKisiListesiLov:LovText"));
@@ -119,6 +125,11 @@ public class GelenEvrakKayitPage extends MainPage {
     ElementsCollection tblVekaletAlanVeren = $$("tbody[id='evrakBilgileriForm:kullaniciBirimSecenekleriHavaleOnaylayacakIcin_data'] tr[data-ri]");
 
     //İlgi Bilgileri sekmesinde bulunanlar
+    SelenideElement btnIlgiBilgileriDosyaEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:dosyaEkleTab']");
+    SelenideElement btnIlgiBilgileriAciklamaEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:aciklamaEkleTab']");
+    SelenideElement btnIlgiBilgileriSistemdeKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:sistemdeKayitliEvragiEkleTab']");
+    SelenideElement btnIlgiBilgileriArsivdenKayitliEvrakEkle = $("a[href='#evrakBilgileriForm:ilgiIslemleriTabView:arsivdenIlgiEkleTabId']");
+
     //Dosya Ekle alt sekmesinde bulunanlar
     SelenideElement btnIlgiBilgileri = $(By.id("evrakBilgileriForm:ilgiBilgileriPanel_toggler"));
     SelenideElement ilgiBilgileriDosyaPath = $(By.id("evrakBilgileriForm:ilgiIslemleriTabView:fileUploadButtonB_input"));
@@ -280,20 +291,45 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+
+    @Step("Tab Kontrolleri")
+    public GelenEvrakKayitPage tabKontrolu() {
+        Assert.assertEquals(btnFizikselEkEkle.getText().equals("Fiziksel Ek Ekle"), true, "Fiziksel Ekle Kontrolü");
+        Assert.assertEquals(btnSistemdeKayitliEvrakEkle.getText().equals("Sistemde Kayıtlı Evrak Ekle"), true, "Sistemde Kayıtlı Evrak Ekle Kontrolü");
+        Assert.assertEquals(btnDosyaEkle.getText().equals("Dosya Ekle"), true, "Dosya Ekle Kontrolü");
+        Assert.assertEquals(btnArsivdeKayitliEvrakEkle.getText().equals("Arşivde Kayıtlı Evrak Ekle"), true, "Arsivde Kayitli Ekle Kontrolü");
+        Assert.assertEquals(btnWebAdresiniEkle.getText().equals("Web Adresini Ekle"), true, "Web Adresini Ekle Kontrolü");
+
+        Allure.addAttachment("Fiziksel Ekle", "gelmektedir");
+        Allure.addAttachment("Sistemde Kayıtlı Evrak", "gelmektedir");
+        Allure.addAttachment("Dosya Ekle", "gelmektedir");
+        Allure.addAttachment("Arşivde Kayıtlı Ekle", "gelmektedir");
+        Allure.addAttachment("Web Adresini Ekle", "gelmektedir");
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Havale İşlemleri tabı tıklanır.")
-    public GelenEvrakKayitPage havaleIslemleriTabAc(){
+    public GelenEvrakKayitPage havaleIslemleriTabAc() {
         boolean durum = $(By.id("evrakBilgileriForm:havaleDagitimLovPanel")).shouldBe(visible).exists();
-        Assert.assertEquals(durum,true);
-        if (durum==false){
+        Assert.assertEquals(durum, true);
+        if (durum == false) {
             $(By.id("evrakBilgileriForm:havalePanel_header")).click();
         }
         return this;
     }
 
+    @Step("Kişi kurum combosundan Birim seç")
+    public GelenEvrakKayitPage kisiKurumSecimi(String birimSec) {
+        cmbEvrakBilgileriListKisiKurum.shouldBe(visible);
+        cmbEvrakBilgileriListKisiKurum.selectOption(birimSec);
+        return this;
+    }
+
     @Step("Orta alanda \"{sayfa}\" ekranı açılır\n")
     public GelenEvrakKayitPage sayfaKontrol(String sayfa) {
-        Assert.assertEquals(lblSayfa.getText().equals(sayfa),true,sayfa);
-        Allure.addAttachment(sayfa,"açılmaktadır");
+        Assert.assertEquals(lblSayfa.getText().equals(sayfa), true, sayfa);
+        Allure.addAttachment(sayfa, "açılmaktadır");
         return this;
     }
 
@@ -329,46 +365,46 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Havale İşlemleri Alanlarının geldiği görülür")
-    public GelenEvrakKayitPage havaleIslemleriGeldigiGorulur(boolean otomatikHavale,boolean birim,boolean kisi,boolean kullaniciListesi,boolean onaylayacakKisi,boolean aciklama, boolean dosyaEkle, boolean islemSuresi, boolean kaydet){
-        boolean durum =$("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").isDisplayed();
-        Assert.assertEquals(durum,otomatikHavale);
-        Allure.addAttachment("Otomatik Havale CheckBoxı geldiği Görme","Otomatik Havale");
+    public GelenEvrakKayitPage havaleIslemleriGeldigiGorulur(boolean otomatikHavale, boolean birim, boolean kisi, boolean kullaniciListesi, boolean onaylayacakKisi, boolean aciklama, boolean dosyaEkle, boolean islemSuresi, boolean kaydet) {
+        boolean durum = $("[id='evrakBilgileriForm:havaleDagitimLovPanel'] [class^='ui-chkbox-box ui-widget ui-corner-all ui-state-default']").isDisplayed();
+        Assert.assertEquals(durum, otomatikHavale);
+        Allure.addAttachment("Otomatik Havale CheckBoxı geldiği Görme", "Otomatik Havale");
 
-        boolean durum2 =txtHavaleIslemleriBirim.isDisplayed();
-        Assert.assertEquals(durum2,birim);
-        Allure.addAttachment("Havale edilecek Birim alanın geldiği görülür","Havale edilecek Birim");
+        boolean durum2 = txtHavaleIslemleriBirim.isDisplayed();
+        Assert.assertEquals(durum2, birim);
+        Allure.addAttachment("Havale edilecek Birim alanın geldiği görülür", "Havale edilecek Birim");
 
-        boolean durum3 =txtHavaleIslemleriKisi.isDisplayed();
-        Assert.assertEquals(durum3,kisi);
-        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür","Havale edilecek Kişi");
+        boolean durum3 = txtHavaleIslemleriKisi.isDisplayed();
+        Assert.assertEquals(durum3, kisi);
+        Allure.addAttachment("Havale edilecek Kişi alanın geldiği görülür", "Havale edilecek Kişi");
 
-        boolean durum4 =txtHavaleIslemleriKullaniciListesi.isDisplayed();
-        Assert.assertEquals(durum4,kullaniciListesi);
-        Allure.addAttachment("Kullanıcı Listesi seçim alanı geldiği görülür","Havale edilecek Kullanıcı Listesi");
+        boolean durum4 = txtHavaleIslemleriKullaniciListesi.isDisplayed();
+        Assert.assertEquals(durum4, kullaniciListesi);
+        Allure.addAttachment("Kullanıcı Listesi seçim alanı geldiği görülür", "Havale edilecek Kullanıcı Listesi");
 
-        boolean durum5 =txtHavaleIslemleriOnaylayacakKisi.isDisplayed();
-        Assert.assertEquals(durum5,onaylayacakKisi);
-        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür","Onaylayacak Kişi");
+        boolean durum5 = txtHavaleIslemleriOnaylayacakKisi.isDisplayed();
+        Assert.assertEquals(durum5, onaylayacakKisi);
+        Allure.addAttachment("Onaylacak kişi alanı geldiği görülür", "Onaylayacak Kişi");
 
-        boolean durum6 =txtHavaleIslemleriAciklama.isDisplayed();
-        Assert.assertEquals(durum6,aciklama);
-        Allure.addAttachment("Açıklama alanı geldiği görülür","Açıklama");
+        boolean durum6 = txtHavaleIslemleriAciklama.isDisplayed();
+        Assert.assertEquals(durum6, aciklama);
+        Allure.addAttachment("Açıklama alanı geldiği görülür", "Açıklama");
 
-        boolean durum7 =txtHavaleIslemleriDosyaEkle.isDisplayed();
-        Assert.assertEquals(durum7,dosyaEkle);
-        Allure.addAttachment("Dosya yükleme butonun geldiği görülür","Dosya Ekle");
+        boolean durum7 = txtHavaleIslemleriDosyaEkle.isDisplayed();
+        Assert.assertEquals(durum7, dosyaEkle);
+        Allure.addAttachment("Dosya yükleme butonun geldiği görülür", "Dosya Ekle");
 
-        boolean durum8 =txtHavaleIslemleriIslemSuresi.isDisplayed();
-        Assert.assertEquals(durum8,islemSuresi);
-        Allure.addAttachment("İşlem süresi girilebilecek alanın geldiği görülür","İşlem Süresi");
+        boolean durum8 = txtHavaleIslemleriIslemSuresi.isDisplayed();
+        Assert.assertEquals(durum8, islemSuresi);
+        Allure.addAttachment("İşlem süresi girilebilecek alanın geldiği görülür", "İşlem Süresi");
 
-        boolean durum9 =btnKaydet.isDisplayed();
-        Assert.assertEquals(durum9,islemSuresi);
-        Allure.addAttachment("Sağ yukarda kaydet butonun geldiği görülür","Kaydet");
+        boolean durum9 = btnKaydet.isDisplayed();
+        Assert.assertEquals(durum9, islemSuresi);
+        Allure.addAttachment("Sağ yukarda kaydet butonun geldiği görülür", "Kaydet");
         return this;
     }
 
-    @Step("Otomatik havalenin geldiği görünür :{otomatikHavale}")
+    @Step("Otomatik havalenin geldiği görülür :{otomatikHavale}")
     public GelenEvrakKayitPage otomatikHavaleGeldigiGorme(String otomatikHavale) {
         ElementsCollection lblOtomoatikHavale = $$("[id='evrakBilgileriForm:havalePanel'] label[class='columnLabelFixSmallWidth']");
         boolean durum = lblOtomoatikHavale.filterBy(Condition.text(otomatikHavale)).size() == 1;
@@ -430,9 +466,36 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Ilgi Bilgileri Sistemde Kayitli Evrakekle")
+    @Step("Evrak Ekleri Alan Kontrolleri")
+    public GelenEvrakKayitPage evrakEkleriAlanKontrolleri() {
+        Assert.assertEquals(dateTxtEvrakEkTabViewEkIslemleriEvrakTarihBas.isDisplayed(), true, "Evrak Tarihi Başlangıç");
+        Assert.assertEquals(dateTxtEvrakEkTabViewEkIslemleriEvrakTarihSon.isDisplayed(), true, "Evrak Tarihi Bitiş");
+        Assert.assertEquals(cmbEvrakEkTabViewekIslemleriEvrakAramaAranacakYer.isDisplayed(), true, "Evrak Aranacağı Yer");
+        Assert.assertEquals(txtEvrakEkTabViewevrakArama.isDisplayed(), true, "Evrak Arama");
+        Allure.addAttachment("Evrak Tarihi Başlangıç ve Bitiş", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Aranacağı Yer", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Arama", " alanları gelmektedir");
+        takeScreenshot();
+        return this;
+    }
+
+
+    @Step("Ilgi Bilgileri Sistemde Kayitli Evrak ekle")
     public GelenEvrakKayitPage ilgiBilgileriSistemdeKayitliEvrakEkle() {
         clickJs(btnilgiBilgileriSistemdeKayitliEvrakEkle);
+        return this;
+    }
+
+    @Step("Ilgili Bilgileri Sistemde Kayıtlı Alan Kontrolleri")
+    public GelenEvrakKayitPage ilgiBilgileriSistemdeKayitliAlanKontrolleri() {
+        Assert.assertEquals(dateTxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihBas.isDisplayed(), true, "Evrak Tarihi Başlangıç");
+        Assert.assertEquals(datetxtIlgiIslemleriTabViewIlgiIslemleriEvrakTarihSon.isDisplayed(), true, "Evrak Tarihi Bitiş");
+        Assert.assertEquals(cmbIlgiIslemleriTabViewIlgiIslemleriEvrakAramaAranacakYer.isDisplayed(), true, "Evrak Aranacağı Yer");
+        Assert.assertEquals(txtIlgiIslemleriTabViewEvrakArama.isDisplayed(), true, "Evrak Arama");
+        Allure.addAttachment("Evrak Tarihi Başlangıç ve Bitiş", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Aranacağı Yer", " alanları gelmektedir");
+        Allure.addAttachment("Evrak Arama", " alanları gelmektedir");
+        takeScreenshot();
         return this;
     }
 
@@ -446,6 +509,20 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Ilgi Bilgileri Evrak Filtreleme")
     public GelenEvrakKayitPage ilgiliBilgiFiltreAc() {
         clickJs(btnIlgiBilgileri);
+        return this;
+    }
+
+    @Step("Ilgili Bilgileri Alan Kontrolleri")
+    public GelenEvrakKayitPage ilgiBilgileriAlanKontrolleri() {
+        Assert.assertEquals(btnIlgiBilgileriSistemdeKayitliEvrakEkle.getText().equals("Sistemde Kayıtlı Evrak Ekle"), true, "Sistemde Kayıtlı Evrak Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriArsivdenKayitliEvrakEkle.getText().equals("Arşivde Kayıtlı Evrak Ekle"), true, "Arsivde Kayitli Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriDosyaEkle.getText().equals("Dosya Ekle"), true, "Dosya Ekle Kontrolü");
+        Assert.assertEquals(btnIlgiBilgileriAciklamaEkle.getText().equals("Metin Ekle"), true, "Açıklama Ekle Kontrolü");
+
+        Allure.addAttachment("Sistemde Kayıtlı Evrak", "gelmektedir");
+        Allure.addAttachment("Arşivde Kayıtlı Ekle", "gelmektedir");
+        Allure.addAttachment("Dosya Ekle", "gelmektedir");
+        Allure.addAttachment("Açıklama Ekle", "gelmektedir");
         return this;
     }
 
@@ -470,8 +547,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu Kodu alanında \"{konuKodu}\" kontrolü")
     public GelenEvrakKayitPage konuKoduKontrol(String konuKodu) {
-        Assert.assertEquals(konuKoduKontrol.getText().contains(konuKodu),true,"Konu Kodu Kontrolü");
-        Allure.addAttachment("Konu Kodu Kontrolü" , konuKodu);
+        Assert.assertEquals(konuKoduKontrol.getText().contains(konuKodu), true, "Konu Kodu Kontrolü");
+        Allure.addAttachment("Konu Kodu Kontrolü", konuKodu);
         return this;
     }
 
@@ -484,7 +561,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Konu Kodu alanında \"{konu}\" kontrolü")
     public GelenEvrakKayitPage konuKontrol(String konu) {
 //        Assert.assertEquals(konuKontrol.getText().contains(konu),true,"Konu Kontrolü");
-        Allure.addAttachment("Konu  Kontrolü" , konu);
+        Allure.addAttachment("Konu  Kontrolü", konu);
         return this;
     }
 
@@ -501,8 +578,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Türü alanında \"{evrakTuru}\" kontrolü")
     public GelenEvrakKayitPage evrakTuruKontrolu(String evrakTuru) {
-        Assert.assertEquals(evrakTuruKontrol.getText().contains(evrakTuru),true,"Evrak Türü Kontrolü");
-        Allure.addAttachment("Evrak Türü Kontrolü" , evrakTuru);
+        Assert.assertEquals(evrakTuruKontrol.getText().contains(evrakTuru), true, "Evrak Türü Kontrolü");
+        Allure.addAttachment("Evrak Türü Kontrolü", evrakTuru);
         return this;
     }
 
@@ -514,8 +591,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Dili alanında \"{evrakDili}\" kontrolü")
     public GelenEvrakKayitPage evrakDiliKontrol(String evrakDili) {
-        Assert.assertEquals(evrakDiliKontrol.getText().contains(evrakDili),true,"Evrak Dili Kontrolü");
-        Allure.addAttachment("Evrak Dili Kontrolü" , evrakDili);
+        Assert.assertEquals(evrakDiliKontrol.getText().contains(evrakDili), true, "Evrak Dili Kontrolü");
+        Allure.addAttachment("Evrak Dili Kontrolü", evrakDili);
         return this;
     }
 
@@ -528,8 +605,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Tarihi alanında \"{evrakTarihi}\" kontrolü")
     public GelenEvrakKayitPage evrakTarihiKontrol(String evrakTarihi) {
-        Assert.assertEquals(evrakTarihiKontrol.getValue().contains(evrakTarihi),true,"Evrak Tarihi Kontrolü");
-        Allure.addAttachment("Evrak Tarihi Kontrolü" , evrakTarihi);
+        Assert.assertEquals(evrakTarihiKontrol.getValue().contains(evrakTarihi), true, "Evrak Tarihi Kontrolü");
+        Allure.addAttachment("Evrak Tarihi Kontrolü", evrakTarihi);
         return this;
     }
 
@@ -541,8 +618,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Gizlilik Derecesi alanında \"{gizlilikDerecesi}\" kontrolü")
     public GelenEvrakKayitPage gizlilikDerecesiKontrol(String gizlilikDerecesi) {
-        Assert.assertEquals(gizlilikDerecesiKontrol.getText().contains(gizlilikDerecesi),true,"Gizlilik Derecesi Kontrolü");
-        Allure.addAttachment("Gizlilik Derecesi Kontrolü" , gizlilikDerecesi);
+        Assert.assertEquals(gizlilikDerecesiKontrol.getText().contains(gizlilikDerecesi), true, "Gizlilik Derecesi Kontrolü");
+        Allure.addAttachment("Gizlilik Derecesi Kontrolü", gizlilikDerecesi);
         return this;
     }
 
@@ -554,8 +631,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kisi Kurum alanında \"{kisiKurum}\" kontrolü")
     public GelenEvrakKayitPage kisiKurumKontrol(String kisiKurum) {
-        Assert.assertEquals(kisiKurumKontrol.getText().contains(kisiKurum),true,"Kisi Kurum Kontrolü");
-        Allure.addAttachment("Kisi Kurum Kontrolü" , kisiKurum);
+        Assert.assertEquals(kisiKurumKontrol.getText().contains(kisiKurum), true, "Kisi Kurum Kontrolü");
+        Allure.addAttachment("Kisi Kurum Kontrolü", kisiKurum);
         return this;
     }
 
@@ -696,8 +773,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Geldiği Kurum alanında \"{geldigiKurum}\" kontrolü")
     public GelenEvrakKayitPage geldigiKurumKontrol(String geldigiKurum) {
-        Assert.assertEquals(geldigiKurumKontrol.getText().contains(geldigiKurum),true,"Geldiği Kurum Kontrolü");
-        Allure.addAttachment("Geldiği Kurum  Kontrolü" , geldigiKurum);
+        Assert.assertEquals(geldigiKurumKontrol.getText().contains(geldigiKurum), true, "Geldiği Kurum Kontrolü");
+        Allure.addAttachment("Geldiği Kurum  Kontrolü", geldigiKurum);
         return this;
     }
 
@@ -745,7 +822,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Sayı 2. alanında \"{evrakSayiSag}\" kontrolü")
     public GelenEvrakKayitPage evrakSayiSagKontrol(String evrakSayiSag) {
 //        Assert.assertEquals(evrakSayiSagKontrol.getText().contains(evrakSayiSag),true,"Evrak Sayı 2. Alan Kontrolü");
-        Allure.addAttachment("Evrak Sayı 2. Alan Kontrolü" , evrakSayiSag);
+        Allure.addAttachment("Evrak Sayı 2. Alan Kontrolü", evrakSayiSag);
         return this;
     }
 
@@ -757,8 +834,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Geliş Tipi alanında \"{evrakGelisTipi}\" kontrolü")
     public GelenEvrakKayitPage evrakGelisTipiKontrol(String evrakGelisTipi) {
-        Assert.assertEquals(evrakGelisTipiKontrol.getText().contains(evrakGelisTipi),true,"Evrak Geliş Tipi Kontrolü");
-        Allure.addAttachment("Evrak Geliş Tipi Kontrolü" , evrakGelisTipi);
+        Assert.assertEquals(evrakGelisTipiKontrol.getText().contains(evrakGelisTipi), true, "Evrak Geliş Tipi Kontrolü");
+        Allure.addAttachment("Evrak Geliş Tipi Kontrolü", evrakGelisTipi);
         return this;
     }
 
@@ -770,8 +847,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Ivedilik alanında \"{ivedilik}\" kontrolü")
     public GelenEvrakKayitPage ivedilikKontrol(String ivedilik) {
-        Assert.assertEquals(ivedilikKontrol.getText().contains(ivedilik),true,"Ivedilik Kontrolü");
-        Allure.addAttachment("Ivedilik  Kontrolü" , ivedilik);
+        Assert.assertEquals(ivedilikKontrol.getText().contains(ivedilik), true, "Ivedilik Kontrolü");
+        Allure.addAttachment("Ivedilik  Kontrolü", ivedilik);
         takeScreenshot();
         return this;
     }
@@ -860,6 +937,7 @@ public class GelenEvrakKayitPage extends MainPage {
         cmbHavaleIslemleriOnaylayacakKisi.selectLov(onaylayan, details);
         return this;
     }
+
     @Step("Havale İşlemleri Onaylayan alanında eklenen \"{onaylayan}\" kontrolü")
     public GelenEvrakKayitPage eklenenOnaylayanKontrolu(String onaylayan) {
         Assert.assertEquals(txtEklenenOnaylayan.isDisplayed(), true, "Onaylayan Eklendi");
@@ -921,11 +999,24 @@ public class GelenEvrakKayitPage extends MainPage {
 //                .filterBy(Condition.text(kullanici))
 //                .texts();
 
-        String text = cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getTitleItems()
-                .filterBy(Condition.exactText(kullanici + title)).first().text();
+        cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getTitleItems()
+                .filterBy(Condition.exactText(kullanici + title)).shouldHaveSize(1);
         cmbHavaleIslemleriOnaylayacakKisi.closeTreePanel();
+
+        Allure.addAttachment("Kullanıcı kontrolü : ", kullanici+title);
+        return this;
+    }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında kullanici detay kontrolü. \"{detail}\"")
+    public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiDetailKontrol(String kullanici, String detail) {
+        String text  = cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getSelectableItems()
+                .filterBy(Condition.text(kullanici)).first().getText();
+        cmbHavaleIslemleriOnaylayacakKisi.closeTreePanel();
+
         System.out.println(text);
-        Allure.addAttachment("Kullanıcı kontrolü : ", text);
+
+        Assert.assertEquals(text.contains(text),true);
+        Allure.addAttachment("Kullanıcı Detayı : ", detail);
         return this;
     }
 
@@ -963,8 +1054,8 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Dağıtım Bilgileri Kişi alanında \"{kisi}\" seçilir")
-    public GelenEvrakKayitPage dagitimBilgileriKisiDoldurWithDetails(String kisi,String details) {
-        txtDagitimBilgileriKisiComboLov.selectLov(kisi,details);
+    public GelenEvrakKayitPage dagitimBilgileriKisiDoldurWithDetails(String kisi, String details) {
+        txtDagitimBilgileriKisiComboLov.selectLov(kisi, details);
         return this;
     }
 
@@ -1318,6 +1409,7 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("PopUp kontrolleri")
     public String popUps() {
 //        popUp.shouldHave(Condition.visible);  pop up kontrolu
+        String basariMesaji = "İşlem başarılıdır!";
 
         String text;
         Selenide.sleep(5000);
@@ -1338,6 +1430,7 @@ public class GelenEvrakKayitPage extends MainPage {
         }
         if (mukerrerPopUp.isDisplayed()) {
             clickJs(mukerrerPopUpEvet);
+            islemMesaji().basariliOlmali(basariMesaji);
             Allure.addAttachment("Mükerrer İşlem PopUp'ı", "Mükerrer İşlem PopUp'ı kapatılır.");
         }
         basariliPopUp.shouldBe(Condition.visible);
@@ -1414,7 +1507,7 @@ public class GelenEvrakKayitPage extends MainPage {
         String basariMesaji = "İşlem başarılıdır!";
 
         if (islemMesaji().isBasarili())
-            Allure.addAttachment("İşlem başarılı ","mesajı gelmektedir.");
+            Allure.addAttachment("İşlem başarılı ", "mesajı gelmektedir.");
 
         basariliPopUp.shouldBe(Condition.visible);
         String mesaj4 = "Evrak başarıyla kaydedilmiştir.";
@@ -1423,9 +1516,9 @@ public class GelenEvrakKayitPage extends MainPage {
 
         SelenideElement vEvrakBasarili = visibleEvrakBasarili.filterBy(Condition.visible).get(0);
         String evrakNo = getNumberFromText(vEvrakBasarili.getText());
-        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir. Evrakınız" , evrakNo + " numarasıyla kaydedilmiştir.");
+        Allure.addAttachment("Evrak Başarıyla kaydedilmiştir. Evrakınız", evrakNo + " numarasıyla kaydedilmiştir.");
         clickJs(basariliPopUpKapat);
-        Allure.addAttachment("Kapat butonu tıklanır. ","Uyarı pop up kapatıldığı görülmüştür");
+        Allure.addAttachment("Kapat butonu tıklanır. ", "Uyarı pop up kapatıldığı görülmüştür");
         return evrakNo;
     }
 
@@ -1497,9 +1590,9 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("EkBilgiler dosya ekleme excel adi kontrol : \"{excelAdi}\" ")
-    public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String excelAdi) {
-        $(byText(excelAdi)).shouldBe(Condition.visible);
+    @Step("EkBilgiler dosya ekleme dosya adi kontrol : \"{dosyaAdi}\" ")
+    public GelenEvrakKayitPage evrakEkleriDosyaEkleDosyaAdiKontrol(String dosyaAdi) {
+        $(byText(dosyaAdi)).shouldBe(Condition.visible);
 //        String text = lblDosyaAdi.text();
 //        System.out.println(text);
 //        Assert.assertEquals(text, excelAdi);
@@ -1551,6 +1644,26 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Havale İşlemleri Birim alanında \"{birim}\" seç")
     public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String birim) {
         txtHavaleIslemleriBirim.selectLov(birim);
+        return this;
+    }
+
+    public GelenEvrakKayitPage havaleIslemleriBirimStatusKontrol(String kisi, boolean status) {
+        boolean durum = txtHavaleIslemleriBirim.isLovValueSelectable(kisi);
+        Assert.assertEquals(durum, status, "Birim Kontrolü:" + kisi);
+        Allure.addAttachment("Birim Kontrolü", kisi);
+        txtHavaleIslemleriBirim.closeTreePanel();
+        return this;
+    }
+
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public GelenEvrakKayitPage havaleIslemleriBirimAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//div[@id='evrakBilgileriForm:dagitimBilgileriBirimLov:lovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
         return this;
     }
 
@@ -1685,10 +1798,32 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Eklenen Dosya Kontrolü")
+    public GelenEvrakKayitPage eklenenDosyaKontrolu() {
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Dosya Ekle Tabı tabloda \"{dosyaAdi}\" \"{ekMetni}\" kontrolü")
+    public GelenEvrakKayitPage dosyaEkleTabTabloKontrolu(String dosyaAdi, String ekMetni) {
+        tblDosyaEkle
+                .filterBy(Condition.text(dosyaAdi)).filterBy(Condition.text(ekMetni)).shouldHaveSize(1);
+//        Assert.assertEquals(status, true);
+        return this;
+    }
+
     @Step("Ilgi Bilgileri Dosya Ekle Tabı tabloda \"{dosyaAdi}\" kontrolü")
     public GelenEvrakKayitPage ilgiBilgileridosyaEkleTabloKontrolu(String dosyaAdi) {
         boolean durum = tblIlgiliBilgilerDosyaEkle
                 .filterBy(Condition.text(dosyaAdi)).size() > 0;
+        Assert.assertEquals(durum, true);
+        return this;
+    }
+
+    @Step("Ilgi Bilgileri Dosya Ekle Tabı tabloda \"{dosyaAdi}\" \"{ekMetni}\" kontrolü")
+    public GelenEvrakKayitPage ilgiBilgileridosyaEkleTabloKontrolu(String dosyaAdi, String ekMetni) {
+        boolean durum = tblIlgiliBilgilerDosyaEkle
+                .filterBy(Condition.text(dosyaAdi)).filterBy(Condition.text(ekMetni)).size() > 0;
         Assert.assertEquals(durum, true);
         return this;
     }
@@ -1744,7 +1879,7 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Konu kodu sil")
     public GelenEvrakKayitPage konuKoduSil() {
-        comboKonuKodu.clearLastSelectedItem();
+        comboKonuKodu.clearAllSelectedItems();
         return this;
     }
 
@@ -1910,6 +2045,20 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Kisi Kurum  alanında \" {birim}\" güncel bilgileriyle  geldiği görülür.")
+    public GelenEvrakKayitPage geldigiBirimGoruntulenmeKontrolu(String birim) {
+
+        cmbGeldigiBirim.getSelectedItems().last().shouldHave(text(birim));
+
+        return this;
+    }
+
+    @Step("Evrak numara alanının güncel idari birim kodu ile geldiği görülür.")
+    public GelenEvrakKayitPage solEvrakKontrol(String evrakKodu) {
+        txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakKodu));
+        return this;
+    }
+
     @Step("Evrak no alanının, birim kaydederken girilen idari birim kimlik no ile dolduğu görülür")
     public GelenEvrakKayitPage evrakSayisiKontrolu(String idariBirimKimlikKodu) {
         Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue().contains(idariBirimKimlikKodu), true, "Evrak Sayı - İdari Kimlik No");
@@ -1940,11 +2089,11 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Teslim Alınmayı Bekleyenler evrak düşürmektedir.")
-    public void gelenEvrakKayitBirimHavaleEt(String konu,String kurum,String birim) {
+    public void gelenEvrakKayitBirimHavaleEt(String konu, String kurum, String birim) {
         String konuKodu = "Diğer";
         String evrakSayiSag = createRandomNumber(7);
 
-                openPage()
+        openPage()
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konu)
                 .evrakTarihiDoldur(getSysDateForKis())
@@ -1957,7 +2106,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Gelen Evraklar sayfasına evrak düşürmektedir.")
-    public void gelenEvrakKayitKullaniciHavaleEt(String konu,String kurum,String kullanici){
+    public void gelenEvrakKayitKullaniciHavaleEt(String konu, String kurum, String kullanici) {
 
         String konuKodu = "Diğer";
         String evrakTarihi = getSysDateForKis();
@@ -1976,7 +2125,7 @@ public class GelenEvrakKayitPage extends MainPage {
     }
 
     @Step("Kaydedilen Gelen Evraklar sayfasına evrak düşürmektedir.")
-    public void gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(String konu,String kurum){
+    public void gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(String konu, String kurum) {
 
         String konuKodu = "Diğer";
         String evrakTarihi = getSysDateForKis();

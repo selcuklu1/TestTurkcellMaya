@@ -63,6 +63,13 @@ public class HavaleOnayinaSunduklarimPage extends MainPage {
     }
 
 
+    @Step("Not girme alanı ve Geri Al butonunun geldiği görülür.")
+    public HavaleOnayinaSunduklarimPage geriAlNotGerialGeldigiGorme(boolean not,boolean geriAl){
+        Assert.assertEquals(txtGeriAlNot.isDisplayed(),not);
+        Assert.assertEquals($$("[id='mainPreviewForm:evrakOnizlemeTab'] button").filterBy(Condition.text("Geri Al")).first().isDisplayed(),geriAl);
+        return this;
+    }
+
     @Step("Not alanını doldur: {not}")
     public HavaleOnayinaSunduklarimPage geriAlNotDoldur(String not) {
         txtGeriAlNot.setValue(not);

@@ -17,30 +17,62 @@ class ComboBoxHelper extends BaseLibrary {
     private By liLocator;
     private By ulLocator;
 
+    void setLocators(SelenideElement proxy) {
+        //Get id without _label. This id is parent Div element id
+        String id = proxy.attr("id");
+        if (id.contains("_label"))
+            id = id.substring(0, id.lastIndexOf("_label"));
+
+        btnTrigger = proxy.attr("class").contains("ui-selectonemenu")
+                ? By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger")
+                : By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");
+       /* if (proxy.has(cssClass("ui-selectonemenu-trigger")))
+            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger");
+        else
+            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");*/
+
+        panelXpath = "//*[@id='" + id + "_panel']";
+        liLocator = By.cssSelector("[id='" + id + "_panel'] li");
+        ulLocator = By.cssSelector("[id='" + id + "_panel'] ul");
+    }
+
+    void openPanel(){
+        if($x(panelXpath).is(not(visible)))
+            $(btnTrigger).click();
+    }
+
+    void closePanel(){
+        if($x(panelXpath).is(visible))
+            $(btnTrigger).click();
+    }
+
     void selectComboBox(SelenideElement proxy, String text, boolean js) {
         setLocators(proxy);
 
 //        if (proxy.text().equalsIgnoreCase(text))
 //            return;
-
-        if (js)
-            jsClick(text);
-        else
-            click(text);
+        /*if ($(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]")).exists() && !js) {
+            clickJs($(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]")).toWebElement());
+        }*/
+        
+        if ($$(liLocator).filterBy(text(text)).size() > 0 && !js){
+            clickJs($$(liLocator).filterBy(text(text)).first().toWebElement());
+        }
+        else {
+            openPanel();
+            $$(liLocator).filterBy(exactText(text)).get(0).scrollIntoView(true).click();
+        }
     }
 
     private void jsClick(String text) {
-        WebElement li = WebDriverRunner.getWebDriver()
-                .findElement(
-                        By.xpath(panelXpath + " //li[text()[contains(normalize-space(),'" + text + "')]]"));
-
+        WebElement li = WebDriverRunner.getWebDriver().findElement(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]"));
         executeJavaScript("arguments[0].click()", li);
     }
-
     //ul.ui-selectonemenu-items
-
     private void click(String text) {
-        $(btnTrigger).click();
+        if($x(panelXpath).is(not(visible)))
+            $(btnTrigger).click();
+
         $$(liLocator)
                 .filterBy(exactText(text))
                 .get(0).doubleClick();
@@ -64,24 +96,4 @@ class ComboBoxHelper extends BaseLibrary {
 
         return $$(liLocator);
     }
-
-    private void setLocators(SelenideElement proxy) {
-        //Get id without _label. This id is parent Div element id
-        String id = proxy.attr("id");
-        if (id.contains("_label"))
-            id = id.substring(0, id.lastIndexOf("_label"));
-
-        btnTrigger = proxy.attr("class").contains("ui-selectonemenu")
-                ? By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger")
-                : By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");
-       /* if (proxy.has(cssClass("ui-selectonemenu-trigger")))
-            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger");
-        else
-            btnTrigger = By.cssSelector("[id='" + id + "'] .ui-selectcheckboxmenu-trigger");*/
-
-        panelXpath = "//*[@id='" + id + "_panel']";
-        liLocator = By.cssSelector("[id='" + id + "_panel'] li");
-        ulLocator = By.cssSelector("[id='" + id + "_panel'] ul");
-    }
-
 }

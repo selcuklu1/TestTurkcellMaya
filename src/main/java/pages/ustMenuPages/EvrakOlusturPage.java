@@ -15,7 +15,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
-import static pages.pageComponents.belgenetElements.BelgentCondition.not;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 public class EvrakOlusturPage extends MainPage {
@@ -305,6 +304,38 @@ public class EvrakOlusturPage extends MainPage {
         return editorTab.editorTabKontrol();
     }
 
+    @Step("Editörün sol alt kısmında güncellenen iletişim bilgilerinin geldiği görülür")
+    public EvrakOlusturPage iletisimBilgileriGeldigiGorme(String iletisim1, String iletisim2, String iletisim3) {
+        boolean durum = $$("[id$='editorFooter']")
+                .filterBy(Condition.text(iletisim1))
+                .filterBy(Condition.text(iletisim2))
+                .filterBy(Condition.text(iletisim3)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF'in sol alt kısmında güncellenen iletişim bilgilerinin geldiği görülür")
+    public EvrakOlusturPage pdfİletisimBilgileriGeldigiGorme(String iletisim1, String iletisim2, String iletisim3) {
+        boolean durum = $$("[id$='viewer']")
+                .filterBy(Condition.text(iletisim1))
+                .filterBy(Condition.text(iletisim2))
+                .filterBy(Condition.text(iletisim3)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("PDF Önizleme butonu tıklanır")
+    public EvrakOlusturPage pdfGoster() {
+        clickJs(btnPDFOnizleme);
+        int i=0;
+        while(i<200){
+            sleep(i);
+            i++;
+        }
+        return this;
+    }
     @Step("Editör Tab Kontrol")
     public EditorTab editorTabKontrolInbox() {
         return editorTab.editorTabKontrolInbox();
@@ -351,6 +382,8 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement cmbKonuKodu = comboLov("input[id$='konuKoduLov:LovText']");
         SelenideElement btnKonuKoduTree = $("button[id$='konuKoduLov:treeButton']");
         SelenideElement txtKonu = $("textarea[id$='konuTextArea']");
+        BelgenetElement cmbGeregiDoldur = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovText"));
+        BelgenetElement cmbBilgiDoldur = comboLov(By.id("yeniGidenEvrakForm:evrakBilgileriList:15:bilgiLov:LovText"));
         BelgenetElement cmbKaldiralacakKlasorler = comboLov("input[id$='eklenecekKlasorlerLov:LovText']");
         SelenideElement btnKaldiralacakKlasorlerTree = $("button[id$='eklenecekKlasorlerLov:treeButton']");
         SelenideElement cmbEvrakTuru = $("select[id$='evrakTuruCombo']");
@@ -560,6 +593,23 @@ public class EvrakOlusturPage extends MainPage {
         public BilgilerTab konuAlanıDoluGeldigiGorme(String konu) {
             Assert.assertEquals(txtKonu.getValue(), konu);
             takeScreenshot();
+            return this;
+        }
+
+
+        @Step("Bilgi alanında Güncellenen Birim adının Geldiği kontrolü")
+        public BilgilerTab bilgiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbBilgiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbBilgiDoldur.closeTreePanel();
+            return this;
+
+        }
+        @Step("Geregi alanında Güncellenen Birim adının Geldiği kontrolü")
+        public BilgilerTab geregiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbGeregiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbGeregiDoldur.closeTreePanel();
             return this;
         }
 
@@ -2493,7 +2543,7 @@ public class EvrakOlusturPage extends MainPage {
                     $("#imzalaForm\\:sayisalImzaConfirmDialogOpener").click();
                     clickJs($("#imzalaForm\\:sayisalImzaConfirmForm\\:sayisalImzaEvetButton"));
                     break;
-                } else {
+                } else if($("#imzalaForm\\:imzalaButton").exists()){
                     $("#imzalaForm\\:imzalaButton").click();
                     break;
                 }
@@ -3386,6 +3436,14 @@ public class EvrakOlusturPage extends MainPage {
         public EkleriTab dagitimYerlerindeBirimKurumKullaniciKaldir() {
             chkDagitimYerleriBirimEk2.setSelected(true);
             chkDagitimYerleriKurumEk2.setSelected(true);
+            chkDagitimYerleriKullaniciEk2.setSelected(true);
+
+            return this;
+        }
+
+        @Step("Dağıtım yerlerinde birim ve kullanıcı seçimlerini kaldır")
+        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir() {
+            chkDagitimYerleriBirimEk2.setSelected(true);
             chkDagitimYerleriKullaniciEk2.setSelected(true);
 
             return this;
@@ -4407,17 +4465,15 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(String dagitim, String ekler) {
             String pdfDagitim2 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[20]")).getText();
-            String pdfDagitim2Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
-            String pdfDagitim = pdfDagitim2 + " " + pdfDagitim2Devam;
-            Assert.assertEquals(pdfDagitim.contains(ekler), true);
+            Assert.assertEquals(pdfDagitim2.contains(ekler), true);
             return this;
         }
 
         @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
-            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
-            String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[23]")).getText();
-            String pdfDagitim = pdfDagitim3 + " " + pdfDagitim3Devam;
+            String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
+            String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
+            String pdfDagitim = pdfDagitim3 + "" + pdfDagitim3Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }

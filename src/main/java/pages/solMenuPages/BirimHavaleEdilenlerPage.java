@@ -12,7 +12,6 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -50,6 +49,8 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     SelenideElement tctGeriAlNot = $("[id$='evrakGeriAlInputTextareaId']");
     SelenideElement evrakOnizlemeKontrol = $(By.id("mainPreviewForm:eastLayout"));
 
+    SelenideElement btnIcerikGeriAl = $("button[id^='inboxItemInfoForm:j_idt'] span[class='ui-button-text']");
+
     //Birim
     ElementsCollection birimEvrakEkleri = $$("a[href^='#mainPreviewForm']");
     ElementsCollection birimEvrakEkleriKontrol = $$("div[id$='ekListesiOnizlemeDataTable'] tr[data-ri]");
@@ -77,6 +78,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     ElementsCollection btnGonder = $$("button[id^='mainPreviewForm:j_idt']");
 
     SelenideElement formEvrakOnizleme = $(By.id("mainPreviewForm:evrakOnizlemeTab"));
+    ElementsCollection tblEvrakGecmisi = $$("[id$='hareketGecmisiDataTable_data'] > tr[role='row']");
 
 
     @Step("Birim Havale Edilenler sayfası aç")
@@ -95,6 +97,29 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Evrakın liselendiği görülür")
     public BirimHavaleEdilenlerPage evrakNoIleEvragıGeldigiGorme(String evrakNo) {
         boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo)).size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakBilgileriIleEvragıGeldigiGorme(String evrakNo,String geldigiYer, String gidecegiYer,String evrakTarihi) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(geldigiYer))
+                .filterBy(Condition.text(gidecegiYer))
+                .filterBy(Condition.text(evrakTarihi))
+                .size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrakın liselendiği görülür")
+    public BirimHavaleEdilenlerPage evrakBilgileriIleEvragıGeldigiGorme(String evrakNo,String gidecegiYer,String evrakTarihi) {
+        boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo))
+                .filterBy(Condition.text(gidecegiYer))
+                .filterBy(Condition.text(evrakTarihi))
+                .size() > 0;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
@@ -163,12 +188,48 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Tabloda evrak kontrolü : \"{konu}\"  \"{geldigiKurum}\" \"{evrakTarihi}\" ")
+    public BirimHavaleEdilenlerPage evrakAlanKontrolleri(String konu, String geldigiKurum,String evrakTarihi) {
+        tblKaydedilenGelenEvraklar
+                .filterBy(Condition.text(konu))
+                .filterBy(Condition.text(geldigiKurum))
+                .filterBy(Condition.text(evrakTarihi))
+                .shouldHaveSize(1);
+        Allure.addAttachment("Konu", konu);
+        Allure.addAttachment("EvrakTarihi", evrakTarihi);
+        Allure.addAttachment("GeldigiKurum", geldigiKurum);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Tabloda evrak no ile evrak seçme. \"{evrakNo}\" ")
     public BirimHavaleEdilenlerPage evrakNoIleTablodanEvrakSecme(String evrakNo) {
         tblKaydedilenGelenEvraklar
                 .filterBy(Condition.text(evrakNo))
                 .first()
                 .click();
+        return this;
+    }
+
+    @Step("Evrak Geçmiş Tab Kontrolü")
+    public BirimHavaleEdilenlerPage evrakGecmisTabKontrolu() {
+        boolean durum = $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").isDisplayed();
+        Assert.assertEquals(durum,true,"Evrak Geçmiş Tab Kontrolü");
+        Allure.addAttachment("Evrak Geçmiş Tabı gelmektedir.","");
+        return this;
+    }
+
+    @Step("Evrak geçmişi alanına tıklanır")
+    public BirimHavaleEdilenlerPage secilenEvrakEvrakGecmisi() {
+        $$("[id$='evrakOnizlemeTab'] ul li").filterBy(Condition.text("Evrak Geçmişi")).get(0).$("a").click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi Kontrol")
+    public BirimHavaleEdilenlerPage evrakGecmisi(String teslimAlinan, String islemSureci, String evrakTarihSaat) {
+        boolean durum = tblEvrakGecmisi.filterBy(Condition.text(islemSureci)).filter(Condition.text(teslimAlinan)).size() >= 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -221,8 +282,9 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     }
 
     @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
-    public BirimHavaleEdilenlerPage evrakOnizlemeButonKontrolu(String btnText, boolean shoulBeDisplay) {
-        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+    public BirimHavaleEdilenlerPage evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
         if (shoulBeDisplay)
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         else
@@ -230,6 +292,32 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeHavaleYapBirimAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:birimLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(String btnText, boolean shoulBeDisplay) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public BirimHavaleEdilenlerPage evrakOnizlemeHavaleYapKisiAlaniButonTikla(String btnText) {
+//        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='mainPreviewForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
     @Step("Evrak Önizleme \"{btnText}\" buton tıklanır.")
     public BirimHavaleEdilenlerPage evrakOnizlemeButonTikla(String btnText) {
         SelenideElement btnEvrakOnizleme = $(By.xpath("//span[text()='" + btnText + "']/../../..//button"));
@@ -238,7 +326,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     }
 
 
-    @Step("Evrak no ile teslim al")
+    @Step("Evrak no:{konu} ile İçerik Göster tıklanır")
     public BirimHavaleEdilenlerPage evrakSecIcerikGoster(String konu, boolean secim) {
         tblEvraklar.filterBy(text(konu)).get(0).$$("[id$='detayGosterButton']").first().click();
         return this;
@@ -284,6 +372,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Yap button kontrol")
+    public BirimHavaleEdilenlerPage icerikHavaleYapKontrol() {
+        Assert.assertEquals(btnHavaleYap2.isDisplayed(), true, "Havale Yap Button Kontrol");
+        Allure.addAttachment("Havale Yap Button Kontrol", "");
+        return this;
+    }
+
     @Step("Not Alanını Doldur")
     public BirimHavaleEdilenlerPage notAlanınıDoldur(String not) {
         notAlanıDoldur.setValue(not);
@@ -306,6 +401,12 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Geri Al Butonu tıkla")
     public BirimHavaleEdilenlerPage geriAl() {
         btnGeriAl.click();
+        return this;
+    }
+
+    @Step("Içerik Geri Al Butonu tıkla")
+    public BirimHavaleEdilenlerPage icerikGeriAl() {
+        btnIcerikGeriAl.click();
         return this;
     }
 
@@ -340,6 +441,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
     @Step("Not alanını doldur: {not}")
     public BirimHavaleEdilenlerPage geriAlNotAlaniniDoldur(String not) {
         tctGeriAlNot.setValue(not);
+        return this;
+    }
+
+    @Step("Not girme alnı ve Geri Al butonunun geldiği görülür.")
+    public BirimHavaleEdilenlerPage notGirmeAlaniveGeriAlmaGeldigiGorme(boolean not,boolean geriAl){
+        Assert.assertEquals(tctGeriAlNot.isDisplayed(),not);
+        Assert.assertEquals(btnGeriAlGeriAl.isDisplayed(),geriAl);
         return this;
     }
 
@@ -432,6 +540,13 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         txtComboLovBirim.closeTreePanel();
         return this;
     }
+
+    @Step("Dağıtım Bilgileri Birim alanında \"{birim}\" seçilir")
+    public BirimHavaleEdilenlerPage dagitimBilgileriBirimDoldur(String birim) {
+        txtComboLovBirim.selectLov(birim);
+        return this;
+    }
+
 
     @Step("Havale İşlemleri Birim alanında eklenen \"{birim}\" kontrolü")
     public BirimHavaleEdilenlerPage eklenenBirimKontrolu(String birim) {

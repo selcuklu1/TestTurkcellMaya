@@ -50,6 +50,8 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtKullaniciBirimAtamaBirim = $(By.xpath("//form[@id='kullaniciBirimEditorForm']//table//tbody//tr//td//div"));
     // Kullanıcı Listesi
     SelenideElement btnKullaniciListesiGuncelle = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
+    SelenideElement strKullaniciSayisi = $(By.xpath("//*[@id='kullaniciYonetimiListingForm:kullaniciDataTable']/table/tfoot/tr[2]/td"));
+
 
     // Görevli Olduğu Birimler
 
@@ -71,6 +73,7 @@ public class KullaniciYonetimiPage extends MainPage {
     SelenideElement txtEkranAdi = $(By.id("kullaniciYonetimiEditorForm:ekranAdiInput"));
 
     ElementsCollection tblKullaniciBirim = $$("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_data'] tr[data-ri]");
+    SelenideElement kullaniciYonetimkontrol = $("[id$='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr [id$='kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton']");
 
 
     //Kullancı birim atama
@@ -154,6 +157,19 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Sistemin Kullanıcı Yönetimi ekranını açtığı Kontrolu")
+    public KullaniciYonetimiPage kullaniciYönetimiekranıKontrol() {
+
+        Assert.assertEquals(kullaniciYonetimkontrol.isDisplayed(), true, "Kullanıcı  Geldigi Görülür");
+        return this;
+    }
+
+    @Step("Kullanıcı biriminin listelendiği kontrolu")
+    public KullaniciYonetimiPage birimKullanicikontrol() {
+
+        Assert.assertEquals(kullaniciYonetimkontrol.isDisplayed(), true, "Birimin Geldigi Görülür");
+        return this;
+    }
 
     @Step("Kullanıcı birim atama ekranında bağ tipi combosunun geldiği görülür.")
     public KullaniciYonetimiPage kullaniciBirimAtamaEkranıGorme() {
@@ -285,6 +301,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Alt Birimler Dahil Seç")
     public KullaniciYonetimiPage altBirimlerDahilSec(boolean value) {
         chkAltBirimiOlmayanlar.setSelected(value);
         return this;
@@ -304,7 +321,7 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür.")
+    @Step("Kullanıcıların TCKN, ad soyad ve birim bilgileri ile listelendiği görülür")
     public KullaniciYonetimiPage kullaniciListesiGeldigiGorme() {
         $("[id='kullaniciYonetimiListingForm:filterPanel'] a").click();
         boolean durum = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr").size() == 0;
@@ -557,6 +574,11 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    public KullaniciYonetimiPage gorevListesiSonSayfaTikla(){
+        clickJs($("[id='kullaniciYonetimiEditorForm:kullaniciBirimDataTable_paginator_top'] [class='ui-paginator-last ui-state-default ui-corner-all']"));
+        return this;
+    }
+
     @Step("Görevli olduğu birimi pasif yap")
     public KullaniciYonetimiPage gorevliOlduguBirimSil(String birimAdi) {
 
@@ -571,5 +593,23 @@ public class KullaniciYonetimiPage extends MainPage {
         islemOnayi("Evet");
 
         return this;
+    }
+
+    @Step("Birimin set edilmiş olduğu kontrolu")
+    public KullaniciYonetimiPage birimKontrol(String birim) {
+        cmlBirim.getSelectedTitles().last().shouldHave(text(birim));
+
+        return this;
+    }
+
+    @Step("Birimin set edilmiş olduğu kontrolu : {kullaniciSayisi}")
+    public String kullaniciSayisiniAl() {
+
+        String kullaniciSayisi = strKullaniciSayisi.getText();
+
+        String[] parts = kullaniciSayisi.split(": ");// "004: 034556"
+        String part1 = parts[1]; // 034556
+
+        return parts[1];
     }
 }

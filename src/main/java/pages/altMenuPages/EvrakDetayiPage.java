@@ -1,7 +1,6 @@
 package pages.altMenuPages;
 
 import com.codeborne.selenide.*;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -9,7 +8,6 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.solMenuPages.GelenEvraklarPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -54,6 +52,7 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIadeEt2 = $(By.id("inboxItemInfoForm:iadeEtButton_id"));
     SelenideElement btnTeslimAlPopup = $(By.id("teslimAlEvetButton"));
 
+    BelgenetElement txtHavaleYapBirim = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriBirimLov:LovText"));
     SelenideElement btnDetay = $("[id$='inboxItemInfoForm:dagitimBilgileriKisiListesiLov:LovSecilenTable:0:']");
     ElementsCollection tblKullaniciGrupDetay = $$("[id='inboxItemInfoForm:kullaniciGrubuDetay_data'] tr[data-ri]");
     SelenideElement btnKullaniciGrupDetayKullan = $(By.id("inboxItemInfoForm:kullaniciGrubuDetayKullanViewDialog"));
@@ -73,6 +72,9 @@ public class EvrakDetayiPage extends MainPage {
     SelenideElement btnIcerikHavaleGonder = $("[class$='havaleGonderButonClass']");
     SelenideElement btnIcerikTeslimAlGonder = $(By.xpath("//*[contains(text(),'Teslim Al Gönder')]"));
     SelenideElement btnIcerikVazgec = $(By.id("inboxItemInfoForm:teslimAlHavaleEtVazgecButton"));
+
+    BelgenetElement txtIcerikHavaleYapKisi = comboLov(By.id("inboxItemInfoForm:dagitimBilgileriKullaniciLov:LovText"));
+
 
     private HareketGecmisiTab hareketGecmisiTab = new HareketGecmisiTab();
     private EditorTab editorTab = new EditorTab();
@@ -140,12 +142,36 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
-    public EvrakDetayiPage havaleYapAlanındaButonKontrolu(String btnText, boolean shoulBeDisplay) {
-        SelenideElement btnEvrakOnizleme = $(By.xpath("//form[@id='mainPreviewForm']//button[.='" + btnText + "']"));
+    public EvrakDetayiPage havaleYapKisiAlanindaButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='inboxItemInfoForm:kisiLovContainer']//span[text()='" + btnText + "']"));
         if (shoulBeDisplay)
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
         else
             Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public EvrakDetayiPage havaleYapKisiAlanindaButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='inboxItemInfoForm:kisiLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton kontrolü. Buton Name : \"{btnText}\", Ekranda bulunuyor mu : {shoulBeDisplay} ")
+    public EvrakDetayiPage havaleYapBirimAlanindaButonKontrolu(String btnText, boolean shoulBeDisplay) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='inboxItemInfoForm:birimLovContainer']//span[text()='" + btnText + "']"));
+        if (shoulBeDisplay)
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), true);
+        else
+            Assert.assertEquals(btnEvrakOnizleme.isDisplayed(), false);
+        return this;
+    }
+
+    @Step("Evrak Önizleme buton tıklanır. Buton Name : \"{btnText}\" ")
+    public EvrakDetayiPage havaleYapBirimAlanindaButonTikla(String btnText) {
+        SelenideElement btnEvrakOnizleme = $(By.xpath("//table[@id='inboxItemInfoForm:birimLovContainer']//span[text()='" + btnText + "']"));
+        btnEvrakOnizleme.click();
         return this;
     }
 
@@ -341,6 +367,20 @@ public class EvrakDetayiPage extends MainPage {
         txtOnaylayacakKisi.openTreePanel().getSelectableItems().filterBy(text(kisi)).first().click();
         return this;
     }
+
+    @Step("Havale Yap alanında Birim \"{birim}\" seçilir. ")
+    public EvrakDetayiPage havaleYapAlanindaBirimSec(String birim) {
+        txtHavaleYapBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Evrak Detayi ekranında Havale Yap alanında Kisi \"{kisi}\" seçilir. ")
+    public EvrakDetayiPage havaleYapAlanindaKisiSec(String kisi) {
+        txtIcerikHavaleYapKisi.selectLov(kisi);
+        return this;
+    }
+
+
 
     @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
     public EvrakDetayiPage tebligEtKullaniciListesiSec(String kullaniciListesi) {
@@ -566,7 +606,7 @@ public class EvrakDetayiPage extends MainPage {
 
     @Step("Pdf Dağıtımda eklerin gitmeyeceği yerler kontrolu: {dagitim}")
     public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
-        String pdfDagitim = $(By.xpath("//*[@id=\"viewer\"]/div/div[2]/div[30]")).getText();
+        String pdfDagitim = $(By.xpath("//*[@id='viewer']/div/div[2]/div[30]")).getText();
         Assert.assertEquals(pdfDagitim.contains(ekler), true);
         return this;
     }

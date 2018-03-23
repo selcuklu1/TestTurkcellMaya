@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,10 +63,10 @@ public class GalenExampleTest extends BaseTest {
         // checkLayout function checks the layout and returns a LayoutReport
         // object
         LayoutReport layoutReport = Galen.checkLayout(WebDriverRunner.getWebDriver(), "src/test/resources/specs/homepage.gspec",
-                Arrays.asList("desktop"));
+                Collections.singletonList("desktop"));
 
         // Create a tests list
-        List<GalenTestInfo> galenTests = new LinkedList<GalenTestInfo>();
+        List<GalenTestInfo> galenTests = new LinkedList<>();
 
         // Create a GalenTestInfo object
         GalenTestInfo galenTest = GalenTestInfo.fromString("testName layout");

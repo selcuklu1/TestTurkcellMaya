@@ -37,6 +37,8 @@ public class GidenEvrakKayitPage extends MainPage {
     By cmbGeregiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='geregiLov:LovText']");
     By cmbBilgiBy = By.cssSelector("[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList'][id$='bilgiLov:LovText']");
     SelenideElement btnGeregiDelete = $("button[id^='gidenEvrakDefterKaydiForm:evrakBilgileriList:11:geregiLov:LovSecilenTable'] span[class$='delete-icon']");
+    BelgenetElement cmbGeregiDoldur = comboLov(By.id("gidenEvrakDefterKaydiForm:evrakBilgileriList:11:geregiLov:LovText"));
+    BelgenetElement cmbBilgiDoldur =  comboLov(By.id("gidenEvrakDefterKaydiForm:evrakBilgileriList:12:bilgiLov:LovText"));
 
     BelgenetElement comboBilgi = comboLov("[id$='bilgiLov:LovText']");
     BelgenetElement comboKaldiralacakKlasörler = comboLov("[id$='kaldirilacakKlasorlerLov:LovText']");
@@ -83,6 +85,21 @@ public class GidenEvrakKayitPage extends MainPage {
     @Step("Giden Evrak Kayit sayfasını aç")
     public GidenEvrakKayitPage openPage() {
         ustMenu(UstMenuData.EvrakIslemleri.GidenEvrakKayit);
+        return this;
+    }
+
+    @Step("Bilgi alanında Birimin güncel bilgileriyle geldiği görülür.")
+    public GidenEvrakKayitPage bilgiGeldigiGorme(String birimAdi) {
+        boolean durum = cmbBilgiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+        Assert.assertEquals(durum,true);
+        cmbBilgiDoldur.closeTreePanel();
+        return this;
+    }
+    @Step("Gereği alanında  Birimin güncel bilgileriyle geldiği görülür.")
+    public GidenEvrakKayitPage geregiGeldigiGorme(String birimAdi) {
+        boolean durum = cmbGeregiDoldur.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+        Assert.assertEquals(durum,true);
+        cmbGeregiDoldur.closeTreePanel();
         return this;
     }
 

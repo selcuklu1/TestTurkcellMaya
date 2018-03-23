@@ -5,10 +5,13 @@
 
     <test name="Sezai Çelik Tests">
         <packages>
-            <package name="tests.TuzelKisiYonetimi"/>
+<!--            <package name="tests.TuzelKisiYonetimi"/>
             <package name="tests.GercekKisiYonetimi"/>
             <package name="tests.OnayAkisi"/>
-            <package name="tests.EkIlgi"/>
+            <package name="tests.EkIlgi"/>-->
+
+            <package name="tests.BirimYonetimi"/>
+            <package name="tests.OnayAkisindakiEvrakiSil"/>
         </packages>
     </test>
 

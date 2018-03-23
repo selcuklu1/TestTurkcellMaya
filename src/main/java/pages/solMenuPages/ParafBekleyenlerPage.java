@@ -2,7 +2,9 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -14,7 +16,6 @@ import pages.pageData.SolMenuData;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
@@ -555,12 +556,13 @@ public class ParafBekleyenlerPage extends MainPage {
 
     @Step("Versiyonlari Karşılaştırma")
     public ParafBekleyenlerPage versiyonlariKarsilastirma() throws InterruptedException {
-//        switchTo().frame("onizlemeFrame");
+        windowHandleBefore();
+        switchToNewWindow();
         boolean durum = $("[class='onizlemeFrame']").isDisplayed();
-        if(durum)
-            takeScreenshot();
-
-//        switchToDefaultWindow();
+        Assert.assertEquals(durum,true,"2 Evrak Yanyana Açılmıştır");
+        Allure.addAttachment("2 Evrak Yanyana Açılmıştır","");
+        takeScreenshot();
+        switchToDefaultWindow();
         return this;
     }
 

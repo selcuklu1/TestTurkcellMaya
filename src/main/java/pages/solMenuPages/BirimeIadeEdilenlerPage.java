@@ -74,7 +74,9 @@ public class BirimeIadeEdilenlerPage extends MainPage {
 
     BelgenetElement havaleIslemleriBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
 
-    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+//    SelenideElement birimTopluTeslimAlGonder = $(By.id("mainPreviewForm:btnTopluTeslimAlGonder"));
+    SelenideElement birimTopluTeslimAlGonder = $("button[id='mainPreviewForm:btnTopluTeslimAlGonder']");
+
     SelenideElement birimTeslimAlGonder = $(By.id("mainPreviewForm:btnTeslimAlGonder"));
     SelenideElement tabHavale = $("[id='mainPreviewForm:evrakOnizlemeTab']");
     SelenideElement tabEvrakDetayi = $("[id='inboxItemInfoForm']");
@@ -414,7 +416,7 @@ public class BirimeIadeEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisi}\" seç")
+    @Step("Havale İşlemleri Kişi Listesi alanında \"{kisiliste}\" seç")
     public BirimeIadeEdilenlerPage havaleKisiListesi(String kisiliste) {
         txtHavaleIslemleriKisiListesi.openTreePanel();
         txtHavaleIslemleriKisiListesi.closeTreePanel();

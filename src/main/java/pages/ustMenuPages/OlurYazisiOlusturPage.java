@@ -10,7 +10,6 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageComponents.tabs.EditorTab;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
@@ -168,6 +167,21 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Bilgi Alanına  Birimin güncel bilgileriyle geldiği görülür.")
+        public BilgilerTab bilgiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbBilgi.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbBilgi.closeTreePanel();
+            return this;
+        }
+
+        @Step("Geregi Alanında Birimin güncel bilgileriyle geldiği görülür.")
+        public BilgilerTab geregiGeldigiGorme(String birimAdi) {
+            boolean durum = cmbGeregi.type(birimAdi).getTitleItems().filterBy(Condition.text(birimAdi)).size()==1;
+            Assert.assertEquals(durum,true);
+            cmbGeregi.closeTreePanel();
+            return this;
+        }
         @Step("Onay akışında güncel gelen kullanıcıyı kontrolu")
         public BilgilerTab onayAkisiKullaniciKontrol(String kullaniciAdi, String kullaniciTipi) {
             trOnayAkisiEkleKullanicilar

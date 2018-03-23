@@ -642,7 +642,7 @@ login(TestData.gsahin);
 
 //        login("username23t", "123");
 //        login(TestData.username23t,TestData.passwor23t);
-        login(TestData.username22n,TestData.passwor22n);
+        login(TestData.username22n,TestData.password22n);
         String mesaj = "Gizlilik kleransınız evrakın gizlilik derecesini görüntülemek için yeterli değildir.";
 
 
@@ -668,9 +668,10 @@ login(TestData.gsahin);
     public void TS2139() throws InterruptedException {
 
 //        login("username22n", "123");
-        login(TestData.username22n,TestData.passwor22n);
 
-        String evrakNo = "13364";
+        evrakOlustur();
+        login(TestData.username22n,TestData.password22n);
+//        String evrakNo = "14036";
         String aranacagiYer = "Birim Evrakları Ara";
         String aranacagiYer2 = "İşlem Yaptıklarımda Ara";
         String aramaKriteri = "Evrak Sayı";
@@ -703,8 +704,8 @@ login(TestData.gsahin);
                 .sistemdeKayitliEvrakEkleTabAc()
                 .evrakinAranacagiYerSec(aranacagiYer)
                 .evrakAramaDoldur(evrakNo)
-                .dokumanAra();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .dokumanAra()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         evrakOlusturPage
                 .ekleriTabAc()

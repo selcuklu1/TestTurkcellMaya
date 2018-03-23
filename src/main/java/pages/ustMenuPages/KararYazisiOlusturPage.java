@@ -352,6 +352,13 @@ public class KararYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Kullanıcılar alanını doldur \"{kullanici}\" | \"{birim}\" ")
+        public BilgilerTab kullanicilarDoldurWithDetailBirim(String kullanici, String birim) {
+            txtKullanicilar.type(kullanici).getDetailItems().filterBy(text(birim)).first().click();
+            txtKullanicilar.closeTreePanel();
+            return this;
+        }
+
         @Step("Kullanıcılar alanı doldur")
         public BilgilerTab kullanicilarDoldur(String kullanici) {
             txtKullanicilar.selectLov(kullanici);

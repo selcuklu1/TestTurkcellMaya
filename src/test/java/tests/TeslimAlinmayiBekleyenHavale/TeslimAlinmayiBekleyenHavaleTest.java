@@ -13,6 +13,8 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
+import pages.pageComponents.EvrakOnizleme;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 
@@ -29,6 +31,8 @@ import static data.TestData.*;
 public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    EvrakOnizleme evrakOnizleme;
+    EvrakDetayiPage evrakDetayiPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
     BirimHavaleEdilenlerPage birimHavaleEdilenlerPage;
     GelenEvraklarPage gelenEvraklarPage;
@@ -36,6 +40,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
     HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
     HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerimPage;
+
     String basariMesaji = "İşlem başarılıdır!";
     String konuKodu = "Diğer";
     String konuKoduRandomTS2285 = "TC-2285_" + createRandomNumber(15);
@@ -58,6 +63,8 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
         havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
         havaleOnayiVerdiklerimPage = new HavaleOnayiVerdiklerimPage();
+        evrakDetayiPage = new EvrakDetayiPage();
+        evrakOnizleme = new EvrakOnizleme();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -65,7 +72,6 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     public void TS0443() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "Diğer";
         String konuKoduRandom = "TS-0443_" + createRandomNumber(25);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
@@ -79,8 +85,9 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandom)
+                .evrakOnizlemeGeldigiGorme(true)
                 .teslimAlVeHavaleEt()
-                .teslimAlVeKapatAlanGeldigiGorme()
+                .teslimAlVeHavaleEtEkranGeldigiGorme()
                 .teslimAlVeHavaleEtBirimDoldur("Optiim Birim", "YGD")
                 .teslimAlveHavaleEtTeslimAlGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -97,6 +104,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleTablodanEvrakSecme(konuKoduRandom)
                 .geriAl()
+                .notGirmeAlaniveGeriAlmaGeldigiGorme(true,true)
                 .geriAlNotAlaniniDoldur(not)
                 .geriAlGeriAl()
                 .islemMesaji().basariliOlmali(basariMesaji);
@@ -117,13 +125,10 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     public void TS0453() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKodu = "Diğer";
         String konuKoduRandom = "TC-0443_" + createRandomNumber(15);
-        String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Yazılım Geliştirme Direktörlüğ";
-        String not = createRandomText(15);
         login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
@@ -132,8 +137,15 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakIcerikGosterSec(konuKoduRandom)
-                .teslimAlVeHavaleEt()
+                .icerikGosterIcerikGeldigiGorme(true)
+                .teslimAlVeHavaleEt();
+
+        evrakDetayiPage
+                .icerikGosterTeslimAlVeHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        teslimAlinmayiBekleyenlerPage
                 .evrakDetayTeslimAlVeHavaleEtBirimDoldur("Optiim Birim", "YGD")
+                .birimSecilenGeregiIcinGonderGeldigiGorme()
                 .evrakDetayTeslimAlVeHavaleEtSecilenBirimBilgiSec()
                 .evrakDetayTeslimAlVeHavaleEtKisiDoldur("Optiim TEST", "YGD")
                 .evrakDetayTeslimAlveHavaleEtTeslimAlGonder()
@@ -153,7 +165,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandom);
+                .evrakGeldigiGorme(konuKoduRandom,kurum,evrakTarihi);
     }
 
     @Step("Teslim alınmayı bekleyenler alanına evrak düşürmekte")
@@ -220,9 +232,16 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
+                .teslimAlVeTeslimAlVeHavaleEtGeldigiGorme(true,true)
                 .evrakNoIleEvrakSec(konuKoduRandomTS2294)
-                .teslimAlVeHavaleEt()
+                .teslimAlVeHavaleEt();
+
+        evrakOnizleme
+                .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
+
+        teslimAlinmayiBekleyenlerPage
                 .teslimAlVeHavaleEtBirimDoldur("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ", "")
+                .birimSecilenDefaultGeregiGeldigiGorme()
                 .teslimAlVeHavaleEtKisiDoldur("Mehmet BOZDEMİR", "YGD")
                 .kisiGeregiIcinGonderBilgiIcinGonderDegistir()
                 .teslimAlVeHavaleEtKullaniciListesiDoldur("TS2994", "TS2994")
@@ -232,25 +251,25 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .evrakNoIleTabloKontrolu(konuKoduRandomTS2294);
+                .evrakAlanKontrolleri(konuKoduRandomTS2294,kurum,evrakTarihi);
 
         login(usernameYAKYOL, passwordYAKYOL);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakGeldigiGorunur(konuKoduRandomTS2294, evrakTarihi, kurum);
+                .evrakGeldigiGorunur(konuKoduRandomTS2294, kurum, evrakTarihi);
 
         login(usernameMBOZDEMIR, passwordMBOZDEMIR);
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS2294);
+                .evrakGeldigiGorme(konuKoduRandomTS2294,kurum,evrakTarihi);
 
         login(usernameYAKYOL, passwordYAKYOL);
 
         gelenEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduRandomTS2294);
+                .evrakGeldigiGorme(konuKoduRandomTS2294,kurum,evrakTarihi);
     }
 
     @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
@@ -300,7 +319,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakSecEvrakGecmisiSec()
                 .evrakGecimisiGeregiVeBilgiGeldigiGorme("Gereği", kisi, "Bilgi", birim);
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(usernameZTEKIN, passwordZTEKIN);
 
         birimHavaleEdilenlerPage
                 .openPage()

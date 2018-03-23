@@ -7,13 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pages.MainPage;
-import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.SearchTable;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
-import pages.pageData.UstMenuData;
 import pages.pageData.UstMenuData.KullaniciIslemleri;
-import pages.ustMenuPages.DagitimPlaniYonetimiPage;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.disappear;
@@ -21,7 +18,6 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 

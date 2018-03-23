@@ -4,9 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.User;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +22,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static pages.pageData.UstMenuData.*;
-//import pages.ustMenuPages.EvrakOlusturPage;
 
 /****************************************************
  * Tarih: 2017-12-22
@@ -33,6 +30,7 @@ import static pages.pageData.UstMenuData.*;
  * Yazan: Samed Solak
  ****************************************************/
 
+@Feature("Kısa yol tuşları")
 public class KisayolTuslariTest extends BaseTest {
 
     MainPage mainPage = new MainPage();
@@ -43,8 +41,15 @@ public class KisayolTuslariTest extends BaseTest {
         login(user1);
     }
 
+    @Attachment
+    public String performedActions(String name) {
+        return name;
+    }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1952: Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
+    @Description("Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
+    @Story("Kısayol tuşları kullanarak Olur Oluştur ekranını açma")
     public void TS1952a() throws InterruptedException {
         new EvrakOlusturPage().openPage();
 

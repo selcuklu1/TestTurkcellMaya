@@ -29,7 +29,7 @@ public class VekaletVerPage extends MainPage {
     SelenideElement tabVekaletListesi = $("a[href='#vekaletVerForm:vekaletLayout:vekaletSorgulaField']");
     SelenideElement tabYeniVekalet = $("a[href='#vekaletVerForm:vekaletLayout:yeniVekaletTab']");
 
-    SelenideElement btnVekalelVerenTemizle = $(By.id("vekaletVerForm:vekaletLayout:vekaletVerenLov:j_idt134"));
+    SelenideElement btnVekalelVerenTemizle = $("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:'] [class='ui-button-icon-left ui-icon delete-icon']");
     By txtVekaletVeren = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletVerenLov:LovText']");
     By txtVekaletAlan = By.cssSelector("[id^='vekaletVerForm:vekaletLayout:vekaletAlanLov:LovText']");
     BelgenetElement txtOnaylayacakKisi = comboLov(By.id("vekaletVerForm:vekaletLayout:vekaletOnaylayacakKisiLov:LovText"));
@@ -82,7 +82,7 @@ public class VekaletVerPage extends MainPage {
 
     @Step("Vekalet veren alanını farklı doldur \"{vekaletVeren}\" ")
     public VekaletVerPage vekaletVerenFarkliDoldur(String vekaletVeren) {
-        btnVekalelVerenTemizle.click();
+        clickJs(btnVekalelVerenTemizle);
         txtVekaletVerenCombolov.selectLov(vekaletVeren);
         return this;
     }
