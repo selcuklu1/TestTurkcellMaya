@@ -140,6 +140,16 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Onayla ve onayı reddet seçeneklerinin geldiği görülür")
+    public HavaleOnayınaGelenlerPage havaleOnayiOnaylaOnayiReddetGeldigiGorme(){
+        boolean durum = $(By.id("inboxItemInfoForm:onaylaButton_id")).isDisplayed();
+        boolean durum1 = $(By.id("inboxItemInfoForm:reddetButton_id")).isDisplayed();
+        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum1,true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Birim alanını doldur: {birim}")
     public HavaleOnayınaGelenlerPage havaleOnayiBirimDoldur(String birim) {
         txtHavaleOnayiBirim.selectLov(birim);
@@ -267,6 +277,12 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Onayla butonunu tıkla")
+    public HavaleOnayınaGelenlerPage icerikGosterHavaleOnayiOnayla(){
+        $(By.id("inboxItemInfoForm:onaylaButton_id")).pressEnter();
+        return this;
+    }
+
     @Step("Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz? Evet / Hayır uyarısını geldiği görülür.")
     public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme() {
         boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size() > 0;
@@ -274,7 +290,6 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         takeScreenshot();
         return this;
     }
-
 
     @Step("Evet tıklanır")
     public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzeresinizEvet() {
