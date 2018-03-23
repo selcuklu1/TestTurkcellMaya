@@ -7,9 +7,11 @@ import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.pageData.UstMenuData;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
@@ -36,6 +38,7 @@ public class BirimYonetimiTest extends BaseTest {
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
+
     @BeforeMethod
     public void loginBeforeTests() {
 
@@ -51,6 +54,7 @@ public class BirimYonetimiTest extends BaseTest {
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -640,6 +644,7 @@ public class BirimYonetimiTest extends BaseTest {
 
         birimYonetimiPage
                 .openPage()
+
                 .dataResetlemeBirimPasifIseAktifYap(birimAdi)
                 .birimFiltreDoldur(birimAdi)
                 .ara()
@@ -717,4 +722,92 @@ public class BirimYonetimiTest extends BaseTest {
                 .openPage()
                 .dataResetlemeBirimPasifIseAktifYap(birimAdi);
     }
+
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS1116: Tanımlı kullanıcısı olan birimin pasif yapılması")
+    public void TS1116() throws InterruptedException {
+
+     //   String birimAdı="TS1116-2017";
+
+        login("alkanseker","123");
+
+        testStatus("TS1116", "Birim Oluşturma");
+        //1109 senaryosu yerine pre. con. koşuluyor
+        List<String> birim = new ReusableSteps().yeniBirimKayit();
+
+        String birimAdi = birim.get(0);
+        //String birimKisaAdi = birim.get(1);
+        //String idariBirimKimlikKodu = birim.get(2);
+        String amirAdi = "Alkan Ako SEKER";
+        String gorev = "Genel Müdür";
+        String basariMesaji = "İşlem başarılıdır!";
+
+
+        birimYonetimiPage
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimGüncelle(birimAdi)
+                .birimAmiriEkle()
+                .txtBirimAmiriAtamaKullaniciDoldur(amirAdi)
+                .txtBirimAmiriAtamaGorevDoldur(gorev)
+                .birimAmiriAtamaBaslangicBitisTarihiKontrol()
+                .cmbBirimAmiriAtamaBagTipiSec("Amir")
+                .cmbBirimAmiriAtamaGizlilikDerecesiSec("Çok Gizli")
+                .birimAmiriAtamaKaydet()
+                .kaydet();
+
+        kullaniciYonetimiPage
+                .openPage()
+                .TCKimlikNoDoldur("20987987455")
+                .ara()
+                .kullaniciListesiGuncelle()
+                .rolListeriEkle()
+                .yeniRolIliskilendirmeKullaniciBirimDoldur(birimAdi)
+                .yeniRolIliskilendirmeKullaniciRolSec("ENTERPRİSE")
+                .yeniRolIliskilendirmeKaydet();
+                logout();
+
+     /*   evrakOlusturPage
+        .evrakOlusturSayfaKapat()
+        .islemPenceresiKapatmaOnayiPopup("Kapat");*/
+
+
+     login("alkanseker","123");
+                birimYonetimiPage
+                .openPage()
+                .birimYonetimiFiltrelemeAlanKontrolleri()
+                .birimFiltreDoldur(birimAdi)
+                .ara()
+                .birimTuruSec("İç Birim")
+                .durumSec("Sadece Aktifler")
+                .ara()
+                .birimPasifYap(birimAdi)
+                .popupIslemOnayiAciklamaDoldur("Ts için yazılmıştır")
+                .popupIslemOnayiEvet();
+
+      Thread.sleep(500);
+
+        birimYonetimiPage
+                .popupIslemOnayiHayir()
+                .birimdekikullanıcılarbutonunatıkla()
+                ;
+
+        kullaniciYonetimiPage
+                .kullaniciListesiGuncelle2()
+                .gorevliOlduguBirimSil(birimAdi)
+                .rolSil(birimAdi)
+                .kaydet()
+        ;
+        birimYonetimiPage
+                .openPage()
+                .birimPasifYap(birimAdi)
+                .aciklamaDoldur("TS1116 işlemleri ")
+                .popupIslemOnayiEvet();
+
+
+    }
+
+
 }

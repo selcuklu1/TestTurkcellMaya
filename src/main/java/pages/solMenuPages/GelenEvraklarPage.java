@@ -39,6 +39,9 @@ public class GelenEvraklarPage extends MainPage {
 
     //Havale Yap Alt Yapı
     SelenideElement btnHavaleYap = $("[id='mainPreviewForm:onizlemeRightTab:onizlemeRightTab'] td:nth-child(5) button");
+    SelenideElement btnbirimtumuyap = $("[id='mainPreviewForm:birimLovContainer'] div[id^='mainPreviewForm'] [class$='ui-icon-close']");
+    SelenideElement btnbirimtumuyap2 = $("[id='inboxItemInfoForm:birimLovContainer'] div[id^='inboxItemInfoForm'] [class$='ui-icon ui-icon-close']");
+
     SelenideElement treeHavaleYapBirim = $(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovTexts"));
     BelgenetElement txtComboLovKisi = comboLov(By.id("mainPreviewForm:dagitimBilgileriKullaniciLov:LovText"));
     BelgenetElement txtComboLovBirim = comboLov(By.id("mainPreviewForm:dagitimBilgileriBirimLov:LovText"));
@@ -739,6 +742,34 @@ public class GelenEvraklarPage extends MainPage {
         btnHavaleYap.click();
         return this;
     }
+
+    @Step("Havale Yap tıklanır")
+    public GelenEvraklarPage evrakicerikgosterhavalebirimiyap() {
+        btnHavaleYap2.click();
+        return this;
+    }
+
+
+    @Step("Havale Yap tıklanır")
+    public GelenEvraklarPage havaleEtTumuGelmedigiKontrol() {
+        Assert.assertEquals($("[id='mainPreviewForm:birimLovContainer'] div[id^='mainPreviewForm'] [class$='ui-icon-close']").isDisplayed(),true);
+        return this;
+    }
+
+
+
+    @Step("Evrak İçerik Göster Havale Birimini Kontrol Etme")
+    public GelenEvraklarPage evrakicerikgosterhavalebirimikontrol() {
+        Assert.assertEquals($("[id='inboxItemInfoForm:birimLovContainer'] div[id^='inboxItemInfoForm'] [class$='ui-icon ui-icon-close']").isDisplayed(),true);
+        return this;
+    }
+
+    @Step("Tümü butonunu işaretle")
+    public GelenEvraklarPage evrakOnizlemeHavaleYapBirimAlaniButonTikla() {
+        btnbirimtumuyap.click();
+        return this;
+    }
+
 
     @Step("Havale bilgilerinin girileceği alanların geldiği görülür.")
     public GelenEvraklarPage havaleBilgilerininGirilecegiAlanlarınGeldigiGorme() {

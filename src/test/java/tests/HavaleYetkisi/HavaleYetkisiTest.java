@@ -342,19 +342,10 @@ public class HavaleYetkisiTest extends BaseTest {
     @Test(enabled = true, description = "TS0615 : Tüm birimlere havale yetkisi olmayan kullanıcının ekran kontrolü")
     public void TS0615() throws InterruptedException{
 
-        String konuKodu = "TS0615"+createRandomNumber(15);
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
-
-        gelenEvrakKayitPage
-                .gelenEvrakKayitKullaniciHavaleEt(konuKodu,"Büyük Harflerle Kurum","Zübeyde Tekin");
-
-        gelenEvraklarPage
-                .openPage()
-                .evrakNoyaGoreEvrakSec(konuKodu)
-                .havaleYap()
-                .evrakOnizlemeHavaleYapKisiAlaniButonKontrolu(btnBirim, false)
 
         ;
+
+
 
     }
 

@@ -205,6 +205,14 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Seçilen kullanıcıyı güncelle")
+    public KullaniciYonetimiPage kullaniciListesiGuncelle2() {
+        $(By.id("kullaniciYonetimiListingForm:kullaniciDataTable:0:updateKullaniciButton")).click();
+        return this;
+    }
+
+
+
     @Step("\"{kullanici}\" adlı seçilen kullanıcıdaki güncelle tıklanır")
     public KullaniciYonetimiPage kullaniciListesiGuncelle(String kullanici) {
         kullanici = $$("[id='kullaniciYonetimiListingForm:kullaniciDataTable_data'] tr[data-ri='0'] div").get(1).getText();
