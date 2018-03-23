@@ -115,6 +115,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement chkDisBirimDolu = $("[id='birimYonetimiEditorForm:disBirimCheckbox'] [class$='ui-state-disabled']");
     SelenideElement filtreSorgulamaPanel = $("[id='birimYonetimiFilterForm'] [id='birimYonetimiFilterForm:accordionPanel']");
     SelenideElement popupIslemOnaySorusu = $("[id='baseConfirmationDialog:form'] [class='content']");
+
+
     SelenideElement txtPopupIslemOnayAciklama = $(By.id("baseConfirmationDialog:explanationInput"));
     SelenideElement txtPopupIslemOnayiEvet = $(By.id("baseConfirmationDialog:confirmButton"));
     SelenideElement txtPopupIslemOnayiHayir = $(By.id("baseConfirmationDialog:baseConfirmationDialogCancelButton"));
@@ -921,14 +923,15 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("İşlem Onayı - Hayır")
-    public BirimYonetimiPage popupIslemOnayiHayir() {
-        txtPopupIslemOnayiHayir.click();
-        return this;
-    }
     @Step("Birimdeki Kullanıcılar butonuna Tıkla")
     public BirimYonetimiPage birimdekikullanıcılarbutonunatıkla() {
         btnbirimdekikullanicilar.click();
+        return this;
+    }
+
+    @Step("İşlem Onayı - Hayır")
+    public BirimYonetimiPage popupIslemOnayiHayir() {
+        txtPopupIslemOnayiHayir.click();
         return this;
     }
     @Step("Birim Amiri ekle")
