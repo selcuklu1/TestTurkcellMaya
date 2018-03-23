@@ -460,6 +460,8 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public TopluPostaladiklarimPage gidisSekliSec(String gidisSekli) {
+        SelenideElement element = $(By.id("mainPreviewForm:postaListesiPostaTipi_input"));
+        element.selectOption(gidisSekli);
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
