@@ -18,12 +18,12 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
-/****************************************************
+/******************
  * Tarih: 2018-02-15
  * Proje: Türksat Functional Test Automation
  * Class: "Birim Yönetimi" konulu senaryoları içerir
- * Yazan: Sezai Çelik 
- ****************************************************/
+ * Yazan: Sezai Çelik
+ ******************/
 
 @Feature("Birim Yönetimi")
 public class BirimYonetimiTest extends BaseTest {

@@ -46,7 +46,7 @@ public class TopluPostaladiklarimPage extends MainPage {
     BelgenetElement cmbGonderildigiYer = comboBox(By.id("mainPreviewForm:tpbeGidecegiYerSelectOneMenuId_label"));
     BelgenetElement cmbGonderildigiYer2 = comboBox(By.id("mainPreviewForm:postaListesiYurticiYurtdisi_label"));
     SelenideElement txtAdres = $(By.id("mainPreviewForm:gidecegiAdresId"));
-    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi"));
+    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
     SelenideElement txtIndirimOrani = $x("//label[normalize-space(text())='İndirim Oranı :']/../following-sibling::td//input");
     SelenideElement txtGramaj = $(By.xpath("//*[@id='mainPreviewForm:eastLayout']//label[normalize-space(text())='Gramaj :']/../..//input"));
     SelenideElement btnHesapla = $x("//span[. = 'Tutar Hesapla']/..");
@@ -460,6 +460,12 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public TopluPostaladiklarimPage gidisSekliSec(String gidisSekli) {
+        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
+        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
+
+        sleep(2000);
+        element.click();
+        panel.$$("li").filterBy(text(gidisSekli)).first().click();
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
@@ -472,7 +478,8 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("İndirim oranı girilir")
     public TopluPostaladiklarimPage indirimOraniDoldur(String indirimOrani) {
-        txtIndirimOrani.setValue(indirimOrani);
+//        txtIndirimOrani.setValue(indirimOrani);
+        setValueJS(txtIndirimOrani,indirimOrani);
         return this;
     }
 

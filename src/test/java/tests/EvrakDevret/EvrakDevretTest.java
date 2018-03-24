@@ -41,7 +41,7 @@ public class EvrakDevretTest extends BaseTest {
 
 
     //    String konu = "TS2178 20180205135705";
-    String konu = "Evrak Devret " + getSysDate();
+    String konu = "Evrak Devret ";
     String tur = "IMZALAMA";
     String icerik = "Test Otomasyon " + getSysDate();
     String konuKodu = "010.01";
@@ -79,9 +79,9 @@ public class EvrakDevretTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178a() throws InterruptedException {
-
+        String yeniKonu=konu +getSysDate();
         login(mbozdemir);
-        imzaBekleyenEvrakOlustur();
+        imzaBekleyenEvrakOlustur(yeniKonu);
         logout();
         login(username21g);
 
@@ -89,7 +89,7 @@ public class EvrakDevretTest extends BaseTest {
         String aciklamaSil = "Silme işlemi";
 //        String konu ="Evrak Devret 20180301150342";
 
-        System.out.println(konu);
+        System.out.println(yeniKonu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
@@ -100,7 +100,7 @@ public class EvrakDevretTest extends BaseTest {
 
         kullaniciEvrakDevretPage
                 .tabloAlanKontrolleri()
-                .tabloEvrakSecimi(tabName, konu)
+                .tabloEvrakSecimi(tabName, yeniKonu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
@@ -111,20 +111,20 @@ public class EvrakDevretTest extends BaseTest {
 
 //                .islemMesaji().basariliOlmali(basariMesaji);
         kullaniciEvrakDevretPage
-                .tabloEvrakKontrolu(konu, false);
+                .tabloEvrakKontrolu(yeniKonu, false);
 
         login(username22n);
 
         taslakEvraklarPage
                 .openPage()
-                .evrakKontrolu(konu, true)
-                .evrakSecKonuyaGore(konu)
+                .evrakKontrolu(yeniKonu, true)
+                .evrakSecKonuyaGore(yeniKonu)
                 .evrakOnizlemeveEkiKontrolu(icerik)
                 .evrakOnizlemeButonTikla(btnSilName)
                 .silAciklamaInputDolduur(aciklamaSil)
                 .silSilGonder()
                 .silmeOnayıPopUpEvet()
-                .evrakKontrolu(konu, false);
+                .evrakKontrolu(yeniKonu, false);
 
         //gelen kutusu kontrolü ?
     }
@@ -136,14 +136,14 @@ public class EvrakDevretTest extends BaseTest {
     public void TS2179() throws InterruptedException {
 
         remoteDownloadPath = useChromeWindows151("TS2179");
-
+String yeniKonu = konu + getSysDate();
         login(mbozdemir);
 
         System.out.println(remoteDownloadPath);
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
                 + " tarafından Gelen Evraklar menüsünden devredilmiştir. / " + icerik;
 
-        gelenEvrak();
+        gelenEvrak(yeniKonu);
 
         evrakDevret("Gelen Evraklar");
 
@@ -152,7 +152,7 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .konuyaGoreEvrakIcerikGoster(konu);
+                .konuyaGoreEvrakIcerikGoster(yeniKonu);
 
         evrakDetayiPage
                 .sayfaAcilmali()
@@ -164,7 +164,7 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .konuyaGoreEvrakOnizlemedeAc(konu)
+                .konuyaGoreEvrakOnizlemedeAc(yeniKonu)
                 .evrakGecmisiTikla()
                 .tabloKontol(mesaj)
                 .raporAl(remoteDownloadPath);
@@ -174,7 +174,7 @@ public class EvrakDevretTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0517 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
     public void TS0517() throws InterruptedException {
-
+        String yeniKonu=konu +getSysDate();
         login(mbozdemir);
 
         String aciklama = "Onay akışı güncelledi.";
@@ -185,7 +185,7 @@ public class EvrakDevretTest extends BaseTest {
 
         System.out.println(remoteDownloadPath);
 
-        imzaBekleyenEvrakOlustur();
+        imzaBekleyenEvrakOlustur(yeniKonu);
 
         evrakDevret("İmza Bekleyen Evraklar");
 
@@ -193,7 +193,7 @@ public class EvrakDevretTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .konuyaGoreEvrakIcerikGoster(konu);
+                .konuyaGoreEvrakIcerikGoster(yeniKonu);
 
         evrakDetayiPage
                 .sayfaAcilmali()
@@ -218,22 +218,23 @@ public class EvrakDevretTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2178b : Havale Onayına Gelen evrakın devredilmesi")
     public void TS2178b() throws InterruptedException {
+        String yeniKonu=konu +getSysDate();
 
         login(mbozdemir);
-        havaleOnayı();
+        havaleOnayı(yeniKonu);
         logout();
         login(username21g);
 
         String tabName = "Havale Onayına Gelen Evraklar";
 
-        System.out.println(konu);
+        System.out.println(yeniKonu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
                 .devredecekKisiSec(devredecekKisi)
                 .listele()
                 .tabloAlanKontrolleri()
-                .tabloEvrakSecimi(tabName, konu)
+                .tabloEvrakSecimi(tabName, yeniKonu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
@@ -246,29 +247,31 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .searchTable().findRows(Condition.text(konu)).shouldHaveSize(1);
-//                .tabloKonuyaGoreEvrakKontrol(konu, true);
+//                .searchTable().findRows(Condition.text(konu)).shouldHaveSize(1);
+                .tabloKonuyaGoreEvrakKontrol(yeniKonu, true);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0516 : İlgisi olan gelen evrakın devredilmesi.")
     public void TS0516() throws InterruptedException {
 
+        String yeniKonu=konu +getSysDate();
+
         login(mbozdemir);
-        gelenEvrak();
+        gelenEvrak(yeniKonu);
         logout();
         login(username21g);
 
         String tabName = "Gelen Evraklar";
 
-        System.out.println(konu);
+        System.out.println(yeniKonu);
         kullaniciEvrakDevretPage
                 .openPage()
                 .ekranTabKontrolleri()
                 .devredecekKisiSec(devredecekKisi)
                 .listele()
                 .tabloAlanKontrolleri()
-                .tabloEvrakSecimi(tabName, konu)
+                .tabloEvrakSecimi(tabName, yeniKonu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
@@ -281,16 +284,16 @@ public class EvrakDevretTest extends BaseTest {
 
         gelenEvraklarPage
                 .openPage()
-                .tabloKonuyaGoreEvrakKontrol(konu, true);
+                .tabloKonuyaGoreEvrakKontrol(yeniKonu, true);
 
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
     public void TS2183() throws InterruptedException {
-
+        String yeniKonu = konu + getSysDate();
         login(mbozdemir);
-        gelenEvrak();
+        gelenEvrak(yeniKonu);
         logout();
         login(username21g);
 
@@ -309,7 +312,7 @@ public class EvrakDevretTest extends BaseTest {
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
         kullaniciEvrakDevretPage
-                .tabloEvrakSecimi(tabName, konu)
+                .tabloEvrakSecimi(tabName, yeniKonu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .aciklamaDoldur(icerik)
@@ -329,14 +332,13 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Step("Test datası oluşturuldu.")
-    private void gelenEvrak() throws InterruptedException {
+    private void gelenEvrak(String konu) throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
         String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String pathToFileText = getUploadPath() + "test.txt";
-
 
         gelenEvrakKayitPage
                 .openPage()
@@ -355,7 +357,7 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Step("Test datası oluşturuldu.")
-    private void havaleOnayı() {
+    private void havaleOnayı(String konu) {
 //        String konuKoduRandomTS2178b = "TC2178" + createRandomNumber(15);
 
         String basariMesaji = "İşlem başarılıdır!";
@@ -411,7 +413,7 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Step("Test datası oluşturuldu.")
-    private void imzaBekleyenEvrakOlustur() {
+    private void imzaBekleyenEvrakOlustur(String konu) {
         String imzacı = "username21g";
         evrakOlusturPage
                 .openPage()

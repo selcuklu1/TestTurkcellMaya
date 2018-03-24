@@ -1,6 +1,7 @@
 package tests.SuresizEvrakKapatma;
 
 import common.BaseTest;
+import data.TestData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.solMenuPages.*;
@@ -383,11 +384,11 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
         String sureliKapatma = "Süreli Kapatma";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login("ztekin", "123");
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom, "BÜYÜK HARFLERLE KURUM", kullanici);
-        login("ztekin", "123");
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
         gelenEvrakKayitPage
                 .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom2, "BÜYÜK HARFLERLE KURUM", kullanici);
 
@@ -414,8 +415,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .kapatKontrol()
                 .evrakKapat()
                 .evrakKapatmaEkranGeldigiGorme()
-                .kapatmaTipiTikla()
                 .evrakKapatKonuKodu(konuKodu)
+                .evrakKapatKisiselKlasorlerimKaldir()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
                 .evrakKapatNotDoldur(randomSayi)
                 .onayAkisiDoldur(" Zübeyde Tekin")
@@ -431,7 +432,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatOnayAkisiKullaniciTipiSec(kullanicihkandur,"Kapatma İmzası")
                 .evrakKapatOnayAkisiKullan()
                 .evrakKapatKapatmaOnayinaSun()
-                .islemMesaji().isBasarili();
+                .islemMesaji().basariliOlmali(basariMesaji);
 
     }
 
