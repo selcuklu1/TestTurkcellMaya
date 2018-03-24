@@ -460,12 +460,12 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public TopluPostaladiklarimPage gidisSekliSec(String gidisSekli) {
-        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
-        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
-
-        sleep(2000);
-        element.click();
-        panel.$$("li").filterBy(text(gidisSekli)).first().click();
+//        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
+//        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
+//
+//        sleep(2000);
+//        element.click();
+//        panel.$$("li").filterBy(text(gidisSekli)).first().click();
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
