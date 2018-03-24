@@ -1648,6 +1648,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
+    @Step("Havale İşlemleri Birim alanında \"{birim}\" seç")
+    public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String kullaniciAdi, String birim ) {
+        txtHavaleIslemleriBirim.selectLov(kullaniciAdi, birim);
+        return this;
+    }
+
     public GelenEvrakKayitPage havaleIslemleriBirimStatusKontrol(String kisi, boolean status) {
         boolean durum = txtHavaleIslemleriBirim.isLovValueSelectable(kisi);
         Assert.assertEquals(durum, status, "Birim Kontrolü:" + kisi);
