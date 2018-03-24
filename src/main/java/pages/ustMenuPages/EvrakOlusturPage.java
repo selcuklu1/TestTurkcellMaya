@@ -1263,6 +1263,13 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Gereği {description} doldur: | {geregi}")
+        public BilgilerTab geregiDoldurWithTitle(String geregi, String detail, String description) {
+            cmbGeregi.type(geregi).getTitleItems().filterBy(text(detail)).first().click();
+            cmbGeregi.closeTreePanel();
+            return this;
+        }
+
         @Step("Gereği kontrol: | {geregi}")
         public BilgilerTab geregiKontrol(String geregi) {
             Assert.assertEquals(cmbGeregiKontrol.getText().contains(geregi), true, "Gereği kontrol:" + geregi);
