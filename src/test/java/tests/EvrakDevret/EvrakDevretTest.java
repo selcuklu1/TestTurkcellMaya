@@ -3,6 +3,7 @@ package tests.EvrakDevret;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -38,6 +39,8 @@ public class EvrakDevretTest extends BaseTest {
     User mbozdemir = new User("mbozdemir", "123");
     User username22n = new User("username22n", "123");
     User username21g = new User("username21g", "123");
+    User username30 = new User("un30", "123");
+    User username20n = new User("username20n", "123");
 
 
     //    String konu = "TS2178 20180205135705";
@@ -51,15 +54,15 @@ public class EvrakDevretTest extends BaseTest {
     String gizlilikDerecesi = "Normal";
     String ivedilik = "Normal";
     String geregi = "Optiim Birim";
-    String kullaniciNormal = "USERNAME22N TEST";
+    String kullaniciNormal = "USERNAME20N TEST";
     String basariMesaji = "İşlem başarılıdır!";
     String uyariMesaji = "Zorunlu alanları doldurunuz";
     String dikkatMesaji = "Evrak seçilmemiştir!";
     String tabName = "İmza Bekleyen Evraklar";
-    String nameDA = "Username22n TEST";
-    String nameDE = "Username21g TEST";
+    String nameDA = "Username20n TEST";
+    String nameDE = "Username30 TEST";
     String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-    String devredecekKisi = "username21g";
+    String devredecekKisi = "username30";
     String remoteDownloadPath;
 
 
@@ -80,10 +83,10 @@ public class EvrakDevretTest extends BaseTest {
     @Test(enabled = true, description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178a() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
         imzaBekleyenEvrakOlustur(yeniKonu);
         logout();
-        login(username21g);
+        login(username30);
 
         String btnSilName = "Sil";
         String aciklamaSil = "Silme işlemi";
@@ -113,7 +116,7 @@ public class EvrakDevretTest extends BaseTest {
         kullaniciEvrakDevretPage
                 .tabloEvrakKontrolu(yeniKonu, false);
 
-        login(username22n);
+        login(username20n);
 
         taslakEvraklarPage
                 .openPage()
@@ -137,7 +140,7 @@ public class EvrakDevretTest extends BaseTest {
 
         remoteDownloadPath = useChromeWindows151("TS2179");
 String yeniKonu = konu + getSysDate();
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
 
         System.out.println(remoteDownloadPath);
         String mesaj = nameDE + kullaniciTitle + " ait evrak " + nameDA + kullaniciTitle + " adlı kişiye " + nameDE + kullaniciTitle
@@ -148,7 +151,7 @@ String yeniKonu = konu + getSysDate();
         evrakDevret("Gelen Evraklar");
 
 
-        login(username22n);
+        login(username20n);
 
         gelenEvraklarPage
                 .openPage()
@@ -175,11 +178,11 @@ String yeniKonu = konu + getSysDate();
     @Test(enabled = true, description = "TS0517 : Devredilen evrakların devredilen kullanıcıda kontrol edilmesi")
     public void TS0517() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
 
         String aciklama = "Onay akışı güncelledi.";
         String btnName = "Kaydet ve Onaya Sun";
-        String onayAkisi = "TC0574";
+        String onayAkisi = "TS0517";
         String icerikGuncelle = "İçerik değiştirildi.";
         String tabEditörName = "Editör";
 
@@ -189,7 +192,7 @@ String yeniKonu = konu + getSysDate();
 
         evrakDevret("İmza Bekleyen Evraklar");
 
-        login(username22n);
+        login(username20n);
 
         taslakEvraklarPage
                 .openPage()
@@ -220,10 +223,11 @@ String yeniKonu = konu + getSysDate();
     public void TS2178b() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
 
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
+
         havaleOnayı(yeniKonu);
         logout();
-        login(username21g);
+        login(username30);
 
         String tabName = "Havale Onayına Gelen Evraklar";
 
@@ -243,7 +247,7 @@ String yeniKonu = konu + getSysDate();
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-        login(username22n);
+        login(username20n);
 
         gelenEvraklarPage
                 .openPage()
@@ -257,11 +261,12 @@ String yeniKonu = konu + getSysDate();
 
         String yeniKonu=konu +getSysDate();
 
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
         gelenEvrak(yeniKonu);
-        logout();
-        login(username21g);
+//        logout();
+//        login(username21g);
 
+        login(username30);
         String tabName = "Gelen Evraklar";
 
         System.out.println(yeniKonu);
@@ -269,18 +274,22 @@ String yeniKonu = konu + getSysDate();
                 .openPage()
                 .ekranTabKontrolleri()
                 .devredecekKisiSec(devredecekKisi)
+//                .devredecekKisiSec("username30")
+
                 .listele()
                 .tabloAlanKontrolleri()
                 .tabloEvrakSecimi(tabName, yeniKonu)
                 .devret()
                 .devralacakKisiAlanKontolu()
                 .devralacakKisiSec(kullaniciNormal)
+//                .devralacakKisiSec("username20n")
+
                 .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
-        login(username22n);
+        login(username20n);
 
         gelenEvraklarPage
                 .openPage()
@@ -292,10 +301,11 @@ String yeniKonu = konu + getSysDate();
     @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
     public void TS2183() throws InterruptedException {
         String yeniKonu = konu + getSysDate();
-        login(mbozdemir);
+        login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
+
         gelenEvrak(yeniKonu);
         logout();
-        login(username21g);
+        login(username30);
 
         String tabName = "Gelen Evraklar";
 
@@ -347,7 +357,8 @@ String yeniKonu = konu + getSysDate();
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriKisiDoldur("Username21g")
+//                .havaleIslemleriKisiDoldur("Username21g")
+                .havaleIslemleriKisiDoldur("Username30")
                 .ilgiliBilgiFiltreAc()
                 .ilgiBilgileriDosyaEkleme(pathToFileText)
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)
@@ -365,7 +376,7 @@ String yeniKonu = konu + getSysDate();
         String evrakSayiSag = createRandomNumber(10);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
+        String kullaniciAdi = "OPTİİM";
 
         gelenEvrakKayitPage
                 .openPage()
@@ -374,7 +385,7 @@ String yeniKonu = konu + getSysDate();
                 .evrakTarihiDoldur(evrakTarihi)
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(kullaniciAdi)
+                .havaleIslemleriBirimDoldur(kullaniciAdi,"YGD")
                 .kaydet()
                 .evetDugmesi()
                 .yeniKayitButton();
@@ -387,7 +398,7 @@ String yeniKonu = konu + getSysDate();
                 .openPage()
                 .evrakSec(konu)
                 .teslimAlVeHavaleEt()
-                .onaylanacakKisiDoldur("Username21g Test", "YGD")
+                .onaylanacakKisiDoldur("Username30 Test", "Optiim")
                 .havaleOnayinaGonder();
     }
 
@@ -395,7 +406,7 @@ String yeniKonu = konu + getSysDate();
     private void evrakDevret(String tabName) {
 
 //        imzaBekleyenEvrakOlustur();
-        login(username21g);
+        login(username30);
 
 
         kullaniciEvrakDevretPage
@@ -414,13 +425,13 @@ String yeniKonu = konu + getSysDate();
 
     @Step("Test datası oluşturuldu.")
     private void imzaBekleyenEvrakOlustur(String konu) {
-        String imzacı = "username21g";
+        String imzacı = "username30";
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
                 .konuDoldur(konu)
-                .kaldiralacakKlasorlerSec("gündem") //kaldırılacakKlasör
+                .kaldiralacakKlasorlerSec("Diğer") //kaldırılacakKlasör
                 .evrakTuruSec(evrakTuru)
                 .evrakDiliSec(evrakDili)
                 .gizlilikDerecesiSec(gizlilikDerecesi)

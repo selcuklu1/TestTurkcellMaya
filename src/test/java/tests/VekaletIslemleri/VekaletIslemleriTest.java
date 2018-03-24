@@ -733,7 +733,7 @@ public class VekaletIslemleriTest extends BaseTest {
 //                .onayVerecekAlanKontrolu(true)  //Onay verecek kişi alanı pasif kalıyor
 //                .vekaletVerenSil()
                 .vekaletAlanKontrolu("UsernemaVV TEST", false)  //Güncel birim TS2200 Alt Birim Personel Usernamevv üst birim Amir Yardımcısı
-                .vekaletAlanKontrolu("Username30 TEST", true)//Güncel birim TS2200 Alt Birim Personel Username29 TS2200 2. Alt Birim Amir
+                .vekaletAlanKontrolu("Username35 TEST", true)//Güncel birim TS2200 Alt Birim Personel Username29 TS2200 2. Alt Birim Amir
                 .vekaletAlanDoldur("Username27 TEST")//Güncel birim TS2200 Alt Birim Personel
                 .onayVerecekDoldur(onayVerecekKullanici)
                 .baslangicTarihDoldur(baslangicTarihi)
