@@ -458,10 +458,20 @@ public class TopluPostaladiklarimPage extends MainPage {
         return this;
     }
 
+    public TopluPostaladiklarimPage adresDoldur() {
+       txtAdres.click();
+        return this;
+    }
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public TopluPostaladiklarimPage gidisSekliSec(String gidisSekli) {
-        SelenideElement element = $(By.id("mainPreviewForm:postaListesiPostaTipi_input"));
-        element.selectOption(gidisSekli);
+//        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']");
+//        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
+//
+//
+//        element.click();
+//        sleep(2000);
+//        panel.$$("li").filterBy(text(gidisSekli)).first().click();
+
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
     }
@@ -474,7 +484,8 @@ public class TopluPostaladiklarimPage extends MainPage {
 
     @Step("İndirim oranı girilir")
     public TopluPostaladiklarimPage indirimOraniDoldur(String indirimOrani) {
-        txtIndirimOrani.setValue(indirimOrani);
+//        txtIndirimOrani.setValue(indirimOrani);
+        setValueJS(txtIndirimOrani,indirimOrani);
         return this;
     }
 
@@ -638,8 +649,9 @@ public class TopluPostaladiklarimPage extends MainPage {
             SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
             SelenideElement altAntetWebSitesiAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Web: www.turksat.com.tr']"));
 
-            String evraNoPDF = evrakNoAlaniPDF.getText();
+//            String evraNoPDF = evrakNoAlaniPDF.getText();
 
+            sleep(2000);
             System.out.println("Beklenen Sayı : " + evrakNo);
             System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
             System.out.println("Beklenen Konu : " + konu);
@@ -653,6 +665,7 @@ public class TopluPostaladiklarimPage extends MainPage {
             System.out.println("Beklenen Alt Antet Web Sitesi : " + "Web: www.turksat.com.tr");
             System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
 
+            sleep(3000);
             Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
             Assert.assertEquals(konuAlaniPDF.getText(), konu);
             Assert.assertEquals(icerikAlaniPDF.getText(), icerik);

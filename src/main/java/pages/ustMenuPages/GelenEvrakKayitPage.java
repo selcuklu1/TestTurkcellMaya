@@ -1372,7 +1372,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kaydet butonu")
     public GelenEvrakKayitPage kaydet() {
-        btnKaydet.pressEnter();
+//        btnKaydet.pressEnter();
+        clickJs(btnKaydet);
         return this;
     }
 
