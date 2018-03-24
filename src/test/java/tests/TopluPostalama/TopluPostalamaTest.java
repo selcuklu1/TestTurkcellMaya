@@ -2046,7 +2046,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gonderildigiKurumKontrolu(geregi, true)
                 .postaDetayiGonderildigiYer(geregiTipi)
                 .adresDoldur(adres)
-                .gidisSekliSec("İadeli Taahhütlü")
+                .gidisSekliSec2("İadeli Taahhütlü")
                 .gonderildigiYerSec("Yurt İçi")
                 .gramajDoldur("deneme")
                 .gramajDoldur(gramaj1)
@@ -2236,7 +2236,7 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1816 20180322211733", "TC1816 20180322211733"
+//                "TC1816 20180324121920", "TC1816 20180324121920"
 //        };
 //
 //        String[] evrakNo1816 = new String[]{
@@ -2280,12 +2280,18 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakListesiOrjinaliYazdir(konu)
                 .tutarGuncelle("65.00")
                 .guncelle()
+                .islemMesaji().basariliOlmali();
+
+        topluPostaladiklarimPage
                 .topluPostaladiklarimEvrakSec(postaListesi)
                 .postaListesiAdiDegistirme(konu[1])
                 .postaListesiBarkodNoDoldur(createRandomNumber(5))
                 .gonderildigiYerSec("Kurum")
                 .adresDoldur(adres)
                 .gidisSekliSec("Kurye")
+                .adresDoldur();
+
+        topluPostaladiklarimPage
                 .gidisSekliSec("Ankara İçi APS")
                 .gonderildigiYerSec2("Yurt İçi")
                 .tutarHesapla()
