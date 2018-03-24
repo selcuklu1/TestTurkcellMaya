@@ -2840,6 +2840,18 @@ public class EvrakOlusturPage extends MainPage {
             Allure.addAttachment("Editor Konu Kontrol", konu);
             return this;
         }
+
+        SelenideElement txtAntetGuncel = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir2']");
+        SelenideElement txtAntetUstBirim = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir1']");
+        SelenideElement txtAntetEnUstBirim = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
+        @Step("Editorde konu kontrolu: {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+        public EditorTab editorAntetKontrol(String antetGuncel,String antetUstBirim, String enUstBirim) {
+//            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+//            Allure.addAttachment("Editor Konu Kontrol", konu);
+            return this;
+        }
     }
 
     public class EkleriTab extends MainPage {

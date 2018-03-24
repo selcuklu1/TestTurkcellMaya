@@ -25,7 +25,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class BirimYonetimiPage extends MainPage {
 
     SelenideElement btnAra = $(By.id("birimYonetimiFilterForm:accordionPanel:searchEntitiesButton"));
-    SelenideElement btnDuzenle = $(By.cssSelector("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
+//    SelenideElement btnDuzenle = $(By.cssSelector("birimYonetimiListingForm:birimTreeTable:0:updateBirimButton"));
     ElementsCollection paylastiklarimList = $$("[id='birimYonetimiListingForm:birimTreeTable'] > button[role='row']");
     SelenideElement cmbBirimTuru = $(By.id("birimYonetimiFilterForm:accordionPanel:birimTuruSelectBox"));
     SelenideElement btnBirimTurumDropDownButton = $("span[id='birimYonetimiEditorForm:birimTipiAutoComplete'] > button");
@@ -420,11 +420,11 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Düzenle")
-    public BirimYonetimiPage duzenle() {
-        btnDuzenle.click();
-        return this;
-    }
+//    @Step("Düzenle")
+//    public BirimYonetimiPage duzenle() {
+//        btnDuzenle.click();
+//        return this;
+//    }
 
     @Step("Ara")
     public BirimYonetimiPage ara() {
