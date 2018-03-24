@@ -54,7 +54,7 @@ class ComboBoxHelper extends BaseLibrary {
         /*if ($(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]")).exists() && !js) {
             clickJs($(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]")).toWebElement());
         }*/
-        
+
         if ($$(liLocator).filterBy(text(text)).size() > 0 && !js){
             clickJs($$(liLocator).filterBy(text(text)).first().toWebElement());
         }
