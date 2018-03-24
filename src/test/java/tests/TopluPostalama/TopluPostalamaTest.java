@@ -2235,9 +2235,9 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = getDownloadPath();
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
-        String[] konu = new String[]{
-                "TC1816 20180322211733", "TC1816 20180322211733"
-        };
+//        String[] konu = new String[]{
+//                "TC1816 20180322211733", "TC1816 20180322211733"
+//        };
 //
 //        String[] evrakNo1816 = new String[]{
 //                "11872", "11873"
@@ -2247,9 +2247,9 @@ public class TopluPostalamaTest extends BaseTest {
 //                "TC1816 2018013113350920180131133553", "TC1816 147286950310120180131133707"
 //        };
 
-//        String[] konu = new String[]{
-//                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
-//        };
+        String[] konu = new String[]{
+                "TC1816 " + getSysDate(), "TC1816 " + createRandomNumber(12)
+        };
 
 
         //region Parameters
@@ -2267,10 +2267,10 @@ public class TopluPostalamaTest extends BaseTest {
         };
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
-//
-//
-//        topluPostalanacakEvraklar(konu, geregi, geregiTipi);
-//        postaListesiPostala(konu);
+
+
+        topluPostalanacakEvraklar(konu, geregi, geregiTipi);
+        postaListesiPostala(konu);
 
         topluPostaladiklarimPage
                 .openPage()
