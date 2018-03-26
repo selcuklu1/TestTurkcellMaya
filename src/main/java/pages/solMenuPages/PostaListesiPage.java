@@ -681,7 +681,7 @@ searchTable().findRowAndSelect(text(konu));
 //            pdfName = pdfIndir();
             switchTo().window(1);
             String pdfPath = remoteDownloadPath + pdfName;
-            sleep(3000);
+            sleep(5000);
             pdfKontrol
                     .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
 //                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
@@ -714,7 +714,7 @@ searchTable().findRowAndSelect(text(konu));
             evrakDetayiPopUpKontrolü();
             evrakDetayiOrjinaliYazdır(konu[i]);
             switchTo().window(1);
-            sleep(3000);
+            sleep(5000);
             pdfKontrol
                     .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
 //                    .PDFAlanKontrolleri(pdfPath, konu[i], evrakNo[i], icerik[i]);
@@ -744,7 +744,7 @@ searchTable().findRowAndSelect(text(konu));
 //            String evraNoPDF = evrakNoAlaniPDF.getText();
 //            String evraNoPDF = evrakNoAlaniPDF.getText();
 
-            sleep(2000);
+            sleep(5000);
 
             System.out.println("Beklenen Sayı : " + evrakNo);
             System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
@@ -759,7 +759,7 @@ searchTable().findRowAndSelect(text(konu));
             System.out.println("Beklenen Alt Antet Web Sitesi : " + "Web: www.turksat.com.tr");
             System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
 
-            sleep(3000);
+            sleep(4000);
             Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
             Assert.assertEquals(konuAlaniPDF.getText(), konu);
             Assert.assertEquals(icerikAlaniPDF.getText(), icerik);
