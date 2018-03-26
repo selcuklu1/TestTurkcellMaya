@@ -432,6 +432,13 @@ public class EvrakHavaleKurallariYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("{kurallar} kuralların listelendiği görülür.")
+    public EvrakHavaleKurallariYonetimiPage kurallarListelendigiGorme(String kurallar){
+    Assert.assertEquals($$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] tr").size()>0,true);
+    takeScreenshot();
+    return this;
+    }
+
     @Step("Kayıtlı bütün kuralların listelendiği görülür.")
     public EvrakHavaleKurallariYonetimiPage havaleKurallariListesiGorme() {
         boolean durum = $$("[id='havaleKuralYonetimiListingForm:havaleKuralDataTable_data'] >tr").size() > 0;

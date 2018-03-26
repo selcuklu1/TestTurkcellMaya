@@ -78,8 +78,8 @@ public class GundemIzlemePage extends MainPage {
 
     @Step("Yayımla")
     public GundemIzlemePage yayimla() {
-        islemButonlar.get(2).click();
-        clickJs(btnYayimlaEvet);
+        clickJs($("[class='ui-button-icon-left ui-icon yayimla_ok']"));
+        btnYayimlaEvet.pressEnter();
         return this;
     }
 

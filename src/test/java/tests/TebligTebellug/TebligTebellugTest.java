@@ -16,7 +16,7 @@ import static data.TestData.userMbozdemir;
 
 public class TebligTebellugTest extends BaseTest {
 
-    @Test(enabled = true, description = "TS0845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.")
+    @Test(enabled = true, description = "TS0845 : Gelen Evrakın kullanıcı listesine detay ekrandan tebliğ edilmesi.", priority = 1)
     public void TS0845() {
 
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
@@ -105,7 +105,7 @@ public class TebligTebellugTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS0845 : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi")
+    @Test(enabled = true, description = "TS0845 : Gelen Evrakın Önizleme ekranından kullanıcıya tebliğ edilmesi", priority = 2)
     public void TS0845A() {
         GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
         TebligEttiklerimPage tebligEttiklerimPage = new TebligEttiklerimPage();
