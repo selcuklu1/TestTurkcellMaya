@@ -51,7 +51,7 @@ public class VekaletIslemleriTest extends BaseTest {
     String vekaletAlan = "Optiim TEST2";
     String evrakNo1 = "";
     String evrakNo2 = "";
-    String basariMesaji = "İşlem başarılıdır!";
+    String basariMesaji = "İşlem Başarılıdır!";
     String tur = "IMZALAMA";
     String icerik = "Test Otomasyon " + getSysDate();
     String konuKodu = "010.01";
@@ -532,7 +532,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .dagitimBilgileriKisiSec("YASEMİN")
                 .kaydet();
         String evrakNO2212 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        gelenEvrakKayitPage.islemMesaji().basariliOlmali(basariMesaji);
         //endregion
         return evrakNO2212;
     }
