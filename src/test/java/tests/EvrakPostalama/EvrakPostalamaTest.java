@@ -894,7 +894,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException, IOException {
-        String downloadpath = useChromeWindows151("TS1434") + "/";
+        String downloadpath = useChromeWindows151("TS1434") + "\\";
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
@@ -962,7 +962,7 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm()
                 .sayfayiraporlaexcel()
-                .raporalbasarilidir();
+                .islemMesaji().basariliOlmali();
         //  String downloadpath = useChromeWindows151("TS1434");
         System.out.println(downloadpath);
         postalananEvrakRaporuPage.excelTabloKars(downloadpath);
