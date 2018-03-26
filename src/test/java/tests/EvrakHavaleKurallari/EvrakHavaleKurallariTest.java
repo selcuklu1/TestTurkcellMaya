@@ -77,7 +77,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .konuKoduDoldur(konuKodu)
                 .evrakTuruSec(evrakTuru)
                 .otomatikHavaleSec()
-                .islemMesaji().dikkatOlmali(uyariMesaji);
+                .islemMesaji().isDikkat(uyariMesaji);
     }
 
 
@@ -137,6 +137,21 @@ public class EvrakHavaleKurallariTest extends BaseTest {
                 .kuralAdiDoldur(kuralAdi2)
                 .kuralEklemeKaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+        //Test bittikten sonra datamızı siliyoruz. Bir sonraki koşumda hata almamamız için.
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAdi, "Kural adı")
+                .ara()
+                .sil(kuralAdi, "Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        evrakHavaleKurallariYonetimiPage
+                .filtreleKuralAdiDoldur(kuralAdi2, "Kural adı")
+                .ara()
+                .sil(kuralAdi2, "Konu")
+                .islemOnayiEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -227,37 +242,53 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         evrakHavaleKurallariYonetimiPage
                 .openPage()
                 .ara()
+                .kurallarListelendigiGorme("Bütün")
                 .durumSec(durumSadecePasifler)
                 .ara()
+                .kurallarListelendigiGorme("Sadece pasif")
                 .durumSec(durumSadeceAktifler)
                 .ara()
+                .kurallarListelendigiGorme("Sadece aktif")
                 .geldigiYerTipiSec(geldigiYerKullanici)
                 .ara()
-                .kullaniciDoldur(kullanici)
+                .kurallarListelendigiGorme("Geldiği yer bilgisinde Kullanıcı içeren bütün")
+                .kullaniciDoldur(kullanici2)
                 .ara()
+                .kurallarListelendigiGorme("Bilgisi girilen kullanıcıyı içeren")
                 .geldigiYerTipiSec(geldigiYerBirim)
                 .ara()
+                .kurallarListelendigiGorme("Geldiği yer bilgisinde Birim içeren bütün")
                 .filtreleGeldigiYerBirimDoldur(birim)
                 .ara()
+                .kurallarListelendigiGorme("Bilgisi girilen Birimi içeren")
                 .geldigiYerTipiSec(geldigiYerGercekKisi)
                 .ara()
+                .kurallarListelendigiGorme("Geldiği yer bilgisinde Gerek Kişi içeren bütün")
                 .filtreleGeldigiYerGercekKisiDoldur(kullanici)
                 .ara()
+                .kurallarListelendigiGorme("Bilgisi girilen Gerçek kişiyi içeren")
                 .geldigiYerTipiSec(geldigiYerTuzelKisi)
                 .ara()
+                .kurallarListelendigiGorme("Geldiği yer bilgisinde Tüzel Kişi içeren bütün")
                 .filtreleGeldigiYerTuzelKisiDoldur(kullanici2)
                 .ara()
+                .kurallarListelendigiGorme("Bilgisi girilen Tüzel Kişiyi içeren")
                 .geldigiYerTipiSec(geldigiYerKurum)
                 .ara()
+                .kurallarListelendigiGorme("Geldiği yer bilgisinde Kurum içeren bütün")
                 .filtreleGeldigiYerKurumDoldur(kurum)
                 .ara()
+                .kurallarListelendigiGorme("Bilgisi girilen kurumu içeren")
                 .birimDoldur(birim)
                 .ara()
+                .kurallarListelendigiGorme("Seçilen birim")
                 .altBirimDahilSec(true)
                 .ara()
-                .filtrelemeKuralAdiDoldur(kuralAdi)
+                .kurallarListelendigiGorme("Seçilen birim altbirimlerinde tanımlı")
                 .geldigiYerTipiSec(geldigiYerSeciniz)
-                .ara();
+                .filtrelemeKuralAdiDoldur(kuralAdi)
+                .ara()
+                .kurallarListelendigiGorme("Girilen kural adındaki");
     }
 
     @Severity(SeverityLevel.CRITICAL)
