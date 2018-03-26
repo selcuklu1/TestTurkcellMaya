@@ -202,8 +202,8 @@ public class BirimYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1109: Yeni birim kayıt ve evrak işlemlerinden kontrolü - Görünür")
-    public void TS1109() {
+    @Test(enabled = true, description = "TS1109b: Yeni birim kayıt ve evrak işlemlerinden kontrolü - Görünür")
+    public void TS1109b() {
 
         String testID = "TS1109";
         String sistemTarihi = getSysDate();
