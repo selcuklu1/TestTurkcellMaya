@@ -961,8 +961,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String evrakNO2186 = gelenEvrakKayitPage.popUps();
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+//        gelenEvrakKayitPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         logout();
 //        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
