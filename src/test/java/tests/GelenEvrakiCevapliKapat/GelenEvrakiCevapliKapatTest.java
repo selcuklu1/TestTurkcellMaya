@@ -615,8 +615,8 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String evrakNo = gelenEvrakKayitPage.popUps();
         String kayitTarihiSayi = kayitTarihi + " / " + evrakNo;
 
-        gelenEvrakKayitPage
-                .islemMesaji().basariliOlmali(basariMesaji);
+        //gelenEvrakKayitPage
+          //      .islemMesaji().basariliOlmali(basariMesaji);
 
         Selenide.sleep(3000);
 
