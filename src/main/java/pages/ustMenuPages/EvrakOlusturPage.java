@@ -17,6 +17,7 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
+
 public class EvrakOlusturPage extends MainPage {
 
     public PDFKontrol pdfKontrol = new PDFKontrol();
@@ -2850,18 +2851,32 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         SelenideElement txtAntetGuncel = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir2']");
+        SelenideElement txtAntetBaslik = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
         SelenideElement txtAntetUstBirim = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir1']");
         SelenideElement txtAntetEnUstBirim = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
-        @Step("Editorde Antet kontrolu: {antetGuncel}  {antetUstBirim}  {enUstBirim}")
-        public EditorTab editorAntetKontrol(String antetGuncel,String antetUstBirim, String enUstBirim) {
-            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
-            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
-            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
-            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
-//            Allure.addAttachment("Editor Konu Kontrol", konu);
-            return this;
-        }
+        SelenideElement txtAntet = $("div[class='firstPageHeader']");
+//        @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+//        public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
+////            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+//            Assert.assertEquals(txtAntetBaslik.getText().contains(antetDefault),true, "Default Antet Kontrol");
+//            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+//            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+//            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+//            return this;
+//        }
+//    }
+
+    @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+    public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
+//            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+
+        return this;
     }
+}
 
     public class EkleriTab extends MainPage {
 
@@ -3358,6 +3373,7 @@ public class EvrakOlusturPage extends MainPage {
 
             return this;
         }
+
 
         @Step("Detay tıklanarak açılan ek detay kontrolu")
         public EkleriTab ekleriDetayGeldigiKontrolu() {

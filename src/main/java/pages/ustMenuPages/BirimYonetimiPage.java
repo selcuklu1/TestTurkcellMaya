@@ -8,6 +8,8 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -20,6 +22,8 @@ import java.util.Random;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class BirimYonetimiPage extends MainPage {
@@ -38,7 +42,8 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement chkOzelHitap = $(By.id("birimYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement txtMesajAdresi = $(By.id("birimYonetimiEditorForm:maggKoduInput"));
     SelenideElement txtKarargahKisaltmasi = $(By.id("birimYonetimiEditorForm:karargahKisaltmasiInput"));
-    SelenideElement cmbAntetTipi = $(By.id("birimYonetimiEditorForm:antetTipiSelect_input"));
+    BelgenetElement cmbAntetTipi = comboBox(By.id("birimYonetimiEditorForm:antetTipiSelect"));
+    SelenideElement cmbAntetTipi2 = $("select[id='birimYonetimiEditorForm:antetTipiSelect_input']");
     SelenideElement txtIdariKimlikKodu = $(By.id("birimYonetimiEditorForm:kurumKimlikKoduInput"));
     SelenideElement cmbBirimTipi = $(By.id("birimYonetimiEditorForm:birimTipiAutoComplete_input"));
     SelenideElement txtGelenEvrakNumaratoru = $(By.id("birimYonetimiEditorForm:gelenEvrakNumaratorAutoComplete_input"));
@@ -356,7 +361,23 @@ public class BirimYonetimiPage extends MainPage {
 
     @Step("Antet tipi seç")
     public BirimYonetimiPage antetTipiSec(String antentTipi) {
-        cmbAntetTipi.selectOption(antentTipi);
+
+        cmbAntetTipi.selectComboBox(antentTipi);
+        /*System.out.println(cmbAntetTipi2.getSelectedOption());
+        System.out.println(cmbAntetTipi2.getSelectedValue());
+
+        //1. denemeselect utility ile deneme
+        Select mySelect= new Select(cmbAntetTipi2);
+//        mySelect.selectByVisibleText(antentTipi);
+        mySelect.selectByIndex(1);
+
+        //2. deneme value domda arayarak deneme
+        $("select[id='birimYonetimiEditorForm:antetTipiSelect_input'] option[value='Y']").click();
+
+        //3. denemeutility select olmadan deneme
+//        cmbAntetTipi2.selectOptionByValue("Y");
+//        cmbAntetTipi2.selectOption(antentTipi);*/
+
         return this;
     }
 

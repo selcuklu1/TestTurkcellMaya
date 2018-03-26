@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 class ComboBoxHelper extends BaseLibrary {
 
     private String panelXpath;
+    private By label;
     private By btnTrigger;
     private By liLocator;
     private By ulLocator;
@@ -22,6 +23,8 @@ class ComboBoxHelper extends BaseLibrary {
         String id = proxy.attr("id");
         if (id.contains("_label"))
             id = id.substring(0, id.lastIndexOf("_label"));
+
+        label = By.id(id + "_label");
 
         btnTrigger = proxy.attr("class").contains("ui-selectonemenu")
                 ? By.cssSelector("[id='" + id + "'] .ui-selectonemenu-trigger")
@@ -62,6 +65,8 @@ class ComboBoxHelper extends BaseLibrary {
             openPanel();
             $$(liLocator).filterBy(exactText(text)).get(0).scrollIntoView(true).click();
         }
+
+        //$(label).shouldHave(text(text));
     }
 
     private void jsClick(String text) {
