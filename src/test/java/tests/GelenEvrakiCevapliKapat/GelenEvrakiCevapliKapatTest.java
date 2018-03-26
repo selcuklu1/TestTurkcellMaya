@@ -1,6 +1,7 @@
 package tests.GelenEvrakiCevapliKapat;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -50,7 +51,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
     @BeforeMethod
     public void loginBeforeTests() {
 
-        login("ztekin", "123");
+        login(TestData.userZtekin);
 
         cevaplananEvrakRaporuPage = new CevaplananEvrakRaporuPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
@@ -617,7 +618,9 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         gelenEvrakKayitPage
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(usernameOPTIIM, passwordOPTIIM);
+        Selenide.sleep(3000);
+
+        login(TestData.optiim);
 
         gelenEvraklarPage
                 .openPage()
