@@ -20,6 +20,10 @@ public class TestData extends BaseLibrary {
     public static final User username27 = new User("un27","123","Username27 TEST","TS2200 Alt Birim");
     public static final User username27YGD = new User("un27","123","Username27 TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User userMbozdemir = new User("mbozdemir","123","Mehmet BOZDEMİR","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    public static final User userYakyol = new User("yakyol","123","Yasemşn AKYOL","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
+    public static final User userZtekin = new User("ztekin","123","Zübeye TEKİN","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+
     public static final User user21g = new User("username21g","123","Username21g TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User uservv = new User("usernameVV","123","usernameVV TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User userva = new User("usernameVA","123","usernameVA TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");

@@ -1994,7 +1994,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         //region Parameters
 
@@ -2046,7 +2046,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .gonderildigiKurumKontrolu(geregi, true)
                 .postaDetayiGonderildigiYer(geregiTipi)
                 .adresDoldur(adres)
-                .gidisSekliSec("İadeli Taahhütlü")
+                .gidisSekliSec2("İadeli Taahhütlü")
                 .gonderildigiYerSec("Yurt İçi")
                 .gramajDoldur("deneme")
                 .gramajDoldur(gramaj1)
@@ -2056,7 +2056,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tutarKontrol("45.000");
 
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2118,7 +2118,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "TC1812 " + getSysDate(), "TC1812 " + createRandomNumber(12)
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         //region Parameters
 
@@ -2191,7 +2191,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00");
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2236,7 +2236,7 @@ public class TopluPostalamaTest extends BaseTest {
 //        String remoteDownloadPath = "C:\\Users\\optiim\\Downloads\\";
 
 //        String[] konu = new String[]{
-//                "TC1816 20180322211733", "TC1816 20180322211733"
+//                "TC1816 20180324121920", "TC1816 20180324121920"
 //        };
 //
 //        String[] evrakNo1816 = new String[]{
@@ -2266,7 +2266,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
 
         topluPostalanacakEvraklar(konu, geregi, geregiTipi);
@@ -2280,12 +2280,18 @@ public class TopluPostalamaTest extends BaseTest {
                 .evrakListesiOrjinaliYazdir(konu)
                 .tutarGuncelle("65.00")
                 .guncelle()
+                .islemMesaji().basariliOlmali();
+
+        topluPostaladiklarimPage
                 .topluPostaladiklarimEvrakSec(postaListesi)
                 .postaListesiAdiDegistirme(konu[1])
                 .postaListesiBarkodNoDoldur(createRandomNumber(5))
                 .gonderildigiYerSec("Kurum")
                 .adresDoldur(adres)
                 .gidisSekliSec("Kurye")
+                .adresDoldur();
+
+        topluPostaladiklarimPage
                 .gidisSekliSec("Ankara İçi APS")
                 .gonderildigiYerSec2("Yurt İçi")
                 .tutarHesapla()
@@ -2297,7 +2303,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true);
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2373,7 +2379,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .evrakImzala();
 
             logout();
-            login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+            login(TestData.userMbozdemir);
 
             imzaladiklarimPage
                     .openPage();

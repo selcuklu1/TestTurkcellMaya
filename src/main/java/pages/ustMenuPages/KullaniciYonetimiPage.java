@@ -148,10 +148,12 @@ public class KullaniciYonetimiPage extends MainPage {
     public KullaniciYonetimiPage gorevliOlduguBirimlerGuncelle(String birim) {
 //        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", tblKullaniciBirim);
 
-        tblKullaniciBirim
+        SelenideElement btn = tblKullaniciBirim
                 .filterBy(Condition.text(birim))
                 .first()
-                .$("button[id$=':updateKullaniciBirimButton']").click();
+                .$("button[id$=':updateKullaniciBirimButton']");
+
+        clickJs(btn);
 
 //        clickJs(btnGorevliOlduguBirimlerGuncelle);
         return this;

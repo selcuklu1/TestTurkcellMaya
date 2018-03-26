@@ -1372,7 +1372,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Kaydet butonu")
     public GelenEvrakKayitPage kaydet() {
-        btnKaydet.pressEnter();
+//        btnKaydet.pressEnter();
+        clickJs(btnKaydet);
         return this;
     }
 
@@ -1644,6 +1645,12 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Havale İşlemleri Birim alanında \"{birim}\" seç")
     public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String birim) {
         txtHavaleIslemleriBirim.selectLov(birim);
+        return this;
+    }
+
+    @Step("Havale İşlemleri Birim alanında \"{birim}\" seç")
+    public GelenEvrakKayitPage havaleIslemleriBirimDoldur(String kullaniciAdi, String birim ) {
+        txtHavaleIslemleriBirim.selectLov(kullaniciAdi, birim);
         return this;
     }
 

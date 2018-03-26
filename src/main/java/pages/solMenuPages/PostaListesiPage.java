@@ -35,7 +35,7 @@ public class PostaListesiPage extends MainPage {
     SelenideElement txtPostaListesi = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion:postaListesiAdi_input"));
     SelenideElement btnPostala = $(By.xpath("//span[text()='Postala']//..//..//button"));
     SelenideElement tblIlkRow = $(By.xpath("//tbody[@id='mainInboxForm:inboxDataTable_data']/tr[@data-ri='0']"));
-    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi_label"));
+    BelgenetElement cmbGidisSekli = comboBox(By.id("mainPreviewForm:postaListesiPostaTipi"));
     BelgenetElement cmbGonderildigiTuzelKisi = comboLov(By.id("mainPreviewForm:tpbeGonderildigiTuzelKisiLovId:LovSecilen"));
     BelgenetElement cmbGonderildigiKurum = comboLov(By.id("mainPreviewForm:tpbeGonderildigiKurumLovId:LovSecilen"));
 
@@ -174,12 +174,12 @@ public class PostaListesiPage extends MainPage {
     @Step("Gidis Sekli \"{gidisSekli}\" seç")
     public PostaListesiPage gidisSekliSec2(String gidisSekli) {
 
-        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
-        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
-
-        sleep(2000);
-        element.click();
-        panel.$$("li").filterBy(text(gidisSekli)).first().click();
+//        SelenideElement element = $x("//div[@id='mainPreviewForm:postaListesiPostaTipi']//div[@class='ui-selectonemenu-trigger ui-state-default ui-corner-right']");
+//        SelenideElement panel = $(By.id("mainPreviewForm:postaListesiPostaTipi_panel"));
+//
+//        sleep(2000);
+//        element.click();
+//        panel.$$("li").filterBy(text(gidisSekli)).first().click();
 
         cmbGidisSekli.selectComboBox(gidisSekli);
         return this;
@@ -741,8 +741,10 @@ searchTable().findRowAndSelect(text(konu));
             SelenideElement altAntetTelefonAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Tel: 0312 222 22 22']"));
             SelenideElement altAntetWebSitesiAlaniPDF = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='Web: www.turksat.com.tr']"));
 
-            String evraNoPDF = evrakNoAlaniPDF.getText();
 //            String evraNoPDF = evrakNoAlaniPDF.getText();
+//            String evraNoPDF = evrakNoAlaniPDF.getText();
+
+            sleep(2000);
 
             System.out.println("Beklenen Sayı : " + evrakNo);
             System.out.println("Gelen Sayı : " + evrakNoAlaniPDF.getText());
@@ -757,6 +759,7 @@ searchTable().findRowAndSelect(text(konu));
             System.out.println("Beklenen Alt Antet Web Sitesi : " + "Web: www.turksat.com.tr");
             System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
 
+            sleep(3000);
             Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
             Assert.assertEquals(konuAlaniPDF.getText(), konu);
             Assert.assertEquals(icerikAlaniPDF.getText(), icerik);

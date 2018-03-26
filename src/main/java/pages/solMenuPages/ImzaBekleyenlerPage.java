@@ -9,10 +9,22 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
+import org.openqa.selenium.Keys;
+
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+//import java.io.BufferedInputStream;
+import java.io.IOException;
+//import java.io.InputStream;
+//import java.net.URL;
 
 public class ImzaBekleyenlerPage extends MainPage {
     ElementsCollection tblImzaBekleyenEvraklar = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");// span[class='ui-chkbox-icon']");
@@ -386,6 +398,120 @@ public class ImzaBekleyenlerPage extends MainPage {
         tabEvrakEkleri.click();
         return this;
     }
+
+    @Step("Ek Listesi Kontrol")
+    public ImzaBekleyenlerPage ekListesiKontrol(String ekNo,String description) {
+        boolean durum = tblEvrakOnizlemeEkler.filterBy(text(ekNo)).filterBy(text(description)).size() > 0;
+        Assert.assertEquals(durum,true,"Ek Listesi Kontrolü");
+        Allure.addAttachment("Ek Listesi Kontrolü:" , ekNo +":" + description);
+        return this;
+    }
+
+    @Step("Ek listesinde detay göster")
+    public ImzaBekleyenlerPage ekListesindeDetayGoster(String ekNo,String description) {
+        tblEvrakOnizlemeEkler
+                .filterBy(text(ekNo)).filterBy(text(description))
+                .get(0)
+                .shouldBe(exist)
+                .$("[id$='detayButton']").click();
+
+        return this;
+    }
+
+    @Step("Ek listesinde detay göster")
+    public ImzaBekleyenlerPage ekOnizlemeKontrol(Condition... conditions) {
+        switchTo().frame($("iframe[class='onizlemeFrame']"));
+        for (Condition condition : conditions) {
+            Allure.addAttachment(condition.toString(), condition.toString());
+            $(".textLayer").shouldHave(condition);
+            //page.waitUntil(condition, 30000);
+        }
+        takeScreenshot();
+        switchTo().defaultContent();
+        return this;
+    }
+
+    @Step("UstVeri Orijinal E-Ibaresi ve Kırmızı Yazı kontrolü, Screenshot ve output text olarak yazdırma")
+    public ImzaBekleyenlerPage ekKontrol() throws InterruptedException, IOException, UnsupportedFlavorException {
+        switchTo().window(1);
+        takeScreenshot();
+
+        SelenideElement pdftab = $x("//*[@id='plugin']");
+//            pdftab.sendKeys(Keys.SPACE);
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        Thread.sleep(500);
+        pdftab.sendKeys(Keys.CONTROL, "c");
+        pdftab.sendKeys(Keys.CONTROL, "a");
+        pdftab.sendKeys(Keys.CONTROL, "c");
+
+        pdftab.sendKeys(Keys.CONTROL, "V");
+        Thread.sleep(1000);
+        String result = "";
+
+//            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//            for (DataFlavor flavor : clipboard.getAvailableDataFlavors()) {
+//                System.out.println(flavor);
+//            }
+//
+//
+//            try {
+//                Object data = clipboard.getData(DataFlavor.allHtmlFlavor);
+//                System.out.println(data);
+//            } catch (UnsupportedFlavorException | IOException ex) {
+//                ex.printStackTrace();
+//            }
+//            try {
+//                Object data = clipboard.getData(DataFlavor.stringFlavor);
+//                System.out.println(data);
+//            } catch (UnsupportedFlavorException | IOException ex) {
+//                ex.printStackTrace();
+//            }
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+
+        DataFlavor[] dataFlavors = contents.getTransferDataFlavors();
+        System.out.println("dataflavor length:" + dataFlavors.length);
+
+        for (int count = 0; count < dataFlavors.length; count++) {
+            // System.out.println(" : " + dataFlavors[count]);
+
+            if (DataFlavor.stringFlavor == dataFlavors[count]) {
+                System.out.println("It is String in Clipboard");
+                Object object = contents.getTransferData(dataFlavors[count]);
+
+                if (object instanceof String) {
+                    System.out.println("String in clipboard :"
+                            + object.toString());
+                }
+
+            }
+        }
+
+
+        boolean hasTransferableText =
+                (contents != null) &&
+                        contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        Allure.addAttachment("PDF", result);
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+
 
     @Step("Dağıtım yerleri aç - Ek")
     public ImzaBekleyenlerPage ekeGoreDagitimYerleriAc(String ek) {
