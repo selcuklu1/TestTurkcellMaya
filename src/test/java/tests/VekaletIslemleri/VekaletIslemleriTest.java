@@ -89,7 +89,6 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , priority = 0
             , description = "TS0025a : Onaya göndererek Vekalet Verme")
     public void TS0025a() throws InterruptedException {
 
@@ -193,8 +192,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,priority = 2
-//            , dependsOnMethods = {"TS0025b"}
+            , dependsOnMethods = {"TS0025b"}
             , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
@@ -712,7 +710,9 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
+    @Test(enabled = true
+            , priority = 0
+            ,description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
     public void TS2200() throws InterruptedException, ParseException {
 
         login(TestData.username27);
