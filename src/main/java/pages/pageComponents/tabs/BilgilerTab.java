@@ -460,6 +460,14 @@ public class BilgilerTab extends MainPage {
         getBilgiDagitimHitapDuzenlemeButton(secilenAramaKriteri).shouldBe(visible).click();
         return new DagitimHitapDuzenle();
     }
+
+
+    @Step("Gereği alanıda değeri seçilecek değer boş mu")
+    public BilgilerTab bilgiDegerSecilemez(String text) {
+        Assert.assertTrue(getBilgiCombolov().type(text).isEmpty());
+        return this;
+    }
+
     //endregion
 
     //******************************************************

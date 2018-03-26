@@ -417,7 +417,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnGeregiTree = $("button[id$='geregiLov:treeButton']");
         ElementsCollection trGeregi = $$("tbody[id*='yeniGidenEvrakForm:evrakBilgileriList:16:geregiLov:LovSecilenTable_data'] tr[role='row']");
 
-        SelenideElement chkDagitimiEkYap = $("input[id$='dagitimEkYapCheckBoxId_input']");
+        SelenideElement chkDagitimiEkYap = $("div[id$='dagitimEkYapCheckBoxId']");
 
         // Onay Akışı Elementleri
         SelenideElement btnOnayAkisiEkle = $("button[id*='onayAkisiEkle']");
@@ -1060,9 +1060,10 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Dagitimi Ek Yap alanı \"{setSelected}\" seç")
-        public BilgilerTab dagitimiEkYapSec(boolean setSelected) {
-            chkDagitimiEkYap.setSelected(setSelected);
+        @Step("Dagitimi Ek Yap alanı \"{selection}\" seç")
+        public BilgilerTab dagitimiEkYapSec(boolean selection) {
+            chkDagitimiEkYap.setSelected(selection);
+//            chkDagitimiEkYap.click();
             return this;
         }
 
@@ -1260,6 +1261,13 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
             cmbGeregi.selectLov(geregi);
+            return this;
+        }
+
+        @Step("Gereği {description} doldur: | {geregi}")
+        public BilgilerTab geregiDoldurWithTitle(String geregi, String detail, String description) {
+            cmbGeregi.type(geregi).getTitleItems().filterBy(text(detail)).first().click();
+            cmbGeregi.closeTreePanel();
             return this;
         }
 
@@ -2840,6 +2848,19 @@ public class EvrakOlusturPage extends MainPage {
             Allure.addAttachment("Editor Konu Kontrol", konu);
             return this;
         }
+
+        SelenideElement txtAntetGuncel = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir2']");
+        SelenideElement txtAntetUstBirim = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir1']");
+        SelenideElement txtAntetEnUstBirim = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
+        @Step("Editorde Antet kontrolu: {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+        public EditorTab editorAntetKontrol(String antetGuncel,String antetUstBirim, String enUstBirim) {
+            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+//            Allure.addAttachment("Editor Konu Kontrol", konu);
+            return this;
+        }
     }
 
     public class EkleriTab extends MainPage {
@@ -2854,6 +2875,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnDosyaEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:fileUploadButtonA_input"));
         SelenideElement chkTaramaHavuzuTarihBaslangic = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuIlkTarihCalendar_input"));
         SelenideElement chkTaramaHavuzuTarihBitis = $(By.id("taramaHavuzuFormId:filterAccordionPanelId:taramaHavuzuSonTarihCalendar_input"));
+        SelenideElement chkboxEkListesiniEkYap = $("div[id^='yeniGidenEvrakForm:j_idt'] [class='ui-chkbox ui-widget']");
 
         SelenideElement lblDosyaAdi = $(By.id("yeniGidenEvrakForm:evrakEkTabView:dosyaAdi"));
         ElementsCollection trEkLlistesi = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable'] tr[role='row']");
@@ -3129,6 +3151,22 @@ public class EvrakOlusturPage extends MainPage {
                     .shouldBe(exist);
             return this;
         }
+
+        @Step("Ek Listesi Kontrolü: {ekNo} {description}")
+        public EkleriTab ekListesiKontrol(String ekNo, String description) {
+            boolean durum = trEkLlistesi.filterBy(text(ekNo)).filterBy(text(description)).size() > 0;
+            Assert.assertEquals(durum,true,"Ek Listesi Kontrolü");
+            Allure.addAttachment("Ek Listesi Kontrolü:" , ekNo +":" + description);
+            return this;
+        }
+
+        @Step("Ek Listesini Ek Yap")
+        public EkleriTab ekListesiniEkYap() {
+            chkboxEkListesiniEkYap.click();
+            return this;
+        }
+
+
 
         @Step("Fiziksel ek metni doldur")
         public EkleriTab fizikselEkMetniDoldur(String fizikselEkMetni) {

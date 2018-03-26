@@ -668,15 +668,24 @@ public class TuzelKisiYonetimiTest extends BaseTest {
 
         List<String> medyaKisi = new ReusableSteps().medyaSirketiTuzelKisiEkleme();
 
-        evrakOlusturPage
-                .openPage()
+           //Burası upgrade sonrası değiştirildi.
+/*              .openPage()
                 .editorTabAc()
                 .geregiDoldur(medyaKisi.get(0), "Ad")
                 .secilenGeregiSil()
                 .geregiDoldur(medyaKisi.get(1), "Kısa Ad")
                 .secilenGeregiSil()
-                .geregiVergiNoDoldur(medyaKisi.get(2), "Vergi Kimlik No");
+                .geregiVergiNoDoldur(medyaKisi.get(2), "Vergi Kimlik No");*/
 
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .geregiSecimTipiSec("Tüzel Kişi")
+                .geregiDoldur(medyaKisi.get(0), "Ad")
+                .geregiTemizle()
+                .geregiDoldurWithTitle(medyaKisi.get(1), medyaKisi.get(0), "Kısa Ad")
+                .geregiTemizle()
+                .geregiDoldurWithTitle(medyaKisi.get(2), medyaKisi.get(0),"Vergi Kimlik No");
     }
 
 }

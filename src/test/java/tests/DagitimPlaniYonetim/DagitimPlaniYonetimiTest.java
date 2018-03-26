@@ -889,7 +889,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     private void evrakOlusturSayfadaPasifKontrolu(String adi) {
         new EvrakOlusturPage().openPage().bilgileriTab()
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
-                .geregiDegerSecilemez(adi);
+                .geregiDegerSecilemez(adi)
+                .geregiTemizle()
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
+                .bilgiDegerSecilemez(adi);
     }
 
     @Step("Dağıtım Planı Aktif/Pasif yapılır")
