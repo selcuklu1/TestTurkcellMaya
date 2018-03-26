@@ -258,6 +258,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage kullaniciIslemVe1SiraKontrolu(String kullanici1, String islemTipi1) {
         Assert.assertEquals(label1IslemTipi.getText(), "1. " + islemTipi1);
         Assert.assertEquals(label1Kullanici.getText(), kullanici1);
+
         return this;
     }
 
@@ -279,6 +280,17 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage kullaniciIslemVe4SiraKontrolu(String kullanici4, String islemTipi4) {
         Assert.assertEquals(label4IslemTipi.getText(), "4. " + islemTipi4);
         Assert.assertEquals(label4Kullanici.getText(), kullanici4);
+        return this;
+    }
+
+
+    @Step("Doğru sırada ve işlemlerle geldiği görülür")
+    public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici, String islemTipi) {
+
+        Assert.assertEquals($(By.xpath("//label[@class='columnLabelFixWidth' and contains(., '"+islemTipi+"')]")).getText().contains(islemTipi), true);
+        Assert.assertEquals($(By.xpath("//label[normalize-space(text())='"+kullanici+"']")).getText(), kullanici);
+
+
         return this;
     }
 
