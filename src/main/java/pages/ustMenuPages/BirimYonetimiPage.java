@@ -23,6 +23,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 public class BirimYonetimiPage extends MainPage {
@@ -41,7 +42,7 @@ public class BirimYonetimiPage extends MainPage {
     SelenideElement chkOzelHitap = $(By.id("birimYonetimiEditorForm:ozelHitapExistSelBoolean_input"));
     SelenideElement txtMesajAdresi = $(By.id("birimYonetimiEditorForm:maggKoduInput"));
     SelenideElement txtKarargahKisaltmasi = $(By.id("birimYonetimiEditorForm:karargahKisaltmasiInput"));
-    SelenideElement cmbAntetTipi = $(By.id("birimYonetimiEditorForm:antetTipiSelect_input"));
+    BelgenetElement cmbAntetTipi = comboBox(By.id("birimYonetimiEditorForm:antetTipiSelect"));
     SelenideElement cmbAntetTipi2 = $("select[id='birimYonetimiEditorForm:antetTipiSelect_input']");
     SelenideElement txtIdariKimlikKodu = $(By.id("birimYonetimiEditorForm:kurumKimlikKoduInput"));
     SelenideElement cmbBirimTipi = $(By.id("birimYonetimiEditorForm:birimTipiAutoComplete_input"));
@@ -360,7 +361,9 @@ public class BirimYonetimiPage extends MainPage {
 
     @Step("Antet tipi seç")
     public BirimYonetimiPage antetTipiSec(String antentTipi) {
-        System.out.println(cmbAntetTipi2.getSelectedOption());
+
+        cmbAntetTipi.selectComboBox(antentTipi);
+        /*System.out.println(cmbAntetTipi2.getSelectedOption());
         System.out.println(cmbAntetTipi2.getSelectedValue());
 
         //1. denemeselect utility ile deneme
@@ -373,7 +376,7 @@ public class BirimYonetimiPage extends MainPage {
 
         //3. denemeutility select olmadan deneme
 //        cmbAntetTipi2.selectOptionByValue("Y");
-//        cmbAntetTipi2.selectOption(antentTipi);
+//        cmbAntetTipi2.selectOption(antentTipi);*/
 
         return this;
     }

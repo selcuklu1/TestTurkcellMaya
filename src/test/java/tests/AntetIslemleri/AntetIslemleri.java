@@ -87,17 +87,20 @@ public class AntetIslemleri extends BaseTest {
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetGuncelBirimTipi)
                 .antetBilgisiDoldur(antetGuncelBirim)
+                .kaydet()
 
                 .birimFiltreDoldur(ustBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetUstBirimTipi)
                 .antetBilgisiDoldur(antetUstBirim)
+                .kaydet()
 
                 .birimFiltreDoldur(enUstBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
-                .antetTipiSec(antetEnUstBirimTipi);
+                .antetTipiSec(antetEnUstBirimTipi)
+                .kaydet();
 
         testStatus(testid, "Test Başladı");
         login(ztekinGuncel);

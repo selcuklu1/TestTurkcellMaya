@@ -258,6 +258,7 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage kullaniciIslemVe1SiraKontrolu(String kullanici1, String islemTipi1) {
         Assert.assertEquals(label1IslemTipi.getText(), "1. " + islemTipi1);
         Assert.assertEquals(label1Kullanici.getText(), kullanici1);
+
         return this;
     }
 
@@ -279,6 +280,17 @@ public class EvrakOlusturPage extends MainPage {
     public EvrakOlusturPage kullaniciIslemVe4SiraKontrolu(String kullanici4, String islemTipi4) {
         Assert.assertEquals(label4IslemTipi.getText(), "4. " + islemTipi4);
         Assert.assertEquals(label4Kullanici.getText(), kullanici4);
+        return this;
+    }
+
+
+    @Step("Doğru sırada ve işlemlerle geldiği görülür")
+    public EvrakOlusturPage kullaniciIslemVeSiraKontrolu(String kullanici, String islemTipi) {
+
+        Assert.assertEquals($(By.xpath("//label[@class='columnLabelFixWidth' and contains(., '"+islemTipi+"')]")).getText().contains(islemTipi), true);
+        Assert.assertEquals($(By.xpath("//label[normalize-space(text())='"+kullanici+"']")).getText(), kullanici);
+
+
         return this;
     }
 
@@ -2854,16 +2866,29 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtAntetBaslik = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
         SelenideElement txtAntetUstBirim = $("div[class='firstPageHeader'] td[id='kurumHeaderSatir1']");
         SelenideElement txtAntetEnUstBirim = $("div[class='firstPageHeader'] td[id='editorAntetBaslik']");
-        @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
-        public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
+        SelenideElement txtAntet = $("div[class='firstPageHeader']");
+//        @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+//        public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
+////            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+//            Assert.assertEquals(txtAntetBaslik.getText().contains(antetDefault),true, "Default Antet Kontrol");
+//            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+//            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+//            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+//            return this;
+//        }
+//    }
+
+    @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
+    public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
-            Assert.assertEquals(txtAntetBaslik.getText().contains(antetDefault),true, "Default Antet Kontrol");
-            Assert.assertEquals(txtAntetGuncel.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
-            Assert.assertEquals(txtAntetUstBirim.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
-            Assert.assertEquals(txtAntetEnUstBirim.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
-            return this;
-        }
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+
+        return this;
     }
+}
 
     public class EkleriTab extends MainPage {
 
