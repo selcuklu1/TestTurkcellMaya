@@ -89,7 +89,6 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            , priority = 0
             , description = "TS0025a : Onaya göndererek Vekalet Verme")
     public void TS0025a() throws InterruptedException {
 
@@ -193,8 +192,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,priority = 2
-//            , dependsOnMethods = {"TS0025b"}
+            , dependsOnMethods = {"TS0025b"}
             , description = "TS2208 : Onaya göndererek Vekalet Verme işleminde onayın kabul edilmesi")
     public void TS2208() throws InterruptedException {
 //        Allure.addAttachment("Test Datası", "Test Datası oluşturuluyor.");
@@ -532,7 +530,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .dagitimBilgileriKisiSec("YASEMİN")
                 .kaydet();
         String evrakNO2212 = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+//        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
         //endregion
         return evrakNO2212;
     }
@@ -654,7 +652,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2203 : Vekalet veren kullanıcının havale onayında seçilmesi")
     public void TS2203() throws InterruptedException {
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         gelenEvrakKayitPage
                 .openPage()
                 .dagitimBilgileriOnaylayacakKisiPanel()
@@ -672,7 +670,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , dependsOnMethods = {"TS2208"}
             , description = "TS2210 : Kullanıcı yönetimi ekranında vekalet kontrolü")
     public void TS2210() throws InterruptedException {
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         String gorevliOlduguBirim = "Vekalet";
 
         kullaniciYonetimiPage
@@ -693,7 +691,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
     public void TS2204() throws InterruptedException {
 
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         String title = "Ağ (Network) Uzman Yardımcısı";
         gelenEvraklarPage
@@ -712,7 +710,9 @@ public class VekaletIslemleriTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
+    @Test(enabled = true
+            , priority = 0
+            ,description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
     public void TS2200() throws InterruptedException, ParseException {
 
         login(TestData.username27);
@@ -754,7 +754,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2205 : Vekalet alan kullanıcının havale onayında seçilmesi")
     public void TS2205() throws InterruptedException{
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         String konu = "TS2205 " + createRandomNumber(8);
 //        String konu = "TS2205 15324160";
@@ -779,7 +779,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletVarPopupSeçim(nameVV)
                 .evrakOnzilemeOnaylayanKisiKontrolu(nameVV,kullaniciTitle);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
