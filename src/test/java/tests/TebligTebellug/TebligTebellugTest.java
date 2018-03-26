@@ -151,7 +151,7 @@ public class TebligTebellugTest extends BaseTest {
         String evrakNo = gelenEvrakKayitPage.popUps();
         String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
 
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        //gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         String tebligEdilecekKisi = "Huser2 TUMER2";
 
@@ -342,7 +342,7 @@ public class TebligTebellugTest extends BaseTest {
                 .kaydet();
 
         String evrakNo = gelenEvrakKayitPage.popUps();
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        //gelenEvrakKayitPage.islemMesaji().basariliOlmali();
         String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
 
 
