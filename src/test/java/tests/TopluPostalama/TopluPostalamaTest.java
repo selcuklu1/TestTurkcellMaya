@@ -1994,7 +1994,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "TC1811 " + getSysDate(), "TC1811 " + createRandomNumber(12)
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         //region Parameters
 
@@ -2056,7 +2056,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .tutarKontrol("45.000");
 
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2118,7 +2118,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "TC1812 " + getSysDate(), "TC1812 " + createRandomNumber(12)
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         //region Parameters
 
@@ -2191,7 +2191,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00");
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2266,7 +2266,7 @@ public class TopluPostalamaTest extends BaseTest {
                 "Ankara İçi APS"
         };
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
 
         topluPostalanacakEvraklar(konu, geregi, geregiTipi);
@@ -2303,7 +2303,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .indirimOraniKontrol("20", true)
                 .tutarKontrol("80.00", true);
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         maximazeBrowser();
 
@@ -2379,7 +2379,7 @@ public class TopluPostalamaTest extends BaseTest {
                     .evrakImzala();
 
             logout();
-            login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
+            login(TestData.userMbozdemir);
 
             imzaladiklarimPage
                     .openPage();
