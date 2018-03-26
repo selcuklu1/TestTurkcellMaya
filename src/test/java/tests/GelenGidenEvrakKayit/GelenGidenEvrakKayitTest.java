@@ -1,7 +1,6 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import data.User;
@@ -252,7 +251,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String geldigiYer = "Kurum";
 
-        login(yakyol);
+        login(TestData.userYakyol);
 
 // Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
