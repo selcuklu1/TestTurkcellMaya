@@ -63,7 +63,7 @@ public class TebligTebellugTest extends BaseTest {
         String evrakNo = gelenEvrakKayitPage.popUps();
         String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
 
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        //gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         String tebligEdilecekKullanicilistesi = "TS0845LISTE";
         String tebligNot = "TS0845 not";
