@@ -2,6 +2,7 @@ package tests.GelenEvrakiCevapliKapat;
 
 import com.codeborne.selenide.Condition;
 import common.BaseTest;
+import data.TestData;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -930,7 +931,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         String mernisNo = createMernisTCKN();
 //        login(usernameZTEKIN, passwordZTEKIN);
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -962,7 +963,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
 
         logout();
 //        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(TestData.userZtekin);
 
 
         gelenEvraklarPage
@@ -1009,7 +1010,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
                 .sImzaImzala(true);
 
         logout();
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(TestData.userZtekin);
 
         gelenEvraklarPage
                 .openPage()

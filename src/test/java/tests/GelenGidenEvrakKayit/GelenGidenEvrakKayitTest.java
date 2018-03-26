@@ -1,8 +1,8 @@
 package tests.GelenGidenEvrakKayit;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
+import data.TestData;
 import data.User;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -89,7 +89,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String pathToFileExcel = getUploadPath() + "test.xlsx";
         String excelName = "test.xlsx";
 
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
 
 
         gelenEvrakKayitPage
@@ -145,7 +145,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String evrakTuru = "Dilekçe";
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
 //        String evrakNO321 = "5569";
 
 // TS0321 de oluşturulan evrak no burada kullanılacak.
@@ -197,7 +197,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
         String pathToFilePdf = getUploadPath() + "Otomasyon.pdf";
         String pdfName = "Otomasyon.pdf";
 
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -251,7 +251,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 
         String geldigiYer = "Kurum";
 
-        login(yakyol);
+        login(TestData.userYakyol);
 
 // Testin öncesinde TS0321 ve TS0328 caselerinin çalışması gerekli..
 
@@ -278,7 +278,7 @@ public class GelenGidenEvrakKayitTest extends BaseTest {
 //                .islemMesaji().basariliOlmali(basariMesaji);
 
 //        logout();
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
 
         kaydedilenGelenEvrakPage
                 .openPage()

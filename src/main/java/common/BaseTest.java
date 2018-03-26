@@ -13,6 +13,7 @@ import listeners.DriverEventListener;
 import listeners.ResultListener;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -359,8 +360,8 @@ public class BaseTest extends BaseLibrary {
                     new ChromeDriver(options)
                     : new RemoteWebDriver(new URL(Configuration.remote), options);*/
             WebDriver driver = Configuration.remote == null ?
-                    new EventFiringWebDriver(new FirefoxDriver()).register(new DriverEventListener())
-                    : new EventFiringWebDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options)).register(new DriverEventListener());
+                    new EventFiringWebDriver(new ChromeDriver(options)).register(new DriverEventListener())
+                    : new EventFiringWebDriver(new RemoteWebDriver(new URL(Configuration.remote), options)).register(new DriverEventListener());
 
             WebDriverRunner.setWebDriver(driver);
         } catch (Exception e) {

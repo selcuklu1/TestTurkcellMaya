@@ -47,7 +47,7 @@ public class AltTabs extends MainPage {
     }
 
     private SelenideElement findElement(String labelText, String parentTag, String targetTag, int index) {
-        return tab.$x("(descendant::" + parentTag + "[descendant::label[normalize-space(.)='" + labelText + "']]//" + targetTag + ")[" + index + "]");
+        return tab.$x("(.//" + parentTag + "[.//label[normalize-space(.)='" + labelText + "']]//" + targetTag + ")[" + index + "]");
     }
 
     public BelgenetElement inputComboLov(String label, int... index) {
@@ -329,7 +329,7 @@ public class AltTabs extends MainPage {
 
     @Step("Evrak Tarihi başlangıç alanı bul")
     public SelenideElement getEvrakTarihiBasInput() {
-        return input("Evrak Tarihi", 0);
+        return input("Evrak Tarihi", 1);
     }
 
     @Step("Evrak Tarihi başlangiç gir")
