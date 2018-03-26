@@ -9,6 +9,7 @@ package tests.EvrakPostalama;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import common.BaseTest;
 import data.TestData;
@@ -71,31 +72,6 @@ public class EvrakPostalamaTest extends BaseTest {
     String[] gonderimSekli = new String[5];
     String konu309 = "";
     String konuKoduRandomTS520 = "TS0520A-" + createRandomNumber(15);
-
-  /*  public void TestDeneme () throws InterruptedException, IOException {
-        login("Mbozdemir","123");
-        konu = "TS0308";
-        postalanacakEvraklarPage
-                .openPage()
-                .filter().findRowsWith(text(konu)).first().click();
-
-        postalanacakEvraklarPage.evrakPostala()
-
-                .popupOrjYazYazdirButonKonrolleri()
-                .popupEvrOrjYazKapat()
-                .PDFEibareVeKırmızıYazıktrl()
-                .pdfEvrakYazismaKuralkontrol()
-                .popupEvrOrjYazKapat()
-                .dagitimplanyazdir()
-                .dgmpdfhitapguvenktrl ()
-                .gramajDoldur("111111")
-                .hesapla()
-                .postala()
-                .dialogpostalaEvet();
-
-
-    }
-*/
     String konuKodu = "Diğer";
     String kaldirilacakKlasor = "Diğer";
     String gizlilikDerecesi = "Normal";
@@ -918,6 +894,7 @@ public class EvrakPostalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1434 : Postalanan Evrak Raporu Alan kontrolleri")
     public void TS1434() throws InterruptedException, IOException {
+        String downloadpath = useChromeWindows151("TS1434") + "\\";
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
@@ -985,12 +962,11 @@ public class EvrakPostalamaTest extends BaseTest {
         postalananEvrakRaporuPage.ekranSorgulananSonucKontrol();
         postalananEvrakRaporuPage.evrakRaporForm()
                 .sayfayiraporlaexcel()
-                .raporalbasarilidir();
+                .islemMesaji().basariliOlmali();
         //  String downloadpath = useChromeWindows151("TS1434");
-        String downloadpath = getDownloadPath();
         System.out.println(downloadpath);
         postalananEvrakRaporuPage.excelTabloKars(downloadpath);
-
+        Selenide.close();
     }
 
     @Step("TS0310 için data oluşturma")

@@ -269,9 +269,9 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .kaydetOnayaSun()
 
-                .kullaniciIslemVe1SiraKontrolu(parafciKullanici1, "Paraflama")
-                .kullaniciIslemVe2SiraKontrolu(parafciKullanici2, "Paraflama")
-                .kullaniciIslemVe3SiraKontrolu(imzaciKullanici, "İmzalama");
+                .kullaniciIslemVeSiraKontrolu(parafciKullanici1, "Paraflama")
+                .kullaniciIslemVeSiraKontrolu(parafciKullanici2, "Paraflama")
+                .kullaniciIslemVeSiraKontrolu(imzaciKullanici, "İmzalama");
     }
 
     @Severity(SeverityLevel.CRITICAL)
