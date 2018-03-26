@@ -652,7 +652,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2203 : Vekalet veren kullanıcının havale onayında seçilmesi")
     public void TS2203() throws InterruptedException {
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         gelenEvrakKayitPage
                 .openPage()
                 .dagitimBilgileriOnaylayacakKisiPanel()
@@ -670,7 +670,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , dependsOnMethods = {"TS2208"}
             , description = "TS2210 : Kullanıcı yönetimi ekranında vekalet kontrolü")
     public void TS2210() throws InterruptedException {
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         String gorevliOlduguBirim = "Vekalet";
 
         kullaniciYonetimiPage
@@ -691,7 +691,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2204 : Vekalet Alan Kullanıcın Evrak Kapatma Onayında Seçilmesi")
     public void TS2204() throws InterruptedException {
 
-        login(mbozdemir);
+        login(TestData.userMbozdemir);
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
         String title = "Ağ (Network) Uzman Yardımcısı";
         gelenEvraklarPage
@@ -754,7 +754,7 @@ public class VekaletIslemleriTest extends BaseTest {
             , description = "TS2205 : Vekalet alan kullanıcının havale onayında seçilmesi")
     public void TS2205() throws InterruptedException{
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         String konu = "TS2205 " + createRandomNumber(8);
 //        String konu = "TS2205 15324160";
@@ -779,7 +779,7 @@ public class VekaletIslemleriTest extends BaseTest {
                 .vekaletVarPopupSeçim(nameVV)
                 .evrakOnzilemeOnaylayanKisiKontrolu(nameVV,kullaniciTitle);
 
-        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
+        login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
