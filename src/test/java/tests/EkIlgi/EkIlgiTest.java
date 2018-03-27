@@ -3,6 +3,7 @@ package tests.EkIlgi;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +24,8 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Class: "Ek Ilgi" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
+
+@Feature("Ek ve Ilgi")
 public class EkIlgiTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
