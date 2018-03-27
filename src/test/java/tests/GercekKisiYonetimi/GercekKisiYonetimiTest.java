@@ -318,8 +318,8 @@ public class GercekKisiYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1119: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
-    public void TS1119() throws InterruptedException {
+    @Test(enabled = true, description = "TS1119a: Gerçek Kişi iletişim bilgilerinin değiştirilmesi")
+    public void TS1119a() throws InterruptedException {
 
         String TCKN1 = "54548785445";
         String ad = "Ts1119";

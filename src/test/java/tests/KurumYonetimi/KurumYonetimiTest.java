@@ -183,8 +183,8 @@ public class KurumYonetimiTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS01109 : Kurum tanımlama ve kontrolü")
-    public void TS1109() {
+    @Test(enabled = true, description = "TS01109a : Kurum tanımlama ve kontrolü")
+    public void TS1109a() {
 
         String yeniKurumAdi = "Yenikurum" + getSysDate();
         String idariBirimKimlikKodu = getSysDate() + "";

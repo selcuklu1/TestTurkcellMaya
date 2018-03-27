@@ -1,12 +1,14 @@
 package tests.BakimaAl;
 
 import common.BaseTest;
+import data.TestData;
+import io.qameta.allure.Feature;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ustMenuPages.BakimaAlPage;
 
-
+@Feature("Bakıma Al")
 public class BakimaAlTest extends BaseTest {
 
     BakimaAlPage bakimaAlPage;
@@ -16,11 +18,11 @@ public class BakimaAlTest extends BaseTest {
     public void loginBeforeTests() {
         bakimaAlPage = new BakimaAlPage();
         loginPage = new LoginPage();
-        login("mbozdemir", "123");
+        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
     }
 
-    @Test(enabled = true, description = "2108 : Bakım Moduna Alma ve alan kontrolleri")
-    public void TS02108() {
+    @Test(enabled = true, description = "TS2108 : Bakım Moduna Alma ve alan kontrolleri")
+    public void TS2108() {
 
         String girilecekBilgilendirmeMetni = "";
         String iptalEdilecekBilgilendirmeMetni = "İptal edilecek bilgilendirme metni.";
@@ -59,15 +61,15 @@ public class BakimaAlTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "2109 : Bakım Modundan Çıkar")
-    public void TS02109() {
+    @Test(enabled = true, description = "TS2109 : Bakım Modundan Çıkar")
+    public void TS2109() {
 
         bakimaAlPage
                 .openPage()
                 .bakimdaOlmali()
                 .bakimdanCikar()
                 .bakimdaOlmamali();
-        login("ztekin", "123");
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
     }
 
