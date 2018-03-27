@@ -708,7 +708,7 @@ public class EkIlgiTest extends BaseTest {
         String kurum = "Başbakanlık";
         String kurumPostalanakYerler = "BAŞBAKANLIĞA";
 
-        String evrakSayisi1 = "6345202-010.01-11217";
+        String evrakSayisi1 = "6345202-010.01-11601";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -917,7 +917,7 @@ public class EkIlgiTest extends BaseTest {
         evrakDetayiPage
                 .evrakGoster()
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-3 konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
 
 
