@@ -921,7 +921,7 @@ public class GelenEvrakiCevapliKapatTest extends BaseTest {
         String ad = "Test";
         String soyad = "Otomasyon";
         String kisiKurum = "Gerçek Kişi";
-        String basariMesaji = "İşlem Başarılıdır!";
+        String basariMesaji = "İşlem başarılıdır!";
         String tur = "IMZALAMA";
         String kaldirilacakKlasor = "Diğer";
         String kladirilacakKlasorTitle = "[Klasör] 000";
