@@ -730,7 +730,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+        login(TestData.userMbozdemir); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -863,7 +863,7 @@ public class EkIlgiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         Selenide.sleep(3000);
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //ztekin
+        login(TestData.userZtekin); //ztekin
 
         imzaBekleyenlerPage
                 .openPage()
@@ -906,7 +906,7 @@ public class EkIlgiTest extends BaseTest {
                 .tabEvrakEkleriAc()
                 .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");
 
-        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+        login(TestData.userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
