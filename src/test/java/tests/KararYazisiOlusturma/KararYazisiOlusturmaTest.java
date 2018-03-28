@@ -533,7 +533,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-                .popUpsv2();
+                .yeniKayitButton();
 
         gelenEvraklarPage
                 .openPage()
