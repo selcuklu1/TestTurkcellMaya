@@ -36,7 +36,10 @@ public class AntetIslemleri extends BaseTest {
     public static final User gsahinGuncel = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Güncel Birim");
     public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Üst Birim");
     public static final User ztekinGuncel = new User("ztekin", "123", "Zübeyde TEKİN", "Antet Güncel Birim");
+    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ", "GENEL MÜDÜRLÜK MAKAMI");
+    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ", "Antet Güncel Birim");
 
+    //antetislem1
     BirimYonetimiPage birimYonetimiPage;
     EvrakOlusturPage evrakOlusturPage;
     TextEditor editor;
@@ -45,7 +48,7 @@ public class AntetIslemleri extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login(ztekinEnUst);
+        login(antetIslem1EnUst);
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         editor = new TextEditor();
@@ -63,7 +66,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -103,8 +106,8 @@ public class AntetIslemleri extends BaseTest {
                 .kaydet();
 
         testStatus(testid, "Test Başladı");
-        login(ztekinGuncel);
 
+        login(antetIslem1Guncel);
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
@@ -157,6 +160,7 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
+        useFirefox();
         login(gsahinUstBirim);
         imzaBekleyenlerPage
                 .openPage()
@@ -185,7 +189,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -309,7 +313,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -433,7 +437,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
