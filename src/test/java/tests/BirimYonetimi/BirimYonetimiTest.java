@@ -829,8 +829,10 @@ public class BirimYonetimiTest extends BaseTest {
                 .birimIdariKoduGuncelle(idariBirimKimlikKodu)
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
         birimYonetimiPage
                 .birimYonetimiPageKontrol1();
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -839,16 +841,20 @@ public class BirimYonetimiTest extends BaseTest {
 
         evrakOlusturPage
                 .editorTabAc();
+
         mainPage
                 .evrakOlusturSayfayiKapat();
+
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecimi(geregiTipi)
                 .geldigiBirimDoldur(birimAdi)
                 .geldigiBirimGoruntulenmeKontrolu(birimAdi)
                 .solEvrakKontrol(idariBirimKimlikKodu);
+
         mainPage
                 .evrakOlusturSayfayiKapat();
+
         gidenEvrakKayitPage
                 .openPage()
                 .geregiGeldigiGorme(birimAdi)
@@ -859,6 +865,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .bilgilerTabiAc()
                 .bilgiGeldigiGorme(birimAdi)
                 .geregiGeldigiGorme(birimAdi);
+
         olurYazisiOlusturPage
                 .editorTabAc();
     }

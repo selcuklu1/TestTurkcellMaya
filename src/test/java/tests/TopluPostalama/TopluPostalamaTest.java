@@ -1800,7 +1800,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .etiketBastir();
     }
 
-    @Test(enabled = true, description = "TS1817 : Tutar alanı kontrol edilir.")
+    @Test(enabled = true, description = "TS1817 : Posta Tutarı Hesaplama Alan Kontrolleri (UC_POSTAYÖNETİMİ_006)")
     public void TS1817() {
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();

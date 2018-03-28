@@ -2127,8 +2127,7 @@ public class GelenEvrakKayitPage extends MainPage {
                 .evrakSayiSagDoldur(evrakSayiSag)
                 .havaleIslemleriKisiDoldur(kullanici)
                 .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+                .popUpsv2();
     }
 
     @Step("Kaydedilen Gelen Evraklar sayfasına evrak düşürmektedir.")
