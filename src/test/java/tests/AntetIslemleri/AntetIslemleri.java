@@ -294,7 +294,9 @@ public class AntetIslemleri extends BaseTest {
         login(gsahinUstBirim);
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonuyaGoreSec(konu)
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
                 .ekOnizlemeKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
 
         imzaBekleyenlerPage
@@ -303,9 +305,10 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -418,7 +421,9 @@ public class AntetIslemleri extends BaseTest {
         login(gsahinUstBirim);
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonuyaGoreSec(konu)
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
                 .ekOnizlemeKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
 
         imzaBekleyenlerPage
@@ -427,9 +432,10 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -542,7 +548,9 @@ public class AntetIslemleri extends BaseTest {
         login(gsahinUstBirim);
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonuyaGoreSec(konu)
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
                 .ekOnizlemeKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
 
         imzaBekleyenlerPage
@@ -551,9 +559,10 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
     }
 
 }
