@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.Random;
 
 import static data.TestData.passwordZTEKIN;
+import static data.TestData.userMbozdemir;
 import static data.TestData.usernameZTEKIN;
 
 
@@ -37,7 +38,8 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login("mbozdemir", "123");
+        //login("mbozdemir", "123");
+        login(userMbozdemir);
         paylastiklarimPage = new PaylastiklarimPage();
         benimlePaylasilanlarPage = new BenimlePaylasilanlarPage();
         taslakEvraklarPage = new TaslakEvraklarPage();
@@ -288,6 +290,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
     }
 
+    //Pass
     @Test(enabled = true, description = "TS1876 : Evrakı paylaşmada alan kontrolleri")
     public void TS1876() {
         String tarihBugun = "" + new SimpleDateFormat("dd.MM.yyyy").format(new Date());
@@ -308,7 +311,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
         evrakOlusturPage
                 .kaydet(true)
-                .evrakOlusturPageKapat();
+                .islemMesaji().basariliOlmali();
+        evrakOlusturPage.evrakOlusturPageKapat()
+                .islemMesaji().closeMessage();
 
         taslakEvraklarPage
                 .openPage()
@@ -429,7 +434,9 @@ public class EvrakPaylasmaTest extends BaseTest {
                 .onayAkisiKullaniciTipiSec(kullaniciAdi, "İmzalama");
         evrakOlusturPage
                 .kaydet(true)
-                .evrakOlusturPageKapat();
+                .islemMesaji().basariliOlmali();
+        evrakOlusturPage.evrakOlusturPageKapat()
+                .islemMesaji().closeMessage();
 
         String evrakAciklamasi = "İçeriğinde form olan evrakı paylaşma";
         String evrakiPaylasan = "Mehmet BOZDEMİR";
@@ -708,7 +715,7 @@ public class EvrakPaylasmaTest extends BaseTest {
 
         String evrakNo = gelenEvrakKayitPage.popUps();
         String kayitTarihiSayi = tarihBugun + " / " + evrakNo;
-        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
+        //gelenEvrakKayitPage.islemMesaji().basariliOlmali();
 
         gelenEvraklarPage
                 .openPage()
