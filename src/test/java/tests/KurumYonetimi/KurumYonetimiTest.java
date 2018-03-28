@@ -187,7 +187,7 @@ public class KurumYonetimiTest extends BaseTest {
     public void TS1109a() {
 
         String yeniKurumAdi = "Yenikurum" + getSysDate();
-        String idariBirimKimlikKodu = getSysDate() + "";
+        String idariBirimKimlikKodu = createRandomNumber(8);
         String yeniKurumKisaAdi = "KISA" + yeniKurumAdi;
         String ustKurum = "Maliye Bakanlığı";
         String hitap = "Hitap" + yeniKurumAdi;
@@ -230,7 +230,7 @@ public class KurumYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
         kurumYonetimiPage
                 .kurumHiyerarsisiniGuncelle()
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali(basariMesaji);
         kurumYonetimiPage
                 .sorgulaKurumDoldur(yeniKurumAdi)
                 .panelKapat();

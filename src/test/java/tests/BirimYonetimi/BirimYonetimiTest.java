@@ -808,25 +808,32 @@ public class BirimYonetimiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1459: Birim bilgisi güncelleme ")
     public void TS1459() {
-        login("ztekin", "123");
 
-        testStatus("TS1459", "Birim Oluşturma");
+        login(TestData.optiim);
+
+        //testStatus("TS1459", "Birim Oluşturma");
+
         //1109 senaryosu yerine pre. con. koşuluyor
-        List<String> birim = new ReusableSteps().yeniBirimKayit();
+     //   List<String> birim = new ReusableSteps().yeniBirimKayit();
+
         String geregiTipi = "Birim";
-        String birimAdi = birim.get(0);
-        String birimKisaAdi = birim.get(1);
-        String idariBirimKimlikKodu = birim.get(2);
+        String eskiBirimAdi = "Ts1459 Birim"; //birim.get(0);
+       // String birimKisaAdi = birim.get(1);
+        String yeniIdariBirimKimlikKodu = createRandomNumber(10);
         String basariMesaji = "İşlem başarılıdır!";
 
+        String detail = "Optiim Birim";
+        String yeniBirimAdi = "Ts1459 Birim" + " " + getSysDate();
 
         birimYonetimiPage
-                .birimFiltreDoldur(birimAdi)
+                .openPage()
+                .birimFiltreDoldurWithDetail(eskiBirimAdi, detail)
+                //.birimFiltreDoldur(birimAdi)
                 .ara()
-                .birimKayitKontrolu(birimAdi)
-                .birimGüncelle(birimAdi)
-                .birimAdGuncelle(birimAdi)
-                .birimIdariKoduGuncelle(idariBirimKimlikKodu)
+                .birimKayitKontrolu(eskiBirimAdi)
+                .birimGüncelle(eskiBirimAdi)
+                .birimAdGuncelle(yeniBirimAdi)
+                .birimIdariKoduGuncelle(yeniIdariBirimKimlikKodu)
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
@@ -836,8 +843,8 @@ public class BirimYonetimiTest extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .geregiGeldigiGorme(birimAdi)
-                .bilgiGeldigiGorme(birimAdi);
+                .geregiGeldigiGorme(yeniBirimAdi)
+                .bilgiGeldigiGorme(yeniBirimAdi);
 
         evrakOlusturPage
                 .editorTabAc();
@@ -848,23 +855,23 @@ public class BirimYonetimiTest extends BaseTest {
         gelenEvrakKayitPage
                 .openPage()
                 .kisiKurumSecimi(geregiTipi)
-                .geldigiBirimDoldur(birimAdi)
-                .geldigiBirimGoruntulenmeKontrolu(birimAdi)
-                .solEvrakKontrol(idariBirimKimlikKodu);
+                .geldigiBirimDoldur(yeniBirimAdi)
+                .geldigiBirimGoruntulenmeKontrolu(yeniBirimAdi)
+                .solEvrakKontrol(yeniIdariBirimKimlikKodu);
 
         mainPage
                 .evrakOlusturSayfayiKapat();
 
         gidenEvrakKayitPage
                 .openPage()
-                .geregiGeldigiGorme(birimAdi)
-                .bilgiGeldigiGorme(birimAdi);
+                .geregiGeldigiGorme(yeniBirimAdi)
+                .bilgiGeldigiGorme(yeniBirimAdi);
 
         olurYazisiOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
-                .bilgiGeldigiGorme(birimAdi)
-                .geregiGeldigiGorme(birimAdi);
+                .bilgiGeldigiGorme(yeniBirimAdi)
+                .geregiGeldigiGorme(yeniBirimAdi);
 
         olurYazisiOlusturPage
                 .editorTabAc();

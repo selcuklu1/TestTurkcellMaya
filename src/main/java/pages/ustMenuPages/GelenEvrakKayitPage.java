@@ -780,7 +780,8 @@ public class GelenEvrakKayitPage extends MainPage {
 
     @Step("Evrak Sayı değer kontrolü: {evrakSayi} olmalı.")
     public GelenEvrakKayitPage solEvrakSayiKontrol(String evrakSayi) {
-        txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakSayi));
+        Assert.assertEquals(txtEvrakBilgileriListEvrakSayiTextAreaSol.getValue(),evrakSayi+"-");
+        //txtEvrakBilgileriListEvrakSayiTextAreaSol.shouldHave(value(evrakSayi));
         return this;
     }
 
