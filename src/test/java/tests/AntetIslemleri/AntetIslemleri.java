@@ -48,6 +48,8 @@ public class AntetIslemleri extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
+        useFirefox();
+
         login(antetIslem1EnUst);
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
@@ -160,7 +162,6 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        useFirefox();
         login(gsahinUstBirim);
         imzaBekleyenlerPage
                 .openPage()
