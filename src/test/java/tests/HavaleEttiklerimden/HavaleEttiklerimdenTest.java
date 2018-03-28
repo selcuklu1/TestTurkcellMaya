@@ -13,12 +13,16 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.EvrakDetayiPage;
+import pages.pageComponents.EvrakOnizleme;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.HavaleEttiklerimPage;
+import pages.solMenuPages.HavaleOnayiVerdiklerimPage;
+import pages.solMenuPages.HavaleOnayınaGelenlerPage;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.SistemLoglariPage;
 
-import static data.TestData.passwordZTEKIN;
-import static data.TestData.usernameZTEKIN;
+import static data.TestData.*;
 
 /****************************************************
  * Tarih: 2018-02-12
@@ -33,6 +37,12 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     GelenEvrakKayitPage gelenEvrakKayitPage;
     HavaleEttiklerimPage havaleEttiklerimPage;
     SistemLoglariPage sistemLoglariPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    EvrakOnizleme evrakOnizleme;
+    EvrakDetayiPage evrakDetayiPage;
+    HavaleOnayınaGelenlerPage havaleOnayınaGelenlerPage;
+    HavaleOnayiVerdiklerimPage havaleOnayiVerdiklerimPage;
+
     String basariMesaji = "İşlem başarılıdır!";
     String konuKodu = "Diğer";
     String evrakSayiSag = createRandomNumber(10);
@@ -50,36 +60,43 @@ public class HavaleEttiklerimdenTest extends BaseTest {
         havaleEttiklerimPage = new HavaleEttiklerimPage();
         gelenEvrakKayitPage = new GelenEvrakKayitPage();
         sistemLoglariPage = new SistemLoglariPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        evrakDetayiPage = new EvrakDetayiPage();
+        havaleOnayınaGelenlerPage = new HavaleOnayınaGelenlerPage();
+        havaleOnayiVerdiklerimPage = new HavaleOnayiVerdiklerimPage();
     }
 
     @Step("Havale Ettiklerim sayfasına evrak düşürmektedir.")
-    public void TS2302PreCondition() {
-
-        login(usernameZTEKIN, passwordZTEKIN);
+    public void TS2302PreCondition(String konuKodu,String kurum,String kullanici,String kullanici2) {
 
         gelenEvrakKayitPage
+                .gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
+        gelenEvraklarPage
                 .openPage()
-                .konuKoduDoldur(konuKodu)
-                .konuDoldur(konuKoduRandomTS2302)
-                .evrakTarihiDoldur(evrakTarihi)
-                .geldigiKurumDoldurLovText(kurum)
-                .evrakSayiSagDoldur(evrakSayiSag)
-                .havaleIslemleriBirimDoldur(birim)
-                .kaydet()
-                .evetDugmesi()
-                .yeniKayitButton();
+                .tabloEvrakNoSec(konuKodu)
+                .havaleYap()
+                .havaleYapKisiDoldur(kullanici2)
+                .havaleYapGonder()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS2302: Havale ettiklerim listesinden kullanıcı listesine havale onayına sunma ve evrak geçmiş kontrolü")
     public void TS2302() {
 
-        TS2302PreCondition();
+        login(usernameZTEKIN, passwordZTEKIN);
+
+        TS2302PreCondition(konuKoduRandomTS2302,kurum,"Zübeyde Tekin","Mehmet Bozdemir");
 
         havaleEttiklerimPage
                 .openPage()
                 .evrakNoIleEvrakIcerikGoster(konuKoduRandomTS2302)
-                .havaleYap()
+                .havaleYap();
+
+        evrakDetayiPage
+                .icerikGosterHavaleBilgilerininGirilecegiAlanlarınGeldigiGorme();
+
+        havaleEttiklerimPage
                 .icerikGosterHavaleYapKullaniciListesiDoldur("TS1590")
                 .icerikGosterHavaleyapKullaniciListesiGeregiIcınBilgiIcinDegistir()
                 .icerikGosterHavaleYapOnaylayacakKisiDoldur(kisi, birim2)
@@ -96,11 +113,26 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2312: Onaya sunulan havalenin onaylanması")
+    @Test(enabled = true,dependsOnMethods = {"TS2302"}, description = "TS2312: Onaya sunulan havalenin onaylanması")
     public void TS2312() {
 
-        TS2302();
+        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
 
+        havaleOnayınaGelenlerPage
+                .openPage()
+                .evrakSecIcerikGoster(konuKoduRandomTS2302,true)
+                .havaleOnayi()
+                .havaleOnayiOnaylaOnayiReddetGeldigiGorme()
+                .icerikGosterHavaleOnayiOnayla()
+                .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
+                .icerikHavaleyiOnaylamakUzeresinizEvet()
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        havaleOnayiVerdiklerimPage
+                .openPage()
+                .evrakNoIleEvrakSec(konuKoduRandomTS2302)
+                .evrakSecEvrakGecmisiSec()
+                .evrakGecimisiGeregiVeBilgiGeldigiGorme(" evrak havale edildi (gereği için)","Mehmet Bozdemir","","");
 
     }
 }

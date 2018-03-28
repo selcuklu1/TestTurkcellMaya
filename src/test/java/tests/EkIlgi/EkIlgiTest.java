@@ -3,6 +3,7 @@ package tests.EkIlgi;
 import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +24,8 @@ import static com.codeborne.selenide.Selenide.switchTo;
  * Class: "Ek Ilgi" konulu senaryoları içerir
  * Yazan: Sezai Çelik 
  ****************************************************/
+
+@Feature("Ek ve Ilgi")
 public class EkIlgiTest extends BaseTest {
 
     EvrakOlusturPage evrakOlusturPage;
@@ -708,7 +711,7 @@ public class EkIlgiTest extends BaseTest {
         String kurum = "Başbakanlık";
         String kurumPostalanakYerler = "BAŞBAKANLIĞA";
 
-        String evrakSayisi1 = "6345202-010.01-11217";
+        String evrakSayisi1 = "6345202-010.01-11601";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -727,7 +730,7 @@ public class EkIlgiTest extends BaseTest {
 
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR); //mbozdemir
+        login(TestData.userMbozdemir); //mbozdemir
 
         evrakOlusturPage
                 .openPage()
@@ -860,7 +863,7 @@ public class EkIlgiTest extends BaseTest {
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         Selenide.sleep(3000);
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN); //ztekin
+        login(TestData.userZtekin); //ztekin
 
         imzaBekleyenlerPage
                 .openPage()
@@ -903,7 +906,7 @@ public class EkIlgiTest extends BaseTest {
                 .tabEvrakEkleriAc()
                 .gelenEvrakEkleriKontrol(evrakSayisi1, "Localden eklenen dosya");
 
-        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
+        login(TestData.userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -916,8 +919,9 @@ public class EkIlgiTest extends BaseTest {
 
         evrakDetayiPage
                 .evrakGoster()
+                .frameDegistirme()
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-2 konulmadı, Ek-3 konulmadı")
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-3 konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim3(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
 
 

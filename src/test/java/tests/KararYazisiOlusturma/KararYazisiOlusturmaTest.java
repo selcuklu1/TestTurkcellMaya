@@ -520,10 +520,12 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
+        String ustyazipath = getUploadPath()+"Otomasyon.pdf";
         login(usernameZTEKIN, passwordZTEKIN);
 
         gelenEvrakKayitPage
                 .openPage()
+                .ustYaziEkle(ustyazipath)
                 .konuKoduDoldur(konuKodu)
                 .konuDoldur(konuKoduRandom)
                 .evrakTarihiDoldur(evrakTarihi)
@@ -531,7 +533,6 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-                .evetDugmesi()
                 .yeniKayitButton();
 
         gelenEvraklarPage
