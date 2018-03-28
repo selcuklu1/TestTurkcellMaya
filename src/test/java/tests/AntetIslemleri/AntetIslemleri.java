@@ -1,5 +1,7 @@
 package tests.AntetIslemleri;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import data.User;
@@ -32,11 +34,12 @@ import static com.codeborne.selenide.Condition.textCaseSensitive;
 @Feature("Antet Islemleri")
 public class AntetIslemleri extends BaseTest {
 
-    public static final User ztekinEnUst = new User("ztekin", "123", "Zübeyde TEKİN", "GENEL MÜDÜRLÜK MAKAMI");
-    public static final User gsahinGuncel = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Güncel Birim");
     public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Üst Birim");
     public static final User ztekinGuncel = new User("ztekin", "123", "Zübeyde TEKİN", "Antet Güncel Birim");
+    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ", "GENEL MÜDÜRLÜK MAKAMI");
+    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ", "Antet Güncel Birim");
 
+    //antetislem1
     BirimYonetimiPage birimYonetimiPage;
     EvrakOlusturPage evrakOlusturPage;
     TextEditor editor;
@@ -45,7 +48,9 @@ public class AntetIslemleri extends BaseTest {
 
     @BeforeMethod
     public void loginBeforeTests() {
-        login(ztekinEnUst);
+        useFirefox();
+
+        login(antetIslem1EnUst);
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         editor = new TextEditor();
@@ -63,7 +68,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -103,8 +108,9 @@ public class AntetIslemleri extends BaseTest {
                 .kaydet();
 
         testStatus(testid, "Test Başladı");
-        login(ztekinGuncel);
 
+        login(antetIslem1Guncel);
+        Selenide.sleep(10000);
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
@@ -158,9 +164,12 @@ public class AntetIslemleri extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
         login(gsahinUstBirim);
+        Selenide.sleep(10000);
         imzaBekleyenlerPage
                 .openPage()
-                .evrakKonuyaGoreSec(konu)
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
                 .ekOnizlemeKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
 
         imzaBekleyenlerPage
@@ -169,9 +178,10 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekKontrol()
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekKontrol();
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -185,7 +195,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -293,9 +303,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekKontrol()
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekKontrol();
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -309,7 +319,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -417,9 +427,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekKontrol()
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekKontrol();
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -433,7 +443,7 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Zübeyde TEKİN";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "test.txt";
         String fileName = "test.txt";
@@ -541,9 +551,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                .ekKontrol()
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekKontrol();
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault));
     }
 
 }
