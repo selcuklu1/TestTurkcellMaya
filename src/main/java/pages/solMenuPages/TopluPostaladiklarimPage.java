@@ -666,12 +666,12 @@ public class TopluPostaladiklarimPage extends MainPage {
             System.out.println("Gelen Alt Antet Web Sitesi : " + altAntetWebSitesiAlaniPDF.getText());
 
             sleep(4000);
-            Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true);
-            Assert.assertEquals(konuAlaniPDF.getText(), konu);
-            Assert.assertEquals(icerikAlaniPDF.getText(), icerik);
-            Assert.assertEquals(altAntetAdresAlaniPDF.getText(), "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1");
-            Assert.assertEquals(altAntetTelefonAlaniPDF.getText(), "Tel: 0312 222 22 22");
-            Assert.assertEquals(altAntetWebSitesiAlaniPDF.getText(), "Web: www.turksat.com.tr");
+            Assert.assertEquals(evrakNoAlaniPDF.getText().contains(evrakNo), true, "Evrak no eşit");
+            Assert.assertEquals(konuAlaniPDF.getText(), konu, "Konu aynı");
+            Assert.assertEquals(icerikAlaniPDF.getText(), icerik,"İçerik aynı");
+            Assert.assertEquals(altAntetAdresAlaniPDF.getText(), "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1","Alt antet aynı");
+            Assert.assertEquals(altAntetTelefonAlaniPDF.getText(), "Tel: 0312 222 22 22","Telefon aynı");
+            Assert.assertEquals(altAntetWebSitesiAlaniPDF.getText(), "Web: www.turksat.com.tr","Alt antet web sitesi aynı");
 
             Allure.addAttachment("PDF Kontrolü konu : ", konuAlaniPDF.getText());
             Allure.addAttachment("PDF Kontrolü evrakNo : ", evrakNoAlaniPDF.getText());
