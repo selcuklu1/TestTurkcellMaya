@@ -125,14 +125,14 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .havaleOnayiOnaylaOnayiReddetGeldigiGorme()
                 .icerikGosterHavaleOnayiOnayla()
                 .havaleyiOnaylamakUzersinizUyariGeldigiGorme()
-                .havaleyiOnaylamakUzeresinizEvet()
+                .icerikHavaleyiOnaylamakUzeresinizEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
         havaleOnayiVerdiklerimPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2302)
                 .evrakSecEvrakGecmisiSec()
-                .evrakGecimisiGeregiVeBilgiGeldigiGorme("","","","");
+                .evrakGecimisiGeregiVeBilgiGeldigiGorme(" evrak havale edildi (gereği için)","Mehmet Bozdemir","","");
 
     }
 }

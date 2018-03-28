@@ -1800,7 +1800,7 @@ public class TopluPostalamaTest extends BaseTest {
                 .etiketBastir();
     }
 
-    @Test(enabled = true, description = "TS1817 : Tutar alanı kontrol edilir.")
+    @Test(enabled = true, description = "TS1817 : Posta Tutarı Hesaplama Alan Kontrolleri (UC_POSTAYÖNETİMİ_006)")
     public void TS1817() {
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
@@ -1969,7 +1969,7 @@ public class TopluPostalamaTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1811 : Posta Listesi Postalama İşlemleri (UC_POSTAYÖNETİMİ_003)")
-    public void TS1811() throws IOException, AWTException {
+    public void  TS1811() throws IOException, AWTException {
         useFirefox();
 
         TopluPostalanacakEvraklarPage topluPostalanacakEvraklarPage = new TopluPostalanacakEvraklarPage();
@@ -2378,7 +2378,7 @@ public class TopluPostalamaTest extends BaseTest {
             mainPage
                     .evrakImzala();
 
-            logout();
+//            logout();
             login(TestData.userMbozdemir);
 
             imzaladiklarimPage

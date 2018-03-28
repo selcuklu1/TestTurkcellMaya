@@ -285,7 +285,7 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
 
     @Step("Havaleyi onaylamak üzeresiniz. Kabul ediyor musunuz? Evet / Hayır uyarısını geldiği görülür.")
     public HavaleOnayınaGelenlerPage havaleyiOnaylamakUzersinizUyariGeldigiGorme() {
-        boolean durum = $$(By.id("mainPreviewForm:evetButton_id")).size() > 0;
+        boolean durum = $$("[id$='evetButton_id']").size() > 0;
         Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
@@ -296,6 +296,13 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         $(By.id("mainPreviewForm:evetButton_id")).pressEnter();
         return this;
     }
+
+    @Step("Evet tıklanır")
+    public HavaleOnayınaGelenlerPage icerikHavaleyiOnaylamakUzeresinizEvet() {
+        $(By.id("inboxItemInfoForm:evetButton_id")).pressEnter();
+        return this;
+    }
+
 
     @Step("Evrak İçerikten Havale butonunu tıkla")
     public HavaleOnayınaGelenlerPage icerikHavaleOnay() {
