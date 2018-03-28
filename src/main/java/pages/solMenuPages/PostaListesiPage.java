@@ -680,7 +680,8 @@ searchTable().findRowAndSelect(text(konu));
 
 //            pdfName = pdfIndir();
             switchTo().window(1);
-            String pdfPath = remoteDownloadPath + pdfName;
+            maximazeBrowser();
+//            String pdfPath = remoteDownloadPath + pdfName;
             sleep(5000);
             pdfKontrol
                     .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
@@ -714,6 +715,7 @@ searchTable().findRowAndSelect(text(konu));
             evrakDetayiPopUpKontrolü();
             evrakDetayiOrjinaliYazdır(konu[i]);
             switchTo().window(1);
+            maximazeBrowser();
             sleep(5000);
             pdfKontrol
                     .PDFAlanKontrolleriFF(konu[i], evrakNo[i], icerik[i]);
