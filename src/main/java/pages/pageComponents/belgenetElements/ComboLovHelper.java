@@ -179,7 +179,7 @@ public class ComboLovHelper extends BaseLibrary {
             rows = $$(lovSecilen);
         rows = rows.filter(visible);
 
-        System.out.println("Combolov selected items size " + rows.size());
+        //System.out.println("Combolov selected items size " + rows.size());
         Allure.addAttachment("Items count", String.valueOf(rows.size()));
         if (rows.size() > 0)
             Allure.addAttachment("Values", rows.texts().toString());

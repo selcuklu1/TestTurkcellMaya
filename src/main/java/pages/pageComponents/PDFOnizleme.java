@@ -25,6 +25,11 @@ public class PDFOnizleme extends MainPage{
     SelenideElement viewer = $("#viewer");
     SelenideElement scaleSelect = $("#scaleSelect");
 
+    public PDFOnizleme(SelenideElement frame) {
+        switchTo().frame(frame);
+        waitForLoadingJS();
+    }
+
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
         WebDriverRunner.getWebDriver().manage().window().maximize();
@@ -179,6 +184,10 @@ public class PDFOnizleme extends MainPage{
     public void closeAndReturnToMainWindow(){
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
+    }
+
+    public void switchToDefaultContent(){
+        Selenide.switchTo().defaultContent();
     }
 
     //Firefox scroll error yüzünden kullanılıyor 6.03.2018
