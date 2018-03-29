@@ -89,11 +89,12 @@ public class EvrakDogrulama extends BaseTest {
             .evrakPageButtons()
                 .parafla().islemMesaji().basariliOlmali();
 
-        ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
-        EvrakDetayiPage evrakDetayiPage = parafladiklarimPage.openPage()
+//        ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
+//        EvrakDetayiPage evrakDetayiPage =
+        new ParafladiklarimPage().openPage()
                 .searchTable().findRowAndSelect(text(konu))
-                .icerikGoster();
-        evrakDetayiPage.dogrulamaTab().openTab()
+                .icerikGoster()
+                .dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarılacak")
                 .islemZamaniKontrolu(empty)
                 .aktarilmaDurumuVeIslemZamaniKontorlu("Aktarılacak", empty, 10, 120);

@@ -149,9 +149,8 @@ public class DogrulamaTab extends MainPage {
     @Step("Aktarılma durumu ve islem zamani kontrolü")
     public DogrulamaTab aktarilmaDurumuVeIslemZamaniKontorlu(String aktarilmaDurumu, Condition islemZamani, int intervalSeconds, int timeoutSeconds){
 
-        for (int i = 0; i < timeoutSeconds; i++) {
+        for (int i = 0; i < timeoutSeconds; i+=intervalSeconds) {
             Selenide.sleep(intervalSeconds*1000);
-            timeoutSeconds++;
             guncelle();
 
             if (getAktarilmaDurumuLabel().has(text(aktarilmaDurumu)))
