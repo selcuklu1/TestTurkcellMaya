@@ -104,7 +104,7 @@ public class BaseLibrary extends ElementsContainer {
     public byte[] takeScreenshot() {
         byte[] bytes = new byte[]{};
         try {
-            System.out.println("Screenshot will be taken");
+            //System.out.println("Screenshot will be taken");
             bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
             //System.out.println("Screenshot has been taken");
         } catch (WebDriverException e) {

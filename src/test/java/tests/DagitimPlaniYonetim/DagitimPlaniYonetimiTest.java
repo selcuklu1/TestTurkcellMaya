@@ -78,7 +78,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         evraktaGorunecekHitap1280 = new LinkedHashMap<>();
         evraktaGorunecekHitap1280.put("Kullanıcı", "Sayın " + user.getFullname());
-        evraktaGorunecekHitap1280.put("Birim", user.getBirimAdi() + "E");
+        evraktaGorunecekHitap1280.put("Birim", user.getBirimAdi().toUpperCase() + "E");
         evraktaGorunecekHitap1280.put("Kurum", "Cumhurbaşkanlığı".toUpperCase() + "NA");
         evraktaGorunecekHitap1280.put("Tüzel Kişi", "Türksat Optiim".toUpperCase() + "E");
         evraktaGorunecekHitap1280.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
@@ -373,7 +373,12 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage().bulVeGuncelleTikla(adi);
 
-        u = page.getKullanildigiBirim().getSelectedTitles().last().has(text(u1.getBirimAdi())) ? u2 : u1;
+        page.getKullanildigiBirim().getSelectedItems().shouldHave(sizeGreaterThan(0));
+
+        String birim = page.getKullanildigiBirim()
+                .getSelectedTitles().shouldHave(sizeGreaterThan(0))
+                .last().shouldNotBe(empty).text();
+        u = birim.contains(u1.getBirimAdi()) ? u2 : u1;
 
         page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
                 .kaydet().islemMesaji().basariliOlmali();
@@ -382,6 +387,16 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         login(u);
         evrakOlusturSayfadaAktifKontrolu(adi);
+
+        /*if (u1.equals(u)){
+            evrakOlusturSayfadaAktifKontrolu(adi);
+            login(u);
+            evrakOlusturSayfadaPasifKontrolu(adi);
+        } else {
+            evrakOlusturSayfadaPasifKontrolu(adi);
+            login(u);
+            evrakOlusturSayfadaAktifKontrolu(adi);
+        }*/
 
     }
 
