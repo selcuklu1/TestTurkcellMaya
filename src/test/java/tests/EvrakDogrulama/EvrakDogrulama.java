@@ -97,7 +97,7 @@ public class EvrakDogrulama extends BaseTest {
                 .dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarılacak")
                 .islemZamaniKontrolu(empty)
-                .aktarilmaDurumuVeIslemZamaniKontorlu("Aktarılacak", empty, 10, 120);
+                .aktarilmaDurumuVeIslemZamaniKontorlu("Aktarılacak", empty, 120);
 
         /*evrakDetayiPage.closePage();
 

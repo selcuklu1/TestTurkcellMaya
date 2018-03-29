@@ -147,6 +147,22 @@ public class DogrulamaTab extends MainPage {
     }
 
     @Step("Aktarılma durumu ve islem zamani kontrolü")
+    public DogrulamaTab aktarilmaDurumuVeIslemZamaniKontorlu(String aktarilmaDurumu, Condition islemZamani, int waitSeconds){
+
+        for (int i = 0; i < waitSeconds; i+=10) {
+            Selenide.sleep(10000);
+            guncelle();
+        }
+
+        Selenide.sleep(5000);
+
+        aktarilmaDurumuKontroluAssert(aktarilmaDurumu);
+        islemZamaniKontrolu(islemZamani);
+
+        return this;
+    }
+
+    @Step("Aktarılma durumu ve islem zamani kontrolü")
     public DogrulamaTab aktarilmaDurumuVeIslemZamaniKontorlu(String aktarilmaDurumu, Condition islemZamani, int intervalSeconds, int timeoutSeconds){
 
         for (int i = 0; i < timeoutSeconds; i+=intervalSeconds) {
