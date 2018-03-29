@@ -685,11 +685,11 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(kontolcu);
         kontrolBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
-        evrakOnizleme.new KontrolEt().kontolEtEkrani(
-                text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
-                ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
-                ,text("Koordeni" + "\n" + koordeneli.getFullname())
-                ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+        evrakOnizleme.new KontrolEt()
+                .kontolEtEkrani(text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname()))
+                .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
+                .kontolEtEkrani(text("Koordine\n" + koordeneli.getFullname()))
+                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 
@@ -741,10 +741,10 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(kontolcu);
         kontrolBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
-        evrakOnizleme.kontrolEt.kontolEtEkrani(
-                text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
-                ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
-                ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+        evrakOnizleme.kontrolEt
+                .kontolEtEkrani(text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname()))
+                .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
+                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 
