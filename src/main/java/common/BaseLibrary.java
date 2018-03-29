@@ -106,9 +106,9 @@ public class BaseLibrary extends ElementsContainer {
         try {
             System.out.println("Screenshot will be taken");
             bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-            System.out.println("Screenshot has been taken");
+            //System.out.println("Screenshot has been taken");
         } catch (WebDriverException e) {
-            System.out.println("Take screenshot error:" + e.getMessage());
+            log.warning("Take screenshot error:" + e.getMessage());
         }
         return bytes;
     }
@@ -119,7 +119,7 @@ public class BaseLibrary extends ElementsContainer {
         try {
             bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         } catch (WebDriverException e) {
-            System.out.println("Error takeScreenshot:" + e.getMessage());
+            log.warning("Error takeScreenshot:" + e.getMessage());
         }
         return bytes;
     }
