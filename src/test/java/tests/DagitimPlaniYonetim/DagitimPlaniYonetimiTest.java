@@ -80,8 +80,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         evraktaGorunecekHitap1280.put("Kullanıcı", "Sayın " + user.getFullname());
         evraktaGorunecekHitap1280.put("Birim", user.getBirimAdi().toUpperCase() + "E");
         evraktaGorunecekHitap1280.put("Kurum", "Cumhurbaşkanlığı".toUpperCase() + "NA");
-        evraktaGorunecekHitap1280.put("Tüzel Kişi", "Türksat Optiim".toUpperCase() + "E");
         evraktaGorunecekHitap1280.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
+        evraktaGorunecekHitap1280.put("Tüzel Kişi", "Türksat Optiim".toUpperCase() + "E");
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.yeni()
