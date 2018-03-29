@@ -57,6 +57,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     String planAdi2270;
     String planAdi2279;
     LinkedHashMap<String, String> dagitimPlanElemanlari;
+    LinkedHashMap<String,String> evraktaGorunecekHitap1280;
     LinkedHashMap<String,String> evraktaGorunecekHitap;
     LinkedHashMap<String,String> evraktaGorunecekHitap2279;
 
@@ -74,6 +75,13 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
         dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
         dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+
+        evraktaGorunecekHitap1280 = new LinkedHashMap<>();
+        evraktaGorunecekHitap1280.put("Kullanıcı", "Sayın " + user.getFullname());
+        evraktaGorunecekHitap1280.put("Birim", user.getBirimAdi() + "E");
+        evraktaGorunecekHitap1280.put("Kurum", "Cumhurbaşkanlığı".toUpperCase() + "NA");
+        evraktaGorunecekHitap1280.put("Tüzel Kişi", "Türksat Optiim".toUpperCase() + "E");
+        evraktaGorunecekHitap1280.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.yeni()
@@ -166,7 +174,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.sorgulamadaAdGir(adi)
                 .ara()
-                .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
+                .sorgulamaDataTable
+                .searchByColumnName("Dağıtım Planı Ad")
+                .findRows(exactText(adi)).shouldHaveSize(1);
+        //.getFoundRow().$(page.copyButtonLocator).click();
         page.kopyala();
         checkFields(page, adi, aciklama, kullanildigiBirim, true, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
@@ -315,7 +326,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
                 .geregiSec(planAdi1280)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(planAdi1280))
-                .dagitimPlaniDetaySirasiKontrolu(dagitimPlanElemanlari)
+                .dagitimPlaniDetaySirasiKontrolu(evraktaGorunecekHitap1280)
                 .iptal();
 
         evrakOlusturPage.pageButtons().pdfOnizlemeTikla();

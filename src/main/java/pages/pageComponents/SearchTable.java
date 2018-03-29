@@ -374,6 +374,7 @@ public class SearchTable extends MainPage {
 
     @Step("Arama ayarı: kolon ismine göre aranır")
     public SearchTable searchByColumnName(String columnName) {
+
         this.columnName = columnName;
         columnIndex = getColumnIndex(columnName);
         return this;
@@ -392,7 +393,7 @@ public class SearchTable extends MainPage {
         foundRows = null;
         String rowCssLocator = SearchTable.rowCssLocator;
 
-        boolean searchByColumn = (columnIndex > 0);
+        boolean searchByColumn = (columnIndex > -1);
 
         ArrayList<WebElement> rows = new ArrayList<>();
 
@@ -408,7 +409,7 @@ public class SearchTable extends MainPage {
         SelenideElement pageNavigationButton = searchStartFromLast ? getPrevPageButton() : getNextPageButton();
 
         ElementsCollection collection = searchByColumn ?
-                parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + ")")
+                parentElement.$$(rowCssLocator + " " + columnCssLocator + ":nth-child(" + columnIndex + 1 + ")")
                 : parentElement.$$(rowCssLocator);
 
         while (true) {

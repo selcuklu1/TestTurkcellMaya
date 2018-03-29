@@ -631,13 +631,17 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .evrakPageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 
-        evrakDetayiPage = new ImzaladiklarimPage().openPage()
+        evrakDetayiPage = imzaladiklarimPage.openPage()
                 .searchTable().findRows(text(konu))
                 .icerikGoster();
         evrakDetayiPage.pageButtons().evrakGoster();
         new EvrakOnizleme().pdfOnizlemeKontrol(text(yeniEditorTeksti));
+        evrakDetayiPage.closePage();
 
-        evrakDetayiPage.pageButtons().geriAl().geriAlGeriAl()
+        imzaladiklarimPage.openPage()
+                .searchTable().findRows(text(konu))
+                .icerikGoster()
+                .pageButtons().geriAl().geriAlGeriAl()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
                 .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
                 .geriAlGeriAl();
