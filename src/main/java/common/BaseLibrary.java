@@ -252,7 +252,7 @@ public class BaseLibrary extends ElementsContainer {
                 isJsFinished = (boolean) js.executeScript("return (document.readyState == \"complete\" || document.readyState == \"interactive\")");
             } catch (Exception e) {
                 isJsFinished = true;
-                System.out.println("Load: isJsFinished error: " + e.getMessage());
+                //System.out.println("Load: isJsFinished error: " + e.getMessage());
             }
 
             //            boolean isAjaxFinished = (boolean) ((JavascriptExecutor) driver1).
@@ -263,7 +263,7 @@ public class BaseLibrary extends ElementsContainer {
                 isAjaxFinished = (boolean) js.executeScript("var result = true; try { result = (typeof jQuery != 'undefined') ? jQuery.active == 0 : true } catch (e) {}; return result;");
             } catch (Exception e) {
                 isAjaxFinished = true;
-                System.out.println("Load: isAjaxFinished error: " + e.getMessage());
+                //System.out.println("Load: isAjaxFinished error: " + e.getMessage());
             }
 
             boolean isLoaderHidden = false;
@@ -272,7 +272,7 @@ public class BaseLibrary extends ElementsContainer {
 //                    executeScript("return $('.loading').is(':visible') == false");
             } catch (Exception e) {
                 isLoaderHidden = true;
-                System.out.println("Load: isLoaderHidden error: " + e.getMessage());
+                //System.out.println("Load: isLoaderHidden error: " + e.getMessage());
             }
 
             return isJsFinished && isLoaderHidden && isAjaxFinished;
