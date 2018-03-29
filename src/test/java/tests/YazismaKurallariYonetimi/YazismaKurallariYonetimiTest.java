@@ -69,7 +69,7 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
 
         yazismaKurallariYonetimiPage
                 .openPage()
-                .yazismaKuraliSilEgerVarsa(birimAdi)
+                .yazismaKuraliSilEgerVarsa(yeniBirimAdi)
                 .yazismaKurallariEkle()
                 .birimTipiSec(birimAdi)
                 .tiklaSinirsizYazilabilir(sinirsizYazilabilir)
@@ -91,11 +91,9 @@ public class YazismaKurallariYonetimiTest extends BaseTest {
                 .tiklaVekaletSeviyesi(vekaletSeviyesi)
                 .tiklaSonImzaSeviyesi(sonImzaSeviyesi)
                 .grupBirimTipleriKaydet()
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali(basariMesaj);
         yazismaKurallariYonetimiPage
                 .yazismakurallariKontrolEt(yeniBirimAdi, true, sinirsizYazilabilir, vekaletSeviyesi, sonImzaSeviyesi);
-
-
     }
 
 

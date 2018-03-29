@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="Tanimli Test Paketler" parallel="classes" thread-count="1" verbose="1">
+    <test name="Antet İşlemleri Test">
+        <packages>
+            <package name="tests.AntetIslemleri"/>
+        </packages>
+    </test>
     <test name="Bakima Al Test">
         <packages>
             <package name="tests.BakimaAl"/>

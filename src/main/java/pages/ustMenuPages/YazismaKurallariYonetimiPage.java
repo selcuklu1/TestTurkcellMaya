@@ -206,8 +206,6 @@ public class YazismaKurallariYonetimiPage extends MainPage {
             currentBtnItem.click();
             btnYazismaKuraliSilEvet.click();
         }
-
-
         return this;
     }
 

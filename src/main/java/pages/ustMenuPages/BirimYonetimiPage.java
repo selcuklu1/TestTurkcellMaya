@@ -8,8 +8,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
@@ -19,10 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -1157,6 +1155,36 @@ public class BirimYonetimiPage extends MainPage {
     @Step("Birimdeki Kullanıcılar tıkla")
     public BirimYonetimiPage birimdekiKullanicilarTikla() {
         btnBirimdekiKullanicilar.click();
+        return this;
+    }
+
+    @Step("Birim doldur")
+    public BirimYonetimiPage birimFiltreDoldurWithDetail(String eskiBirimAdi, String detail) {
+
+        txtBirim.type(eskiBirimAdi).getDetailItems().filterBy(text(detail)).first().click();
+/*        ara();
+
+        if (tblBirimYonetimiListesi
+                .filterBy(text(birimAdi)).size() == 1) {
+            tblBirimYonetimiListesi
+                    .filterBy(text(birimAdi))
+                    .first()
+                    .shouldBe(exist)
+                    .$("[id$='updateBirimButton']").click();
+
+            birimAdGuncelle(yeniBirimAdi);
+            kaydet();
+            islemMesaji().basariliOlmali(basariMesaji);
+        } else {
+            Allure.addAttachment("Birim ismi değiştirilmedi.", "");
+        }*/
+
+        return this;
+    }
+
+    @Step("Eklenen birim sonuç tablosunda listelenir")
+    public BirimYonetimiPage birimKayitKontroluContainsBirimAdi(String birimAdi) {
+
         return this;
     }
 }
