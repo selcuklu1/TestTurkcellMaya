@@ -105,7 +105,7 @@ public class EkIlgiTest extends BaseTest {
         String bilgi = "TS2199 Senaryosu";
         String geregi = "TS2199a Senaryosu";
         String basariMesaji = "İşlem başarılıdır!";
-        String dikkatMesaji = "Eklenen dosyaların toplam boyutu üst limiti aşamaz. Toplam dosya boyutu üst limiti : 419,4 MB ";
+        String dikkatMesaji = "Eklenen dosyaların toplam boyutu üst limiti aşamaz. Toplam dosya boyutu üst limiti : 419,4 MB";
 
         login();
 
