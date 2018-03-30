@@ -299,12 +299,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
-
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu);
