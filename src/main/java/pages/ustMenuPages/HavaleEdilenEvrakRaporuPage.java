@@ -46,6 +46,12 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
         return this;
     }
 
+    @Step("Havale Eden birim doldur: {birim}")
+    public HavaleEdilenEvrakRaporuPage havaleEdenBirimDoldur(String birim) {
+        txtHavaleEdenBirim.selectLov(birim);
+        return this;
+    }
+
     @Step("Havale Edilen kullanici doldur: {kullanici}")
     public HavaleEdilenEvrakRaporuPage havaleEdilenKullaniciDoldur(String kullanici) {
         txtHavaleEdilenKullanici.selectLov(kullanici);
@@ -126,6 +132,8 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
         boolean durum = false;
         System.out.println("konu:" + konu);
         boolean paginator_next_durum = paginator_next_disabled.isDisplayed();
+        if(tblHavaleEdilenEvrakRaporuListele.size() > 0)
+            paginator_next_durum = false;
         while (!paginator_next_durum && !durum) {
             durum = tblHavaleEdilenEvrakRaporuListele.filterBy(text(konu)).size() > 0;
             System.out.println("durum1:" + durum + " paginator_next status1:" + paginator_next_durum);
