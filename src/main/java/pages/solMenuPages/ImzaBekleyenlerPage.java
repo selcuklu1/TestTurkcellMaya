@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -437,13 +438,15 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage ekPopPDFKontrol(Condition... conditions) {
         switchTo().window(1);
         maximazeBrowser();
-        takeScreenshot();
+
+        Selenide.sleep(3000);
+
         for (Condition condition : conditions) {
             Allure.addAttachment(condition.toString(), condition.toString());
             $(".textLayer").shouldHave(condition);
             //page.waitUntil(condition, 30000);
         }
-
+        takeScreenshot();
         closeNewWindow();
         switchTo().window(0);
         return this;
