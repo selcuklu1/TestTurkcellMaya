@@ -72,6 +72,12 @@ public class EkIlgiTest extends BaseTest {
         //sisteme yüklenebilecek 50 MB üzeri dosya bilgisayarda kayıtlı bulunmalı.
         //Office Converter sunucuda açık olmalıdır.(Türksat ile görüşülmeli)"*/
 
+/*        Senaryoda bazı değişiklikler yapıldı.
+        1.Pre Condutionda Office Converter kapalı olmalı.
+        2. İkinci adımdan sonra yenibir adım eklenecek.” 50 mb ve üzeri dosya yükleniràDosyanın yüklenemediği, Limitin aşıldığı uyarısının geldiği görülür.”
+        3. Son adım İmzalanabildiği görülür. Olarak değişti.
+        */
+
         String dosyaAdiPDF = "TS2199.pdf";
         String dosyaAdiDOC = "TS2199.doc";
         String dosyaAdiDOCX = "TS2199.docx";
@@ -195,7 +201,7 @@ public class EkIlgiTest extends BaseTest {
                 .dosyaEkle(pathPDF2, "PDF")
                 .dosyaYukleneneKadarLoadingBekle()
                 .dosyaYukleneneKadarFileUploadingBekle()
-               // .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
+               //.ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
                 .ekleriEkle()
                 .dosyaYukleneneKadarLoadingBekle()
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
@@ -215,6 +221,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakDetayiKontrol()
                 .evrakDetayiSayfasınıKapat()
                 .islemPenceresiKapatmaOnayiPopup2("Kapat")
+                .evrakEkEkle()
 
                 .evrakAramaDoldur(evrakNo2)
                 .dokumanAra()
@@ -222,11 +229,9 @@ public class EkIlgiTest extends BaseTest {
                 .evrakDetayiGoster()
                 .evrakDetayiKontrol()
                 .evrakDetayiSayfasınıKapat()
-                .islemPenceresiKapatmaOnayiPopup2("Kapat");
-
-        evrakOlusturPage
-                .ekleriTabAc()
+                .islemPenceresiKapatmaOnayiPopup2("Kapat")
                 .evrakEkEkle()
+
                 .listelenenEklerdeKontrol(evrakSayisi1, "Evrak Sayisi1")
                 .eklenenEklerListesindeDetayGoster(evrakSayisi1)
                 .evrakDetayiSayfasınıKapat()
