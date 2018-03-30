@@ -362,9 +362,26 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
     }
 
-    @Test(description = "TS2324: Kullanıldığı Birim Alanının Güncellenmesi", enabled = true)
+    @Test(description = "TS2324: Kullanıldığı Birim Alanının Güncellenmesi", enabled = true, priority = 3)
     public void TS2324() {
+
         User u1 = ztekin;
+        User u2 = user4;
+        String adi = "TS1280b";
+
+        login(u1);
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage()
+                .openPage()
+                .bulVeGuncelleTikla(adi, "AnaBirim1");
+        adi = page.getAdi().val();
+        page.kullanildigiBirimSec(u2.getBirimAdi())
+                .kaydet()
+                .islemMesaji().basariliOlmali();
+
+        login(u2);
+        evrakOlusturSayfadaAktifKontrolu(adi);
+
+        /*User u1 = ztekin;
         User u2 = ztekin1;
         User u;
         String adi = "TS2324";
@@ -378,15 +395,30 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         String birim = page.getKullanildigiBirim()
                 .getSelectedTitles().shouldHave(sizeGreaterThan(0))
                 .last().shouldNotBe(empty).text();
+
         u = birim.contains(u1.getBirimAdi()) ? u2 : u1;
 
-        /*page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
+        if (u.equals(u2))
+            login(u);
+
+        if (u1.equals(u)){
+            evrakOlusturSayfadaPasifKontrolu(adi);
+            page.openPage().bulVeGuncelleTikla(adi);
+            page.kullanildigiBirimSec(u.getBirimAdi()).kaydet().islemMesaji().basariliOlmali();
+            evrakOlusturSayfadaAktifKontrolu(adi);
+
+            login(u);
+            evrakOlusturSayfadaPasifKontrolu(adi);
+        }
+
+
+        page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
                 .kaydet().islemMesaji().basariliOlmali();
 
-        evrakOlusturSayfadaPasifKontrolu(adi);
+        *//*evrakOlusturSayfadaPasifKontrolu(adi);
 
         login(u);
-        evrakOlusturSayfadaAktifKontrolu(adi);*/
+        evrakOlusturSayfadaAktifKontrolu(adi);*//*
 
         if (u1.equals(u)){
             evrakOlusturSayfadaAktifKontrolu(adi);
@@ -397,7 +429,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
             login(u);
             evrakOlusturSayfadaAktifKontrolu(adi);
         }
-
+*/
     }
 
     @Test(description = "TS2270: Dağıtım Hitap Düzenleme", enabled = true)
