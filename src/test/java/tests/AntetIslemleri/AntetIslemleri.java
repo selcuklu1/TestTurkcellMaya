@@ -82,6 +82,8 @@ public class AntetIslemleri extends BaseTest {
         String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Antet Yok";
         String antetEnUstBirim = "";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
 
         testStatus(testid, "PreCondition");
@@ -114,7 +116,12 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -132,12 +139,13 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                .dagitimiEkYapSec(true)
+                //bilgileri secim ekle
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
+                .dagitimiEkYapSec(true)
                 .kullan();
 
 
@@ -170,7 +178,8 @@ public class AntetIslemleri extends BaseTest {
                 .searchTable().findRowAndSelect(Condition.text(konu));
 
         imzaBekleyenlerPage
-                .ekOnizlemeKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+                .ekOnizlemeKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
@@ -179,9 +188,11 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(""),textCaseSensitive(""))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -209,7 +220,10 @@ public class AntetIslemleri extends BaseTest {
         String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Normal";
         String antetEnUstBirim = "İki Üst Birim Normal Antet";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -242,7 +256,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -336,7 +350,10 @@ public class AntetIslemleri extends BaseTest {
         String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Normal";
         String antetEnUstBirim = "İki Üst Birim Normal Antet";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -369,7 +386,11 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -387,12 +408,13 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                .dagitimiEkYapSec(true)
+                //bilgileri secim ekle
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
+                .dagitimiEkYapSec(true)
                 .kullan();
 
 
@@ -436,6 +458,7 @@ public class AntetIslemleri extends BaseTest {
                 .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetDefault),textCaseSensitive(antetDefault))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
                 .ekPopPDFKontrol(textCaseSensitive(antetDefault),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -463,7 +486,10 @@ public class AntetIslemleri extends BaseTest {
         String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Normal";
         String antetEnUstBirim = "İki Üst Birim Normal Antet";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -496,7 +522,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
