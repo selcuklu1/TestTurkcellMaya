@@ -1810,7 +1810,8 @@ public class GelenEvrakKayitPage extends MainPage {
     public GelenEvrakKayitPage eklenenDosyaKontrolu(String ekNo) {
         String aciklama = tblDosyaEkle
                 .filterBy(Condition.text(ekNo)).get(0).$$("td[role='gridcell']").get(2).getText();
-        Allure.addAttachment("Açıklama Kontrol: " , aciklama);
+        if(aciklama.length()>0)
+            Allure.addAttachment("Açıklama Kontrol: " , aciklama);
         takeScreenshot();
         return this;
     }
