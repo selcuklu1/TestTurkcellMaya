@@ -380,15 +380,15 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .last().shouldNotBe(empty).text();
         u = birim.contains(u1.getBirimAdi()) ? u2 : u1;
 
-        page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
+        /*page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
                 .kaydet().islemMesaji().basariliOlmali();
 
         evrakOlusturSayfadaPasifKontrolu(adi);
 
         login(u);
-        evrakOlusturSayfadaAktifKontrolu(adi);
+        evrakOlusturSayfadaAktifKontrolu(adi);*/
 
-        /*if (u1.equals(u)){
+        if (u1.equals(u)){
             evrakOlusturSayfadaAktifKontrolu(adi);
             login(u);
             evrakOlusturSayfadaPasifKontrolu(adi);
@@ -396,7 +396,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
             evrakOlusturSayfadaPasifKontrolu(adi);
             login(u);
             evrakOlusturSayfadaAktifKontrolu(adi);
-        }*/
+        }
 
     }
 
