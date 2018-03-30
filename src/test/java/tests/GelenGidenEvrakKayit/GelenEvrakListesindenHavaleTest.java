@@ -767,7 +767,6 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .sorgula()
                 .rapordaEvraklarıListele(konu1);
 
-
         login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
         havaleEdilenEvrakRaporuPage
                 .openPage()
@@ -775,9 +774,40 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
                 .havaleTarihAraligiBitisDoldur(evrakTarihi)
                 .sorgula()
+                .rapordaEvraklarıListele(konu2);
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdenBirimDoldur(birim)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
+                .rapordaEvraklarıListele(konu1);
+
+        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        havaleEdilenEvrakRaporuPage
+                .openPage()
+                .havaleEdenBirimDoldur(birim)
+                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+                .sorgula()
                 .rapordaEvraklarıListele(konu2)
                 .rapordaEvraklarıListeleDetayTikla(konu2)
                 .ekranKontrolEvrakDetayi();
+
+
+
+//        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+//        havaleEdilenEvrakRaporuPage
+//                .openPage()
+//                .havaleEdenKullaniciDoldur(kisi)
+//                .havaleTarihAraligiBaslangicDoldur(evrakTarihi)
+//                .havaleTarihAraligiBitisDoldur(evrakTarihi)
+//                .sorgula()
+//                .rapordaEvraklarıListele(konu2)
+//                .rapordaEvraklarıListeleDetayTikla(konu2)
+//                .ekranKontrolEvrakDetayi();
     }
 
     @Severity(SeverityLevel.CRITICAL)

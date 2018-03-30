@@ -77,11 +77,10 @@ public class SistemLoglariPage extends MainPage {
         return this;
     }
 
-    @Step("Sistem Raporu Tablosunda kontrol. Aksiyon: {aksiyon}, Kullanıcı: {kullanici}, Açıklama: {aciklama}, Log olmalı: {shouldBeExist}")
+    @Step("Sistem Raporu Tablosunda kontrol. Aksiyon: {aksiyon}, Kullanıcı: {kullanici}, Tarih: {tarih} Log olmalı: {shouldBeExist}")
     public SistemLoglariPage sistemRaporuKontrol(String aksiyon, String tarih, String kullanici, String aciklama, boolean shouldBeExist) {
-
-        System.out.println("aksiyon:" + aksiyon + " tarih:" + " kullanici:" + kullanici + " aciklama:" + aciklama);
         boolean elementFound = false;
+        String sutunAciklama="";
 
         for (int i = 0; i < sistemRaporuTablePages.size(); i++) {
             sistemRaporuTablePages.get(i).click();
@@ -93,6 +92,22 @@ public class SistemLoglariPage extends MainPage {
                     .filterBy(text(aciklama))
                     .first();
 
+            //Kullanıcı Boş Olmamalı
+            String sutunKullanici = sistemRaporu.$$("td[role='gridcell']").get(3).getText();
+            boolean bosOlmamalıKullanici = sutunKullanici.length() > 0 ;
+            Assert.assertEquals(bosOlmamalıKullanici,true,"Kullanıcı Alan Kontrolü");
+            Allure.addAttachment("Kullanıcı Doludur", sutunKullanici);
+            //IP Boş Olmamalı
+            String sutunIP = sistemRaporu.$$("td[role='gridcell']").get(4).getText();
+            boolean bosOlmamalıIP = sutunIP.length() > 0 ;
+            Assert.assertEquals(bosOlmamalıIP,true,"IP Alan Kontrolü");
+            Allure.addAttachment("IP Doludur", sutunIP);
+            //Açıklama Boş Olmamalı
+            sutunAciklama = sistemRaporu.$$("td[role='gridcell']").get(5).getText();
+            boolean bosOlmamalıAciklama = sutunAciklama.length() > 0 ;
+            Assert.assertEquals(bosOlmamalıAciklama,true,"Açıklama Alan Kontrolü");
+            Allure.addAttachment("Açıklama Kontrol", sutunAciklama);
+
             if (sistemRaporu.isDisplayed() && sistemRaporu.exists()) {
                 elementFound = true;
                 break;
@@ -100,10 +115,8 @@ public class SistemLoglariPage extends MainPage {
 
         }
 
-
-
         Assert.assertEquals(elementFound, shouldBeExist,"Rapor bulunamadı.");
-        Allure.addAttachment("Aksiyon:" + aksiyon + " Tarih:" + tarih + " Kullanıcı:" + kullanici + " Acıklama:" + aciklama,"");
+        Allure.addAttachment("Aksiyon:" + aksiyon + " Tarih:" + tarih + " Kullanıcı:" + kullanici + " Açıklama:" + sutunAciklama ,"");
         takeScreenshot();
         return this;
     }

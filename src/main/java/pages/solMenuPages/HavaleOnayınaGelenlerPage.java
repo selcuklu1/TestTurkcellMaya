@@ -219,10 +219,10 @@ public class HavaleOnayınaGelenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Havale İşlemleri Kişi alanında eklenen \"{kisi}\" kontrolü")
+    @Step("Havale İşlemleri Kişi alanında  \"{kisi}\" kontrolü")
     public HavaleOnayınaGelenlerPage eklenenKisiKontrolu(String kisi) {
-        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Eklendi");
-        Allure.addAttachment("Kisi Eklendi:", kisi);
+        Assert.assertEquals(txtEklenenKisi.isDisplayed(), true, "Kisi Kontrolü");
+        Allure.addAttachment("Kisi Kontrolü:", kisi);
         return this;
     }
 
