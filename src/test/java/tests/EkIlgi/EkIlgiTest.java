@@ -195,7 +195,7 @@ public class EkIlgiTest extends BaseTest {
                 .dosyaEkle(pathPDF2, "PDF")
                 .dosyaYukleneneKadarLoadingBekle()
                 .dosyaYukleneneKadarFileUploadingBekle()
-                .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
+               // .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
                 .ekleriEkle()
                 .dosyaYukleneneKadarLoadingBekle()
                 .islemMesaji().uyariOlmali(uyarıMesaji);
