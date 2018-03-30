@@ -79,6 +79,7 @@ public class EkIlgiTest extends BaseTest {
         String dosyaAdiXLSX = "TS2199.xlsx";
         String dosyaAdiPPT = "TS2199.ppt";
         String dosyaAdiPPTX = "TS2199.pptx";
+        String dosyaAdiPDF2 = "TS2199_2.pdf";
 
         String pathPDF = getUploadPath() + "TS2199.pdf";
         String pathDOC = getUploadPath() + "TS2199.doc";
@@ -87,15 +88,16 @@ public class EkIlgiTest extends BaseTest {
         String pathXLSX = getUploadPath() + "TS2199.xlsx";
         String pathPPT = getUploadPath() + "TS2199.ppt";
         String pathPPTX = getUploadPath() + "TS2199.pptx";
+        String pathPDF2 = getUploadPath() + "TS2199_2.pdf";
 
         String ekMetniAciklama = " isimli dosya eklendi";
         String fizikselEkMetni = "Dosya eklendi " + getSysDate();
 
-        String evrakNo1 = "5408";
-        String evrakSayisi1 = "1402683517-1012";
+        String evrakNo1 = "12495";
+        String evrakSayisi1 = "234234234234234234-010.01-12495";
 
-        String evrakNo2 = "11357";
-        String evrakSayisi2 = "234234234234234234-010.01-11357";
+        String evrakNo2 = "13557";
+        String evrakSayisi2 = "234234234234234234-010.01-13557";
 
         String onayAkisi = "Ts2199 OnayAkisi";
         String kaldirilacakKlasorler = "ESK05";
@@ -103,6 +105,7 @@ public class EkIlgiTest extends BaseTest {
         String bilgi = "TS2199 Senaryosu";
         String geregi = "TS2199a Senaryosu";
         String basariMesaji = "İşlem başarılıdır!";
+        String uyarıMesaji = "Eklenen dosyaların toplam boyutu üst limiti aşamaz. Toplam dosya boyutu üst limiti : 419,4 MB";
 
         login();
 
@@ -187,6 +190,18 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeKontrol(dosyaAdiPPTX, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdiPPTX)
 
+                //TS2199_2.pdf
+                .ekleriEkMetniDoldur(dosyaAdiPDF2 + " " + ekMetniAciklama)
+                .dosyaEkle(pathPDF2, "PDF")
+                .dosyaYukleneneKadarLoadingBekle()
+                .dosyaYukleneneKadarFileUploadingBekle()
+                .ekleriEklenenDosyaAdiKontrol(dosyaAdiPDF)
+                .ekleriEkle()
+                .dosyaYukleneneKadarLoadingBekle()
+                .islemMesaji().uyariOlmali(uyarıMesaji);
+
+        evrakOlusturPage
+                .ekleriTabAc()
                 .fizikselEkEkleTabiniAc()
                 .fizikselEkMetniDoldur(fizikselEkMetni)
                 .fizikselEkMetniEkle()
