@@ -1076,6 +1076,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Dagitimi Ek Yap alanı \"{selection}\" seç")
         public BilgilerTab dagitimiEkYapSec(boolean selection) {
             chkDagitimiEkYap.setSelected(selection);
+            takeScreenshot();
 //            chkDagitimiEkYap.click();
             return this;
         }
@@ -2878,14 +2879,15 @@ public class EvrakOlusturPage extends MainPage {
 //        }
 //    }
 
-    @Step("Editorde Antet kontrolu: {antetDefault} {antetGuncel}  {antetUstBirim}  {enUstBirim}")
-    public EditorTab editorAntetKontrol(String antetDefault,String antetGuncel,String antetUstBirim, String enUstBirim) {
+    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim}  {enUstBirim}")
+    public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
-
+        takeScreenshot();
         return this;
     }
 }
@@ -3184,6 +3186,7 @@ public class EvrakOlusturPage extends MainPage {
             boolean durum = trEkLlistesi.filterBy(text(ekNo)).filterBy(text(description)).size() > 0;
             Assert.assertEquals(durum,true,"Ek Listesi Kontrolü");
             Allure.addAttachment("Ek Listesi Kontrolü:" , ekNo +":" + description);
+            takeScreenshot();
             return this;
         }
 
