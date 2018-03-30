@@ -179,7 +179,7 @@ public class ComboLovHelper extends BaseLibrary {
             rows = $$(lovSecilen);
         rows = rows.filter(visible);
 
-        System.out.println("Combolov selected items size " + rows.size());
+        //System.out.println("Combolov selected items size " + rows.size());
         Allure.addAttachment("Items count", String.valueOf(rows.size()));
         if (rows.size() > 0)
             Allure.addAttachment("Values", rows.texts().toString());
@@ -454,7 +454,7 @@ public class ComboLovHelper extends BaseLibrary {
         return ElementFinder.wrap(BelgenetElement.class, null, By.cssSelector(lovTree), 0);
     }
 
-    @Step("Sonuç bulunamamıştır mı?")
+    @Step("\"Sonuç bulunamamıştır\" mı?")
     public boolean isEmpty() {
         boolean isempty = $$(lovTreeList).get(0).shouldBe(visible).is(have(text("Sonuç bulunamamıştır")));
         Allure.addAttachment("Value", String.valueOf(isempty));

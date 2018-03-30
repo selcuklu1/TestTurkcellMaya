@@ -158,7 +158,7 @@ public class BaseTest extends BaseLibrary {
         testResults += "\nTotal Tests: " + context.getAllTestMethods().length;
         testResults += "\nPassed Tests: " + context.getPassedTests().size();
         testResults += "\nFailed Tests: " + context.getFailedTests().size();
-        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().getAllResults().size() + context.getFailedTests().size())).toString() + "\n";
+        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().size() + context.getFailedTests().size())).toString() + "\n";
         testResults += "\n///////////////////////////////////////////////////////";
         testResults += "\nTEST CLASS: " + test.getDeclaringClass().getSimpleName() + "\n";
         testResults += "\nTEST: " + testName + "\n";

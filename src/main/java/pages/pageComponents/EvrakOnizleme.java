@@ -70,12 +70,16 @@ public class EvrakOnizleme extends MainPage {
 
     @Step("PDF Önizleme tekst kontrolü")
     public EvrakOnizleme pdfOnizlemeKontrol(Condition... kotrolKriteri){
-        sleep(5000);
+        new PDFOnizleme($(".onizlemeFrame").should(exist))
+                .checkInPage(1, kotrolKriteri)
+                .switchToDefaultContent();
+
+        /*sleep(5000);
         switchTo().frame($(".onizlemeFrame"));
         for (Condition condition : kotrolKriteri) {
             $(".textLayer").shouldHave(condition);
         }
-        switchTo().defaultContent();
+        switchTo().defaultContent();*/
         return this;
     }
 
@@ -1076,7 +1080,7 @@ public class EvrakOnizleme extends MainPage {
         @Step("Kişiye seç")
         public TeslimAlveHavaleEt kisiyeSec(User user){
             String filter = user.getBirimKisaAdi().isEmpty() ? user.getBirimAdi() : user.getBirimKisaAdi();
-            kisiyeHavaleLov.selectLov(user.getFullname());
+            //kisiyeHavaleLov.selectLov(user.getFullname());
 
             kisiyeHavaleLov.type(user.getFullname())
                     .getSelectableItems()

@@ -58,12 +58,15 @@ class ComboBoxHelper extends BaseLibrary {
             clickJs($(By.xpath(panelXpath + " //li[.//*[contains(normalize-space(),'" + text + "')]]")).toWebElement());
         }*/
 
-        if ($$(liLocator).filterBy(text(text)).size() > 0 && !js){
+        if (js){
+            if ($$(liLocator).filterBy(exactText(text)).size() == 0)
+                openPanel();
+
             clickJs($$(liLocator).filterBy(text(text)).first().toWebElement());
         }
         else {
             openPanel();
-            $$(liLocator).filterBy(exactText(text)).get(0).scrollIntoView(true).click();
+            $$(liLocator).filterBy(exactText(text)).get(0).scrollIntoView(false).click();
         }
 
         //$(label).shouldHave(text(text));

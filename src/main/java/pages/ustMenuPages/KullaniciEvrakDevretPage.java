@@ -57,8 +57,9 @@ public class KullaniciEvrakDevretPage extends MainPage {
     @Step("Devredecek Kişi seç: {devredecekKisi}")
     public KullaniciEvrakDevretPage devredecekKisiSec(String devredecekKisi) {
 //        txtDevredecekKisi.setValue(devredecekKisi);
-        txtDevredecekKisi.waitUntil(visible, 5000);
-        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", txtDevredecekKisi);
+        //txtDevredecekKisi.waitUntil(visible, 5000);
+        //Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", txtDevredecekKisi);
+        txtDevredecekKisi.scrollIntoView(false);
         txtDevredecekKisi.selectLov(devredecekKisi);
         return this;
     }

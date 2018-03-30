@@ -57,6 +57,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     String planAdi2270;
     String planAdi2279;
     LinkedHashMap<String, String> dagitimPlanElemanlari;
+    LinkedHashMap<String,String> evraktaGorunecekHitap1280;
     LinkedHashMap<String,String> evraktaGorunecekHitap;
     LinkedHashMap<String,String> evraktaGorunecekHitap2279;
 
@@ -74,6 +75,13 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         dagitimPlanElemanlari.put("Kurum", "Cumhurbaşkanlığı");
         dagitimPlanElemanlari.put("Gerçek Kişi", "Zübeyde TEKİN");
         dagitimPlanElemanlari.put("Tüzel Kişi", "Türksat Optiim");
+
+        evraktaGorunecekHitap1280 = new LinkedHashMap<>();
+        evraktaGorunecekHitap1280.put("Kullanıcı", "Sayın " + user.getFullname());
+        evraktaGorunecekHitap1280.put("Birim", user.getBirimAdi().toUpperCase() + "E");
+        evraktaGorunecekHitap1280.put("Kurum", "Cumhurbaşkanlığı".toUpperCase() + "NA");
+        evraktaGorunecekHitap1280.put("Gerçek Kişi", "Sayın Zübeyde TEKİN");
+        evraktaGorunecekHitap1280.put("Tüzel Kişi", "Türksat Optiim".toUpperCase() + "E");
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.yeni()
@@ -166,7 +174,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.sorgulamadaAdGir(adi)
                 .ara()
-                .sorgulamaDataTable.searchByColumnName("Dağıtım Planı Ad").findRows(exactText(adi)).shouldHaveSize(1);//.getFoundRow().$(page.copyButtonLocator).click();
+                .sorgulamaDataTable
+                .searchByColumnName("Dağıtım Planı Ad")
+                .findRows(exactText(adi)).shouldHaveSize(1);
+        //.getFoundRow().$(page.copyButtonLocator).click();
         page.kopyala();
         checkFields(page, adi, aciklama, kullanildigiBirim, true, dagitimElemanlariTipi, dagitimElemanlari);
         page.adiGir(newAd)
@@ -315,7 +326,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
                 .geregiSec(planAdi1280)
                 .geregiDagitimHitapDuzenlemeTiklanir(text(planAdi1280))
-                .dagitimPlaniDetaySirasiKontrolu(dagitimPlanElemanlari)
+                .dagitimPlaniDetaySirasiKontrolu(evraktaGorunecekHitap1280)
                 .iptal();
 
         evrakOlusturPage.pageButtons().pdfOnizlemeTikla();
@@ -362,7 +373,12 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage().bulVeGuncelleTikla(adi);
 
-        u = page.getKullanildigiBirim().getSelectedTitles().last().has(text(u1.getBirimAdi())) ? u2 : u1;
+        page.getKullanildigiBirim().getSelectedItems().shouldHave(sizeGreaterThan(0));
+
+        String birim = page.getKullanildigiBirim()
+                .getSelectedTitles().shouldHave(sizeGreaterThan(0))
+                .last().shouldNotBe(empty).text();
+        u = birim.contains(u1.getBirimAdi()) ? u2 : u1;
 
         page.kullanildigiBirimSec(u.getBirimAdi())//, u.getBirimKisaAdi())
                 .kaydet().islemMesaji().basariliOlmali();
@@ -371,6 +387,16 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         login(u);
         evrakOlusturSayfadaAktifKontrolu(adi);
+
+        /*if (u1.equals(u)){
+            evrakOlusturSayfadaAktifKontrolu(adi);
+            login(u);
+            evrakOlusturSayfadaPasifKontrolu(adi);
+        } else {
+            evrakOlusturSayfadaPasifKontrolu(adi);
+            login(u);
+            evrakOlusturSayfadaAktifKontrolu(adi);
+        }*/
 
     }
 

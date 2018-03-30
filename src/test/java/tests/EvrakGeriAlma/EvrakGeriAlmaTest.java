@@ -28,7 +28,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1", "Ağ (Network) Uzmanı");
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim", "Ağ (Network) Uzman Yardımcısı");
-    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YGD/BHUPGMY", "Genel Müdür");
+    //User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YGD/BHUPGMY", "Genel Müdür");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Genel Müdür");
 
     @Test(description = "TS0978a: Olur yazısı - İmzacıdan evrakın koordine parafçı tarafından geri alınması", enabled = true)
     public void TS0978a() {
@@ -88,7 +89,6 @@ public class EvrakGeriAlmaTest extends BaseTest {
         koordineBekleyenlerPage.openPage()
                 .searchTable().findRowAndSelect(text(konu))
                 .gonderenNotuTooltip(notTeksti);
-
     }
 
     @Test(description = "TS0978b: Olur yazısı - İmzacıdan evrakın ilk imzacı tarafından geri alınması", enabled = true)
@@ -214,8 +214,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
         SearchTable searchTable = parafladiklarimPage.openPage().searchTable()
                 .findRowAndSelect(text(konu));
-        searchTable.getIcerikGosterButton("bulunmalı").shouldBe(visible);
-        searchTable.getTamEkranButton("bulunmalı").shouldBe(visible);
+        searchTable.icerikGosterButton(visible)
+                    .tamEkran(visible);
 
         login(imzaci);
         new ImzaBekleyenlerPage().openPage().searchTable()
@@ -224,16 +224,18 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
         new ImzaladiklarimPage().openPage().searchTable()
                 .findRowAndSelect(text(konu));
-        evrakOnizleme.new EvrakGecmisi()
-                .bulunanKayittaKontrol(
-                        text("Evrak kurum içi otomatik postalandı.")
-                        , text("Evrak Klasöre kaldırıldı")
-                );
+        evrakOnizleme.pdfOnizlemeKontrol(text(yeniEditorTeksti));
+        step("GEÇMIŞ KOTROLÜ!!!", "!!!İSTENİLEN GEÇMIŞ YOK: yazısı oluşturulurken seçilen klasöre otomatik kaldırıldığı açıklamas");
+        evrakOnizleme.new EvrakGecmisi().tabiAc()
+                .kayitBulunmali(text("Evrak kurum içi otomatik postalandı."))
+                .kayitBulunmali(text("Evrak Klasöre kaldırıldı"));
 
         //Birim kullanıcı ile
         login(kullanici);
         new TeslimAlinmayiBekleyenlerPage().openPage()
-                .searchTable().findRowAndSelect(text(konu));
+                .searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().teslimAlveHavaleEt()
+                .islemMesaji().closeMessage();
         evrakOnizleme.new TeslimAlveHavaleEt()
                 .kisiyeSec(kullanici)
                 .teslimAlGonder()
@@ -255,6 +257,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
         String iadeEtNotu = "İade et not teksti";
         String yeniEditorTeksti = "Yeni editör teksti";
         String versiyonlariKarsilastirTooltip = "Evrak "+imzaci1.getFullname()+" kullanıcısının düzelttiği versiyonuyla akışa sokulmuştur.";
+
+        System.out.println("Konu: " + konu);
 
         ImzaBekleyenlerPage imzaBekleyenlerPage = new ImzaBekleyenlerPage();
         ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage();
@@ -333,12 +337,16 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .icerikGoster();
         evrakDetayiPage.pageButtons().evrakGoster();
         new EvrakOnizleme().pdfOnizlemeKontrol(text(yeniEditorTeksti));
+        evrakDetayiPage.closePage();
 
-        evrakDetayiPage.pageButtons().geriAl().geriAlGeriAl()
+        new ImzaladiklarimPage().openPage()
+                .searchTable().findRows(text(konu))
+                .icerikGoster()
+                .pageButtons().geriAl().geriAlGeriAl()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
                 .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
-                .geriAlGeriAl()
-                .islemMesaji().basariliOlmali();
+                .geriAlGeriAl();
+                //.islemMesaji().basariliOlmali();
         imzaBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu));
     }
 
@@ -384,9 +392,9 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         SearchTable searchTable = parafladiklarimPage.openPage().searchTable()
-                .findRowAndSelect(text(konu));
-        searchTable.getIcerikGosterButton("bulunmalı").shouldBe(visible);
-        searchTable.getTamEkranButton("bulunmalı").shouldBe(visible);
+                .findRowAndSelect(text(konu))
+                .icerikGosterButton(visible)
+                .tamEkran(visible);
 
         login(imzaci);
         new ImzaBekleyenlerPage().openPage()
@@ -394,14 +402,20 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .evrakPageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 
-        EvrakDetayiPage evrakDetayiPage = new ImzaladiklarimPage().openPage()
+        ImzaladiklarimPage imzaladiklarimPage = new ImzaladiklarimPage().openPage();
+        EvrakDetayiPage evrakDetayiPage = imzaladiklarimPage
                 .searchTable().findRows(text(konu))
                 .icerikGoster();
         evrakDetayiPage.pageButtons()
                 .getGeriAl().shouldBe(visible);
         evrakDetayiPage.pageButtons().evrakGoster();
+        evrakOnizleme.pdfOnizlemeKontrol(text(yeniEditorTeksti), text(kurum.toUpperCase() + "NA"));
+        /*evrakDetayiPage.closePage();
+        imzaladiklarimPage.searchTable().findRowAndSelect(text(konu));
 
-        new EvrakOnizleme().pdfOnizlemeKontrol(text(yeniEditorTeksti), text(kurum.toUpperCase() + "NA"));
+        evrakOnizleme.evrakGecmisi.tabiAc()
+                .kayitBulunmali(text("Evrak kurum içi otomatik postalandı."))
+                .kayitBulunmali(text("Evrak Klasöre kaldırıldı"));*/
     }
 
     @Test(description = "TS0980a: Olur yazısı - İmzacıdan evrakın kontrolcü tarafından geri alınması", enabled = true)
@@ -617,13 +631,17 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .evrakPageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 
-        evrakDetayiPage = new ImzaladiklarimPage().openPage()
+        evrakDetayiPage = imzaladiklarimPage.openPage()
                 .searchTable().findRows(text(konu))
                 .icerikGoster();
         evrakDetayiPage.pageButtons().evrakGoster();
         new EvrakOnizleme().pdfOnizlemeKontrol(text(yeniEditorTeksti));
+        evrakDetayiPage.closePage();
 
-        evrakDetayiPage.pageButtons().geriAl().geriAlGeriAl()
+        imzaladiklarimPage.openPage()
+                .searchTable().findRows(text(konu))
+                .icerikGoster()
+                .pageButtons().geriAl().geriAlGeriAl()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
                 .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
                 .geriAlGeriAl();
@@ -667,11 +685,11 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(kontolcu);
         kontrolBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
-        evrakOnizleme.new KontrolEt().kontolEtEkrani(
-                text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
-                ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
-                ,text("Koordeni" + "\n" + koordeneli.getFullname())
-                ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+        evrakOnizleme.new KontrolEt()
+                .kontolEtEkrani(text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname()))
+                .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
+                .kontolEtEkrani(text("Koordine\n" + koordeneli.getFullname()))
+                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 
@@ -723,10 +741,10 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(kontolcu);
         kontrolBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
-        evrakOnizleme.kontrolEt.kontolEtEkrani(
-                text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
-                ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
-                ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+        evrakOnizleme.kontrolEt
+                .kontolEtEkrani(text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname()))
+                .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
+                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 

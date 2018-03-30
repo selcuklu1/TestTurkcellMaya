@@ -1,6 +1,7 @@
 package pages.pageComponents.tabs;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -8,6 +9,7 @@ import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.SearchTable;
 
+import static com.codeborne.selenide.Condition.empty;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -101,6 +103,12 @@ public class DogrulamaTab extends MainPage {
         return this;
     }
 
+    @Step("Aktarılma Durumu değeri {aktarilmaDurum} olmalı")
+    public DogrulamaTab aktarilmaDurumuKontroluAssert(String aktarilmaDurum){
+        Assert.assertEquals(getAktarilmaDurumuLabel().text(), aktarilmaDurum, "Aktarılmam durumu");
+        return this;
+    }
+
 
     public SelenideElement getIslemZamaniLabel() {
         return container.$("table[id$='islemZamaniPanelGrid'] label.columnLabel");
@@ -126,6 +134,50 @@ public class DogrulamaTab extends MainPage {
     @Step("Güncelle butona tıklanır")
     public DogrulamaTab guncelle(){
         getEvrakDogrulaGuncelleButton().click();
+        return this;
+    }
+
+    @Step("Güncelle butona her {intervalSeconds} saniye tıklanır, toplam bekleme zamanı - {timeoutSeconds} saniye")
+    public DogrulamaTab guncelleTimeout(int intervalSeconds, int timeoutSeconds){
+        for (int i = 0; i < timeoutSeconds; i++) {
+            guncelle();
+            Selenide.sleep(intervalSeconds*1000);
+        }
+        return this;
+    }
+
+    @Step("Aktarılma durumu ve islem zamani kontrolü")
+    public DogrulamaTab aktarilmaDurumuVeIslemZamaniKontorlu(String aktarilmaDurumu, Condition islemZamani, int waitSeconds){
+
+        for (int i = 0; i < waitSeconds; i+=10) {
+            Selenide.sleep(10000);
+            guncelle();
+        }
+
+        Selenide.sleep(5000);
+
+        aktarilmaDurumuKontroluAssert(aktarilmaDurumu);
+        islemZamaniKontrolu(islemZamani);
+
+        return this;
+    }
+
+    @Step("Aktarılma durumu ve islem zamani kontrolü")
+    public DogrulamaTab aktarilmaDurumuVeIslemZamaniKontorlu(String aktarilmaDurumu, Condition islemZamani, int intervalSeconds, int timeoutSeconds){
+
+        for (int i = 0; i < timeoutSeconds; i+=intervalSeconds) {
+            Selenide.sleep(intervalSeconds*1000);
+            guncelle();
+
+            if (getAktarilmaDurumuLabel().has(text(aktarilmaDurumu)))
+                break;
+        }
+
+        Selenide.sleep(5000);
+
+        aktarilmaDurumuKontroluAssert(aktarilmaDurumu);
+        islemZamaniKontrolu(islemZamani);
+
         return this;
     }
     

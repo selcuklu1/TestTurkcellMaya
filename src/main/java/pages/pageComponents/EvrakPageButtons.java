@@ -196,7 +196,7 @@ public class EvrakPageButtons extends MainPage {
     @Step("Iade et")
     public EvrakPageButtons evrakIadeEt(User user, String iadeNotu) {
         getButton("İade Et").click();
-        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(user.getFullname());
+        comboBox(By.id("mainPreviewForm:kullaniciListOneMenu_id")).selectComboBox(user.getFullname(), true);
         container.$("textarea[id$='notTextArea_id'").setValue(iadeNotu);
         container.$("button[id$='iadeEtButton_id'").click();
         return this;

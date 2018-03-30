@@ -104,11 +104,11 @@ public class BaseLibrary extends ElementsContainer {
     public byte[] takeScreenshot() {
         byte[] bytes = new byte[]{};
         try {
-            System.out.println("Screenshot will be taken");
+            //System.out.println("Screenshot will be taken");
             bytes = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-            System.out.println("Screenshot has been taken");
+            //System.out.println("Screenshot has been taken");
         } catch (WebDriverException e) {
-            System.out.println("Take screenshot error:" + e.getMessage());
+            log.warning("Take screenshot error:" + e.getMessage());
         }
         return bytes;
     }
@@ -119,7 +119,7 @@ public class BaseLibrary extends ElementsContainer {
         try {
             bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         } catch (WebDriverException e) {
-            System.out.println("Error takeScreenshot:" + e.getMessage());
+            log.warning("Error takeScreenshot:" + e.getMessage());
         }
         return bytes;
     }
@@ -142,7 +142,7 @@ public class BaseLibrary extends ElementsContainer {
                     });
 //            System.out.println("Loading: Ok");
         } catch (Exception e) {
-//            System.out.println("Loading window error: " + e.getMessage());
+            System.out.println("Loading window error: " + e.getMessage());
         }
         /*try {
             Wait().until(ExpectedConditions.and(
@@ -190,7 +190,7 @@ public class BaseLibrary extends ElementsContainer {
             }*/
 
 //            System.out.println("Count:" + driver.findElements(By.className("loading")).size());
-            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .loading")).size());
+            //System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .loading")).size());
             new WebDriverWait(driver, 10, 50).
                     until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
                             By.className("loading"))));
@@ -252,7 +252,7 @@ public class BaseLibrary extends ElementsContainer {
                 isJsFinished = (boolean) js.executeScript("return (document.readyState == \"complete\" || document.readyState == \"interactive\")");
             } catch (Exception e) {
                 isJsFinished = true;
-                System.out.println("Load: isJsFinished error: " + e.getMessage());
+                //System.out.println("Load: isJsFinished error: " + e.getMessage());
             }
 
             //            boolean isAjaxFinished = (boolean) ((JavascriptExecutor) driver1).
@@ -263,7 +263,7 @@ public class BaseLibrary extends ElementsContainer {
                 isAjaxFinished = (boolean) js.executeScript("var result = true; try { result = (typeof jQuery != 'undefined') ? jQuery.active == 0 : true } catch (e) {}; return result;");
             } catch (Exception e) {
                 isAjaxFinished = true;
-                System.out.println("Load: isAjaxFinished error: " + e.getMessage());
+                //System.out.println("Load: isAjaxFinished error: " + e.getMessage());
             }
 
             boolean isLoaderHidden = false;
@@ -272,7 +272,7 @@ public class BaseLibrary extends ElementsContainer {
 //                    executeScript("return $('.loading').is(':visible') == false");
             } catch (Exception e) {
                 isLoaderHidden = true;
-                System.out.println("Load: isLoaderHidden error: " + e.getMessage());
+                //System.out.println("Load: isLoaderHidden error: " + e.getMessage());
             }
 
             return isJsFinished && isLoaderHidden && isAjaxFinished;
@@ -300,17 +300,17 @@ public class BaseLibrary extends ElementsContainer {
                     int height = Integer.parseInt(size[1]);
                     Dimension browserSize = new Dimension(width, height);
                     WebDriverRunner.getWebDriver().manage().window().setSize(browserSize);
-                    System.out.println("custom maximize()");
+//                    System.out.println("custom maximize()");
                 } catch (NumberFormatException e) {
                     WebDriverRunner.getWebDriver().manage().window().maximize();
-                    System.out.println("manage().window().maximize()");
+//                    System.out.println("manage().window().maximize()");
                 }
             } else {
                 WebDriverRunner.getWebDriver().manage().window().maximize();
                 System.out.println("manage().window().maximize()");
             }
         } catch (Exception e) {
-            System.out.println("ResultListener maximize:" + e.getMessage());
+//            System.out.println("ResultListener maximize:" + e.getMessage());
         }
     }
 
@@ -482,7 +482,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+//        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
 
         return dtf.format(now);
     }
@@ -496,7 +496,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysDateForKis() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+//        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
 
         return dtf.format(now);
     }
@@ -506,7 +506,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysDateForTarihSaat() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+//        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
 
         return dtf.format(now);
     }
@@ -514,7 +514,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysDateForKis2() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
+//        System.out.println(dtf.format(now)); // 2016/11/16 12:08:43
 
         return dtf.format(now);
     }
@@ -540,7 +540,7 @@ public class BaseLibrary extends ElementsContainer {
         cal.setTime(dateFormat.parse(untildate));
         cal.add(Calendar.DATE, i);
         String convertedDate = dateFormat.format(cal.getTime());
-        System.out.println("Gunun tarihinden 10 gun sonrasi: " + convertedDate);
+//        System.out.println("Gunun tarihinden 10 gun sonrasi: " + convertedDate);
 
         return convertedDate;
 
@@ -550,7 +550,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysYear() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
+//        System.out.println(dtf.format(now));
 
         return dtf.format(now);
     }
@@ -559,7 +559,7 @@ public class BaseLibrary extends ElementsContainer {
     public String getSysMonth() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM");
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
+//        System.out.println(dtf.format(now));
 
         return dtf.format(now);
     }
@@ -584,10 +584,10 @@ public class BaseLibrary extends ElementsContainer {
             File file = new File(pathToFile);
 
             if (file.delete()) {
-                System.out.println(file.getName() + " dosyasi silindi.");
+//                System.out.println(file.getName() + " dosyasi silindi.");
 //                LogPASS(file.getName() + " dosyasi silindi.");
             } else {
-                System.out.println("Dosya silme islemi basarisiz.");
+//                System.out.println("Dosya silme islemi basarisiz.");
                 //logger.error("Error : Dosya silme islemi basarisiz.");
 //                LogFAIL("Error : Dosya silme islemi basarisiz. ");
             }
@@ -624,7 +624,7 @@ public class BaseLibrary extends ElementsContainer {
         String res = "";
         for (int i = 0; i < 11; i++) res = res + Integer.toString(array.elementAt(i));
 
-        System.out.println("Olusturulan TC Kimlik No:" + res);
+//        System.out.println("Olusturulan TC Kimlik No:" + res);
 
         return res;
     }
@@ -655,13 +655,13 @@ public class BaseLibrary extends ElementsContainer {
             element = findElementOnTableByColumnInput(byTable, columnIndex, columnInput);
             if (element == null) {
                 if (next.isDisplayed() == false) {
-                    System.out.println("Element tablodaki hiç bir sayfada bulunamadı.");
+//                    System.out.println("Element tablodaki hiç bir sayfada bulunamadı.");
                     return null; // Element hiç bir sayfada bulunamazsa null döner.
                 }
                 next.click();
             }
         }
-        System.out.println("Tabloda element bulundu.");
+//        System.out.println("Tabloda element bulundu.");
         return element;
     }
 
@@ -707,7 +707,7 @@ public class BaseLibrary extends ElementsContainer {
         Matcher m = y.matcher(x);
         m.find();
         String number = m.group();
-        System.out.println(number);
+//        System.out.println(number);
 
         return number;
     }
@@ -788,13 +788,13 @@ public class BaseLibrary extends ElementsContainer {
             status = element.isDisplayed();
             if (status == false) {
                 if (next.isDisplayed() == false) {
-                    System.out.println("Element hiç bir sayfada bulunamadı.");
+                    //System.out.println("Element hiç bir sayfada bulunamadı.");
                     return status;
                 }
                 next.click();
             }
         }
-        System.out.println("Element bulundu.");
+        //System.out.println("Element bulundu.");
         return status;
     }
 
@@ -814,7 +814,7 @@ public class BaseLibrary extends ElementsContainer {
                     } else {
                         if (files[i].getName().toString().contains(fileName)) {
                             files[i].delete();
-                            System.out.println("dosya silindi");
+                            //System.out.println("dosya silindi");
                             flag = true;
                         } else
                             System.out.println("Klasörde istenilen isimde dosya bulunamadı.");
@@ -948,7 +948,7 @@ public class BaseLibrary extends ElementsContainer {
 //            assert s.equalsIgnoreCase(fileName) : "İstenilen dosya indirilmemiştir.";
 
             if (s.contains(fileName)) {
-                System.out.println("dosya indirilmiştir.");
+                //System.out.println("dosya indirilmiştir.");
                 Allure.addAttachment(dir_contents[i].getName().toString(), "raporu indirilmiştir");
                 flag = true;
                 break;
@@ -962,13 +962,13 @@ public class BaseLibrary extends ElementsContainer {
     public String getOS() {
         Capabilities caps = getCapabilities();
         String platformName = caps.getCapability("platformName").toString();
-        System.out.println("Operation System: " + platformName);
+        //System.out.println("Operation System: " + platformName);
         return platformName;
     }
 
     public String getBrowserName() {
         String browserName = getCapabilities().getBrowserName();
-        System.out.println("Browser Name : " + browserName);
+        //System.out.println("Browser Name : " + browserName);
         return browserName;
     }
 
@@ -980,7 +980,7 @@ public class BaseLibrary extends ElementsContainer {
         // String browserName = caps.getBrowserName();
         // String browserVersion = caps.getVersion();
         Platform operationSystem = caps.getPlatform();
-        System.out.println("Operation System: " + operationSystem.name());
+        //System.out.println("Operation System: " + operationSystem.name());
 
         if (operationSystem.is(Platform.WINDOWS)) {
             uploadPath = "C:\\TestAutomation\\BelgenetFTA\\documents\\";
@@ -993,7 +993,7 @@ public class BaseLibrary extends ElementsContainer {
             //TODO: Mac pathi verilecek
             uploadPath = System.getProperty("user.name") + "/BelgenetFTA/documents";
         }
-        System.out.println("File path: " + uploadPath);
+        //System.out.println("File path: " + uploadPath);
         return uploadPath;
     }
 
@@ -1069,7 +1069,7 @@ public class BaseLibrary extends ElementsContainer {
 
         try {
 
-            System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .template-upload")).size());
+            //System.out.println("Count:" + driver.findElements(By.cssSelector("div[style*='display: block;'] .template-upload")).size());
             new WebDriverWait(driver, timeoutSec, 10).
                     until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(
                             By.className("template-upload"))));
@@ -1087,7 +1087,7 @@ public class BaseLibrary extends ElementsContainer {
         String myIP = driver.findElement(By.cssSelector("ul[class='list-group text-center'] h3")).getText();
         String[] ipString = myIP.split(":");
         myIP = ipString[1].trim();
-        System.out.println(myIP);
+        //System.out.println(myIP);
         return myIP;
     }
 

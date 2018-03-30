@@ -89,24 +89,27 @@ public class EvrakDogrulama extends BaseTest {
             .evrakPageButtons()
                 .parafla().islemMesaji().basariliOlmali();
 
-        ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
-        EvrakDetayiPage evrakDetayiPage = parafladiklarimPage.openPage()
+//        ParafladiklarimPage parafladiklarimPage = new ParafladiklarimPage();
+//        EvrakDetayiPage evrakDetayiPage =
+        new ParafladiklarimPage().openPage()
                 .searchTable().findRowAndSelect(text(konu))
-                .icerikGoster();
-        evrakDetayiPage.dogrulamaTab().openTab()
+                .icerikGoster()
+                .dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarılacak")
-                .islemZamaniKontrolu(empty);
-        evrakDetayiPage.closePage();
+                .islemZamaniKontrolu(empty)
+                .aktarilmaDurumuVeIslemZamaniKontorlu("Aktarılacak", empty, 120);
+
+        /*evrakDetayiPage.closePage();
 
         //125 saniye beklenir
         step("2 dk beklenir", "121 saniye");
-        Selenide.sleep(121000);
-        parafladiklarimPage.openPage()
+        Selenide.sleep(121000);*/
+        /*parafladiklarimPage.openPage()
                 .searchTable().findRowAndSelect(text(konu))
                 .icerikGoster();
         evrakDetayiPage.dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarılacak")
-                .islemZamaniKontrolu(empty);
+                .islemZamaniKontrolu(empty);*/
     }
 
     @Test(description = "TS2079: Doğrulanacak evrak oluşturma", enabled = true)
@@ -137,8 +140,9 @@ public class EvrakDogrulama extends BaseTest {
                 .icerikGoster();
         evrakDetayiPage.dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarılacak")
-                .islemZamaniKontrolu(empty);
-        evrakDetayiPage.closePage();
+                .islemZamaniKontrolu(empty)
+                .aktarilmaDurumuVeIslemZamaniKontorlu("Aktarıldı", empty, 10, 120);
+        /*evrakDetayiPage.closePage();
 
         //125 saniye beklenir
         step("2 dk beklenir", "121 saniye");
@@ -148,7 +152,7 @@ public class EvrakDogrulama extends BaseTest {
                 .icerikGoster();
         evrakDetayiPage.dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Aktarıldı")
-                .islemZamaniKontrolu(not(empty));
+                .islemZamaniKontrolu(not(empty));*/
     }
 
     @Test(description = "TS2081: Evrak Doğrulama Aktarım - Aktar/Geri Al aksiyonunun eklemesi ve kaldırılması", enabled = true)
@@ -269,8 +273,9 @@ public class EvrakDogrulama extends BaseTest {
                 .icerikGoster()
                 .dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Geri Alınacak")
-                .islemZamaniKontrolu(empty);
-        evrakDetayiPage.closePage();
+                .islemZamaniKontrolu(empty)
+                .aktarilmaDurumuVeIslemZamaniKontorlu("Geri alındı", not(empty), 10, 120);
+        /*evrakDetayiPage.closePage();
 
         //125 saniye beklenir
         step("2 dk beklenir", "121 saniye");
@@ -280,6 +285,6 @@ public class EvrakDogrulama extends BaseTest {
                 .icerikGoster();
         evrakDetayiPage.dogrulamaTab().openTab()
                 .aktarilmaDurumuKontrolu("Geri alındı")
-                .islemZamaniKontrolu(not(empty));
+                .islemZamaniKontrolu(not(empty));*/
     }
 }

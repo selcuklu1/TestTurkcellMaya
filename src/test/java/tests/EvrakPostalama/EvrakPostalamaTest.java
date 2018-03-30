@@ -771,13 +771,20 @@ public class EvrakPostalamaTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true
-            , dependsOnMethods = {"TS2235"}
+    @Test(enabled = false
+            //, dependsOnMethods = {"TS2235"}
             , description = "TS0309 : Önizleme ekranından ek ilgi ve ilişiği olan evrakın postalanması")
     public void TS0309() throws InterruptedException {
         login(user1);
         //login("Mbozdemir", "123");
-        //String konu = "TS2235_20180209022613";
+        dagitimPlanElemanlari = new LinkedHashMap<>();
+        dagitimPlanElemanlari.put(GERCEK_KISI, "OptiimTEST");
+        dagitimPlanElemanlari.put(DAGITIM_PLANLARI, "OPTİİM DAĞITIM 1");
+        dagitimPlanElemanlari.put(BIRIM, "ARAŞTIRMA-GELİŞTİRME ALTTTT");
+        dagitimPlanElemanlari.put(TUZEL_KISI, "Türksat Optiim");
+        dagitimPlanElemanlari.put(KULLANICI, "Optiim Test");
+        dagitimPlanElemanlari.put(KURUM, "Başbakan");
+        String konu = "TS2235_20180327164213";
         //String konu = konu309;
         String basariMesaji = "İşlem başarılıdır!";
 //        String title = "OptiimTest TestOptiim";
@@ -802,7 +809,7 @@ public class EvrakPostalamaTest extends BaseTest {
         //postalanacakEvraklarPage.postalanacakYerlerGidisSekliDoldur("Adi Posta")
         EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
         evrakPostala = evrakOnizleme.evrakPostala();
-        gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
+        //gidisSekliKontrol(DAGITIM_PLANLARI.getOptionText(), "DAĞITIM YERLERİNE", "Detaya tıkla");
         gidisSekliKontrol(BIRIM.getOptionText(), dagitimPlanElemanlari.get(BIRIM), "Elektronik Gönderilmiştir");
         gidisSekliKontrol(KULLANICI.getOptionText(), dagitimPlanElemanlari.get(KULLANICI), "Elektronik Gönderilmiştir");
         gidisSekliKontrol(TUZEL_KISI.getOptionText(), dagitimPlanElemanlari.get(TUZEL_KISI), "Adi Posta");
@@ -883,12 +890,17 @@ public class EvrakPostalamaTest extends BaseTest {
 
         postalananlarPage
                 .evrakSec(konu, tarih, title[0])
-                .postaDetayiTikla()
-                .postaDetayiPostalananYerlerKontrolu("DAĞITIM YERLERİNE", "309", "Başbakanlık açıklama")
+                .postaDetayiTikla();
+        dagitimPlanElemanlari.forEach((geregiSecimTipi, dagitim) ->{
+            postalananlarPage.postaDetayiPostalananYerlerKontrolu(dagitim, "309", "Başbakanlık açıklama")
+                    .postaDetayiPostalananYerlerYazdir(dagitim, "309", "Başbakanlık açıklama")
+                    .evrakDetaylariUstVerilerYazdirButonTikla(konu)
+                    .pdfKontrol();
+        });
+        /*postalananlarPage.postaDetayiPostalananYerlerKontrolu("DAĞITIM YERLERİNE", "309", "Başbakanlık açıklama")
                 .postaDetayiPostalananYerlerYazdir("DAĞITIM YERLERİNE", "309", "Başbakanlık açıklama")
                 .evrakDetaylariUstVerilerYazdirButonTikla(konu)
-                .pdfKontrol();
-
+                .pdfKontrol();*/
     }
 
     @Severity(SeverityLevel.CRITICAL)
