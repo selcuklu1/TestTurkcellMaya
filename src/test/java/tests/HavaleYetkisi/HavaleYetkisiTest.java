@@ -164,7 +164,7 @@ public class HavaleYetkisiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "Havale İşlemleri Tüm Birimleri Görebilme aksiyonunu kaldırma")
+    @Test(enabled = true, description = "TS2253 : Havale İşlemleri Tüm Birimleri Görebilme aksiyonunu kaldırma")
     public void TS2253() throws InterruptedException {
         String aksiyonAdi = "Havale İşlemleri Tüm Birimleri Görebilme";
         String guncelBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
