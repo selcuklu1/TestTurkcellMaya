@@ -251,7 +251,8 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(ztekinGuncel);
+        login(antetIslem1Guncel);
+        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -306,6 +307,8 @@ public class AntetIslemleri extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
         login(gsahinUstBirim);
+        Selenide.sleep(10000);
+
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
@@ -381,7 +384,7 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(ztekinGuncel);
+        login(antetIslem1Guncel);
 
         evrakOlusturPage
                 .openPage()
@@ -517,7 +520,7 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(ztekinGuncel);
+        login(antetIslem1Guncel);
 
         evrakOlusturPage
                 .openPage()
