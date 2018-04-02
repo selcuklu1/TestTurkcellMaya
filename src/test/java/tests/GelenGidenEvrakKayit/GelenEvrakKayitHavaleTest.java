@@ -480,10 +480,8 @@ public class GelenEvrakKayitHavaleTest extends BaseTest {
         gelenEvrakKayitPage
                 .ekEkleButton1()
                 .dosyaEkleTabTabloKontrolu("Ek-3")
-                .eklenenDosyaKontrolu()
+                .eklenenDosyaKontrolu("Ek-3")
                 //TODO: Burada dosya adı gelmemektedir. Bir bug bulunmaktadır.
-//              Dosya adının evrak olarak geldiği, açıklamada ... tarihli ... sayılı yazınız. ifadesinin doğru tarih ve sayıyla geldiği görülür."
-//              13/03/2018 tarihli 54354354-11023 sayılı yazınız.
                 .ilgiliBilgiFiltreAc()
                 .ilgiBilgileriAlanKontrolleri()
 

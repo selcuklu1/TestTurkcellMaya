@@ -456,7 +456,7 @@ public class ComboLovHelper extends BaseLibrary {
 
     @Step("\"Sonuç bulunamamıştır\" mı?")
     public boolean isEmpty() {
-        boolean isempty = $$(lovTreeList).get(0).shouldBe(visible).is(have(text("Sonuç bulunamamıştır")));
+        boolean isempty = $$(lovTreeList).shouldHave(sizeGreaterThan(0)).get(0).shouldBe(visible).is(have(text("Sonuç bulunamamıştır")));
         Allure.addAttachment("Value", String.valueOf(isempty));
         return isempty;
     }

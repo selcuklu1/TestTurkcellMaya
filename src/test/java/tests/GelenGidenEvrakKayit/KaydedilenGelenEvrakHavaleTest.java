@@ -263,8 +263,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleYap()
                 .ekranKontrolEvrakDetayi()
                 .icerikHavaleAlanKontrolleri()
-                .icerikHavaleIslemleriKisiDoldur(kisi)
-                .eklenenIcerikKisiKontrolu(kisi)
+//                .icerikHavaleIslemleriKisiDoldur(kisi)
+//                .eklenenIcerikKisiKontrolu(kisi)
                 .icerikDagitimBilgileriBirimDoldurWithDetails(birim, details)
                 .eklenenIcerikBirimKontrolu(birim)
                 .eklenenIcerikBirimOpsiyonKontrolu(gerek)
@@ -283,7 +283,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .evrakNoIleEvrakSec(konu)
                 .havaleOnayIkonKontrolu()
                 .havaleOnay()
-                .eklenenKisiKontrolu(kisi)
+//                .eklenenKisiKontrolu(kisi)
                 .havaleOnayiBirimDoldur(birim)
                 .eklenenOnizlemeBirimKontrolu(birim)
 //                .eklenenBirimKontrolu(birim)
@@ -299,12 +299,12 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
-
+        login(TestData.usernameYAKYOL, TestData.passwordYAKYOL);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konu);
 
+        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleTabloKontrolu(konu);

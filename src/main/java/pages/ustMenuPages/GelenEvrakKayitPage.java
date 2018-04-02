@@ -599,7 +599,8 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Tarihi alanını \"{evrakTarihi}\" doldur")
     public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
-        dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
+        setValueJS(dateTxtEvrakBilgileriListEvrakTarihi,evrakTarihi);
+//        dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
 
@@ -1806,8 +1807,12 @@ public class GelenEvrakKayitPage extends MainPage {
         return this;
     }
 
-    @Step("Eklenen Dosya Kontrolü")
-    public GelenEvrakKayitPage eklenenDosyaKontrolu() {
+    @Step("Eklenen Ek Kontrolü {ekNo}")
+    public GelenEvrakKayitPage eklenenDosyaKontrolu(String ekNo) {
+        String aciklama = tblDosyaEkle
+                .filterBy(Condition.text(ekNo)).get(0).$$("td[role='gridcell']").get(2).getText();
+        if(aciklama.length()>0)
+            Allure.addAttachment("Açıklama Kontrol: " , aciklama);
         takeScreenshot();
         return this;
     }

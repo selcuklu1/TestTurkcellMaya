@@ -356,6 +356,17 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("\"{adi}\" dağıtım planı bul ve güncelle butona tıkla")
+    public DagitimPlaniYonetimiPage bulVeGuncelleTikla(String adi, String birim) {
+        sorgulamadaDurumSec("Sadece Aktifler")
+                .sorgulamadaAdGir(adi)
+                .ara()
+                .sorgulamaDataTable.findRows(text(adi),text(birim)).shouldHave(sizeGreaterThan(0));
+        guncelle()
+                .getAdi().shouldHave(value(adi));
+        return this;
+    }
+
     /*@Step("\"{dagitimElemanlariTipi}\" dağıtım elemanı eklenir")
     public DagitimPlaniYonetimiPage dagitimElemaniEkle(String dagitimElemanlariTipi, String dagitimElemani, String evraktaGorunecekHitap) {
 

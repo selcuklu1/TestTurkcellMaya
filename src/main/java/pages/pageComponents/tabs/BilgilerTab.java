@@ -601,7 +601,7 @@ public class BilgilerTab extends MainPage {
 
     @Step("Gereği alanıda değeri seçilecek değer boş mu")
     public BilgilerTab geregiDegerSecilemez(String text) {
-        Assert.assertTrue(getGeregiCombolov().type(text).isEmpty());
+        Assert.assertTrue(getGeregiCombolov().type(text).isEmpty(), "Gereği diolog tree boş");
         return this;
     }
 

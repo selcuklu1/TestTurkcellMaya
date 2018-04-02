@@ -458,6 +458,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Et iade et butonu tıklanır")
     public GelenEvraklarPage iadeEtIadeEt() {
         btnIadeEtIadeEt.click();
         return this;
@@ -475,6 +476,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Dosya Ekle")
     public GelenEvraklarPage onizlemeIadeEtDosyaEkle() {
         btnOnizlemeIadeEtDosyaEkle.click();
         return this;
@@ -499,7 +501,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-
+    @Step("Iade Et Input Doldur")
     public GelenEvraklarPage iadeEtNotInputDoldur(String text) {
         txtIadeEtNot.setValue(text);
         return this;

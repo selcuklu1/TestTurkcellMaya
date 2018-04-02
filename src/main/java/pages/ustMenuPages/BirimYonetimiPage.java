@@ -519,8 +519,16 @@ public class BirimYonetimiPage extends MainPage {
     }
 
     @Step("Antent bilgisi doldur")
-    public BirimYonetimiPage antetBilgisiDoldur(String antentBilgisi) {
-        txtAntentBilgisi.setValue(antentBilgisi);
+    public BirimYonetimiPage antetBilgisiDoldur(String antetBilgisi) {
+        txtAntentBilgisi.setValue(antetBilgisi);
+        return this;
+    }
+
+    @Step("Antent Özel bilgisi linkini tıkla ve doldur: {antetBilgisi}")
+    public BirimYonetimiPage antetOzelBilgisiDoldur(String antetBilgisi) {
+        $$("span[id$='_display']").get(0).click();
+        $("[id='birimYonetimiEditorForm:headerSatir0'] input[id^='birimYonetimiEditorForm:j_idt']").setValue(antetBilgisi);
+        $$("span[id$='_editor'] button[class$='save']").get(0).click();
         return this;
     }
 
