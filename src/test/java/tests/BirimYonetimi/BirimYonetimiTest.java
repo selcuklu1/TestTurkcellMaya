@@ -806,8 +806,8 @@ public class BirimYonetimiTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS1459: Birim bilgisi güncelleme ")
-    public void TS1459() {
+    @Test(enabled = true, description = "TS1459by: Birim bilgisi güncelleme ")
+    public void TS1459by() {
 
         login(TestData.optiim);
 
