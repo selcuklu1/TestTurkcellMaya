@@ -28,8 +28,8 @@ public class KurumYonetimiTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS01459 : Kurum bilgisi güncelleme")
-    public void TS1459() {
+    @Test(enabled = true, description = "TS1459ky : Kurum bilgisi güncelleme")
+    public void TS1459ky() {
 
         String yeniKurumAdi1 = "Yenikurum" + getSysDate();
         String idariBirimKimlikKodu = getSysDate() + "";
