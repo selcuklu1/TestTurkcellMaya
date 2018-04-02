@@ -35,12 +35,11 @@ import static com.codeborne.selenide.Condition.textCaseSensitive;
 public class AntetIslemleri extends BaseTest {
 
 //    public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Üst Birim");
-    public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN");
+    public static final User gsahin = new User("gsahin", "123", "Gökçe ŞAHİN");
 //    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ", "GENEL MÜDÜRLÜK MAKAMI");
-    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ");
+//    public static final User antetIslem1 = new User("antetislem1", "123", "Antet İSLEMLERİ");
 
     //    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ", "Antet Güncel Birim");
-    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ");
 
     //antetislem1
     BirimYonetimiPage birimYonetimiPage;
@@ -53,7 +52,7 @@ public class AntetIslemleri extends BaseTest {
     public void loginBeforeTests() {
         useFirefox();
 
-        login(antetIslem1EnUst);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
         birimDegistirme("GENEL MÜDÜRLÜK MAKAMI");
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
@@ -115,8 +114,8 @@ public class AntetIslemleri extends BaseTest {
 
         testStatus(testid, "Test Başladı");
 
-        login(antetIslem1Guncel);
-        Selenide.sleep(10000);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
@@ -175,8 +174,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(gsahinUstBirim);
-        Selenide.sleep(10000);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
@@ -255,8 +254,8 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(antetIslem1Guncel);
-        Selenide.sleep(10000);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
 
         evrakOlusturPage
                 .openPage()
@@ -310,8 +309,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(gsahinUstBirim);
-        Selenide.sleep(10000);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
 
         imzaBekleyenlerPage
                 .openPage()
@@ -388,9 +387,8 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(antetIslem1Guncel);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
         birimDegistirme("Antet Güncel Birim");
-//        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -449,7 +447,7 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(gsahinUstBirim);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
         birimDegistirme("Antet Üst Birim");
 
         imzaBekleyenlerPage
@@ -528,7 +526,8 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(antetIslem1Guncel);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
 
         evrakOlusturPage
                 .openPage()
@@ -582,7 +581,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(gsahinUstBirim);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
@@ -656,8 +656,8 @@ public class AntetIslemleri extends BaseTest {
 
         testStatus(testid, "Test Başladı");
 
-        login(antetIslem1Guncel);
-        Selenide.sleep(10000);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
@@ -716,8 +716,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(gsahinUstBirim);
-        Selenide.sleep(10000);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
