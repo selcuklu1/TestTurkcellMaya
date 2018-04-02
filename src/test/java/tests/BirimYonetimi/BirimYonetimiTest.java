@@ -1000,4 +1000,60 @@ public class BirimYonetimiTest extends BaseTest {
         birimlerdekiKisilerRaporuPage
                 .kullaniciSayilarininAyniOldugunuGorme(kullaniciSayisi1, kullaniciSayisi2);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2334: Birim tanımlama ekranı alan kontrolleri")
+    public void TS2334() {
+
+        String birimAdi = "TS2334 Birim";
+        String atentBilgisi = "TS2334 Birim Atenti";
+        String idariBirimKimlikKodu = "22233112234065";
+        String postaBirimi = "Optiim Birim";
+        String postaBirimDetail = "YGD";
+        String uyariMesaji = "Zorunlu alanları doldurunuz";
+
+        login(TestData.optiim);
+
+        birimYonetimiPage
+                .openPage()
+                .ekle()
+                .birimYonetimiAlanKontrolleri()
+
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(birimAdi)
+                .antetBilgisiDoldur(atentBilgisi)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                .postaBirimiSec(postaBirimi, postaBirimDetail)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        birimYonetimiPage
+                .ekle()
+                .gorunurlukTipiSec("Görünür")
+                .antetBilgisiDoldur(atentBilgisi)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                .postaBirimiSec(postaBirimi, postaBirimDetail)
+                .kepPostaBirimiSec(postaBirimi, postaBirimDetail)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        birimYonetimiPage
+                .ekle()
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(birimAdi)
+                .idariKimlikKoduDoldur(idariBirimKimlikKodu)
+                .postaBirimiSec(postaBirimi, postaBirimDetail)
+                .kepPostaBirimiSec(postaBirimi, postaBirimDetail)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        birimYonetimiPage
+                .ekle()
+                .gorunurlukTipiSec("Görünür")
+                .adDoldur(birimAdi)
+                .postaBirimiSec(postaBirimi, postaBirimDetail)
+                .kepPostaBirimiSec(postaBirimi, postaBirimDetail)
+                .kaydet()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+    }
 }
