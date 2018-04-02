@@ -293,6 +293,7 @@ public class EkIlgiTest extends BaseTest {
         //Burası güncellendi excele göre.
         evrakPageButtons
                 .imzalaButonaTikla()
+                .loadingBekleme()
                 .sImzalaRadioSec()
                 .evrakImzaOnay()
                 .islemMesaji().basariliOlmali(basariMesaji);
