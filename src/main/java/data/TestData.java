@@ -72,7 +72,7 @@ public class TestData extends BaseLibrary {
     public static final String usernameUn30 = "un30";
     public static final String passwordUn30 = "123";
 
-    public static final String usernameAntetIslem1 = "antetIslem1";
+    public static final String usernameAntetIslem1 = "antetislem1";
     public static final String passwordAntetIslem1 = "123";
 
 

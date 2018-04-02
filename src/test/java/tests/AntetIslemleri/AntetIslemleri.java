@@ -489,12 +489,12 @@ public class AntetIslemleri extends BaseTest {
         String guncelBirim = "Antet Güncel Birim";
         String ustBirim = "Antet Üst Birim";
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
-        String antetGuncelBirimTipi = "Normal";
-        String antetGuncelBirim = "Normal Antet";
+        String antetGuncelBirimTipi = "Antet Yok";
+        String antetGuncelBirim = "";
         String antetUstBirimTipi = "Normal";
         String antetUstBirim = "Üst Birim Normal Antet";
-        String antetEnUstBirimTipi = "Normal";
-        String antetEnUstBirim = "İki Üst Birim Normal Antet";
+        String antetEnUstBirimTipi = "Antet Yok";
+        String antetEnUstBirim = "";
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
@@ -507,7 +507,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetGuncelBirimTipi)
-                .antetBilgisiDoldur(antetGuncelBirim)
+//                .antetBilgisiDoldur(antetGuncelBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(ustBirim)
@@ -521,7 +521,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetEnUstBirimTipi)
-                .antetBilgisiDoldur(antetEnUstBirim)
+//                .antetBilgisiDoldur(antetEnUstBirim)
                 .kaydet();
 
 
@@ -652,6 +652,283 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetEnUstBirimTipi)
+                .kaydet();
+
+        testStatus(testid, "Test Başladı");
+
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuKoduDoldurKontrol(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec("Normal")
+                .gizlilikDerecesiKontrol("Normal")
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .geregiSecimTipiYeniEvrak("Kurum")
+                .geregiSecimTipiKontrol("Kurum")
+                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiKontrol(geregiKurum)
+                //bilgileri secim ekle
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
+                .onayAkisiKullaniciEkle(user1,details)
+                .onayAkisiKullaniciTipiSec(user1,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
+                .dagitimiEkYapSec(true)
+                .kullan();
+
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
+                .dosyaEkle(pathToFileText,fileName)
+                .ekleriEkMetniDoldur(konu)
+                .ekleriEkle()
+                .ekListesiKontrol("EK-2", fileName)
+                .ekListesiniEkYap()
+                .ekListesiKontrol("EK-3","Ek Listesi");
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
+        imzaBekleyenlerPage
+                .openPage()
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
+                .ekOnizlemeKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
+
+        imzaBekleyenlerPage
+                .evrakEkleriTabAc()
+                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-2", fileName)
+                .ekListesiKontrol("EK-3","Ek Listesi")
+                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(""),textCaseSensitive(""))
+                .ekListesindeDetayGoster("EK-3", "Ek Listesi")
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2368: Güncel birimin anteti yoksa, üst birim normal ve 2 üst birim anteti özelse evrak kontrolü")
+    public void TS2368() throws InterruptedException, IOException {
+        String testid = "TS2368";
+        String konu = "TS2368-" + getSysDate();
+        String konuKodu = "Kanunlar";
+        String kaldirilacakKlasorler = "Kanunlar";
+        String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+//        String basariMesaji = "İşlem başarılıdır!";
+        String user1 = "Gökçe ŞAHİN";
+        String user2 = "Antet İSLEMLERİ";
+        String details = "Antet Üst Birim";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
+
+        String guncelBirim = "Antet Güncel Birim";
+        String ustBirim = "Antet Üst Birim";
+        String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String antetGuncelBirimTipi = "Antet Yok";
+        String antetGuncelBirim = "";
+        String antetUstBirimTipi = "Normal";
+        String antetUstBirim = "Üst Birim Normal Antet";
+        String antetEnUstBirimTipi = "Özel";
+        String antetEnUstBirim = "İki Üst Birim Özel Antet";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
+        String antetDefault = "ANKARA";
+
+        testStatus(testid, "PreCondition");
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(guncelBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetGuncelBirimTipi)
+//                .antetBilgisiDoldur(antetGuncelBirim)
+                .kaydet()
+
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetUstBirimTipi)
+                .antetBilgisiDoldur(antetUstBirim)
+                .kaydet()
+
+                .birimFiltreDoldur(enUstBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetEnUstBirimTipi)
+                .antetOzelBilgisiDoldur(antetEnUstBirim)
+                .kaydet();
+
+        testStatus(testid, "Test Başladı");
+
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme("Antet Güncel Birim");
+        evrakOlusturPage
+                .openPage()
+                .editorTabAc()
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+        evrakOlusturPage
+                .bilgilerTabiAc()
+                .bilgilerTabAlanKontrolleri()
+                .konuKoduDoldur(konuKodu)
+                .konuKoduDoldurKontrol(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
+                .gizlilikDerecesiSec("Normal")
+                .gizlilikDerecesiKontrol("Normal")
+                .ivedilikSec("Normal")
+                .ivedilikKontrol("Normal")
+                .geregiSecimTipiYeniEvrak("Kurum")
+                .geregiSecimTipiKontrol("Kurum")
+                .geregiDoldur(geregiKurum,"Kurum")
+                .geregiKontrol(geregiKurum)
+                //bilgileri secim ekle
+                .onayAkisiEkle()
+                .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
+                .onayAkisiKullaniciEkle(user1,details)
+                .onayAkisiKullaniciTipiSec(user1,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
+                .dagitimiEkYapSec(true)
+                .kullan();
+
+
+        evrakOlusturPage
+                .ekleriTabAc()
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
+                .dosyaEkle(pathToFileText,fileName)
+                .ekleriEkMetniDoldur(konu)
+                .ekleriEkle()
+                .ekListesiKontrol("EK-2", fileName)
+                .ekListesiniEkYap()
+                .ekListesiKontrol("EK-3","Ek Listesi");
+
+        evrakOlusturPage
+                .editorTabAc();
+
+        editor
+                .type(editorIcerik)
+                .editorShouldHave(text(editorIcerik));
+
+
+        evrakOlusturPage
+                .parafla()
+                .islemMesaji().basariliOlmali("İşlem başarılıdır!");
+
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        birimDegistirme("Antet Üst Birim");
+        imzaBekleyenlerPage
+                .openPage()
+                .searchTable().findRowAndSelect(Condition.text(konu));
+
+        imzaBekleyenlerPage
+                .ekOnizlemeKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
+
+        imzaBekleyenlerPage
+                .evrakEkleriTabAc()
+                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-2", fileName)
+                .ekListesiKontrol("EK-3","Ek Listesi")
+                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(""),textCaseSensitive(""))
+                .ekListesindeDetayGoster("EK-3", "Ek Listesi")
+                .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
+
+
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2384: Güncel birimin anteti normalse, üst birimde antet yok ve 2 üst birim anteti özelse evrak kontrolü")
+    public void TS2384() throws InterruptedException, IOException {
+        String testid = "TS2384";
+        String konu = "TS2384-" + getSysDate();
+        String konuKodu = "Kanunlar";
+        String kaldirilacakKlasorler = "Kanunlar";
+        String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
+        String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
+//        String basariMesaji = "İşlem başarılıdır!";
+        String user1 = "Gökçe ŞAHİN";
+        String user2 = "Antet İSLEMLERİ";
+        String details = "Antet Üst Birim";
+        String pathToFileText = getUploadPath() + "test.txt";
+        String fileName = "test.txt";
+
+        String guncelBirim = "Antet Güncel Birim";
+        String ustBirim = "Antet Üst Birim";
+        String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String antetGuncelBirimTipi = "Normal";
+        String antetGuncelBirim = "Normal Antet";
+        String antetUstBirimTipi = "Antet Yok";
+        String antetUstBirim = "";
+        String antetEnUstBirimTipi = "Özel";
+        String antetEnUstBirim = "İki Üst Birim Özel Antet";
+        String antetDefault1 = "T.C.";
+        String antetDefault2 = "ANKARA";
+        String antetDefault = "ANKARA";
+
+        testStatus(testid, "PreCondition");
+        birimYonetimiPage
+                .openPage()
+                .birimFiltreDoldur(guncelBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetGuncelBirimTipi)
+                .antetBilgisiDoldur(antetGuncelBirim)
+                .kaydet()
+
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetUstBirimTipi)
+                .kaydet()
+
+                .birimFiltreDoldur(enUstBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetEnUstBirimTipi)
+                .antetOzelBilgisiDoldur(antetEnUstBirim)
                 .kaydet();
 
         testStatus(testid, "Test Başladı");
