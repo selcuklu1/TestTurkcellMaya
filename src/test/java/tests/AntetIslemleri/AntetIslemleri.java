@@ -34,10 +34,13 @@ import static com.codeborne.selenide.Condition.textCaseSensitive;
 @Feature("Antet Islemleri")
 public class AntetIslemleri extends BaseTest {
 
-    public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Üst Birim");
-    public static final User ztekinGuncel = new User("ztekin", "123", "Zübeyde TEKİN", "Antet Güncel Birim");
-    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ", "GENEL MÜDÜRLÜK MAKAMI");
-    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ", "Antet Güncel Birim");
+//    public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN", "Antet Üst Birim");
+    public static final User gsahinUstBirim = new User("gsahin", "123", "Gökçe ŞAHİN");
+//    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ", "GENEL MÜDÜRLÜK MAKAMI");
+    public static final User antetIslem1EnUst = new User("antetislem1", "123", "Antet İSLEMLERİ");
+
+    //    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ", "Antet Güncel Birim");
+    public static final User antetIslem1Guncel = new User("antetislem1", "123", "Antet İSLEMLERİ");
 
     //antetislem1
     BirimYonetimiPage birimYonetimiPage;
@@ -51,6 +54,7 @@ public class AntetIslemleri extends BaseTest {
         useFirefox();
 
         login(antetIslem1EnUst);
+        birimDegistirme("GENEL MÜDÜRLÜK MAKAMI");
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();
         editor = new TextEditor();
@@ -349,8 +353,8 @@ public class AntetIslemleri extends BaseTest {
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String antetGuncelBirimTipi = "Normal";
         String antetGuncelBirim = "Normal Antet";
-        String antetUstBirimTipi = "Normal";
-        String antetUstBirim = "Üst Birim Normal Antet";
+        String antetUstBirimTipi = "Antet Yok";
+        String antetUstBirim = "";
         String antetEnUstBirimTipi = "Normal";
         String antetEnUstBirim = "İki Üst Birim Normal Antet";
         String antetDefault1 = "T.C.";
@@ -372,7 +376,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetUstBirimTipi)
-                .antetBilgisiDoldur(antetUstBirim)
+//                .antetBilgisiDoldur(antetUstBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(enUstBirim)
@@ -385,6 +389,8 @@ public class AntetIslemleri extends BaseTest {
 
         testStatus(testid, "Test Başladı");
         login(antetIslem1Guncel);
+        birimDegistirme("Antet Güncel Birim");
+//        Selenide.sleep(10000);
 
         evrakOlusturPage
                 .openPage()
@@ -444,6 +450,8 @@ public class AntetIslemleri extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
         login(gsahinUstBirim);
+        birimDegistirme("Antet Üst Birim");
+
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
@@ -621,7 +629,6 @@ public class AntetIslemleri extends BaseTest {
         String antetEnUstBirim = "";
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
-        
         String antetDefault = "ANKARA";
 
         testStatus(testid, "PreCondition");
