@@ -621,6 +621,7 @@ public class AntetIslemleri extends BaseTest {
         String antetEnUstBirim = "";
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
+        
         String antetDefault = "ANKARA";
 
         testStatus(testid, "PreCondition");
