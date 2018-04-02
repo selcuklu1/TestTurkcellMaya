@@ -13,7 +13,8 @@ import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$x;
 import static pages.pageComponents.belgenetElements.Belgenet.$;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
@@ -457,6 +458,7 @@ public class OlurYazisiOlusturPage extends MainPage {
     public class EditorTab extends MainPage {
 
         SelenideElement lblImzaci = $("[id^='yeniOnayEvrakForm'][id*='imzaciGridPanel'] > tbody > tr:nth-child(6) > td > span");
+        SelenideElement editorTarihKonuSayi = $(By.id("yeniOnayEvrakForm:editorTarihKonuSayi"));
 
         private TextEditor editor = new TextEditor();
 
@@ -464,6 +466,7 @@ public class OlurYazisiOlusturPage extends MainPage {
             return editor;
         }
 
+        @Step("Editör tabını aç")
         private EditorTab open() {
             tabEditor.click();
             return this;
@@ -493,6 +496,13 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Sayı alanındaki idari birim kodunun güncel hali ile geldiği görülür")
+        public EditorTab sayiAlanindaIdariBirimKimlikKoduKontrolu(String idariBirimKimlikKodu) {
+            editorTarihKonuSayi.shouldBe(visible);
+            Assert.assertEquals(editorTarihKonuSayi.getText().contains(idariBirimKimlikKodu), true, "Editor sayi alanında idari birim kimlik kodu kontrolu");
+            Allure.addAttachment("Editor sayi alanında idari birim kimlik kodu kontrolu", idariBirimKimlikKodu);
+            return this;
+        }
     }
 
 }

@@ -291,8 +291,10 @@ public class EkIlgiTest extends BaseTest {
                 .onayAkisiDoldur(onayAkisi);
 
         //Burası güncellendi excele göre.
-        evrakOlusturPage
-                .evrakImzala()
+        evrakPageButtons
+                .imzalaButonaTikla()
+                .sImzalaRadioSec()
+                .evrakImzaOnay()
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 

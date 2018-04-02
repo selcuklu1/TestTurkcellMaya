@@ -2333,7 +2333,7 @@ public class EvrakOlusturPage extends MainPage {
         BelgenetElement cmbSablonlar = comboBox("table[id='yeniGidenEvrakForm:icerikSablonListPanel'] select");
         SelenideElement btnUygula = $x("//div[@id='yeniGidenEvrakForm:icerikSablonDialogD1']//span[text()='Uygula']//..//..//button[1]");
         SelenideElement txtIcerik = $("body[class='cke_editable cke_editable_themed cke_contents_ltr'] p");
-
+        SelenideElement editorTarihKonuSayi = $(By.id("yeniGidenEvrakForm:editorTarihKonuSayi"));
         SelenideElement btnTamam = $x("//input[@id='yeniGidenEvrakForm:hitapEkInplaceTextId']//..//..//td[2]//button");
 
 
@@ -2890,7 +2890,15 @@ public class EvrakOlusturPage extends MainPage {
         takeScreenshot();
         return this;
     }
-}
+
+    @Step("Sayı alanındaki idari birim kodunun güncel hali ile geldiği görülür")
+        public EditorTab sayiAlanindaIdariBirimKimlikKoduKontrolu(String idariBirimKimlikKodu) {
+        editorTarihKonuSayi.shouldBe(visible);
+        Assert.assertEquals(editorTarihKonuSayi.getText().contains(idariBirimKimlikKodu), true, "Editor sayi alanında idari birim kimlik kontrolu");
+        Allure.addAttachment("Editor sayi alanında idari birim kimlik kontrolu", idariBirimKimlikKodu);
+            return this;
+    }
+    }
 
     public class EkleriTab extends MainPage {
 
