@@ -100,6 +100,7 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement divEvrakKapatKonuKoduLovPanel = $(By.id("mainPreviewForm:konuKoduLov:lovContainer"));
     SelenideElement cmbEvrakKapatKapatmaTipi = $(By.id("mainPreviewForm:kapatmaTipiOneMenu_id"));
     BelgenetElement txtEvrakKapatKaldirilacakKlasorler = comboLov(By.id("mainPreviewForm:klasorLov_id:LovText"));
+    SelenideElement btnEvrakKapatFavoriKaldirilacakKlasorler =$(By.id("mainPreviewForm:klasorLov_id:favoriteTreeButton"));
     SelenideElement txtEvrakKapatNot = $(By.id("mainPreviewForm:notTextArea_id"));
     SelenideElement btnEvrakKapatKapatmaOnayinaSun = $(By.id("mainPreviewForm:kapatmaOnayinaSunButtonDirektId"));
     BelgenetElement txtEvrakKapatOnayAkisi = comboLov(By.id("mainPreviewForm:akisLov_id:LovText"));
@@ -1004,6 +1005,22 @@ public class GelenEvraklarPage extends MainPage {
         txtEvrakKapatKaldirilacakKlasorler.selectLov(text);
         return this;
     }
+
+    @Step("Kaldırılacak Klasörler alanında \"Sık kullanınlanları Aç\" butonu tıklanır.")
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec(){
+        clickJs(btnEvrakKapatFavoriKaldirilacakKlasorler);
+        return this;
+    }
+
+    @Step("Sık kullanılan Kaldırılacak Klasörlerin listelendiği ve seçilebildiği görülür.")
+    public GelenEvraklarPage evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme(){
+    boolean durum = $$("[id='mainPreviewForm:klasorLov_id:lovTree'] ul li").size()>0;
+    Assert.assertEquals(durum,true);
+    takeScreenshot();
+    clickJs($(By.id("mainPreviewForm:klasorLov_id:lovTreePanelKapat")));
+        return this;
+    }
+
 
     public GelenEvraklarPage evrakKapatKisiselKlasorlerimKaldir(){
             clickJs($("[id='mainPreviewForm:kisiselKlasorlerimiGetirCheckboxId'] div[class='ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active']"));
