@@ -599,7 +599,8 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Evrak Tarihi alanını \"{evrakTarihi}\" doldur")
     public GelenEvrakKayitPage evrakTarihiDoldur(String evrakTarihi) {
         dateTxtEvrakBilgileriListEvrakTarihi.clear();
-        dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
+        setValueJS(dateTxtEvrakBilgileriListEvrakTarihi,evrakTarihi);
+//        dateTxtEvrakBilgileriListEvrakTarihi.sendKeys(evrakTarihi);
         return this;
     }
 

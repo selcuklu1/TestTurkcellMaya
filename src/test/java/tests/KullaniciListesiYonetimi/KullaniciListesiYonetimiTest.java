@@ -299,11 +299,11 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-            ,dependsOnMethods = {"TS1003"}
+//            ,dependsOnMethods = {"TS1003"}
             , description = "TS1465 : Yeni Kullanıcı Listesi Tanımlama Sonrası Ekranlardan Kontrolü")
     public void TS1465() throws InterruptedException {
-
-//        TS1005();
+String basariMesaji = "İşlem Başarılıdır!";
+        TS1005();
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
         String dikkatMesaji = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
@@ -374,8 +374,8 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 //                .kullaniciGrupDetayCheckBoxKontrolu(true)
 //                .kullaniciGrupDetayCheckBoxSecimi(kullanici,false)
 //                .kullaniciGrupDetayKullan()
-                .havaleYapButon("Tebliğ Et");
-//                .islemMesaji().basariliOlmali(basariMesaji)
+                .havaleYapButon("Tebliğ Et")
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenEvrak();
 

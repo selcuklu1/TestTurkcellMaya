@@ -405,6 +405,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
         gelenEvraklarPage
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme()
                 .kaldirilicakKlasorlerKisiselKlasorlerimSec()
                 .kisiselKlasorlerimSecKaldirilicakKlasorlerDataGeldigiGorme()
                 .evrakKapatEvrakKapat()
@@ -418,6 +420,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatKonuKodu(konuKodu)
                 .evrakKapatKisiselKlasorlerimKaldir()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme()
                 .evrakKapatNotDoldur(randomSayi)
                 .onayAkisiDoldur(" Zübeyde Tekin")
                 .onayAkisiSil()
