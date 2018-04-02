@@ -1,9 +1,6 @@
 package common;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
@@ -36,6 +33,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.$$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
@@ -376,6 +374,14 @@ public class BaseTest extends BaseLibrary {
         LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
         if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)
             loginPage.birimSec(Condition.text(user.getBirimAdi()));
+    }
+
+    ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
+    @Step("Kullanıcının Yeni Birimi \"{birim}\" seçilir")
+    public void birimDegistirme(String birim) {
+        birimDegistirme.filterBy(Condition.text(birim)).get(0).click();
+//        waitForLoadingJS(WebDriverRunner.getWebDriver());
+        Selenide.sleep(15000);
     }
 
     @Step("Test Numarası : {testid} {status} ")

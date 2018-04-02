@@ -488,4 +488,9 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    @Step("Loading bekleme")
+    public EvrakPageButtons loadingBekleme() {
+        waitForLoadingJS(WebDriverRunner.getWebDriver(), 36000);
+        return this;
+    }
 }
