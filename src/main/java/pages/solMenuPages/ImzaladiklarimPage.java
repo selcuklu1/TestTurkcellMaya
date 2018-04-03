@@ -71,6 +71,10 @@ public class ImzaladiklarimPage extends MainPage {
     ElementsCollection tblTakipListesi = $$("tbody[id='evrakTakibimeEkleDialogForm:takipListLov:LovSecilenTable_data'] > tr[role='row']");
     SelenideElement btnTakipListesiKapat = $("div[id='evrakTakibimeEkleDialogForm:takipDialog'] span[class*='ui-icon-closethick']");
     BelgenetElement txtTakipListesiKullanicilar = comboLov(By.id("evrakTakibimeEkleDialogForm:takipListLov:LovText"));
+    SelenideElement evrakOnIzlemeEkranKontrol = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
+    SelenideElement btnEvrakGeriAl = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat:'] [class$='evrakGeriAl']");
+
+
 
     @Step("Imzaladiklarim Sayfasini aç")
     public ImzaladiklarimPage openPage() {
@@ -509,6 +513,18 @@ public class ImzaladiklarimPage extends MainPage {
         switchTo().parentFrame();
 //        Assert.assertEquals(PDFHitap.getText().contains(beklenenPDFHitap), true);
         takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public ImzaladiklarimPage evrakOnizlemeKontrol() {
+        Assert.assertEquals(evrakOnIzlemeEkranKontrol.isDisplayed(), true);
+        return this;
+    }
+
+    @Step("Geri al butonu kontrolu")
+    public ImzaladiklarimPage geriAlButonKontrolu() {
+        Assert.assertEquals(btnEvrakGeriAl.isDisplayed(), true);
         return this;
     }
 }

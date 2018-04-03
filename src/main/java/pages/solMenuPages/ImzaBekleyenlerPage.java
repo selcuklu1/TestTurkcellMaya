@@ -434,6 +434,20 @@ public class ImzaBekleyenlerPage extends MainPage {
     }
 
 
+    @Step("{tabAdi} taba tıklanır")
+    public ImzaBekleyenlerPage tabAdiGoreTabSec(String tabAdi){
+        $$("[id='mainPreviewForm:evrakOnizlemeTab'] ul li").filterBy(Condition.text(tabAdi)).first().click();
+        return this;
+    }
+
+    @Step("Evrak Kontrolü")
+    public ImzaBekleyenlerPage disSuretEvrakKontrol(String antetDefault,String antetDefault1,String antetDefault2,String antetDefault3){
+        boolean durum = $("[id='textLayer']").shouldBe(Condition.text(antetDefault3)).isDisplayed();
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("ekPopPDFKontrol")
     public ImzaBekleyenlerPage ekPopPDFKontrol(Condition... conditions) {
         switchTo().window(1);
