@@ -238,7 +238,7 @@ public class KullaniciEvrakDevretPage extends MainPage {
 //        sleep(5000);
         SelenideElement tabGelenEvrak = $x("//div[@id='kullaniciEvrakDevretForm:evrakDevretAccordionPanelId']/h3[1]/a");
         tabGelenEvrak.click();
-
+        sleep(2000);
         ElementsCollection tblTab;
         SelenideElement tab = $x("//a[text()='" + tabName + "']");
         String kontrol = $x("//a[text()='" + tabName + "']/../../h3").getAttribute("aria-expanded");
