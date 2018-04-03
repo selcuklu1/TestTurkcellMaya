@@ -800,7 +800,7 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden evrak önizlemede aç")
+    @Step("Teslim Alınmayı Bekleyenler Evraklar listesinden içerik butonu tıklanır.")
     public TeslimAlinmayiBekleyenlerPage konuyaGoreIcerikGoster(String konu) {
 
 //        new TeslimAlinmayiBekleyenlerPage().searchTable()

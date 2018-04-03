@@ -62,6 +62,8 @@ public class TaslakEvraklarPage extends MainPage {
     SelenideElement tblKolonIslemSureci = $(By.xpath("//span[text()='İşlem Süreci']"));
     SelenideElement tblKolonIslemTarihi = $(By.xpath("//span[normalize-space(text())='İşlem Tarihi']"));
     SelenideElement tblKolonAciklama = $(By.xpath("//span[text()='Açıklama']"));
+    SelenideElement tabIlgiBilgileri = $x("//a[text()='İlgi Bilgileri']");
+    ElementsCollection tableIlgiBilgileri = $$("tbody[id$='ilgiListesiDataTable_data'] tr[data-ri]");
 
     @Step("Taslak Evraklar sayfası aç")
     public TaslakEvraklarPage openPage() {
@@ -75,31 +77,31 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Kopyalanan Evrakların listelendiği görülür")
-    public TaslakEvraklarPage kopyaliEvraklarGeldigiGorme(String konu){
-        boolean durum = tableEvraklar.filterBy(Condition.text(konu)).size()==2;
-        Assert.assertEquals(durum,true);
+    public TaslakEvraklarPage kopyaliEvraklarGeldigiGorme(String konu) {
+        boolean durum = tableEvraklar.filterBy(Condition.text(konu)).size() == 2;
+        Assert.assertEquals(durum, true);
         takeScreenshot();
         return this;
     }
 
     @Step("Evrak Geldiği görülür")
-    public TaslakEvraklarPage evrakGeldigiGorme(String konuKodu){
-        boolean durum = tableEvraklar.filterBy(Condition.text(konuKodu)).size()>0;
-        Assert.assertEquals(durum,true);
+    public TaslakEvraklarPage evrakGeldigiGorme(String konuKodu) {
+        boolean durum = tableEvraklar.filterBy(Condition.text(konuKodu)).size() > 0;
+        Assert.assertEquals(durum, true);
         return this;
     }
 
     @Step("Evrak seçilir")
-    public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu){
+    public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu) {
         tableEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();
         return this;
     }
 
     @Step("Editör alanındaki içeriğin girilenle aynı olduğu görülür.")
-    public TaslakEvraklarPage editorAlaniGirilenIcerikAyniGeldigiGorme(String icerik){
-         boolean durum = $$("[id='inboxItemInfoForm:allPanels']").filterBy(Condition.text(icerik)).size() ==1;
-         Assert.assertEquals(durum,true);
-         takeScreenshot();
+    public TaslakEvraklarPage editorAlaniGirilenIcerikAyniGeldigiGorme(String icerik) {
+        boolean durum = $$("[id='inboxItemInfoForm:allPanels']").filterBy(Condition.text(icerik)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
         return this;
     }
 
@@ -197,7 +199,7 @@ public class TaslakEvraklarPage extends MainPage {
     }
 
     @Step("Evet tıklanır")
-    public TaslakEvraklarPage evrakKopyalaEvet(){
+    public TaslakEvraklarPage evrakKopyalaEvet() {
         btnEvrakKopyalaEvet.click();
         return this;
     }
@@ -258,6 +260,21 @@ public class TaslakEvraklarPage extends MainPage {
                 .click();
         return this;
     }
+
+    @Step("Evrak Önizleme İlgi Bilgileri tabı açılır.")
+    public TaslakEvraklarPage evrakOnizlemeİlgiBilgileriTabAc() {
+
+        tabIlgiBilgileri.click();
+        return this;
+    }
+
+    @Step("İlgi Bilgileri Tablo kontrolu. Açıklama : \"{ilgi}\" ")
+    public TaslakEvraklarPage evrakOnizlemeİlgiBilgileriTabloKontrolu(String ilgi) {
+        tableIlgiBilgileri.filterBy(text(ilgi)).shouldHaveSize(1);
+        takeScreenshot();
+        return this;
+    }
+
 
     @Step("Evrakın içerik göster tıklanır")
     public TaslakEvraklarPage evrakSecKonuyaGoreIcerikGosterSec(String konu) {
