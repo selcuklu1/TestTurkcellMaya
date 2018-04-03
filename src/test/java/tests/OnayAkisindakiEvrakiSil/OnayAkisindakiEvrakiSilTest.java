@@ -10,9 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.pageComponents.TextEditor;
-import pages.solMenuPages.GelenEvraklarPage;
-import pages.solMenuPages.ImzaBekleyenlerPage;
-import pages.solMenuPages.ParafBekleyenlerPage;
+import pages.solMenuPages.*;
 import pages.ustMenuPages.*;
 
 import java.lang.reflect.Method;
@@ -37,12 +35,11 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
     EvrakDetayiPage evrakDetayiPage;
     ParafBekleyenlerPage parafBekleyenlerPage;
     IptalEdilenEvraklarRaporuPage iptalEdilenEvraklarRaporuPage;
-
+    PostalanacakEvraklarPage postalanacakEvraklarPage;
+    ImzaladiklarimPage imzaladiklarimPage;
 
     @BeforeMethod
     public void beforeTests(Method method) {
-
-        login();
 
         evrakOlusturPage = new EvrakOlusturPage();
         onayAkisYonetimiPage = new OnayAkisYonetimiPage();
@@ -54,6 +51,9 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         evrakDetayiPage = new EvrakDetayiPage();
         parafBekleyenlerPage = new ParafBekleyenlerPage();
         iptalEdilenEvraklarRaporuPage = new IptalEdilenEvraklarRaporuPage();
+        postalanacakEvraklarPage = new PostalanacakEvraklarPage();
+        imzaladiklarimPage = new ImzaladiklarimPage();
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -70,6 +70,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String kullanici2 = "Mehmet BOZDEMİR";
         String aciklama = "TS0983 Senaryosu";
         String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.optiim);
 
         kararYazisiOlusturPage
                 .openPage()
@@ -159,6 +161,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String uyariMesaji = "Zorunlu alanları doldurunuz";
         String ilkTarih = getSysDateForKis();
         String sonTarih = getSysDateForKis();
+
+        login(TestData.optiim);
 
         evrakOlusturPage
                 .openPage()
@@ -254,6 +258,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String sonTarih = getSysDateForKis();
         String evrakSilmeNotu = "TS0103 nolu evrak sil";
 
+        login(TestData.optiim);
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
@@ -338,7 +344,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
 
         String evrakKonusu = "TS0133_Senaryosu_" + getSysDate();
         String konuKodu = "399";
-        String kaldirilacakKlasor = "ESK05";
+        String kaldirilacakKlasor = "000";
         String kurum = "Başbakanlık";
         String kullanici = "Sezai Çelik";
         String onayAkisiDefaultKullanici = "Optiim TEST";
@@ -349,6 +355,12 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String ilkTarih = getSysDateForKis();
         String sonTarih = getSysDateForKis();
         String evrakSilmeNotu = "TS0103 nolu evrak sil";
+        String sonImzaciOlurMetniHitapAlani = "Sezai Çelik Olur Metni";
+        String birimAdi = "Optiim Birim";
+        String fizikselEkMetni = "TS0133 EkMetni " + getSysDate();
+        String geriAlmaNotu = "Evrakı Geri Alma Notu";
+
+        login(TestData.optiim);
 
         olurYazisiOlusturPage
                 .openPage()
@@ -359,8 +371,10 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
                 .gizlilikDerecesiSec("Normal")
                 .ivedilikSec("İvedi")
+                .bilgiSecimTipiSecByText("Birim")
+                .bilgiDoldur(birimAdi, "Birim")
                 .geregiSecimTipiSecByText("Kullanıcı")
-                .geregiDoldur(kullanici3, "Kullanıcı")
+                .geregiDoldurWithDetail(kullanici3, "YGD", "Kullanıcı")
 
                 .secilenOnayAkisiSil()
                 .onayAkisiEkle()
@@ -371,25 +385,27 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .onayAkisiDoluGeldigiKontrolu();
 
         olurYazisiOlusturPage
-                .editorTabAc();
+                .editorTabAc()
+                .editorKonuKontrol(evrakKonusu)
+                .metinAlaninGeldigiGorme()
+                .editorHitapKontrol(sonImzaciOlurMetniHitapAlani)
+                .editordeImzaciKontrol(kullanici2)
+                .editordeBilgiKontrol(birimAdi);
 
         editor
                 .type("TS0133 nolu senaryonun testi için bir editör metni girildi.");
 
         olurYazisiOlusturPage
-                .editorTabAc()
-                .metinAlaninGeldigiGorme()
-                .editorHitapKontrol("... Makamına")  // kurum seçilmediği için
-                .editordeImzaciKontrol(kullanici3);
-        //  .geregiAlaniKontrolu(kurum)
-        // .editordeKonuKontrol(evrakKonusu);
+                .ekleriTabAc()
+                .fizikselEkEkleTabiniAc()
+                .ekleriEkMetniDoldur(fizikselEkMetni)
+                .ekleriEkle();
 
-        //TODO: HATALAR VAR. ÇÖZÜLÜNCE DEVAM EDİLECEK.
-        evrakOlusturPage
+                evrakOlusturPage
                 .parafla()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaiceik
+        login(TestData.userSezaiCelik); //sezaiceik
 
         imzaBekleyenlerPage
                 .openPage()
@@ -397,5 +413,25 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakOnizlemeKontrol()
                 .evrakImzala();
+
+        login(TestData.userMbozdemir); //sezaiceik
+
+        postalanacakEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakOnizlemeKontrol();
+
+        login(TestData.userSezaiCelik); //sezaiceik
+
+        imzaladiklarimPage
+                .openPage()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakOnizlemeKontrol()
+                .geriAlButonKontrolu()
+                .geriAl()
+                .geriAlAciklamaDoldurVeOnayla(geriAlmaNotu);
+
     }
 }
