@@ -226,7 +226,7 @@ public class KisiselIslemlerBagTipiTest extends BaseTest {
         vekaletVerPage
                 .openPage()
                 .vekaletVerenAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
-                .vekaletVerenDoldur(farkliKullanici)
+                .vekaletVerenFarkliDoldur(farkliKullanici)
                 .vekaletAlanAlanınaGoruntulenmemeKontrolu(ekranAdi, false)
                 .onayVerecekDoldur(onayVerecek);
 

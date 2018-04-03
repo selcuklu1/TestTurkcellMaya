@@ -80,7 +80,8 @@ public class EvrakDevretTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
+    @Test(enabled = true
+            , description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178a() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
         login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
@@ -122,7 +123,9 @@ public class EvrakDevretTest extends BaseTest {
                 .openPage()
                 .evrakKontrolu(yeniKonu, true)
                 .evrakSecKonuyaGore(yeniKonu)
-                .evrakOnizlemeveEkiKontrolu(icerik)
+                .evrakOnizlemeİlgiBilgileriTabAc()
+                .evrakOnizlemeİlgiBilgileriTabloKontrolu(icerik)
+//               .evrakOnizlemeveEkiKontrolu(icerik)
                 .evrakOnizlemeButonTikla(btnSilName)
                 .silAciklamaInputDolduur(aciklamaSil)
                 .silSilGonder()
@@ -287,6 +290,8 @@ String yeniKonu = konu + getSysDate();
                 .aciklamaDoldur(icerik)
                 .devretTamam()
                 .islemMesaji().basariliOlmali(basariMesaji);
+        kullaniciEvrakDevretPage
+                .tabloEvrakKontrolu(yeniKonu, false);
 
         logout();
         login(username20n);
@@ -441,6 +446,12 @@ String yeniKonu = konu + getSysDate();
                 .kullanicilarDoldur(imzacı)
                 .kullniciIsmineGoreImzaParafSec(imzacı, tur)
                 .kullan();
+
+        evrakOlusturPage
+                .ilgileriTabAc()
+                .ilgileriMetinEkleTabAc()
+                .ilgileriMetinEkleIlgiMetniDoldur(icerik)
+                .ilgileriMetinEkleEkle();
 
         evrakOlusturPage
                 .editorTabAc()

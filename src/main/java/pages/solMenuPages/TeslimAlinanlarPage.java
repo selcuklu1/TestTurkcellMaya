@@ -223,7 +223,7 @@ public class TeslimAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Teslim Alınanlar sayfasında evrakın geldiği kontrolu ve seçme")
+    @Step("Teslim Alınanlar Evraklar listesinden içerik butonu tıklanır.")
     public TeslimAlinanlarPage konuyaGoreEvrakIcerikGoster(String konu) {
 
         tblEvraklar
@@ -303,7 +303,7 @@ public class TeslimAlinanlarPage extends MainPage {
         Assert.assertEquals(durum7,true);
         return this;
     }
-    
+
     @Step("Evrak no ile evrak seçilir : \"{evrakNo}\" ")
     public TeslimAlinanlarPage evrakNoIleEvrakSec(String evrakNo) {
         tblEvraklar

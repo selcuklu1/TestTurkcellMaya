@@ -133,6 +133,5 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .evrakNoIleEvrakSec(konuKoduRandomTS2302)
                 .evrakSecEvrakGecmisiSec()
                 .evrakGecimisiGeregiVeBilgiGeldigiGorme(" evrak havale edildi (gereği için)","Mehmet Bozdemir","","");
-
     }
 }

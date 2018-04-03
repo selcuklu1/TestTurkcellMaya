@@ -725,6 +725,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         vekaletVerPage
                 .openPage()
+                .vekaletAlanAlanKontrolu(false)
+                .onayVerecekAlanKontrolu(false)
                 .vekaletVerenKontrolu("Username26 TEST", false)//Güncel birim TS2200 Alt Birim Personel Username26 üst birim YGD Personel
                 .vekaletVerenKontrolu("Kıvanç KASIMOĞLU ", false)//Güncel birim TS2200 Alt Birim Personel Kıvanc üst birim YGD Amir
                 .vekaletVerenKontrolu("Username29 TEST", true)//Güncel birim TS2200 Alt Birim Personel Username29 TS2200 2. Alt Birim Amir
@@ -743,7 +745,9 @@ public class VekaletIslemleriTest extends BaseTest {
 
         vekaletVerPage
                 .bitisTarihiDoldur(getAfterSysDate(afterDay + 5))
+                .evraktaVelaketeSonEkiGorunsunSeçilebilirlikKontrolu(true)
                 .ozelUnvanSec()
+                .ozelUnvanGirilebilecekAlanKontrolu(true)
                 .aciklamaDoldur(aciklama)
                 .uygula();
     }

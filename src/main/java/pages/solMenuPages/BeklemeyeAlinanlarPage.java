@@ -46,7 +46,7 @@ public class BeklemeyeAlinanlarPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak seçilir")
+    @Step("Evrak İçerik Göster")
     public BeklemeyeAlinanlarPage evrakSecKonuyaGoreIcerikGoster(String konuKodu){
         tblEvraklar.filterBy(Condition.text(konuKodu)).first()
                 .$("[id$='detayGosterButton']").click();
