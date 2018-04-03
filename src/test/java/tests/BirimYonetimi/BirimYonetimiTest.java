@@ -1056,4 +1056,10 @@ public class BirimYonetimiTest extends BaseTest {
                 .kaydet()
                 .islemMesaji().uyariOlmali(uyariMesaji);
     }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2335: Hızlı birim tanımlama")
+    public void TS2335() {
+
+    }
 }

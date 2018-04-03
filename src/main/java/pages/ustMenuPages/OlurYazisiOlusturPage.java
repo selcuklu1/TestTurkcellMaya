@@ -2,6 +2,7 @@ package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -23,11 +24,13 @@ public class OlurYazisiOlusturPage extends MainPage {
     SelenideElement tabBilgiler = $("button[id^='yeniOnayEvrakForm'] span[class$='kullaniciBilgileri']");
     //SelenideElement tabBilgiler = $("button .kullaniciBilgileri");
     SelenideElement tabEditor = $("button .editor");
+    SelenideElement tabEkleri = Selenide.$("button .kullaniciEkleri");
     //endregion
     //region Tabs local variables
     private BilgilerTab bilgilerTab = new BilgilerTab();
     private EditorTab editorTab = new EditorTab();
     private SelenideElement page = $("#yeniOnayEvrakForm");
+    private EkleriTab ekleriTab = new EkleriTab();
 
     @Step("Olur Yazısı Oluştur sayfasını aç")
     public OlurYazisiOlusturPage openPage() {
@@ -43,6 +46,11 @@ public class OlurYazisiOlusturPage extends MainPage {
     @Step("Bilgiler tab aç")
     public BilgilerTab bilgilerTabiAc() {
         return bilgilerTab.open();
+    }
+
+    @Step("Ekleri tabını aç")
+    public EkleriTab ekleriTabAc() {
+        return ekleriTab.open();
     }
 
     public EditorTab editorTabAc() {
@@ -266,9 +274,21 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Bilgi {description} doldur: | {bilgi}")
+        public BilgilerTab bilgiDoldur(String bilgi, String description) {
+            cmbBilgi.selectLov(bilgi);
+            return this;
+        }
+
         @Step("Gereği {description} doldur: | {geregi}")
         public BilgilerTab geregiDoldur(String geregi, String description) {
             cmbGeregi.selectLov(geregi);
+            return this;
+        }
+
+        @Step("Gereği {description} doldur: | {geregi}")
+        public BilgilerTab geregiDoldurWithDetail(String geregi, String details, String description) {
+            cmbGeregi.selectLov(geregi, details);
             return this;
         }
 
@@ -316,6 +336,12 @@ public class OlurYazisiOlusturPage extends MainPage {
         @Step("Onay akışı kullanıcı ekle")
         public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi) {
             txtOnayAkisiKullanicilar.selectLov(kullaniciAdi);
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı ekle")
+        public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi, String details) {
+            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi, details);
             return this;
         }
 
@@ -459,6 +485,8 @@ public class OlurYazisiOlusturPage extends MainPage {
 
         SelenideElement lblImzaci = $("[id^='yeniOnayEvrakForm'][id*='imzaciGridPanel'] > tbody > tr:nth-child(6) > td > span");
         SelenideElement editorTarihKonuSayi = $(By.id("yeniOnayEvrakForm:editorTarihKonuSayi"));
+        SelenideElement editorBilgi = $(By.id("yeniOnayEvrakForm:bilgiLovTable_data"));
+
 
         private TextEditor editor = new TextEditor();
 
@@ -503,6 +531,56 @@ public class OlurYazisiOlusturPage extends MainPage {
             Allure.addAttachment("Editor sayi alanında idari birim kimlik kodu kontrolu", idariBirimKimlikKodu);
             return this;
         }
+
+        @Step("Editorde konu kontrolu: {evrakKonusu}")
+        public EditorTab editorKonuKontrol(String evrakKonusu) {
+            Assert.assertEquals(editorTarihKonuSayi.getText().contains(evrakKonusu), true, "Editor Konu Kontrol");
+            Allure.addAttachment("Editor Konu Kontrol", evrakKonusu);
+            return this;
+        }
+
+        @Step("Editorde bilgi kontrolu: {bilgi}")
+        public EditorTab editordeBilgiKontrol(String bilgi) {
+
+            String birim = bilgi + " " + "e";
+            Assert.assertEquals(editorBilgi.getText().contains(birim), true, "Editor Bilgi Kontrol");
+            Allure.addAttachment("Editor Bilgi Kontrol", birim);
+            return this;
+        }
+    }
+
+    public class EkleriTab extends MainPage {
+
+        SelenideElement btnEkleriFizikselEkEkleTab = $(By.xpath("//a[@href='#yeniOnayEvrakForm:evrakEkTabView:aciklamaEkleTab']"));
+        SelenideElement txtEkleriDosyaAciklama = $(By.id("yeniOnayEvrakForm:evrakEkTabView:aciklamaTextArea"));
+        SelenideElement btnEkleriDosyaEkle = $(By.id("yeniOnayEvrakForm:evrakEkTabView:aciklamaEkleButton"));
+
+
+        @Step("Ekleri Tabını aç")
+        private EkleriTab open() {
+            tabEkleri.shouldBe(visible);
+            clickJs(tabEkleri);
+            return this;
+        }
+
+        @Step("Ekleri/Fiziksel Ek Ekle Tab - Açma")
+        public EkleriTab fizikselEkEkleTabiniAc() {
+            btnEkleriFizikselEkEkleTab.click();
+            return this;
+        }
+
+        @Step("Ekleri Tab - Ek Metni alanını doldur: {aciklama}")
+        public EkleriTab ekleriEkMetniDoldur(String aciklama) {
+            txtEkleriDosyaAciklama.setValue(aciklama);
+            return this;
+        }
+
+        @Step("Ekleri Tab - Ekle")
+        public EkleriTab ekleriEkle() {
+            btnEkleriDosyaEkle.click();
+            return this;
+        }
+
     }
 
 }

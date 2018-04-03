@@ -149,6 +149,7 @@ public class PostalanacakEvraklarPage extends MainPage {
     SelenideElement btnEkleriYazbtn2 = $x("//*[@id='postaDetayYazdirForm:dtPostaEvrakEk_data']/tr[2]/td[7]/div/button");
 
     ElementsCollection tblOnIzlemePostalanacakYerler = $$("[id^='mainPreviewForm:dataTableId_data'] > tr[role='row']");
+    SelenideElement evrakOnIzlemeEkranKontrol = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
 
 
     @Step("Postalanacak Evraklar sayfası aç")
@@ -1433,6 +1434,12 @@ public class PostalanacakEvraklarPage extends MainPage {
                 .$("[class='ui-helper-hidden-accessible' ] [id^='mainPreviewForm:dataTableId:1']")
                 .selectOption(postaTipi);
 
+        return this;
+    }
+
+    @Step("Evrak önizleme ekranı kontrolu")
+    public PostalanacakEvraklarPage evrakOnizlemeKontrol() {
+        Assert.assertEquals(evrakOnIzlemeEkranKontrol.isDisplayed(), true);
         return this;
     }
 }
