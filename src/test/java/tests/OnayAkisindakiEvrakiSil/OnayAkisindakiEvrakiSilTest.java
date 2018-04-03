@@ -365,7 +365,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .secilenOnayAkisiSil()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrol(onayAkisiDefaultKullanici, "PARAFLAMA")
-                .onayAkisiKullaniciEkle(kullanici2)
+                .onayAkisiKullaniciEkle(kullanici2, "YGD")
                 .onayAkisiKullaniciTipiSec(kullanici2, "İmzalama")
                 .kullan()
                 .onayAkisiDoluGeldigiKontrolu();

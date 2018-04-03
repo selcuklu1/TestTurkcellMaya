@@ -1,5 +1,6 @@
 package tests.KullaniciListesiYonetimi;
 
+import com.codeborne.selenide.WebDriverRunner;
 import common.BaseTest;
 import data.TestData;
 import io.qameta.allure.Severity;
@@ -374,8 +375,11 @@ String basariMesaji = "İşlem Başarılıdır!";
 //                .kullaniciGrupDetayCheckBoxKontrolu(true)
 //                .kullaniciGrupDetayCheckBoxSecimi(kullanici,false)
 //                .kullaniciGrupDetayKullan()
-                .havaleYapButon("Tebliğ Et")
-                .islemMesaji().basariliOlmali(basariMesaji);
+                .havaleYapButon("Tebliğ Et");
+
+//waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
+//evrakDetayiPage
+//                .islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenEvrak();
 

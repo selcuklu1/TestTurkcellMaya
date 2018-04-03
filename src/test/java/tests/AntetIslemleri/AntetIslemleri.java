@@ -190,7 +190,7 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
-                //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
+                //TODO: Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(""),textCaseSensitive(""))
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
                 .ekPopPDFKontrol(textCaseSensitive(antetDefault1),textCaseSensitive(antetDefault2),textCaseSensitive(antetUstBirim),textCaseSensitive(antetGuncelBirim));
@@ -661,8 +661,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
-
+                .editorAntetKontrol(antetDefault1,antetDefault2, antetGuncelBirim, antetUstBirim, antetEnUstBirim);
 
         editor
                 .type(editorIcerik)

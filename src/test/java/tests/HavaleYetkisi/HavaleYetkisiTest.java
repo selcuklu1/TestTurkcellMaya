@@ -748,7 +748,8 @@ public class HavaleYetkisiTest extends BaseTest {
 
         havaleEttiklerimPage
                 .openPage()
-                .konuyaGoreEvrakSec(konu)
+                .konuyaGoreEvrakIsaratle(konu)
+                .konuyaGoreEvrakIsaratle(konu2)
                 .evrakOnizlemeKontrolu()
                 .evrakOnizlemeButonKontrolu(btnHavaleYap)
                 .evrakOnizlemeButonTikla(btnHavaleYap)
@@ -912,7 +913,7 @@ public class HavaleYetkisiTest extends BaseTest {
                 .butonKontrolu(btnTeslimAlveHavaleYap, true)
                 .btnTikla(btnTeslimAlveHavaleYap)
                 .havaleYapBirimAlanindaButonKontrolu(btnTumu, false)
-                .havaleYapBirimAlanindaButonKontrolu(farkliBirim,false)
+                .havaleYapBirimAlanindaButonKontrolu(farkliBirim, false)
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
@@ -932,7 +933,7 @@ public class HavaleYetkisiTest extends BaseTest {
                 .evrakOnizlemeButonKontrolu(btnHavaleYap)
                 .evrakOnizlemeButonTikla(btnHavaleYap)
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
-                .havaleIslemleriBirimStatusKontrol(farkliBirim,false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false)
                 .konuyaGoreEvrakIcerikGoster(konu);
 
         evrakDetayiPage
@@ -940,7 +941,7 @@ public class HavaleYetkisiTest extends BaseTest {
                 .butonKontrolu(btnHavaleYap, true)
                 .btnTikla(btnHavaleYap)
                 .havaleYapBirimAlanindaButonKontrolu(btnTumu, false)
-                .havaleYapBirimAlanindaButonKontrolu(farkliBirim,false)
+                .havaleYapBirimAlanindaButonKontrolu(farkliBirim, false)
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
 
@@ -949,10 +950,10 @@ public class HavaleYetkisiTest extends BaseTest {
                 .konuyaGoreEvrakIsaratle(konu2)
                 .topluHavale()  //Teslim al ve Havale et butonu yok.
                 .evrakOnizlemeHavaleYapBirimAlaniButonKontrolu(btnTumu, false)
-                .havaleIslemleriBirimStatusKontrol(farkliBirim,false);
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false);
 
-        new GelenEvrakKayitPage().openPage().havaleIslemleriBirimAlaniButonKontrolu(btnTumu,false)
-                .havaleIslemleriBirimStatusKontrol(farkliBirim,false);
+        new GelenEvrakKayitPage().openPage().havaleIslemleriBirimAlaniButonKontrolu(btnTumu, false)
+                .havaleIslemleriBirimStatusKontrol(farkliBirim, false);
 
     }
 

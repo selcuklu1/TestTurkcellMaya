@@ -116,6 +116,11 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Iade Notu Kontrolü: {konu}")
+    public ParafBekleyenlerPage iadeNotuKontrolu(String konu) {
+        boolean durum = tblParafBekleyenEvraklar.filterBy(Condition.text(konu)).get(0).$("button[id$='gonderenNotuButton']").isDisplayed();
+        return this;
+    }
 
 
     @Step("Kullancılar doldur")
@@ -407,7 +412,7 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Parafladıklarım listesinden evrak önizlemede aç")
+    @Step("Paraf Bekleyenler Listesinden evrak önizlemede aç")
     public ParafBekleyenlerPage konuyaGoreEvrakOnizlemedeAc(String konu) {
 
         tblParafBekleyenEvraklar
@@ -437,7 +442,7 @@ public class ParafBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Parafladıklarım listesinden evrak detay göster")
+    @Step("Paraf Bekleyenler Listesinden evrak detay göster")
     public ParafBekleyenlerPage konuyaGoreEvrakDetayGoster(String konu) {
 
         tblParafBekleyenEvraklar

@@ -30,7 +30,7 @@ public class KontrolBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Parafladıklarım listesinden evrak detay göster")
+    @Step("Kontrol Bekleyenler listesinden evrak detay göster")
     public KontrolBekleyenlerPage konuyaGoreEvrakDetayGoster(String konu) {
 
         tableEvraklar
@@ -40,6 +40,7 @@ public class KontrolBekleyenlerPage extends MainPage {
 
         return this;
     }
+
     @Step("Evrak seç")
     public KontrolBekleyenlerPage evrakSec(String konu, String geldigiYer, String kayitTarihiSayi) {
         tableEvraklar
@@ -47,6 +48,12 @@ public class KontrolBekleyenlerPage extends MainPage {
                 .filterBy(text(geldigiYer))
                 .filterBy(text(kayitTarihiSayi))
                 .get(0).click();
+        return this;
+    }
+
+    @Step("Kontrol Bekleyenlerde Evrak olmadığı görülür : \"{evrakNo}\" ")
+    public KontrolBekleyenlerPage evrakOlmadigiGorme(String evrakNo) {
+        tableEvraklar.filterBy(Condition.text(evrakNo)).shouldHaveSize(0);
         return this;
     }
 
