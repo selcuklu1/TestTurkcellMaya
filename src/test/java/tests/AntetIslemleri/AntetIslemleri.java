@@ -1070,7 +1070,7 @@ public class AntetIslemleri extends BaseTest {
                 .kaydet();
 
         testStatus(testid, "Test Başladı");
-        login(TestData.usernameZTEKIN,TestData.passwordZTEKIN);
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
 //        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
 //        birimDegistirme("Antet Güncel Birim");
         evrakOlusturPage
