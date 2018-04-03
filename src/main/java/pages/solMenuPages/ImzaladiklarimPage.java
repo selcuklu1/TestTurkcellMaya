@@ -266,6 +266,18 @@ public class ImzaladiklarimPage extends MainPage {
         return this;
     }
 
+    @Step("İmzaladıklarım listesinde evrakın listeden düştüğü kontrolu: {konu}")
+    public ImzaladiklarimPage konuyaGoreEvrakinListedenDustuguKontrolu(String konu) {
+
+        boolean durum = tblImzaladiklarimEvraklar
+                .filterBy(Condition.text(konu))
+                .size() == 0;
+
+        Assert.assertEquals(durum, true);
+
+        return this;
+    }
+
     @Step("Imzaladıklarım Evraklar listesinde evrakın listelenmediği kontrolu")
     public ImzaladiklarimPage konuyaGoreEvrakGelmemeKontrolu(String konu) {
 

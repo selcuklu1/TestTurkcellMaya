@@ -431,7 +431,17 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .evrakOnizlemeKontrol()
                 .geriAlButonKontrolu()
                 .geriAl()
-                .geriAlAciklamaDoldurVeOnayla(geriAlmaNotu);
+                .geriAlAciklamaDoldurVeOnayla(geriAlmaNotu)
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        imzaladiklarimPage
+                .konuyaGoreEvrakinListedenDustuguKontrolu(evrakKonusu);
+
+        imzaBekleyenlerPage
+                .openPage()
+                .evrakKonusunaGoreKontrol(evrakKonusu)
+                .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
+                .evrakOnizlemeKontrol();
 
     }
 }
