@@ -121,6 +121,43 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = optiim;
         login(user);
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
+        /*page.sorgulamadaDurumSec("Tümü")
+                .ara()
+                .sorgulamaDataTable.findRows().shouldHave(sizeGreaterThan(0));*/
+        page.sorgulamadaDurumSec("Sadece Aktifler")
+                .sorgulamadaAdGir(ad)
+                .ara()
+                .sorgulamaDataTable.findRows(text(ad)).shouldHave(sizeGreaterThan(0));
+        page.guncelle();
+
+        String newAd = page.getAdi().getValue().equals(ad + "_ORIGINAL") ? ad +  "_UPDATED" : ad + "_ORIGINAL";
+        String newAciklama = page.getAciklama().text().equals(aciklama + " ORIGINAL") ? aciklama + " UPDATED": aciklama + " ORIGINAL";
+
+        String dagitimTipi = "Kullanıcı";
+        String dagitimYeri = "Optiim TEST";
+        if (page.dagitimPlaniDataTable.findRows(text(dagitimYeri)).getFoundRows().size() > 0) {
+            dagitimTipi = "Birim";
+            dagitimYeri = "Optiim Birim";
+        }
+
+        page.tumDagitimYerleriSil()
+                .dagitimElemanlariEkle(dagitimTipi, dagitimYeri)
+                .adiGir(newAd).aciklamaGir(newAciklama)
+                .kaydet()
+                .islemMesaji().basariliOlmali();
+
+        evrakOlusturSayfadaAktifKontrolu(newAd, true);
+        gidenEvrakSayfadaAktifKontrolu(newAd, true);
+    }
+
+    /*@Test(description = "TS1476: Adı Alanının Güncellenmesi", enabled = true)
+    public void TS1476() {
+        String ad = "TS1476";
+        String aciklama = "TS1476 Açıklama";
+
+        User user = optiim;
+        login(user);
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.sorgulamadaDurumSec("Tümü")
                 .ara()
                 .sorgulamaDataTable.findRows().shouldHave(sizeGreaterThan(0));
@@ -130,10 +167,10 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .sorgulamaDataTable.findRows(text(ad)).shouldHave(sizeGreaterThan(0));
         page.guncelle();
 
-        /*String oldAd = page.getAdi().getValue();
+        *//*String oldAd = page.getAdi().getValue();
         String oldAciklama = page.getAciklama().text();
         String newAd = oldAd.equals(ad) ? ad + "_guncellenen": ad;
-        String newAciklama = oldAciklama.equals(aciklama) ? aciklama + "_guncellenen": aciklama;*/
+        String newAciklama = oldAciklama.equals(aciklama) ? aciklama + "_guncellenen": aciklama;*//*
         //page.adiGir(newAd).aciklamaGir(newAciklama);
 
         String dagitimTipi = "Kullanıcı";
@@ -158,7 +195,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         evrakOlusturSayfadaAktifKontrolu(ad);
         gidenEvrakSayfadaAktifKontrolu(ad);
-    }
+    }*/
 
     @Test(description = "TS1478: Kopyalama", enabled = true)
     public void TS1478() {
@@ -1018,19 +1055,19 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     }
 
     @Step("Evrak Oluştur ekranda gereği/bilgi alanlarından kontrol edilir")
-    public void evrakOlusturSayfadaAktifKontrolu(String dagitimPlanAdi) {
+    public void evrakOlusturSayfadaAktifKontrolu(String dagitimPlanAdi, boolean... exactValue) {
         EvrakOlusturPage evrakOlusturPage = new EvrakOlusturPage().openPage();
         evrakOlusturPage.bilgileriTab()
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
-                .geregiSec(dagitimPlanAdi)
+                .geregiSec(dagitimPlanAdi, exactValue)
                 .geregiTemizle()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
-                .bilgiSec(dagitimPlanAdi);
+                .bilgiSec(dagitimPlanAdi, exactValue);
         evrakOlusturPage.closePage(false);
     }
 
     @Step("Giden Evrak Kayıt ekranda gereği/bilgi alanlarından kontrol edilir")
-    public void gidenEvrakSayfadaAktifKontrolu(String dagitimPlanAdi) {
+    public void gidenEvrakSayfadaAktifKontrolu(String dagitimPlanAdi, boolean... exactValue) {
         new GidenEvrakKayitPage().openPage()
                 .bilgiSecimTipiSecByText(BilgiSecimTipi.DAGITIM_PLANLARI.getOptionText())
                 .bilgiDoldur(dagitimPlanAdi)
