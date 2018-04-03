@@ -319,6 +319,12 @@ public class OlurYazisiOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı kullanıcı ekle")
+        public BilgilerTab onayAkisiKullaniciEkle(String kullaniciAdi, String details) {
+            txtOnayAkisiKullanicilar.selectLov(kullaniciAdi, details);
+            return this;
+        }
+
         @Step("Onay akışı alanının dolduğu görülür kontrolu")
         public BilgilerTab onayAkisiDoluGeldigiKontrolu() {
 

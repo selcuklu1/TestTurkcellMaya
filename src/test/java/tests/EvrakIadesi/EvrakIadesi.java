@@ -1200,7 +1200,7 @@ public class EvrakIadesi extends BaseTest {
                 .kullaniciyaIadeEt()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        imzaBekleyenlerPage
+        kontrolBekleyenlerPage
                 .openPage()
                 .evrakOlmadigiGorme(konu);
 
@@ -2286,6 +2286,7 @@ public class EvrakIadesi extends BaseTest {
         parafBekleyenlerPage
                 .openPage()
                 .iadeEdilmistirIkonKontrolu(yeniKonu)
+                .iadeNotuKontrolu(yeniKonu)
                 .konuyaGoreEvrakOnizlemedeAc(yeniKonu)
                 .onizlemeEkranKontrolu()
                 .versiyonlariListeleKontrolu()
