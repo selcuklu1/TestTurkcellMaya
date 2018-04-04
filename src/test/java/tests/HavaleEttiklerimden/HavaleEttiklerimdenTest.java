@@ -51,6 +51,7 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     String birim = "Yazılım Geliştirme Direktörlüğ";
     String kisi = "Mehmet Bozdemir";
     String kisi2 = "Zübeyde Tekin";
+    String aksiyon = "Havale Onayına Gelenler-Havale Onayla";
     String birim2 = "YGD";
     String not = createRandomText(15);
     String konuKoduRandomTS2302 = "TC-2302_" + createRandomNumber(15);
@@ -113,10 +114,10 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TS2302"}, description = "TS2312: Onaya sunulan havalenin onaylanması")
+    @Test(enabled = true, description = "TS2312: Onaya sunulan havalenin onaylanması")
     public void TS2312() {
-
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        TS2302();
+        login(userMbozdemir);
 
         havaleOnayınaGelenlerPage
                 .openPage()
@@ -132,6 +133,20 @@ public class HavaleEttiklerimdenTest extends BaseTest {
                 .openPage()
                 .evrakNoIleEvrakSec(konuKoduRandomTS2302)
                 .evrakSecEvrakGecmisiSec()
-                .evrakGecimisiGeregiVeBilgiGeldigiGorme(" evrak havale edildi (gereği için)","Mehmet Bozdemir","","");
+                .evrakGecimisiGeregiVeBilgiGeldigiGorme(" Evrak havale edildi (Bilgi İçin)","Mehmet Bozdemir"," Evrak havale edildi (Gereği İçin)","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true, description = "TS2312: Onaya sunulan havalenin onaylanması")
+    public void TS2313() {
+
+        TS2312();
+
+        sistemLoglariPage
+                .openPage()
+                .kullaniciSec(kisi)
+                .aksiyonSec(aksiyon)
+                .sorgula()
+                .sistemRaporuKontrol(aksiyon,evrakTarihi,kisi,"evrakın havalesini onaylamıştır.",true);
     }
 }

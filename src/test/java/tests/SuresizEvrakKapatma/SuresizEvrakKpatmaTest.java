@@ -418,6 +418,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapat()
                 .evrakKapatmaEkranGeldigiGorme()
                 .evrakKapatKonuKodu(konuKodu)
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
+                .evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme()
                 .evrakKapatKisiselKlasorlerimKaldir()
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
                 .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
