@@ -531,6 +531,7 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement txtGeregiSecimTipiYeniEvrak = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:j_idt']");
         SelenideElement txtGeregiSecimTipiEskiEvrak = $("select[id^='inboxItemInfoForm:evrakBilgileriList:16:j_idt']");
         BelgenetElement cmbGeregiEski = comboLov("[id='inboxItemInfoForm:evrakBilgileriList:16:geregiLov:LovText']");
+        SelenideElement btnOtomatikOnayAkisiKapat = $("[id^='yeniGidenEvrakForm:hiyerarsikAkisOlusturDialog'] [class='ui-icon ui-icon-closethick']");
 
         //endregion
         ElementsCollection tableGeregiSecilenler = $$("tbody[id$='geregiLov:LovSecilenTable_data'] > tr");
@@ -1739,6 +1740,18 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Otomatik Hiyerarşik Onay Akışı Amir kontrolu")
+        public BilgilerTab otomatikOnayAkisiAmirKontrolu(String kullaniciAdi) {
+            btnOtomatikAkisKullan.sendKeys(Keys.SHIFT);
+
+            trOtomatikOnayAkisiEkleKullanicilar
+                    .filterBy(matchText("(?i)(?u)(?m)\\b" + kullaniciAdi.trim().replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0") + "\\b"))
+                    .get(0)
+                    .shouldBe(exist);
+
+            return this;
+        }
+
         @Step("Onay akışı kullanıcı adı ve tipi kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\" ")
         public BilgilerTab onayAkisiKullaniciKontrolu(String kullaniciAdi, String kullaniciTipi) {
             boolean durum = trOnayAkisiEkleKullanicilar
@@ -2293,6 +2306,12 @@ public class EvrakOlusturPage extends MainPage {
             System.out.println("Birimin geldiği ve seçilebildiği görülür: " + birim);
             Allure.addAttachment("Birimin geldiği ve seçilebildiği görülür: " + birim, "");
 
+            return this;
+        }
+
+        @Step("Otomatik onay akışını kapat")
+        public BilgilerTab otomatikOnayAkisiKapat() {
+            btnOtomatikOnayAkisiKapat.click();
             return this;
         }
 

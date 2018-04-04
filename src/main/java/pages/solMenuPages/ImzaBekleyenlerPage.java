@@ -10,20 +10,12 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
-import org.openqa.selenium.Keys;
-
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.io.BufferedInputStream;
-import java.io.IOException;
 //import java.io.InputStream;
 //import java.net.URL;
 
@@ -47,6 +39,7 @@ public class ImzaBekleyenlerPage extends MainPage {
     ElementsCollection tblImzaBekleyenler = $$("tbody[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
     SelenideElement btnEvrakSil = $("[id^='mainPreviewForm:onizlemeRightTab:uiRepeat'] [class$='evrakSil']");
     SelenideElement btnSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
+    SelenideElement btnNotSonrasiSil = $("[id^='mainPreviewForm:j_idt'] [class$='ui-button-text']");
     SelenideElement txtEvrakSilmeNotu = $(By.xpath("/html//table[@id='mainPreviewForm:evrakSilPanelGrid']/tbody//table[@class='gridForm']//textarea[@role='textbox']"));
     SelenideElement evrakOnIzlemeEkranKontrol = $("[id^='mainPreviewForm:j_idt'] [class='ui-tabs-panel ui-widget-content ui-corner-bottom']");
     SelenideElement evrakIcerikEkranKontrol = $("div[id='windowItemInfoDialog']");
@@ -356,8 +349,8 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Popup Silme Onayı:  {secim}")
-    public void popupSilmeOnayi(String secim) {
+    @Step("Popup Silme Onayı-Kaydı silmek istediğinize emin misiniz?: {secim}")
+    public ImzaBekleyenlerPage popupSilmeOnayi(String secim) {
 
         SelenideElement btnIslemOnayiEvet = $(By.id("mainPreviewForm:evrakSilEvetButton"));
         SelenideElement btnIslemOnayiHayir = $(By.id("mainPreviewForm:evrakSilHayirButton"));
@@ -370,7 +363,7 @@ public class ImzaBekleyenlerPage extends MainPage {
                 btnIslemOnayiHayir.click();
                 break;
         }
-
+        return this;
     }
 
     @Step("Evrak önizleme ekranı kontrolu")
@@ -388,9 +381,13 @@ public class ImzaBekleyenlerPage extends MainPage {
 
     @Step("Sil butonunun gelmediği kontrolu")
     public ImzaBekleyenlerPage silButonuGelmedigiKontrolu() {
-
         Assert.assertEquals(btnEvrakSil.isDisplayed(), false);
+        return this;
+    }
 
+    @Step("Sil butonunun geldiği kontrolu")
+    public ImzaBekleyenlerPage silButonunGeldigiKontrolu() {
+        Assert.assertEquals(btnEvrakSil.isDisplayed(), true);
         return this;
     }
 
