@@ -483,7 +483,7 @@ public class VekaletIslemleriTest extends BaseTest {
         String evrakGelisTipi = "Posta";
         String geldigiKurum = "Esk Kurum 071216 2";
         //region Test Datası
-        String evrakNO2212 = gelenEvrakKayit(evrakGelisTipi,geldigiKurum);
+        String evrakNO2212 = gelenEvrakKayit(evrakGelisTipi, geldigiKurum);
 
         String mesaj = "Seçmiş olduğunuz kullanıcı grubunda vekalet vermiş kişiler bulunmaktadır. Kullanıcı grubunu kullanırsanız havale asıl kişilere(vekalet veren) gidecektir. Yine de işleme devam etmek istiyor musunuz?";
         String kullanici = "YAZILIM GELİŞTİRME";
@@ -533,6 +533,17 @@ public class VekaletIslemleriTest extends BaseTest {
 //        gelenEvrakKayitPage.islemMesaji().basariliOlmali();
         //endregion
         return evrakNO2212;
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(enabled = true
+            , dependsOnMethods = {"TS0012"}
+            , description = "TS1907 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
+    public void TS1907() throws InterruptedException {
+
+        String evrakGelisTipi = "Posta";
+        String geldigiKurum = "Esk Kurum 071216 2";
+        String konu = "konu " + getSysDateForKis();
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -712,7 +723,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , priority = 0
-            ,description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
+            , description = "TS2200 : Vekalet verme ekranında alan kontrolleri")
     public void TS2200() throws InterruptedException, ParseException {
 
         login(TestData.username27);
@@ -756,7 +767,7 @@ public class VekaletIslemleriTest extends BaseTest {
     @Test(enabled = true
             ,dependsOnMethods = {"TS2208"}
             , description = "TS2205 : Vekalet alan kullanıcının havale onayında seçilmesi")
-    public void TS2205() throws InterruptedException{
+    public void TS2205() throws InterruptedException {
 
         login(TestData.userMbozdemir);
 
@@ -765,34 +776,34 @@ public class VekaletIslemleriTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birimName = "Usernameva TEST";
         String kullaniciTitle = " [Ağ (Network) Uzman Yardımcısı]";
-        String birim ="Vekalet: " + getSysDateForKis() + "/" + " " + getSysDateForKis() + nameVA;
+        String birim = "Vekalet: " + getSysDateForKis()+ "/" + getSysDateForKis() + " " + nameVV;
+        String detail = nameVA + kullaniciTitle+ '\n' +"YGD"+'\n'+"BHUPGMY"+" - "+ birim;
 
-        reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birimName);
+//        reusableSteps.gelenEvraklarEvrakOlustur(konu, kurum, birimName);
+//
+//        login(TestData.usernameva,TestData.passwordva);
+//
+//        mainPage.vekaletVarUyariPopUp()
+//                .birimSec(Condition.exactText("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"));
 
-        login(TestData.usernameva,TestData.passwordva);
 
-        mainPage.vekaletVarUyariPopUp()
-                .birimSec(Condition.exactText("YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ"));
-
-
-        gelenEvraklarPage
-                .openPage()
-                .konuyaGoreEvrakOnizlemedeAc(konu)
-                .evrakOnizlemeButonTikla("Havale Yap")
-                .havaleIslemleriOnaylayacakKisiSec(nameVV)
-                .vekaletVarPopupSeçim(nameVV)
-                .evrakOnzilemeOnaylayanKisiKontrolu(nameVV,kullaniciTitle);
+//        gelenEvraklarPage
+//                .openPage()
+//                .konuyaGoreEvrakOnizlemedeAc(konu)
+//                .evrakOnizlemeButonTikla("Havale Yap")
+//                .havaleIslemleriOnaylayacakKisiSec(nameVV)
+//                .vekaletVarPopupSeçim(nameVV)
+//                .evrakOnzilemeOnaylayanKisiKontrolu(nameVV,kullaniciTitle);
 
         login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
-                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVV,kullaniciTitle)
-                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVA,kullaniciTitle)
-                .dagitimBilgileriOnaylayacakKisiDetailKontrol(nameVA,birim)
-                .dagitimBilgileriOnaylayanKisiSec(nameVA);
-
-
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVV, kullaniciTitle)
+                .dagitimBilgileriOnaylayacakKisiKontrolü(nameVA, kullaniciTitle)
+                .dagitimBilgileriOnaylayacakKisiDetailKontrol(nameVA, birim)
+                .dagitimBilgileriOnaylayanKisiSec(nameVA)
+                .dagitimBilgileriSeçilenOnaylayacakKisiDetailKontrol(nameVA, detail);
 
     }
 }
