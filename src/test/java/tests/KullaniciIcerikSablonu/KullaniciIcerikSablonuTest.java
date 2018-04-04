@@ -10,6 +10,7 @@ import pages.pageComponents.tabs.EditorTab;
 import pages.ustMenuPages.*;
 
 import static data.TestData.passwordZTEKIN;
+import static data.TestData.userZtekin;
 import static data.TestData.usernameZTEKIN;
 
 /****************************************************
@@ -72,7 +73,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
     @Test(enabled = true, description = "TS0989 : Kopyala - yapıştır yapılarak şablon oluşturma işlemi")
     public void TS0989() throws InterruptedException
     {
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
        kullaniciIcerikSablonuPage
                .openPage()
@@ -107,7 +108,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
         String icerikTS0995 = createRandomText(15);
         String icerikToplam = icerikTS0995+ icerik;
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         kullaniciIcerikSablonuPage
                 .openPage()
@@ -182,7 +183,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
         String sablonAdiTS0987 = "TS0987-"+createRandomNumber(10);
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         kullaniciIcerikSablonuPage
                 .openPage()

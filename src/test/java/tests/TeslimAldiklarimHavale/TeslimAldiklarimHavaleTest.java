@@ -68,7 +68,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
     public void TS1597PreCondition() {
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS1597,kurum,birim);
 
@@ -80,7 +80,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Step("Teslim Alınanlar sayfasına evrak düşürmektedir.")
     public void TS446PreCondition() {
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS1597,kurum,birim);
 
@@ -115,13 +115,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Büyük Harflerle Kurum","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",evrakTarihi)
                 .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS1597,evrakTarihi,"Büyük Harflerle Kurum");
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -185,7 +185,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -200,7 +200,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
         teslimAlinmayiBekleyenlerPage
                 .evrakNoGelmedigiGorme(konuKoduRandomTS1597);
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         birimeIadeEdilenlerPage
                 .openPage()
@@ -242,7 +242,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS1591b: Teslim aldıklarım listesinden yapılan havalenin Havale Edilen Evrak Raporundan kontrolü")
     public void TS1591b() {
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         havaleEdilenEvrakRaporuPage
                 .openPage()

@@ -99,12 +99,12 @@ public class EvrakKopyalamaTest extends BaseTest {
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(userYakyol);
 
         evrakOlusturPage
                 .evrakOlusturParafla(konuKoduTS2196,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama");
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(userYakyol);
 
         parafladiklarimPage
                 .openPage()
