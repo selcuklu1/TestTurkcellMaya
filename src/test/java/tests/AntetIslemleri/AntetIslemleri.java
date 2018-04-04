@@ -29,7 +29,7 @@ import static com.codeborne.selenide.Condition.textCaseSensitive;
  * Tarih: 2018-03-24
  * Proje: Türksat Functional Test Automation
  * Class: "Antet Islemleri" konulu senaryoları içerir
- * Yazan: Serdar Kayis
+ * Yazan: Serdar Kayis - Can Şeker
  ****************************************************/
 @Feature("Antet Islemleri")
 public class AntetIslemleri extends BaseTest {
@@ -1486,6 +1486,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
 
         testStatus(testid, "PreCondition");
@@ -1531,7 +1532,10 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
@@ -1613,6 +1617,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -1654,13 +1659,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -1736,6 +1743,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
 
         testStatus(testid, "PreCondition");
@@ -1788,7 +1796,10 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
@@ -1870,6 +1881,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
 
         testStatus(testid, "PreCondition");
@@ -1926,13 +1938,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -2009,6 +2023,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2065,13 +2080,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -2140,6 +2157,7 @@ public class AntetIslemleri extends BaseTest {
         String antetUstBirim = "";
         String antetEnUstBirimTipi = "Özel";
         String antetEnUstBirim = "İki Üst Birim Özel Antet";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2182,13 +2200,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -2265,6 +2285,7 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2327,13 +2348,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -2403,6 +2426,7 @@ public class AntetIslemleri extends BaseTest {
         String antetEnUstBirimTipi = "Özel";
         String antetEnUstBirim = "İki Üst Birim Özel Antet";
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2445,13 +2469,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 
@@ -2523,6 +2549,7 @@ public class AntetIslemleri extends BaseTest {
         String antetEnUstBirimTipi2 = "Normal";
         String antetEnUstBirim = "İki Üst Birim Özel Antet";
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
+        String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2579,13 +2606,15 @@ public class AntetIslemleri extends BaseTest {
                 .geregiSecimTipiKontrol("Kurum")
                 .geregiDoldur(geregiKurum,"Kurum")
                 .geregiKontrol(geregiKurum)
-                //bilgileri secim ekle
+                .bilgiSecimTipiSecByText("Kurum")
+                .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .kullan();
 
 

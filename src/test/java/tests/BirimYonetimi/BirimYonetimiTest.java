@@ -727,6 +727,8 @@ public class BirimYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS1119b: Birim iletişim bilgilerinin değiştirilmesi")
     public void TS1119b() {
 
+        login("optiimotomasyon1","123");
+
         String birim = "TS1119";
         String iletisim1 = "Ankara Üniversitesi Ankütek Teknopark E Blok Kat:1";
         String iletisim2 = "Tel: 0312 222 22 22";
@@ -744,7 +746,6 @@ public class BirimYonetimiTest extends BaseTest {
         String webAdresi = "www.turksat.com.tr";
         String eskiBirim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
 
         birimYonetimiPage
                 .openPage()

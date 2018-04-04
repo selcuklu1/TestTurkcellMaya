@@ -74,7 +74,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
 
         String dikkatMesaji = "Evrak seçilmemiştir!";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
         TS2295PreCondition();
 
@@ -110,7 +110,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         String birim = "Yazılım Geliştirme Direktörlüğü";
         String dikkatMesaji = "Evrak seçilmemiştir!";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -209,7 +209,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .openPage()
                 .evrakSec()
                 .havaleYap()
-        .havaleYapEkranGeldigiGorulur();
+                .havaleYapEkranGeldigiGorulur();
 
         evrakOnizleme
                 .havaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true);
@@ -278,7 +278,6 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .teslimAlvehavaleBilgilerininGirilecegiAlanlarınGeldigiGorme(true,true,true,true,true,true,true,true,true);
     }
 
-
     @Test(enabled = true, description = "TS2297: Görüntülenen evrakın havale onayından geri çekilemediğinin kontrolü")
     public void TS2297() {
 
@@ -287,7 +286,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin );
 
         gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
 
@@ -301,7 +300,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .havaleOnayinaGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         havaleOnayınaGelenlerPage
                 .openPage()
@@ -311,7 +310,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .havaleOnayiOnayla()
                 .havaleyiOnaylamakUzeresinizEvet();
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -330,7 +329,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         String kullanici = "Zübeyde Tekin";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitKullaniciHavaleEt(konuKodu,kurum,kullanici);
@@ -344,14 +343,14 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .icerikGosterKullaniciListesiDoldur("TS1590")
                 .icerikGosterGonder();
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakNoyaGoreEvrakSec(konuKodu)
                 .evrakOnizlemeKontrolu();
 
-        login(usernameZTEKIN,passwordYAKYOL);
+        login(userZtekin);
 
         havaleEttiklerimPage
                 .openPage()
