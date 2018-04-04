@@ -1081,6 +1081,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dagitimi Ek Yap alanı kontrol")
+        public BilgilerTab dagitimiEkYapSecKontrol() {
+            Assert.assertEquals(chkDagitimiEkYap.isDisplayed(),true,"Dağıtım Ek Yap Alanı Kontrol");
+            Allure.addAttachment("Dağıtımı Ek Yap Alanı kontrolü :" + chkDagitimiEkYap.isDisplayed(),"");
+            return this;
+        }
+
+
         @Step("Onay Akisi alanında \"{onayAkisi}\" seç")
         public BilgilerTab cmbOnayAkisi(String onayAkisi) {
             cmbOnayAkisi2.selectLov(onayAkisi);
@@ -4484,6 +4492,7 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Pdf hitap kontrolü. \"{beklenenPDFHitap}\" ")
         public PDFKontrol PDFHitapKontrol(String beklenenPDFHitap) {
             switchTo().window(1);
+            maximazeBrowser();
             SelenideElement PDFHitap = $(By.xpath("//div[@id='viewer']/div[@class='page']//div[.='" + beklenenPDFHitap + "']"));
             Assert.assertEquals(PDFHitap.getText().contains(beklenenPDFHitap), true);
             takeScreenshot();
