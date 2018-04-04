@@ -8,6 +8,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.MainPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.GelenEvrakKayitPage;
 import pages.ustMenuPages.KullaniciListesiYonetimiPage;
@@ -28,6 +29,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
     TeslimAlinanlarPage teslimAlinanlarPage;
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
+    MainPage mainPage;
 
     String ad = "TS1005 " + createRandomNumber(8);
     String aciklama = "TS1005 " + getSysDate();
@@ -61,6 +63,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
         teslimAlinanlarPage = new TeslimAlinanlarPage();
         kaydedilenGelenEvraklarPage = new KaydedilenGelenEvraklarPage();
         birimeIadeEdilenlerPage = new BirimeIadeEdilenlerPage();
+        mainPage=new MainPage();
 
     }
 
@@ -303,7 +306,7 @@ public class KullaniciListesiYonetimiTest extends BaseTest {
 //            ,dependsOnMethods = {"TS1003"}
             , description = "TS1465 : Yeni Kullanıcı Listesi Tanımlama Sonrası Ekranlardan Kontrolü")
     public void TS1465() throws InterruptedException {
-String basariMesaji = "İşlem Başarılıdır!";
+String basariMesaji = "İşlem başarılıdır!";
         TS1005();
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
@@ -378,8 +381,8 @@ String basariMesaji = "İşlem Başarılıdır!";
                 .havaleYapButon("Tebliğ Et");
 
 //waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
-//evrakDetayiPage
-//                .islemMesaji().basariliOlmali(basariMesaji);
+
+   mainPage.islemMesaji().basariliOlmali(basariMesaji);
 
         teslimAlinmayiBekleyenEvrak();
 

@@ -1012,15 +1012,28 @@ public class GelenEvrakKayitPage extends MainPage {
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında kullanici detay kontrolü. \"{detail}\"")
     public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiDetailKontrol(String kullanici, String detail) {
         String text  = cmbHavaleIslemleriOnaylayacakKisi.openTreePanel().getSelectableItems()
-                .filterBy(Condition.text(kullanici)).first().getText();
+                 .filterBy(Condition.text(kullanici)).first().getText();
         cmbHavaleIslemleriOnaylayacakKisi.closeTreePanel();
 
         System.out.println(text);
 
-        Assert.assertEquals(text.contains(text),true);
+        Assert.assertEquals(text.contains(detail),true);
         Allure.addAttachment("Kullanıcı Detayı : ", detail);
         return this;
     }
+
+    @Step("Dağıtım Bilgileri Onaylayacak Kisi alanında kullanici detay kontrolü. \"{detail}\"")
+    public GelenEvrakKayitPage dagitimBilgileriSeçilenOnaylayacakKisiDetailKontrol(String kullanici, String detail) {
+        String text  = txtEklenenOnaylayan.getText();
+        System.out.println(text);
+
+        Assert.assertEquals(text.contains(detail),true);
+        Allure.addAttachment("Kullanıcı Detayı : ", detail);
+        return this;
+    }
+
+
+
 
     @Step("Dağıtım Bilgileri Onaylayacak Kisi alanı kontrolü.")
     public GelenEvrakKayitPage dagitimBilgileriOnaylayacakKisiAlaniKontrolü(String vekaletAlan, String title, String vekaletVeren) {
