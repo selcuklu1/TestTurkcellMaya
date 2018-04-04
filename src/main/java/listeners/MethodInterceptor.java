@@ -94,7 +94,7 @@ public class MethodInterceptor implements IMethodInterceptor {
         //convert to json file
         String json = new Gson().toJson(finalList);
         //json = json.replace("\\u0027"," ");
-        json = "String tests='" + json + "'\n\n" + "return \"<input name='value' value='${tests}' class='setting-input' type='text' style='width:100%;'>\"";
+        //json = "String tests='" + json + "'\n\n" + "return \"<input name='value' value='${tests}' class='setting-input' type='text' style='width:100%;'>\"";
 
         File jsonFile = new File("testsJenkins.json");
         if (jsonFile.exists())
