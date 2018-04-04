@@ -66,7 +66,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         String kullanici = "Mehmet Bozdemir";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(userYakyol);
 
         reusableSteps
                 .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
@@ -83,6 +83,7 @@ public class EvrakKopyalamaTest extends BaseTest {
                 .evrakGeldigiGorme(konuKoduTS2233);
 
         beklemeyeAlinanlarPage
+                .openPage()
                 .evrakSecKonuyaGoreIcerikGoster(konuKoduTS2233);
 
         evrakDetayiPage
