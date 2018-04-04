@@ -368,7 +368,7 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
         String kullanici = "Zübeyde Tekin";
         String birim = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         gelenEvrakKayitPage.gelenEvrakKayitKaydedilenGelenEvraklarEvrakOlustur(konuKodu,kurum);
 
@@ -381,14 +381,14 @@ public class EvrakHavaleIslemleriTest extends BaseTest {
                 .havaleYapGonder()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(usernameYAKYOL,passwordYAKYOL);
+        login(userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakNoIleEvrakSec(konuKodu)
                 .evrakOnizlemeGeldigiGorme(true);
 
-        login(usernameMBOZDEMIR,passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         birimHavaleEdilenlerPage
                 .openPage()

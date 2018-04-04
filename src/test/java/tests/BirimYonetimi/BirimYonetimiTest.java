@@ -385,7 +385,7 @@ public class BirimYonetimiTest extends BaseTest {
     @Test(enabled = true, description = "TS1112: Kaydedilen birime amir eklenmesi")
     public void TS1112() {
 
-        login();
+        login(TestData.optiim);
 
         testStatus("TS1109", "Birim Oluşturma");
         //1109 senaryosu yerine pre. con. koşuluyor
@@ -415,10 +415,15 @@ public class BirimYonetimiTest extends BaseTest {
                 .kaydet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
+        login(TestData.userSezaiCelik);
+
         evrakOlusturPage
                 .openPage()
                 .bilgilerTabiAc()
                 .secilenOnayAkisiSil()
+                .otomatikOnayAkisiSec()
+                .otomatikOnayAkisiAmirKontrolu(amirAdi)
+                .otomatikOnayAkisiKapat()
                 .onayAkisiEkle()
                 .onayAkisiKullaniciEkle(amirAdi, birimAdi);
     }

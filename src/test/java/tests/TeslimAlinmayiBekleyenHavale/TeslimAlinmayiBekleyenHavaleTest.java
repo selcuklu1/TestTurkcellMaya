@@ -129,7 +129,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Yazılım Geliştirme Direktörlüğ";
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitBirimHavaleEt(konuKoduRandom,kurum,birim);
