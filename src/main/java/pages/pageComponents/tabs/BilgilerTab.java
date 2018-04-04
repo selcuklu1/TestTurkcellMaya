@@ -415,8 +415,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Bilgi seçilir")
-    public BilgilerTab bilgiSec(String text) {
-        getBilgiCombolov().selectLov(text);
+    public BilgilerTab bilgiSec(String text, boolean... exactValue) {
+
+        if (exactValue.length > 0 && exactValue[0])
+            getBilgiCombolov().selectExactLov(text);
+        else
+            getBilgiCombolov().selectLov(text);
+
         return this;
     }
 
@@ -543,8 +548,13 @@ public class BilgilerTab extends MainPage {
     }
 
     @Step("Gereği alanı seçilir")
-    public BilgilerTab geregiSec(String text) {
-        getGeregiCombolov().selectLov(text);
+    public BilgilerTab geregiSec(String text, boolean... exactValue) {
+
+        if (exactValue.length > 0 && exactValue[0])
+            getGeregiCombolov().selectExactLov(text);
+        else
+            getGeregiCombolov().selectLov(text);
+
         return this;
     }
 

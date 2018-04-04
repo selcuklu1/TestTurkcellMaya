@@ -1081,6 +1081,14 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Dagitimi Ek Yap alanı kontrol")
+        public BilgilerTab dagitimiEkYapSecKontrol() {
+            Assert.assertEquals(chkDagitimiEkYap.isDisplayed(),true,"Dağıtım Ek Yap Alanı Kontrol");
+            Allure.addAttachment("Dağıtımı Ek Yap Alanı kontrolü :" + chkDagitimiEkYap.isDisplayed(),"");
+            return this;
+        }
+
+
         @Step("Onay Akisi alanında \"{onayAkisi}\" seç")
         public BilgilerTab cmbOnayAkisi(String onayAkisi) {
             cmbOnayAkisi2.selectLov(onayAkisi);

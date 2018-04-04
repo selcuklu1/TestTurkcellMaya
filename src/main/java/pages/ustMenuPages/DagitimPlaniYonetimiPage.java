@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -273,10 +274,23 @@ public class DagitimPlaniYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Kayır silinir")
-    public DagitimPlaniYonetimiPage sil(Condition... silenecekKayit) {
+    @Step("Dağıtım Yeri silinir")
+    public DagitimPlaniYonetimiPage sil(Condition... silenecekKayitKontolOnly) {
         dagitimPlaniDataTable.getFoundRow().$(deleteButtonLocator).shouldBe(visible).pressEnter();
-        dagitimPlaniDataTable.findRows(silenecekKayit).shouldHaveSize(0);
+        dagitimPlaniDataTable.findRows(silenecekKayitKontolOnly).shouldHaveSize(0);
+        return this;
+    }
+
+    @Step("Tüm Dağıtım Yerleri silinir")
+    public DagitimPlaniYonetimiPage tumDagitimYerleriSil() {
+        ElementsCollection rows = dagitimPlaniDataTable.findRows().getFoundRows();
+        int count = rows.size();
+
+        for (int i = 0; i < count; i++) {
+            dagitimPlaniDataTable.findRows().getFoundRow();
+            sil();
+        }
+        dagitimPlaniDataTable.findRows().shouldHaveSize(0);
         return this;
     }
 
