@@ -765,7 +765,7 @@ public class VekaletIslemleriTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
-//            ,dependsOnMethods = {"TS2208"}
+            ,dependsOnMethods = {"TS2208"}
             , description = "TS2205 : Vekalet alan kullanıcının havale onayında seçilmesi")
     public void TS2205() throws InterruptedException {
 
