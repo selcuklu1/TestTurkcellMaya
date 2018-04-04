@@ -151,7 +151,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
         String sablon = "Optiim form şablonu";
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        login(userZtekin);
 
         evrakOlusturPage
                 .evrakOlusturEvrakTuruneGore(konuKodu,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama","Form",sablon);

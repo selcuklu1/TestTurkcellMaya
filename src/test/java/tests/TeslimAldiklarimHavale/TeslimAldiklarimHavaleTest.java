@@ -156,13 +156,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .openPage()
                 .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Yasemin Çakıl Akyol",evrakTarihi);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakGeldigiGorme(konuKoduRandomTS1597,kurum,evrakTarihi);
 
-        login(usernameMBOZDEMIR, passwordZTEKIN);
+        login(userMbozdemir);
 
         gelenEvraklarPage
                 .openPage()
@@ -231,7 +231,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
                 .geriAlNotDoldur(not)
                 .geriAlGeriAl();
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         havaleOnayınaGelenlerPage
                 .openPage()
