@@ -359,6 +359,7 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
         String birimAdi = "Optiim Birim";
         String fizikselEkMetni = "TS0133 EkMetni " + getSysDate();
         String geriAlmaNotu = "Evrakı Geri Alma Notu";
+        String silmeNotu = "Evrakı Silme Notu";
 
         login(TestData.optiim);
 
@@ -412,7 +413,8 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
                 .evrakOnizlemeKontrol()
-                .evrakImzala();
+                .evrakImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         login(TestData.userMbozdemir); //sezaiceik
 
@@ -441,7 +443,30 @@ public class OnayAkisindakiEvrakiSilTest extends BaseTest {
                 .openPage()
                 .evrakKonusunaGoreKontrol(evrakKonusu)
                 .konuyaGoreEvrakOnizlemedeAc(evrakKonusu)
-                .evrakOnizlemeKontrol();
+                .evrakOnizlemeKontrol()
+                .silButonunGeldigiKontrolu()
+                .evrakSil()
+                .sil()
+                .islemMesaji().uyariOlmali(uyariMesaji);
+
+        imzaBekleyenlerPage
+                .evrakSilmeNotuGir(silmeNotu)
+                .sil()
+                .popupSilmeOnayi("Evet")
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        iptalEdilenEvraklarRaporuPage
+                .openPage()
+                .sayfaAcilmali()
+                .ilkTarihDoldur(ilkTarih)
+                .sonTarihDoldur(sonTarih)
+                .belgeDurumuSec("Belge olmuş evraklar")
+                .sorgula()
+                .konuyaGoreEvrakKontrol(evrakKonusu)
+                .konuyaGoreEvrakDetayiTikla(evrakKonusu);
+
+        evrakDetayiPage
+                .sayfaAcilmasiKontrolu();
 
     }
 }
