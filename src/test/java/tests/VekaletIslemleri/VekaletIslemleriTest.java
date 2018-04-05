@@ -538,17 +538,6 @@ public class VekaletIslemleriTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true
             , dependsOnMethods = {"TS0012"}
-            , description = "TS1907 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
-    public void TS1907() throws InterruptedException {
-
-        String evrakGelisTipi = "Posta";
-        String geldigiKurum = "Esk Kurum 071216 2";
-        String konu = "konu " + getSysDateForKis();
-    }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true
-            , dependsOnMethods = {"TS0012"}
             , description = "TS0011 : Vekalet alan kullanıcıya evrak havalesi ve kontrolü")
     public void TS0011() throws InterruptedException {
 
