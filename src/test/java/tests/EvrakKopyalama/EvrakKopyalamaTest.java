@@ -70,7 +70,7 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         reusableSteps
                 .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
-
+        login(userMbozdemir);
         beklemeyeAlinanlarPage
                 .openPage()
                 .evrakSecKonuyagore(konuKoduTS2233)
