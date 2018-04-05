@@ -109,7 +109,7 @@ public class KullaniciIcerikSablonuPage extends MainPage
 
     @Step("Yeni Şablon oluştur tıklanır")
     public KullaniciIcerikSablonuPage yeniSablonOlustur(){
-        btnYeniSablonOlustur.click();
+        clickJs(btnYeniSablonOlustur);
         return this;
     }
 
