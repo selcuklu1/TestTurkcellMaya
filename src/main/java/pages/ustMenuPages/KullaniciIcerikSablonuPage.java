@@ -81,7 +81,7 @@ public class KullaniciIcerikSablonuPage extends MainPage
     public KullaniciIcerikSablonuPage evrakOnizleme(){
         btnEvrakOnizleme.click();
         int i =0;
-        while (i<200){
+        while (i<250){
             sleep(i); i++;
         }
         return this;
