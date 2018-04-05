@@ -137,7 +137,7 @@ public class HavaleEttiklerimdenTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true, description = "TS2312: Onaya sunulan havalenin onaylanması")
+    @Test(enabled = true, description = "TS2313: Onaylanan Havale işleminin sistem loglarından kontrolü")
     public void TS2313() {
 
         TS2312();
