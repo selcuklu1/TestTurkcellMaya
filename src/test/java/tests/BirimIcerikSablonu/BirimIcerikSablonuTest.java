@@ -80,7 +80,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .getText();
 
         birimIcerikSablonlarPage
-                .pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1082), text("(@BIRIM)"))
+                .pdfOnzilemeTextKontol(text(sablonAdi1082), text("(@BIRIM)"))
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 

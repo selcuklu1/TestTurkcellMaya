@@ -356,7 +356,7 @@ public class BirimIcerikSablonlarPage extends MainPage {
         WebDriver driver = switchTo().window("htmlToPdfServlet");
         $(".textLayer").shouldBe(exist, visible);
         for (Condition condition : conditions) {
-            System.out.println(new Timestamp(System.currentTimeMillis()) + "   pdfonizleme text: " + $(".textLayer").text());
+            System.out.println(new Timestamp(System.currentTimeMillis()) + " pdfonizleme text: " + $(".textLayer").text());
             $(".textLayer").shouldHave(condition);
         }
 
