@@ -130,9 +130,11 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods =  {"TS0989"}, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
+    @Test(enabled = true, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
     public void TS0995() throws InterruptedException
     {
+        String sablonAdi = "TS0989-"+createRandomNumber(11);
+        TS0989PreCondition(sablonAdi);
         useFirefox();
 
         String sablonAdiTS0997 = "TS0995-"+createRandomNumber(10);
@@ -150,7 +152,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
                 .evrakOnizlemeGeldigiGorme();
 
         kullaniciIcerikSablonuPage
-                .sablonAdiGoreDetaySec(sablonAdiTS989);
+                .sablonAdiGoreDetaySec(sablonAdi);
 
         String editorIcerik = birimIcerikSablonlarPage.getEditor().getText();
 
