@@ -81,7 +81,7 @@ public class KullaniciIcerikSablonuPage extends MainPage
     public KullaniciIcerikSablonuPage evrakOnizleme(){
         btnEvrakOnizleme.click();
         int i =0;
-        while (i<250){
+        while (i<210){
             sleep(i); i++;
         }
         return this;
@@ -109,7 +109,7 @@ public class KullaniciIcerikSablonuPage extends MainPage
 
     @Step("Yeni Şablon oluştur tıklanır")
     public KullaniciIcerikSablonuPage yeniSablonOlustur(){
-        clickJs(btnYeniSablonOlustur);
+        clickJs(btnYeniSablonOlustur.pressEnter());
         return this;
     }
 
