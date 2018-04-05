@@ -44,7 +44,6 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
 
-
     //Seconds
     static final int timeout = 30;
     static final int loadingTimeout = 30;
