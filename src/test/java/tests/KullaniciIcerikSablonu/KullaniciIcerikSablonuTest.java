@@ -40,9 +40,10 @@ public class KullaniciIcerikSablonuTest extends BaseTest
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TS0989"}, description = "TS0985 : Kullanıcı şablonlarının listelenmesi")
+    @Test(enabled = true, description = "TS0985 : Kullanıcı şablonlarının listelenmesi")
     public void TS0985() throws InterruptedException
     {
+        TS0989();
         useFirefox();
 
         login(usernameZTEKIN,passwordZTEKIN);
@@ -100,9 +101,10 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods =  {"TS0989"}, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
+    @Test(enabled = true, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
     public void TS0995() throws InterruptedException
     {
+        TS0989();
         useFirefox();
 
         String sablonAdiTS0997 = "TS0995-"+createRandomNumber(10);
@@ -178,7 +180,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS0987: Yeni kullanıcı şablonu oluşturma")
-    public void TS0987() throws InterruptedException
+    public void TS0987()
     {
         useFirefox();
 
