@@ -77,7 +77,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Yazılım Geliştirme Direktörlüğ";
         String not = createRandomText(15);
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitBirimHavaleEt(konuKoduRandom,kurum,kullaniciAdi);
@@ -98,7 +98,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandom, evrakTarihi, kurum);
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -226,7 +226,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     @Test(enabled = true, description = "TS2294: Havale yeri Birim, Kişi, Kullanıcı Listesi seçilerek evrakın havale edilmesi")
     public void TS2294() {
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS2294,kurum, birim);
 
@@ -253,19 +253,19 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .openPage()
                 .evrakAlanKontrolleri(konuKoduRandomTS2294,kurum,evrakTarihi);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS2294, kurum, evrakTarihi);
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         gelenEvraklarPage
                 .openPage()
                 .evrakGeldigiGorme(konuKoduRandomTS2294,kurum,evrakTarihi);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
 
         gelenEvraklarPage
                 .openPage()
@@ -275,7 +275,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     @Step("Havale onayına gelenler sayfasına evrak düşürmektedir.")
     public void TS2300PreCondition() {
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
         gelenEvrakKayitPage.gelenEvrakKayitBirimHavaleEt(konuKoduRandomTS2300,kurum,birim);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
@@ -298,7 +298,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         TS2300PreCondition();
 
-        login(usernameMBOZDEMIR, passwordMBOZDEMIR);
+        login(userMbozdemir);
 
         havaleOnayınaGelenlerPage
                 .openPage()
@@ -319,17 +319,16 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
                 .evrakSecEvrakGecmisiSec()
                 .evrakGecimisiGeregiVeBilgiGeldigiGorme("Gereği", kisi, "Bilgi", birim);
 
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         birimHavaleEdilenlerPage
                 .openPage()
                 .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS2300);
 
-        login(usernameYAKYOL, passwordYAKYOL);
+        login(userYakyol);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
                 .evrakGeldigiGorunur(konuKoduRandomTS2300);
     }
-
 
 }
