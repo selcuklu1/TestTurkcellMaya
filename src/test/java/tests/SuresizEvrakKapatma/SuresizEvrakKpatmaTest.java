@@ -416,7 +416,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
                 .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
                 .evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme()
-                .evrakKapatNotDoldur(randomSayi)
+                .evrakKapatNotDoldur("Evrak Kapatma Notu") //randomSayi
                 .onayAkisiDoldur(" Zübeyde Tekin")
                 .onayAkisiSil()
                 .evrakKapatmaOnayAkisiEkle()
