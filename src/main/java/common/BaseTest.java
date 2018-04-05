@@ -37,14 +37,12 @@ import static com.codeborne.selenide.Selenide.$$;
 import static data.TestData.belgenetURL;
 import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
-
 //BrowserPerTest.class
 @Listeners({ResultListener.class
 //        , MethodInterceptor.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
-
     //Seconds
     static final int timeout = 30;
     static final int loadingTimeout = 30;
