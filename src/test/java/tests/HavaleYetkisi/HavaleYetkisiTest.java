@@ -748,7 +748,7 @@ public class HavaleYetkisiTest extends BaseTest {
 
         havaleEttiklerimPage
                 .openPage()
-                .konuyaGoreEvrakIsaratle(konu)
+                .konuyaGoreEvrakSec(konu)
                 .evrakOnizlemeKontrolu()
                 .evrakOnizlemeButonKontrolu(btnHavaleYap)
                 .evrakOnizlemeButonTikla(btnHavaleYap)
