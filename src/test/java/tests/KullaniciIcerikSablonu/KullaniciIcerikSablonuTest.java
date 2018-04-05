@@ -73,6 +73,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
     @Test(enabled = true, description = "TS0989 : Kopyala - yapıştır yapılarak şablon oluşturma işlemi")
     public void TS0989() throws InterruptedException
     {
+
         login(userZtekin);
 
        kullaniciIcerikSablonuPage
