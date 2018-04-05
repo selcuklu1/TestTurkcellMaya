@@ -374,8 +374,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
         String konuKoduRandom = "TS2066-" + createRandomText(15);
         String konuKoduRandom2 = "TS2066-" + createRandomText(15);
         String uyariMesaji = " Zorunlu alanları doldurunuz";
-        String kaldirilacakKlasör = "diğer";
-        String konuKodu = "Diğer";
+        String kaldirilacakKlasör = "000";
+        String konuKodu = "040";
         String randomSayi = createRandomText(251);
         String kullanici = "Zübeyde Tekin";
         String kullanicihkandur = "Hamza Kandur";
