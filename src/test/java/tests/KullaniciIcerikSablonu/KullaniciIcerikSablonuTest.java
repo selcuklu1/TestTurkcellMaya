@@ -3,6 +3,7 @@ package tests.KullaniciIcerikSablonu;
 import common.BaseTest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -39,13 +40,42 @@ public class KullaniciIcerikSablonuTest extends BaseTest
         kararYazisiOlusturPage = new KararYazisiOlusturPage();
     }
 
+    @Step("TS0989 Koşmaktadır")
+    public void TS0989PreCondition(String sablonAdi){
+            login(userZtekin);
+
+            kullaniciIcerikSablonuPage
+                    .openPage()
+                    .yeniSablonOlustur()
+                    .yeniSablonOlustur()
+                    .sablonAdiVeEditorAktifHaleGeldigiGorme(true,true)
+                    .sablonAdiDoldur(sablonAdi);
+
+            birimIcerikSablonlarPage.getEditor()
+                    .type(icerik).type(Keys.ENTER);
+
+            kullaniciIcerikSablonuPage
+                    .kaydet()
+                    .islemMesaji().basariliOlmali(basariMesaji);
+
+            kullaniciIcerikSablonuPage
+                    .kaydedilenSablonListeyeDustuguGorme(sablonAdi)
+                    .kaydedilenSablonListesindenSablonDetaySec(sablonAdi);
+
+            String editorIcerik = birimIcerikSablonlarPage.getEditor().getText();
+
+            kullaniciIcerikSablonuPage.detaySecilenEditorKarsilastirma(editorIcerik,icerik);
+    }
+
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods = {"TS0989"}, description = "TS0985 : Kullanıcı şablonlarının listelenmesi")
+    @Test(enabled = true, description = "TS0985 : Kullanıcı şablonlarının listelenmesi")
     public void TS0985() throws InterruptedException
     {
-        useFirefox();
+        String sablonAdi = "TS0989-"+createRandomNumber(10);
 
-        login(usernameZTEKIN,passwordZTEKIN);
+        TS0989PreCondition(sablonAdi);
+
+        login(userZtekin);
 
        kullaniciIcerikSablonuPage
                .openPage()
@@ -56,7 +86,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
                .evrakOnizlemeGeldigiGorme();
 
         kullaniciIcerikSablonuPage
-                .sablonAdiGoreDetaySec(sablonAdiTS989);
+                .sablonAdiGoreDetaySec(sablonAdi);
 
         String editorIcerik = birimIcerikSablonlarPage.getEditor().getText();
 
@@ -66,7 +96,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
                 .sablonPDFGeldigiGormeDogruBilgiGeldigiGorme(editorIcerik);
     }
 
-    String sablonAdiTS989 = "TS0989-"+createRandomNumber(10);
+    String sablonAdiTS989 = "TS0989-"+createRandomNumber(12);
     String icerik = createRandomText(20);
     String basariMesaji = "İşlem başarılıdır!";
     @Severity(SeverityLevel.CRITICAL)
@@ -77,6 +107,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
        kullaniciIcerikSablonuPage
                .openPage()
+               .yeniSablonOlustur()
                .yeniSablonOlustur()
                .sablonAdiVeEditorAktifHaleGeldigiGorme(true,true)
                .sablonAdiDoldur(sablonAdiTS989);
@@ -99,9 +130,11 @@ public class KullaniciIcerikSablonuTest extends BaseTest
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Test(enabled = true,dependsOnMethods =  {"TS0989"}, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
+    @Test(enabled = true, description = "TS0995 : Yeni kullanıcı şablonu oluşturmaYeni kullanıcı şablonu oluşturma")
     public void TS0995() throws InterruptedException
     {
+        String sablonAdi = "TS0989-"+createRandomNumber(11);
+        TS0989PreCondition(sablonAdi);
         useFirefox();
 
         String sablonAdiTS0997 = "TS0995-"+createRandomNumber(10);
@@ -119,7 +152,7 @@ public class KullaniciIcerikSablonuTest extends BaseTest
                 .evrakOnizlemeGeldigiGorme();
 
         kullaniciIcerikSablonuPage
-                .sablonAdiGoreDetaySec(sablonAdiTS989);
+                .sablonAdiGoreDetaySec(sablonAdi);
 
         String editorIcerik = birimIcerikSablonlarPage.getEditor().getText();
 

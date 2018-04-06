@@ -15,18 +15,34 @@ import java.util.Date;
 
 public class SuresizEvrakKpatmaTest extends BaseTest {
 
+    GelenEvrakKayitPage gelenEvrakKayitPage;
+    GelenEvraklarPage gelenEvraklarPage;
+    KlasorEvrakIslemleriPage klasorEvrakIslemleriPage;
+    KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage;
+    OnayaSunduklarimPage onayaSunduklarimPage;
+    ImzaBekleyenlerPageKapatmaIslemleri imzaBekleyenlerPageKapatmaIslemleri;
+    KapattiklarimPage kapattiklarimPage;
+    TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
+    PersonelVeAcikEvrakIstatigiPage personelVeAcikEvrakIstatigiPage;
+
     @BeforeMethod
     public void loginBeforeTests() {
+
+        gelenEvrakKayitPage = new GelenEvrakKayitPage();
+        gelenEvraklarPage = new GelenEvraklarPage();
+        klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
+        klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
+        onayaSunduklarimPage = new OnayaSunduklarimPage();
+        imzaBekleyenlerPageKapatmaIslemleri = new ImzaBekleyenlerPageKapatmaIslemleri();
+        kapattiklarimPage = new KapattiklarimPage();
+        teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
+        personelVeAcikEvrakIstatigiPage = new PersonelVeAcikEvrakIstatigiPage();
 
     }
 
     @Test(enabled = true, description = "TS0073 : Gelen Evrakın Kapatılması ve Klasöre kaldırılması")
     public void TS0073() throws InterruptedException {
 
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
-        KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
         // Gelen evrak kayıt oluşturma>>>
 
         login("huser1", "123");
@@ -78,12 +94,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
     @Test(enabled = true, description = "TS0074 : Kapatma onayındaki evrakın reddedilmesi")
     public void TS0074() throws InterruptedException {
-
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
-        OnayaSunduklarimPage onayaSunduklarimPage = new OnayaSunduklarimPage();
-        ImzaBekleyenlerPageKapatmaIslemleri imzaBekleyenlerPageKapatmaIslemleri = new ImzaBekleyenlerPageKapatmaIslemleri();
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
 
         // Gelen evrak kayıt oluşturma>>>
 
@@ -168,12 +178,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS0077 : Klasörden çıkartılan evrak - \"Gelen Evrak\", \"Kapattıklarım\" ve \"Klasöre Kaldırdıklarım\" listelerinden kontrolü")
     public void TS0077() throws InterruptedException {
 
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
-        KapattiklarimPage kapattiklarimPage = new KapattiklarimPage();
-        KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
-
         // Gelen evrak kayıt oluşturma>>>
 
         login("huser1", "123");
@@ -238,12 +242,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS0383 : Evrak Onaylı Kapatma ve Klasöre Kaldırılması Kontrolü")
     public void TS0383() throws InterruptedException {
 
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
-        OnayaSunduklarimPage onayaSunduklarimPage = new OnayaSunduklarimPage();
-        ImzaBekleyenlerPageKapatmaIslemleri imzaBekleyenlerPageKapatmaIslemleri = new ImzaBekleyenlerPageKapatmaIslemleri();
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
-        KapattiklarimPage kapattiklarimPage = new KapattiklarimPage();
         // Gelen evrak kayıt oluşturma>>>
 
         login("huser1", "123");
@@ -320,11 +318,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2167 : Evrakın Teslim Alınıp Kapatılması ve Klasöre Kaldırılması")
     public void TS2167() throws InterruptedException {
 
-        KlasoreKaldirdiklarimPage klasoreKaldirdiklarimPage = new KlasoreKaldirdiklarimPage();
-        TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-        KlasorEvrakIslemleriPage klasorEvrakIslemleriPage = new KlasorEvrakIslemleriPage();
-
         login("huser1", "123");
 
         String randomNumber = "" + getSysDate();
@@ -368,9 +361,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2166 : Evrak Kapatma - Alan Kontrolleri")
     public void TS2166() {
 
-        GelenEvraklarPage gelenEvraklarPage = new GelenEvraklarPage();
-        GelenEvrakKayitPage gelenEvrakKayitPage = new GelenEvrakKayitPage();
-
         String konuKoduRandom = "TS2066-" + createRandomText(15);
         String konuKoduRandom2 = "TS2066-" + createRandomText(15);
         String uyariMesaji = " Zorunlu alanları doldurunuz";
@@ -388,7 +378,9 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
         gelenEvrakKayitPage
                 .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom, "BÜYÜK HARFLERLE KURUM", kullanici);
+
         login(TestData.usernameZTEKIN, TestData.passwordZTEKIN);
+
         gelenEvrakKayitPage
                 .gelenEvrakKayitKullaniciHavaleEt(konuKoduRandom2, "BÜYÜK HARFLERLE KURUM", kullanici);
 
@@ -424,7 +416,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatKaldirilacakKlasorlerDoldur(kaldirilacakKlasör)
                 .evrakKapatKaldirilacakKlasorlerSikKullanilanlarSec()
                 .evrakKapatKaldirilacakKlasorlerSikKullanilanlarGeldigiGorme()
-                .evrakKapatNotDoldur(randomSayi)
+                .evrakKapatNotDoldur("Evrak Kapatma Notu") //randomSayi
                 .onayAkisiDoldur(" Zübeyde Tekin")
                 .onayAkisiSil()
                 .evrakKapatmaOnayAkisiEkle()
@@ -433,6 +425,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatOnayAkisiKullaniciTipiSec(kullanicimbozdemir,"Kapatma Parafı")
                 .evrakKapatOnayAkisiKullan()
                 .islemMesaji().isUyari(uyariMesaji);
+
         gelenEvraklarPage
                 .evrakKapatOnayAkisiKullaniciSec(kullanicihkandur)
                 .evrakKapatOnayAkisiKullaniciTipiSec(kullanicihkandur,"Kapatma İmzası")
@@ -445,7 +438,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2169 : Kapatılan evrakın Personel ve Açık Evrak İstatistiği raporunda kontrolü")
     public void TS2169() {
 
-        PersonelVeAcikEvrakIstatigiPage personelVeAcikEvrakIstatigiPage = new PersonelVeAcikEvrakIstatigiPage();
         login("huser1", "123");
         String gelenEvrakKonu = "TS0073-20180221100551";
 
@@ -493,9 +485,5 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .cevapsizKapatilanlarEvrakKontrol(gelenEvrakKonu, true);
 
     }
-
-
-
-
 
 }
