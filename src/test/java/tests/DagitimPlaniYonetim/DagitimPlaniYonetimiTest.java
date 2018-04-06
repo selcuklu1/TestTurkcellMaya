@@ -150,53 +150,6 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         gidenEvrakSayfadaAktifKontrolu(newAd, true);
     }
 
-    /*@Test(description = "TS1476: Adı Alanının Güncellenmesi", enabled = true)
-    public void TS1476() {
-        String ad = "TS1476";
-        String aciklama = "TS1476 Açıklama";
-
-        User user = optiim;
-        login(user);
-        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
-        page.sorgulamadaDurumSec("Tümü")
-                .ara()
-                .sorgulamaDataTable.findRows().shouldHave(sizeGreaterThan(0));
-        page.sorgulamadaDurumSec("Sadece Aktifler")
-                .sorgulamadaAdGir(ad)
-                .ara()
-                .sorgulamaDataTable.findRows(text(ad)).shouldHave(sizeGreaterThan(0));
-        page.guncelle();
-
-        *//*String oldAd = page.getAdi().getValue();
-        String oldAciklama = page.getAciklama().text();
-        String newAd = oldAd.equals(ad) ? ad + "_guncellenen": ad;
-        String newAciklama = oldAciklama.equals(aciklama) ? aciklama + "_guncellenen": aciklama;*//*
-        //page.adiGir(newAd).aciklamaGir(newAciklama);
-
-        String dagitimTipi = "Kullanıcı";
-        String dagitimYeri = "Optiim TEST";
-        String yeniDagitimTipi = dagitimTipi;
-        String yeniDagitimYeri = dagitimYeri;
-        if (page.dagitimPlaniDataTable.findRows(text(dagitimTipi)).findRows(text(dagitimYeri)).getFoundRows().size() > 0) {
-            yeniDagitimTipi = "Birim";
-            yeniDagitimYeri = "Optiim Birim";
-        }
-        //Eski dağıtımları silinir
-        while (page.dagitimPlaniDataTable.findRows().getFoundRows().size() != 0) {
-            page.dagitimPlaniDataTable.findRows().getFoundRow().$(page.deleteButtonLocator).click();
-        }
-
-//        Assert.assertEquals(page.getAdi().getValue(), newAd, "Dağıtım Yeri silindikten sonra Adı alanı güncelleme kayboluyor");
-//        Assert.assertEquals(page.getAciklama().text(), newAciklama, "Dağıtım Yeri silindikten sonra Açıklama alanı güncelleme kayboluyor");
-
-        //Yeni dağıtım eklenir
-        page.dagitimElemanlariEkle(yeniDagitimTipi, yeniDagitimYeri);
-        page.kaydet().islemMesaji().basariliOlmali();
-
-        evrakOlusturSayfadaAktifKontrolu(ad);
-        gidenEvrakSayfadaAktifKontrolu(ad);
-    }*/
-
     @Test(description = "TS1478: Kopyalama", enabled = true)
     public void TS1478() {
         String adi = "TS1478";
