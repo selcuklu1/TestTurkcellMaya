@@ -213,7 +213,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(bilgi));
         hitapDuzenle
                 .adresGirilir(bilgiAdres)
-                .adresDagitimdaGorunsunSec(true)
+                //.adresDagitimdaGorunsunSec(true)
                 .kaydet();
 
         page.bilgileriTab()
@@ -222,7 +222,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .geregiDagitimHitapDuzenlemeTiklanir(text(geregi));
         hitapDuzenle
                 .adresGirilir(geregiAdres)
-                //.adresDagitimdaGorunsunSec(true)
+                .adresDagitimdaGorunsunSec(true)
                 .kaydet();
 
         page.pageButtons().pdfOnizlemeTikla();
