@@ -684,7 +684,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .searchTable().findRowAndSelect(text(konu));
 
         EvrakOnizleme.EvrakDetaylari evrakDetaylari = new EvrakOnizleme().new PostaDetayi().tabiAc()
-                .postalananYerlerindeAra(text(planAdi2270 + "E"))
+                .postalananYerlerindeAra(text(dagitimPlani + "E"))
                 .yazdir();
         evrakDetaylari.ustVerileriListesindeAra(text(konu)).ustVerileriYazdir();
 

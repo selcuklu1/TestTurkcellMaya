@@ -189,6 +189,16 @@ public class DriverEventListener extends BaseLibrary implements WebDriverEventLi
         }
     }
 
+    @Override
+    public void beforeSwitchToWindow(String s, WebDriver webDriver) {
+
+    }
+
+    @Override
+    public void afterSwitchToWindow(String s, WebDriver webDriver) {
+
+    }
+
     public void onException(Throwable throwable, WebDriver driver) {
         /*System.out.println("///////////////////////////////////////////////////////////////////////////");
         System.out.println("Case Error: " + throwable.getMessage());
