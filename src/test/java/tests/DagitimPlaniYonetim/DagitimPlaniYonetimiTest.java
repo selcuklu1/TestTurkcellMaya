@@ -625,7 +625,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         User user = user1;
         login(user);
 
-        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage().bulVeGuncelleTikla(planAdi2270);
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage().bulVeGuncelleTikla(planAdi2279);
 
         page.dagitimPlaniListesindeAra(text("Kullanıcı"))
                 .guncelleTikla()

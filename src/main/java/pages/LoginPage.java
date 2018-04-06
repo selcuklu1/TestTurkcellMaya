@@ -17,6 +17,8 @@ public class LoginPage extends MainPage {
     private SelenideElement txtUsername = $(By.id("eForm:txtEKullaniciAdi"));
     private SelenideElement txtPassword = $(By.id("eForm:loginESifre"));
     private SelenideElement btnLogin = $(By.id("eForm:egirisYapButton"));
+    //private SelenideElement btnUsermenu = $(By.id("topMenuForm:userMenuButton_button"));
+    private SelenideElement btnUsermenu = $("button#topMenuForm\\:userMenuButton_button");
 
     private LoginPage open() {
 //        clearCookies();
@@ -38,7 +40,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(usernameOPTIIM);
         txtPassword.sendKeys(passwordOPTIIM);
         btnLogin.shouldBe(Condition.visible).click();
-        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40000);
+        btnUsermenu.waitUntil(Condition.visible, 40000);
         return this;
     }
 
@@ -48,7 +50,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
         btnLogin.click();
-        $(By.id("topMenuForm:userMenuButton_button")).waitUntil(Condition.visible, 40000);
+        btnUsermenu.waitUntil(Condition.visible, 40000);
         return this;
     }
 
@@ -59,6 +61,7 @@ public class LoginPage extends MainPage {
         txtUsername.sendKeys(username);
         txtPassword.sendKeys(password);
         btnLogin.click();
+        btnUsermenu.waitUntil(Condition.visible, 40000);
         return this;
     }
 
