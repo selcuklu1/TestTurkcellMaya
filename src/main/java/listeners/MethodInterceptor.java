@@ -101,6 +101,8 @@ public class MethodInterceptor implements IMethodInterceptor {
             jsonFile.delete();
         writeToFile(jsonFile, json);
 
+        //context.getCurrentXmlTest().setXmlClasses(null);
+
         System.exit(0);
         return null;
     }

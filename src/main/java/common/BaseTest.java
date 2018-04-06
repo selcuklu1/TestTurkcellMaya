@@ -1,7 +1,6 @@
 package common;
 
 import com.codeborne.selenide.*;
-import com.codeborne.selenide.testng.BrowserPerTest;
 import data.TestData;
 import data.User;
 import io.qameta.allure.Allure;
@@ -15,7 +14,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestContext;
@@ -39,7 +37,7 @@ import static io.qameta.allure.util.ResultsUtils.firstNonEmpty;
 
 //BrowserPerTest.class
 @Listeners({ResultListener.class
-//        , MethodInterceptor.class
+        //, MethodInterceptor.class
 })
 //@Listeners({RerunFailedTests.class})
 public class BaseTest extends BaseLibrary {
@@ -128,7 +126,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeSuite(enabled = true)
     public void beforeSuite(ITestContext context) {
-        if (System.getProperty("buildName")!=null && !System.getProperty("buildName").isEmpty())
+        if (System.getProperty("buildName") != null && !System.getProperty("buildName").isEmpty())
             context.getSuite().getXmlSuite().setName(System.getProperty("buildName"));
         else
             context.getSuite().getXmlSuite().setName("Suite");
@@ -138,7 +136,7 @@ public class BaseTest extends BaseLibrary {
 
     @BeforeMethod(alwaysRun = true, enabled = true)
     public void beforeMethod(ITestContext context, Method test) {
-        String testResults="";
+        String testResults = "";
         /*if (test.getDeclaringClass().isAnnotationPresent(io.qameta.allure.Feature.class))
             ((TestRunner) context).getTest().setName(test.getDeclaringClass().getAnnotation(io.qameta.allure.Feature.class).value());
         else
@@ -170,7 +168,7 @@ public class BaseTest extends BaseLibrary {
 
     @AfterMethod(alwaysRun = true, enabled = true)
     public void afterMethod(ITestResult testResult) {
-        String testResults="";
+        String testResults = "";
         int SUCCESS = 1;
         int FAILURE = 2;
         int SKIP = 3;
@@ -233,6 +231,7 @@ public class BaseTest extends BaseLibrary {
 
     /**
      * @param testName
+     *
      * @return downloadPath
      */
     public String useFirefoxWindows151(String testName) {
@@ -294,7 +293,7 @@ public class BaseTest extends BaseLibrary {
             capabilities.setVersion(Configuration.browserVersion);*/
 
             EventFiringWebDriver driver;
-            if (Configuration.remote == null){
+            if (Configuration.remote == null) {
                 WebDriver firefox = new FirefoxDriver();
                 driver = new EventFiringWebDriver(firefox).register(new DriverEventListener());
             } else {
@@ -326,7 +325,7 @@ public class BaseTest extends BaseLibrary {
             Configuration.remote = System.getProperty("hub");*/
 
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote ,e.getMessage()), e);
+            throw new RuntimeException(String.format("Error new RemoteWebDriver: %s error %s", Configuration.remote, e.getMessage()), e);
         }
 
         //System.out.println("Browser: " + getCapabilities().getBrowserName());
@@ -334,6 +333,7 @@ public class BaseTest extends BaseLibrary {
 
     /**
      * @param testName
+     *
      * @return downloadPath
      */
     public String useChromeWindows151(String testName) {
@@ -377,6 +377,7 @@ public class BaseTest extends BaseLibrary {
     }
 
     ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
+
     @Step("Kullanıcının Yeni Birimi \"{birim}\" seçilir")
     public void birimDegistirme(String birim) {
         birimDegistirme.filterBy(Condition.text(birim)).get(0).click();
