@@ -121,7 +121,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
         log.info(sysProperties);
-        AllureEnvironmentUtils.create();
+        //AllureEnvironmentUtils.create();
     }
 
     @BeforeSuite(enabled = true)
