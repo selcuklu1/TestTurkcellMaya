@@ -168,6 +168,11 @@
                             <value>\\10.101.20.151\Jenkins\deneme\allure-results</value>
                             <!--<value>test-result/allure-xml</value>-->
                         </property>
+                        <property>
+                            <name>allure.report.directory</name>
+                            <value>\\10.101.20.151\Jenkins\deneme\allure-report</value>
+                            <!--<value>test-result/allure-xml</value>-->
+                        </property>
                     </systemProperties>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
