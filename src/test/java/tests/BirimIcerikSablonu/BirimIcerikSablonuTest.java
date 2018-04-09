@@ -34,7 +34,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
-    public static BaseLibrary baseLibrary= new BaseLibrary();
+    public static BaseLibrary baseLibrary = new BaseLibrary();
     public static String sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
     public static String editorText1082;
     private String sablonAdi1085 = "TS1085_" + getSysDate();
@@ -59,13 +59,13 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)
-    public static void TS1082() {
+    public void TS1082() {
         LoginPage loginPage = new LoginPage();
         BaseLibrary baseLibrary = new BaseLibrary();
         String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
         User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
-         String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
-         BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+        //String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+        BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
 
         loginPage.login(user1);
         birimIcerikSablonlarPage
