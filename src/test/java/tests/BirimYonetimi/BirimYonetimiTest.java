@@ -76,7 +76,7 @@ public class BirimYonetimiTest extends BaseTest {
         String gidenEvrakNumaratoru = "Türksat AŞ_numarator - Giden Evrak";
         String basariMesaji = "İşlem başarılıdır!";
 
-        login();
+        login(TestData.optiim);
 
         testStatus(testID, "Birim Oluşturma");
 

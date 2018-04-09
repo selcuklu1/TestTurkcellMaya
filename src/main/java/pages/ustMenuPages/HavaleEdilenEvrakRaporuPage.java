@@ -40,6 +40,32 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
         return this;
     }
 
+    @Step("Sistem Logları Alanların Geldiği Kontrölü")
+    public HavaleEdilenEvrakRaporuPage alanlarGeldigiGorme(boolean havaleEdenBirim,boolean havaleEdenKullanici,boolean havaleEdilenBirim,boolean havaleEdilenKullanici,boolean havaleTarihAraligi,boolean sorgula, boolean temizle){
+        Allure.addAttachment("Havale Eden Birim alanının geldigi görülür","");
+        Assert.assertEquals(txtHavaleEdenBirim.isDisplayed(),havaleEdenBirim);
+
+        Allure.addAttachment("Havale Eden Kullanıcı alanının geldigi görülür","");
+        Assert.assertEquals(txtHavaleEdenKullanici.isDisplayed(),havaleEdenKullanici);
+
+        Allure.addAttachment("Havale Edilen Birim alanının geldigi görülür","");
+        Assert.assertEquals(txtHavaleEdilenBirim.isDisplayed(),havaleEdilenBirim);
+
+        Allure.addAttachment("Havale Edilen Kullanıcı alanının geldigi görülür","");
+        Assert.assertEquals(txtHavaleEdilenKullanici.isDisplayed(),havaleEdilenKullanici);
+
+        Allure.addAttachment("Havale tarih aralığı alanlarının geldigi görülür","");
+        Assert.assertEquals(txtHevaleTarihAraligiBaslangic.isDisplayed(),txtHevaleTarihAraligiBitis.isDisplayed());
+        Assert.assertEquals(txtHevaleTarihAraligiBaslangic.isDisplayed(),havaleTarihAraligi);
+
+        Allure.addAttachment("Sorgula button geldigi görülür","");
+        Assert.assertEquals(btnSorgula.isDisplayed(),sorgula);
+
+        Allure.addAttachment("Temizle button geldigi görülür","");
+        Assert.assertEquals(btnTemizle.isDisplayed(),temizle);
+        return this;
+    }
+
     @Step("Havale Edilen birim doldur: {birim}")
     public HavaleEdilenEvrakRaporuPage havaleEdilenBirimDoldur(String birim) {
         txtHavaleEdilenBirim.selectLov(birim);
@@ -79,6 +105,14 @@ public class HavaleEdilenEvrakRaporuPage extends MainPage {
     @Step("Sorgula tıklanır")
     public HavaleEdilenEvrakRaporuPage sorgula() {
         btnSorgula.click();
+        return this;
+    }
+
+    @Step("Kaydın listelendiği görülür.")
+    public HavaleEdilenEvrakRaporuPage kayitlarinListelendigiGorme(){
+        boolean durum = $$("[id='havaleEvrakRaporuForm:havaleEvrakRaporOutputTab_data'] > tr[role='row']").size()>0;
+        Assert.assertEquals(durum,true);
+        takeScreenshot();
         return this;
     }
 

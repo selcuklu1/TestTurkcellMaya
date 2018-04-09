@@ -114,7 +114,7 @@ public class BirimHavaleEdilenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrakın liselendiği görülür")
+    @Step("Evrakın liselendiği görülür: Konu:{evrakNo}, Gideceği Yer: {gidecegiYer}, Evrak Tarihi:{evrakTarihi} ")
     public BirimHavaleEdilenlerPage evrakBilgileriIleEvragıGeldigiGorme(String evrakNo,String gidecegiYer,String evrakTarihi) {
         boolean durum = tblEvraklar.filterBy(Condition.text(evrakNo))
                 .filterBy(Condition.text(gidecegiYer))

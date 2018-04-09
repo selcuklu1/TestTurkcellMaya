@@ -246,14 +246,19 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         havaleEdilenEvrakRaporuPage
                 .openPage()
+                .alanlarGeldigiGorme(true,true,true,true,true,true,true)
                 .havaleEdilenBirimDoldur(birim)
                 .sorgula()
+                .kayitlarinListelendigiGorme()
                 .havaleEdilenKullaniciDoldur("Can Şeker")
                 .sorgula()
+                .kayitlarinListelendigiGorme()
                 .havaleTarihAraligiBaslangicDoldur("13.02.2018")
                 .sorgula()
+                .kayitlarinListelendigiGorme()
                 .havaleTarihAraligiBitisDoldur("13.02.2018")
                 .sorgula()
+                .kayitlarinListelendigiGorme()
                 .evrakDetaySec("TC-1597_1121310802619547311")
                 .evrakDetayGeldigGorme();
 

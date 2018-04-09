@@ -125,7 +125,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
     public void TS0453() {
 
         String basariMesaji = "İşlem başarılıdır!";
-        String konuKoduRandom = "TC-0443_" + createRandomNumber(15);
+        String konuKoduRandom = "TC-0453_" + createRandomNumber(15);
         String evrakTarihi = getSysDateForKis();
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String birim = "Yazılım Geliştirme Direktörlüğ";
@@ -153,7 +153,7 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .evrakNoIleTabloKontrolu(konuKoduRandom);
+                .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandom,kurum,evrakTarihi);
 
         login(usernameOPTIIM, passwordOPTIIM);
 
@@ -328,7 +328,8 @@ public class TeslimAlinmayiBekleyenHavaleTest extends BaseTest {
         login(userYakyol);
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakGeldigiGorunur(konuKoduRandomTS2300);
+                .evrakGeldigiGorunur(konuKoduRandomTS2300)
+                .evrakDogruIfadeGeldigiGorunur(konuKoduRandomTS2300,"(B)");
     }
 
 }
