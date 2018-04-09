@@ -41,7 +41,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
     private String editorText1085;
     private String sablonAdi1079;
     private String evrakTipi = "Giden Evrak";
-    private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+    //private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+    private String onizlemeText = "T.C.\nANKARA\nÖZEL ANTET\n";
     private BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     private pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
     private OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
@@ -80,7 +81,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .getText();
 
         birimIcerikSablonlarPage
-                .pdfOnzilemeTextKontol(text(sablonAdi1082), text("(@BIRIM)"))
+                .pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1082), text("(@BIRIM)"))
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 
