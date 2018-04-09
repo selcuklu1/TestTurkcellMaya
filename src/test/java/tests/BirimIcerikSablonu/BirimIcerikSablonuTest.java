@@ -42,7 +42,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     private String sablonAdi1079;
     private String evrakTipi = "Giden Evrak";
     //private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
-    private String onizlemeText = "T.C.\nANKARA\nÖZEL ANTET\n";
+    private static String onizlemeText = "T.C.\nANKARA\nÖZEL ANTET\n";
     private BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     private pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
     private OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
