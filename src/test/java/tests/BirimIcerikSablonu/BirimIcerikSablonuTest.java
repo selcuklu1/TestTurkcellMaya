@@ -59,7 +59,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     }
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)
-    public void TS1082() {
+    public static void TS1082() {
         LoginPage loginPage = new LoginPage();
         BaseLibrary baseLibrary = new BaseLibrary();
         String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
