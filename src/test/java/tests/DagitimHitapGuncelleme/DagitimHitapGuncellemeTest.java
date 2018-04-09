@@ -213,7 +213,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(bilgi));
         hitapDuzenle
                 .adresGirilir(bilgiAdres)
-                .adresDagitimdaGorunsunSec(true)
+                //.adresDagitimdaGorunsunSec(true)
                 .kaydet();
 
         page.bilgileriTab()
@@ -463,7 +463,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         String birim2 = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         //String adres2 = "ATAŞEHİR / İSTANBUL";
-        String hitap2 = birim2 + "NE\n" + adres2;
+        String hitap2 = birim2;// + "NE\n" + adres2;
         String evraktaGorunecekHitap2 = birim2.toUpperCase();
 
         login(user);
@@ -483,7 +483,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSec(birim2)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(birim2))
                 .adresGirilir(adres2)
-                .adresDagitimdaGorunsunSec(true)
+                //.adresDagitimdaGorunsunSec(true)
                 .kaydet();
         //page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap2));
 

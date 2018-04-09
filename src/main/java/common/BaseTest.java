@@ -121,7 +121,7 @@ public class BaseTest extends BaseLibrary {
         System.out.println("Download path: " + getDownloadPath());
         System.out.println("Selenide/Selenium driver has been set up.");*/
         log.info(sysProperties);
-        AllureEnvironmentUtils.create();
+        //AllureEnvironmentUtils.create();
     }
 
     @BeforeSuite(enabled = true)
@@ -154,7 +154,8 @@ public class BaseTest extends BaseLibrary {
         testResults += "\nTotal Tests: " + context.getAllTestMethods().length;
         testResults += "\nPassed Tests: " + context.getPassedTests().size();
         testResults += "\nFailed Tests: " + context.getFailedTests().size();
-        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().size() + context.getFailedTests().size())).toString() + "\n";
+        testResults += "\nSkipped Tests: " + context.getSkippedTests().size();
+        testResults += "\nLeft Tests: " + Integer.valueOf(context.getAllTestMethods().length - (context.getPassedTests().size() + context.getFailedTests().size() + context.getSkippedTests().size())).toString() + "\n";
         testResults += "\n///////////////////////////////////////////////////////";
         testResults += "\nTEST CLASS: " + test.getDeclaringClass().getSimpleName() + "\n";
         testResults += "\nTEST: " + testName + "\n";

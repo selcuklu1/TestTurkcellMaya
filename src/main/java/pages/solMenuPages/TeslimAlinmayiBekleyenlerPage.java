@@ -394,6 +394,16 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
+    @Step("Listenen Evrakda {ifade} ifadesi ile geldiği görülür.")
+    public TeslimAlinmayiBekleyenlerPage evrakDogruIfadeGeldigiGorunur(String konuKodu,String ifade) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konuKodu))
+                .filterBy(Condition.text(ifade)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Teslim Al ve Havale Et")
     public TeslimAlinmayiBekleyenlerPage teslimAlVeHavaleEt() {
         btnTeslimAlVeKapat2.click();
