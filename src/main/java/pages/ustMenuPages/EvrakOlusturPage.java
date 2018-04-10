@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 
@@ -3542,15 +3543,23 @@ public class EvrakOlusturPage extends MainPage {
 
         //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
         @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
-        public EkleriTab dagitimYerlerindeKullaniciKaldirEk1(String kullaniciDagitimYeri) {
+        public EkleriTab dagitimYerlerindeKullaniciKaldirEk1(String ekleriAciklamaDosya1, String kullaniciDagitimYeri) {
             //chkDagitimYerleriBirimEk1.setSelected(false);
             //chkDagitimYerleriKurumEk1.setSelected(false);
             //chkDagitimYerleriKullaniciEk1.setSelected(true);
 
-            ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
-                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+             //ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
+             //if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+             //clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
 
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(ekleriAciklamaDosya1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
@@ -3565,35 +3574,40 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde birim ve kullanıcı seçimlerini kaldır")
-        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir(String birimDagitimYeri, String kullaniciDagitimYeri) {
+        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir(String fizikselEkAciklama, String birimDagitimYeri, String kullaniciDagitimYeri) {
             //chkDagitimYerleriBirimEk2.setSelected(true);
             //chkDagitimYerleriKullaniciEk2.setSelected(true);
 
-            ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(fizikselEkAciklama)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
                 clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
 
-            ElementsCollection values2 = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values2.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
                 clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
 
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
-        public EkleriTab dagitimYerlerindeBirimKurumKaldirEK3(String birimDagitimYeri,String  kurumDagitimYeri) {
+        public EkleriTab dagitimYerlerindeBirimKurumKaldirEK3(String evrakSayisi1, String birimDagitimYeri,String  kurumDagitimYeri) {
             //chkDagitimYerleriBirimEk3.setSelected(true);
             //chkDagitimYerleriKurumEk3.setSelected(true);
             //chkDagitimYerleriKullaniciEk3.setSelected(false);
 
-            ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(evrakSayisi1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
                 clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
 
-            ElementsCollection values2 = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(kurumDagitimYeri)).size()>0 && values2.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+            if(values.filterBy(text(kurumDagitimYeri)).size()>0 && values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
                 clickJs(values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box"));
-
+            combo.closePanel();
 
             return this;
         }
