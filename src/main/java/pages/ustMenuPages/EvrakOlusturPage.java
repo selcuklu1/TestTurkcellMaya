@@ -3543,9 +3543,9 @@ public class EvrakOlusturPage extends MainPage {
         //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
         @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
         public EkleriTab dagitimYerlerindeKullaniciKaldirEk1(String kullaniciDagitimYeri) {
-            chkDagitimYerleriBirimEk1.setSelected(false);
-            chkDagitimYerleriKurumEk1.setSelected(false);
-            chkDagitimYerleriKullaniciEk1.setSelected(true);
+            //chkDagitimYerleriBirimEk1.setSelected(false);
+            //chkDagitimYerleriKurumEk1.setSelected(false);
+            //chkDagitimYerleriKullaniciEk1.setSelected(true);
 
             ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
             if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
