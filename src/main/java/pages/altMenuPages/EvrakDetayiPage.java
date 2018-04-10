@@ -607,8 +607,9 @@ public class EvrakDetayiPage extends MainPage {
     //@Step("Frame Değiştirme")
     public EvrakDetayiPage frameDegistirme() {
 
+        Selenide.sleep(2000);
         switchTo().frame($("iframe[class='onizlemeFrame']"));
-
+        Selenide.sleep(1000);
         return this;
     }
 

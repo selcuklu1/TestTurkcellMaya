@@ -790,7 +790,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi1, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdi1)
                 .dagitimYerleriAcEk1()
-                .dagitimYerlerindeKullaniciKaldirEk1(kullaniciDagitimYeri)
+                .dagitimYerlerindeKullaniciKaldirEk1(ekleriAciklamaDosya1, kullaniciDagitimYeri)
 
                 //fiziksel ek ekle
                 .fizikselEkEkleTabiniAc()
@@ -798,7 +798,7 @@ public class EkIlgiTest extends BaseTest {
                 .fizikselEkMetniEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(fizikselEkAciklama, "Açıklama")
                 .dagitimYerleriAcEk2()
-                .dagitimYerlerindeBirimKullaniciKaldir(birimDagitimYeri,  kullaniciDagitimYeri)
+                .dagitimYerlerindeBirimKullaniciKaldir(fizikselEkAciklama, birimDagitimYeri,  kullaniciDagitimYeri)
 
                 //Sistemde kayıtlı evrak ekle
                 //evrak sayisi1
@@ -812,7 +812,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakEkEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi1, "Evrak Sayısı1")
                 .dagitimYerleriAcEk3()
-                .dagitimYerlerindeBirimKurumKaldirEK3(birimDagitimYeri,  kurumDagitimYeri);
+                .dagitimYerlerindeBirimKurumKaldirEK3(evrakSayisi1, birimDagitimYeri,  kurumDagitimYeri);
 
         evrakOlusturPage
                 .editorTabAc();
