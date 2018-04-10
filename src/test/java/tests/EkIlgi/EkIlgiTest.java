@@ -735,6 +735,10 @@ public class EkIlgiTest extends BaseTest {
         String kurum = "Başbakanlık";
         String kurumPostalanakYerler = "BAŞBAKANLIĞA";
 
+        String birimDagitimYeri = "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜNE";
+        String kullaniciDagitimYeri = "Sayın Sezai ÇELİK";
+        String kurumDagitimYeri = "BAŞBAKANLIĞA";
+
         String evrakSayisi1 = "6345202-010.01-11601";
         String evrakTarihiBaslangic = "01.01.2018";
 
@@ -786,7 +790,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklereDosyanınGeldigiKontrolu(dosyaAdi1, "Dosya Adı")
                 .listelenenEklerdeIndırButonuKontrol(dosyaAdi1)
                 .dagitimYerleriAcEk1()
-                .dagitimYerlerindeBirimVeKurumSecEk1()
+                .dagitimYerlerindeKullaniciKaldirEk1(kullaniciDagitimYeri)
 
                 //fiziksel ek ekle
                 .fizikselEkEkleTabiniAc()
@@ -794,7 +798,7 @@ public class EkIlgiTest extends BaseTest {
                 .fizikselEkMetniEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(fizikselEkAciklama, "Açıklama")
                 .dagitimYerleriAcEk2()
-                .dagitimYerlerindeBirimKullaniciKaldir()
+                .dagitimYerlerindeBirimKullaniciKaldir(birimDagitimYeri,  kullaniciDagitimYeri)
 
                 //Sistemde kayıtlı evrak ekle
                 //evrak sayisi1
@@ -808,7 +812,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakEkEkle()
                 .listelenenEklereDosyanınGeldigiKontrolu(evrakSayisi1, "Evrak Sayısı1")
                 .dagitimYerleriAcEk3()
-                .dagitimYerlerindeKullaniciSecEK3();
+                .dagitimYerlerindeBirimKurumKaldirEK3(birimDagitimYeri,  kurumDagitimYeri);
 
         evrakOlusturPage
                 .editorTabAc();
@@ -828,7 +832,7 @@ public class EkIlgiTest extends BaseTest {
                 .PDFEk3Kontrolu(evrakSayisi1)
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(birim, "Ek-2 konulmadı, Ek-3 konulmadı")
                 .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim2(kurum, "Ek-3 konulmadı")
-                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kullanici, "Ek-1 konulmadı, Ek-2konulmadı");
+                .eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(kullanici, "Ek-1 konulmadı, Ek-2 konulmadı");
 
         closeNewWindow();
         switchTo().window(0);
