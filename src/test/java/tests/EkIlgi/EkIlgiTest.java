@@ -101,6 +101,7 @@ public class EkIlgiTest extends BaseTest {
 
         String evrakNo1 = "12495";
         String evrakSayisi1 = "234234234234234234-010.01-12495";
+        String evrakTarihiBaslangic = "01.01.2018";
 
         String evrakNo2 = "13557";
         String evrakSayisi2 = "234234234234234234-010.01-13557";
@@ -214,6 +215,7 @@ public class EkIlgiTest extends BaseTest {
                 .listelenenEklerdeKontrol(fizikselEkMetni, "Fiziksel Ek Metni")
 
                 .sistemdeKayitliEvrakEkleTabiniAc()
+                .ekleriEvrakTarihBaslangicDoldur(evrakTarihiBaslangic)
                 .evrakAramaDoldur(evrakNo1)
                 .dokumanAra()
                 .listelenenEvraklardaKontrol(evrakNo1)
@@ -224,6 +226,7 @@ public class EkIlgiTest extends BaseTest {
                 .evrakEkEkle()
 
                 .evrakAramaDoldur(evrakNo2)
+                .ekleriEvrakTarihBaslangicDoldur(evrakTarihiBaslangic)
                 .dokumanAra()
                 .listelenenEvraklardaKontrol(evrakNo2)
                 .evrakDetayiGoster()
@@ -463,8 +466,8 @@ public class EkIlgiTest extends BaseTest {
                 //ek1
                 .ekleriEkMetniDoldur(ekDosya1Aciklama)
                 .taramaHavuzundanEkle()
-                .evrakTarihBaslangicDoldur("01.01.2017")
-                .evrakTarihBitisDoldur("01.12.2018")
+                .taramaHavuzuEvrakTarihBaslangicDoldur("01.01.2017")
+                .taramaHavuzuEvrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("Ek")
                 .taramaHavuzuSorgula()
                 .birinciEvrakSec(true)
@@ -476,8 +479,8 @@ public class EkIlgiTest extends BaseTest {
                 //ek2
                 .ekleriEkMetniDoldur(ekDosya2Aciklama)
                 .taramaHavuzundanEkle()
-                .evrakTarihBaslangicDoldur("01.01.2017")
-                .evrakTarihBitisDoldur("01.12.2018")
+                .taramaHavuzuEvrakTarihBaslangicDoldur("01.01.2017")
+                .taramaHavuzuEvrakTarihBitisDoldur("01.12.2018")
                 .evrakTuruSec("Ek")
                 .taramaHavuzuSorgula()
                 .ikinciEvrakSec(true)
@@ -733,6 +736,7 @@ public class EkIlgiTest extends BaseTest {
         String kurumPostalanakYerler = "BAŞBAKANLIĞA";
 
         String evrakSayisi1 = "6345202-010.01-11601";
+        String evrakTarihiBaslangic = "01.01.2018";
 
         String ekleriAciklamaDosya1 = "Ekleri_Dosya1_" + getSysDate();
         String pathDosya1 = getUploadPath() + "TS1493_dosya1.pdf";
@@ -796,6 +800,7 @@ public class EkIlgiTest extends BaseTest {
                 //evrak sayisi1
                 .sistemdeKayitliEvrakEkleTabAc()
                 .sistemdeKayitliEvrakEkleAlanKontrolleri()
+                .ekleriEvrakTarihBaslangicDoldur(evrakTarihiBaslangic)
                 .evrakAranacakYerSec("Birim Evrakları Ara")
                 .evrakAramaDoldur(evrakSayisi1)
                 .dokumanAra()
@@ -853,6 +858,7 @@ public class EkIlgiTest extends BaseTest {
                 //sistemde kayıtlı evrak ekle
                 //Evrak sayi1
                 .sistemdeKayitliEvrakEkleTabAc()
+                .ilgileriEvrakTarihBaslangicDoldur(evrakTarihiBaslangic)
                 .evrakAranacakYerSec("Birim Evrakları Ara")
                 .evrakAramaDoldur(ilgileriEvrakSayisi1)
                 .dokumanAra()
@@ -918,7 +924,7 @@ public class EkIlgiTest extends BaseTest {
                 .dialogpostalaEvet()
                 .islemMesaji().basariliOlmali(basariMesaji);
 
-        login(TestData.usernameSEZAICELIK, TestData.passwordSEZAICELIK); //sezaicelik
+        login(TestData.userSezaiCelik); //sezaicelik
 
         gelenEvraklarPage
                 .openPage()

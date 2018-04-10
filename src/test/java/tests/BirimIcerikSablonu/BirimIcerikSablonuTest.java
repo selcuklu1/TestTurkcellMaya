@@ -34,14 +34,15 @@ public class BirimIcerikSablonuTest extends BaseTest {
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
-    public static BaseLibrary baseLibrary= new BaseLibrary();
+    public static BaseLibrary baseLibrary = new BaseLibrary();
     public static String sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
     public static String editorText1082;
     private String sablonAdi1085 = "TS1085_" + getSysDate();
     private String editorText1085;
     private String sablonAdi1079;
     private String evrakTipi = "Giden Evrak";
-    private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+    //private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+    private static String onizlemeText = "T.C.\nANKARA\nÖZEL ANTET\n";
     private BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     private pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
     private OlurYazisiOlusturPage olurYazisiOlusturPage = new OlurYazisiOlusturPage();
@@ -63,8 +64,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
         BaseLibrary baseLibrary = new BaseLibrary();
         String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
         User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
-         String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
-         BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
+        //String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
+        BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
 
         loginPage.login(user1);
         birimIcerikSablonlarPage
@@ -80,7 +81,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .getText();
 
         birimIcerikSablonlarPage
-                .pdfOnzilemeTextKontol(text(sablonAdi1082), text("(@BIRIM)"))
+                .pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1082), text("(@BIRIM)"))
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 
