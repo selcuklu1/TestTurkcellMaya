@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 
@@ -3547,10 +3548,9 @@ public class EvrakOlusturPage extends MainPage {
             //chkDagitimYerleriKurumEk1.setSelected(false);
             //chkDagitimYerleriKullaniciEk1.setSelected(true);
 
-            ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
-            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
-                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
-
+             ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
+             if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+             clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
 
             return this;
         }
