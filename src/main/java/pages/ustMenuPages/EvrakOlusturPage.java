@@ -2999,6 +2999,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEvrakEkEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:ekEkleButton1"));
         ElementsCollection trEvraklarTumListe = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
 
+        SelenideElement chkEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihBasId_input"));
+        SelenideElement chkEvrakTarihiBitis = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihSonId_input"));
+
         //Web Adresini Ekle Tab
         SelenideElement btnEkleriWebAdresiniEkle = $("a[href='#yeniGidenEvrakForm:evrakEkTabView:webAdresindenEkEkle']");
         //Arşivde Kayıtlı Ekle Tab
@@ -3435,15 +3438,27 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak tarih aralığı - başlangıç")
-        public EkleriTab evrakTarihBaslangicDoldur(String tarihBaslangic) {
+        @Step("Tarama Havuzu Evrak tarih aralığı - başlangıç")
+        public EkleriTab taramaHavuzuEvrakTarihBaslangicDoldur(String tarihBaslangic) {
             chkTaramaHavuzuTarihBaslangic.setValue(tarihBaslangic);
             return this;
         }
 
-        @Step("Evrak tarih aralığı - bitiş")
-        public EkleriTab evrakTarihBitisDoldur(String tarihBitis) {
+        @Step("Tarama Havuzu Evrak tarih aralığı - bitiş")
+        public EkleriTab taramaHavuzuEvrakTarihBitisDoldur(String tarihBitis) {
             chkTaramaHavuzuTarihBitis.setValue(tarihBitis);
+            return this;
+        }
+
+        @Step("EkleriTab - Evrak tarih aralığı - başlangıç")
+        public EkleriTab ekleriEvrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkEvrakTarihiBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("EkleriTab - Evrak tarih aralığı - bitiş")
+        public EkleriTab ekleriEvrakTarihBitisDoldur(String tarihBitis) {
+            chkEvrakTarihiBitis.setValue(tarihBitis);
             return this;
         }
 
@@ -3528,7 +3543,6 @@ public class EvrakOlusturPage extends MainPage {
         //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
         @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
         public EkleriTab dagitimYerlerindeBirimVeKurumSecEk1() {
-
             chkDagitimYerleriBirimEk1.setSelected(false);
             chkDagitimYerleriKurumEk1.setSelected(false);
             chkDagitimYerleriKullaniciEk1.setSelected(true);
@@ -3638,6 +3652,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEvrakIlgiEkEkle = $("[id^='yeniGidenEvrakForm:ilgiIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:'] [class$='document-follow']");
         SelenideElement evrakDetayiPageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
         SelenideElement btnEvrakDetayiPenceresiKapat = $("#windowReadOnlyEvrakDialog > div:nth-of-type(1) .ui-icon-closethick");
+        SelenideElement chkEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
+        SelenideElement chkEvrakTarihiBitis = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
 
         //İlgileri tabı - Arşivde Kayıtlı Evrak Ekle
         SelenideElement dateIlgileriArsivdeEvrakAraTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihBasId_input"));
@@ -3919,6 +3935,18 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Evrakın Aranaği Yer seç")
         public IlgileriTab evrakAranacakYerSec(String aranacakYer) {
             cmbIlgileriSistemdeEvrakAranacakyer.selectOption(aranacakYer);
+            return this;
+        }
+
+        @Step("Ilgileri Tab - Evrak tarih aralığı - başlangıç")
+        public IlgileriTab ilgileriEvrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkEvrakTarihiBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("Ilgileri Tab - Evrak tarih aralığı - bitiş")
+        public IlgileriTab ilgileriEvrakTarihBitisDoldur(String tarihBitis) {
+            chkEvrakTarihiBitis.setValue(tarihBitis);
             return this;
         }
 
