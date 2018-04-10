@@ -17,6 +17,7 @@ import pages.ustMenuPages.GelenEvrakKayitPage;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static data.TestData.passwordZTEKIN;
+import static data.TestData.userCanSeker;
 import static data.TestData.usernameZTEKIN;
 
 /****************************************************
@@ -303,7 +304,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String birim2 = "BHUPGMY";
 
-        login("cseker", passwordZTEKIN);
+        login(userCanSeker);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
@@ -369,7 +370,7 @@ public class EvrakHavaleKurallariTest extends BaseTest {
         String kisi = "Zübeyde Tekin";
         String birim2 = "YGD";
         String kuralAdiGuncelle = kuralAdi + " Güncelle";
-        login("cseker", passwordZTEKIN);
+        login(userCanSeker);
         //TODO PRE Conditon bir kural bulunmalı
         evrakHavaleKurallariYonetimiPage
                 .openPage()
