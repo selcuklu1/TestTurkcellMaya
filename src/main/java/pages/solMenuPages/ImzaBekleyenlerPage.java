@@ -420,11 +420,38 @@ public class ImzaBekleyenlerPage extends MainPage {
     @Step("Önizleme ekranında PDF EK Kontrolü")
     public ImzaBekleyenlerPage ekOnizlemeKontrol(Condition... conditions) {
         switchTo().frame($("iframe[class='onizlemeFrame']"));
+
         for (Condition condition : conditions) {
             Allure.addAttachment(condition.toString(), condition.toString());
             $(".textLayer").shouldHave(condition);
+//            if(!condition.equals("exact text ''")) {
+//                $$(".textLayer div[style^='left']").filterBy(condition).shouldHaveSize(1);
+//                System.out.println("condition: " +  condition);
+//            }
+
             //page.waitUntil(condition, 30000);
         }
+        takeScreenshot();
+        switchTo().defaultContent();
+        return this;
+    }
+
+    @Step("Önizleme ekranında PDF EK Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage ekOnizlemePDFKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
+        switchTo().frame($("iframe[class='onizlemeFrame']"));
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
         takeScreenshot();
         switchTo().defaultContent();
         return this;
@@ -445,8 +472,8 @@ public class ImzaBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("ekPopPDFKontrol")
-    public ImzaBekleyenlerPage ekPopPDFKontrol(Condition... conditions) {
+    @Step("Ek Popup PDF Kontrolü")
+    public ImzaBekleyenlerPage ekPopPDFKontrolu(Condition... conditions) {
         switchTo().window(1);
         maximazeBrowser();
 
@@ -454,9 +481,61 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         for (Condition condition : conditions) {
             Allure.addAttachment(condition.toString(), condition.toString());
-            $(".textLayer").shouldHave(condition);
+//            $(".textLayer").shouldHave(condition);
+            $$(".textLayer div[style^='left']").filterBy(exactText(condition.toString())).shouldHaveSize(1);
+            Allure.addAttachment("| kontrolü: ",condition.toString());
+
             //page.waitUntil(condition, 30000);
         }
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Dağıtım Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage dagitimListesiPDFKontrolu(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+    @Step("Ek Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage ekListesiPDFKontrolu(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
         takeScreenshot();
         closeNewWindow();
         switchTo().window(0);
