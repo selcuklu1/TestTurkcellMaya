@@ -52,7 +52,8 @@ public class AntetIslemleri extends BaseTest {
     public void loginBeforeTests() {
         useFirefox();
 
-        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+//        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        login(TestData.usernameMBOZDEMIR,TestData.passwordMBOZDEMIR);
         birimDegistirme("GENEL MÜDÜRLÜK MAKAMI");
         birimYonetimiPage = new BirimYonetimiPage();
         evrakOlusturPage = new EvrakOlusturPage();

@@ -1077,7 +1077,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Dagitimi Ek Yap alanı \"{selection}\" seç")
         public BilgilerTab dagitimiEkYapSec(boolean selection) {
-            chkDagitimiEkYap.setSelected(selection);
+//            chkDagitimiEkYap.setSelected(selection);
+            chkDagitimiEkYap.click();
             takeScreenshot();
 //            chkDagitimiEkYap.click();
             return this;
