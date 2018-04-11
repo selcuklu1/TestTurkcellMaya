@@ -164,7 +164,9 @@ public class EditorTab extends MainPage {
 
     @Step("Hitapta alanda \"{hitapAramaKriteri}\" tesks bulunmalı")
     public EditorTab hitapAlanindaTekstBulunmali(Condition... hitapAramaKriteri){
-        getHitapAlani().scrollIntoView(true).shouldHave(hitapAramaKriteri);
+        getHitapAlani().scrollIntoView(true);
+        takeScreenshot();
+        getHitapAlani().shouldHave(hitapAramaKriteri);
         return this;
     }
 
@@ -176,6 +178,12 @@ public class EditorTab extends MainPage {
     @Step("Hitapta alanda \"{dagitimAramaKriteri}\" tesks bulunmalı")
     public EditorTab dagitimPaneldeTekstBulunmali(Condition... dagitimAramaKriteri){
         getDagitimPanel().scrollIntoView(true).shouldHave(dagitimAramaKriteri);
+        return this;
+    }
+
+    @Step("Hitapta alanda \"{dagitimAramaKriteri}\" tesks bulunmamalı")
+    public EditorTab dagitimPaneldeTekstBulunmamali(Condition... dagitimAramaKriteri){
+        getDagitimPanel().scrollIntoView(true).shouldNotHave(dagitimAramaKriteri);
         return this;
     }
 
