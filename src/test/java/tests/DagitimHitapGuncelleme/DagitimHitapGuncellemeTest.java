@@ -17,6 +17,7 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
@@ -273,6 +274,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String metni1 = "TS2126_1 Metni";
         String hitap1 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
         String hitap2 = "CUMHURBAŞKANLIĞINA";
+        hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase();
 
         Map<String, String> dagitimPlaniMap2 = new LinkedHashMap<>();
         dagitimPlaniMap2.put("Kullanıcı", "Zübeyde TEKİN");
@@ -282,7 +284,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Kullanıcı")+" Hariç)";
         //String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Birim").toUpperCase()+" Hariç)";
         String hitap3 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
-        String hitap4 = "Sayın " + dagitimPlaniMap1.get("Birim") + "E";
+        //String hitap4 = "Sayın " + dagitimPlaniMap1.get("Birim") + "E";
 
         login(user);
 
