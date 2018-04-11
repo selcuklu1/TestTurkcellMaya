@@ -1477,7 +1477,7 @@ public class AntetIslemleri extends BaseTest {
     @Test(enabled = true, description = "TS2372: Güncel birimin anteti yoksa, üst birimde antet yok ve 2 üst birim anteti normalse evrak kontrolü")
     public void TS2372() throws InterruptedException, IOException {
         String testid = "TS2372";
-        String konu = "TS2382-" + getSysDate();
+        String konu = "TS2372-" + getSysDate();
         String konuKodu = "Kanunlar";
         String kaldirilacakKlasorler = "Kanunlar";
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
@@ -1512,14 +1512,12 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetGuncelBirimTipi)
-                .antetBilgisiDoldur(antetGuncelBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(ustBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetUstBirimTipi)
-                .antetBilgisiDoldur(antetUstBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(enUstBirim)
@@ -1542,8 +1540,8 @@ public class AntetIslemleri extends BaseTest {
                 .konuKoduDoldur(konuKodu)
                 .konuKoduDoldurKontrol(konuKodu)
                 .konuDoldur(konu)
-                .kaldiralacakKlasorlerSec("TS2372")
-                .kaldiralacakKlasorlerKontrol("TS2372")
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasorler)
+                .kaldiralacakKlasorlerKontrol(kaldirilacakKlasorler)
                 .gizlilikDerecesiSec("Normal")
                 .gizlilikDerecesiKontrol("Normal")
                 .ivedilikSec("Normal")
