@@ -93,7 +93,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .kaydet();
 
         page.bilgileriTab().secilenBilgiAlanKotrolu(textCaseSensitive(ozelHitap));
-        page.editorTab().openTab().getHitapAlani().shouldHave(textCaseSensitive(ozelHitap));
+        page.editorTab().openTab().hitapAlanindaTekstBulunmali(textCaseSensitive(ozelHitap));
         page.pageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1).checkText(textCaseSensitive(ozelHitap));
 
@@ -135,7 +135,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         page.bilgileriTab().secilenGeregiAlanKotrolu(textCaseSensitive(hitap));
 
-        page.editorTab().openTab().getHitapAlani().shouldHave(textCaseSensitive(evraktaGorunecekHitap));
+        page.editorTab().openTab().hitapAlanindaTekstBulunmali(textCaseSensitive(evraktaGorunecekHitap));
         page.pageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1).checkText(textCaseSensitive(evraktaGorunecekHitap));
     }
@@ -176,7 +176,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(hitap));
 
-        page.editorTab().openTab().getHitapAlani().shouldHave(exactTextCaseSensitive(evraktaGorunecekHitap));
+        page.editorTab().openTab().hitapAlanindaTekstBulunmali(exactTextCaseSensitive(evraktaGorunecekHitap));
         page.pageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1).checkText(textCaseSensitive(evraktaGorunecekHitap));
 
@@ -271,8 +271,8 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         //dagitimPlaniMap1.put("Birim", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
         String dagitimPlani1 = "TS2126_1";
         String metni1 = "TS2126_1 Metni";
-        /*String hitap1 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
-        String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase() + "NA";*/
+        String hitap1 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
+        String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase() + "NA";
 
         Map<String, String> dagitimPlaniMap2 = new LinkedHashMap<>();
         dagitimPlaniMap2.put("Kullanıcı", "Zübeyde TEKİN");
@@ -281,7 +281,8 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String metni2 = "TS2126_2 Metni";//defect oluduğu için kullanılmıyor
         String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Kullanıcı")+" Hariç)";
         //String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Birim").toUpperCase()+" Hariç)";
-        String hitap2 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
+        String hitap3 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
+        String hitap4 = "Sayın " + dagitimPlaniMap1.get("Birim") + "E";
 
         login(user);
 
@@ -340,7 +341,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .ustVerileriListesindeAra(text(konu))
                 .ustVerilerOrjinaliniYazdir();
 
-        new PDFOnizleme(1).checkText(0, textCaseSensitive(metni1), textCaseSensitive(haricMetni));
+        new PDFOnizleme(1).checkText(0, textCaseSensitive("DAĞITIM YERLERİNE"), textCaseSensitive(metni1), textCaseSensitive(haricMetni));
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
         evrakPostala.evrakDetayDialogClose();
@@ -352,8 +353,21 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .ustVerileriListesindeAra(text(konu))
                 .getUstVerilerYazdirButton("tıkla").click();
         new PDFOnizleme(1)
-                .checkText(0, textCaseSensitive(metni1), textCaseSensitive(haricMetni))
-                .checkText(1, textCaseSensitive(metni1), textCaseSensitive(haricMetni));
+                .checkText(0, textCaseSensitive(hitap1), textCaseSensitive(metni1), textCaseSensitive(haricMetni))
+                .checkText(1, textCaseSensitive(hitap2), textCaseSensitive(metni1), textCaseSensitive(haricMetni))
+                .closeAndReturnToMainWindow();
+
+        /*evrakPostala
+                .evrakDetayDialogClose()
+                .postalanacakYerlerdeAra(text(haricMetni))
+                .yazdir()
+                .ustVerileriListesindeAra(text(konu))
+                .getUstVerilerYazdirButton("tıkla").click();
+        new PDFOnizleme(1)
+                .checkText(0, textCaseSensitive(hitap3), textCaseSensitive(metni1), textCaseSensitive(haricMetni))
+                .checkText(1, textCaseSensitive(hitap4), textCaseSensitive(metni1), textCaseSensitive(haricMetni))
+                .closeAndReturnToMainWindow();*/
+
     }
 
     @Test(description = "TS2127: Hitabına NA NE eklenmesi", enabled = true)
@@ -425,7 +439,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String gercekKisi2 = "Optiim OTOMASYON";
         String hitap2 = "Sayın Optiim OTOMASYON";
         //String adres2 = "ATAŞEHİR / İSTANBUL";
-        String evraktaGorunecekHitap2 = gercekKisi2 + "\n" + adres2;
+        String evraktaGorunecekHitap2 = gercekKisi2;// + "\n" + adres2;
 
         login(user);
 
@@ -444,12 +458,13 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .bilgiSec(gercekKisi2)
                 .bilgiDagitimHitapDuzenlemeTiklanir(text(gercekKisi2))
                 .adresGirilir(adres2)
-                .adresDagitimdaGorunsunSec(true)
+                .adresDagitimdaGorunsunSec(false)
                 .kaydet();
         //page.bilgileriTab().secilenBilgiAlanKotrolu(exactTextCaseSensitive(evraktaGorunecekHitap2));
 
         page.editorTab().openTab()
                 .dagitimPaneldeTekstBulunmali(textCaseSensitive(evraktaGorunecekHitap1), textCaseSensitive(evraktaGorunecekHitap2))
+                .dagitimPaneldeTekstBulunmamali(text(adres2))
                 .evrakPageButtons().pdfOnizlemeTikla();
         new PDFOnizleme(1).checkText(textCaseSensitive(evraktaGorunecekHitap1),textCaseSensitive(evraktaGorunecekHitap2));
     }
@@ -587,7 +602,9 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .anlikOnayAkisKullanicininTipiSec(user, OnayKullaniciTipi.IMZALAMA)
                 .kullan();
 
-        page.editorTab().openTab().getEditor().type("editör tekst");
+        page.editorTab().openTab()
+                .hitapAlanindaTekstBulunmali(textCaseSensitive(evraktaGorunecekHitap))
+                .getEditor().type("editör tekst");
         page.pageButtons().evrakImzala()
                 .islemMesaji().basariliOlmali();
 

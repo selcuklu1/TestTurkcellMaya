@@ -211,7 +211,7 @@ public class DagitimHitapDuzenle extends MainPage {
 
     @Step("\"Dağıtım Metni\" alanın tekst kotrollü")
     public DagitimHitapDuzenle dagitimMetniTekstKontrol(Condition... conditions) {
-        getDagitimMetniTextarea("").shouldHave(conditions);
+        getDagitimMetniTextarea(conditions.toString()).shouldHave(conditions);
         return this;
     }
 
@@ -297,7 +297,7 @@ public class DagitimHitapDuzenle extends MainPage {
         return this;
     }
 
-    @Step("Dağıtım Planı eleman görülür ve checkbox seçili kontrollü")
+    @Step("Dağıtım Planı elemanların checkli olduğu kontrol edilir")
     public DagitimHitapDuzenle dagitimPlaniDetayListesiKontrolu(Map<String, String> dagitimPlanElemanlari) {
         ElementsCollection rows = new SearchTable(container.$("div[id$='dagitimPlaniDetayDataTableId']")).findRows().getFoundRows();
 
