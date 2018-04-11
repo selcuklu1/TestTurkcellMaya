@@ -73,10 +73,10 @@ public class AntetIslemleri extends BaseTest {
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
-        String user2 = "Antet İSLEMLERİ";
+        String user2 = "Antet İSLEMLERİ2";
         String details = "Antet Üst Birim";
-        String pathToFileText = getUploadPath() + "test.txt";
-        String fileName = "test.txt";
+        String pathToFileText = getUploadPath() + "Otomasyon.pdf";
+        String fileName = "Otomasyon.pdf";
 
         String guncelBirim = "Antet Güncel Birim";
         String ustBirim = "Antet Üst Birim";
@@ -116,13 +116,12 @@ public class AntetIslemleri extends BaseTest {
 
         testStatus(testid, "Test Başladı");
 
-        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        login("antetislem2","123");
         birimDegistirme("Antet Güncel Birim");
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
                 .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
-
 
         editor
                 .type(editorIcerik)
@@ -147,7 +146,10 @@ public class AntetIslemleri extends BaseTest {
                 .bilgiSecimTipiSecByText("Kurum")
                 .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrolu(user2 , "Paraflama")
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiKullaniciEkle(user2,"Antet Güncel Birim")
+                .onayAkisiKullaniciTipiSec(user2,"Paraflama")
+                .onayAkisiKullaniciKontrolu(user2,"Paraflama")
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
