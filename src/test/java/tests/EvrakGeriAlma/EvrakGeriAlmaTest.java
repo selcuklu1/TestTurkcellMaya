@@ -538,7 +538,6 @@ public class EvrakGeriAlmaTest extends BaseTest {
     }
 
 
-
     @Test(description = "TS0979: Postalanmayı bekleyen evrakın önizlemeden geri alınması ve iade işlemleri", enabled = true)
     public void TS0979() {
         User parafci = user1;
@@ -648,7 +647,6 @@ public class EvrakGeriAlmaTest extends BaseTest {
 //                .islemMesaji().basariliOlmali();
         imzaBekleyenlerPage.openPage().searchTable().findRowAndSelect(text(konu));
     }
-
 
 
     @Test(description = "TS976a: Olur yazısı - Koordine parafçısından evrakın kontrolcü tarafından geri alınması", enabled = true)

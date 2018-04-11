@@ -17,6 +17,7 @@ import pages.pageData.alanlar.OnayKullaniciTipi;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
@@ -258,7 +259,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
     @Test(description = "TS2126: Dağıtım metni kullanma ve hariç tutma", enabled = true)
     public void TS2126() {
-        useFirefox();
+        //useFirefox();
         String konu = "TS2126_" + getSysDate();
 
         //Yaratılmış 2 dağıtım planı olmalı:
@@ -267,12 +268,12 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
 
         Map<String, String> dagitimPlaniMap1 = new LinkedHashMap<>();
         dagitimPlaniMap1.put("Kullanıcı", "Optiim TEST");
-        dagitimPlaniMap1.put("Kurum", "Cumhurbaşkanliğina");
+        dagitimPlaniMap1.put("Kurum", "Cumhurbaşkanlığına");
         //dagitimPlaniMap1.put("Birim", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
         String dagitimPlani1 = "TS2126_1";
         String metni1 = "TS2126_1 Metni";
         String hitap1 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
-        String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase() + "NA";
+        String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase();
 
         Map<String, String> dagitimPlaniMap2 = new LinkedHashMap<>();
         dagitimPlaniMap2.put("Kullanıcı", "Zübeyde TEKİN");
@@ -282,7 +283,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Kullanıcı")+" Hariç)";
         //String haricMetni = dagitimPlani2 + "E ("+dagitimPlaniMap2.get("Birim").toUpperCase()+" Hariç)";
         String hitap3 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
-        String hitap4 = "Sayın " + dagitimPlaniMap1.get("Birim") + "E";
+        //String hitap4 = "Sayın " + dagitimPlaniMap1.get("Birim") + "E";
 
         login(user);
 
