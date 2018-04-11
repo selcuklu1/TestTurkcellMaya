@@ -521,7 +521,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullaniciAdi = "Zübeyde Tekin";
         String ustyazipath = getUploadPath()+"Otomasyon.pdf";
-        login(usernameZTEKIN, passwordZTEKIN);
+        login(userZtekin);
 
         gelenEvrakKayitPage
                 .openPage()

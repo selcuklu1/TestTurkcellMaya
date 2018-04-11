@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 
@@ -3000,6 +3001,9 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEvrakEkEkle = $(By.id("yeniGidenEvrakForm:evrakEkTabView:sistemdeKayitliEvrakListesiDataTable:0:ekEkleButton1"));
         ElementsCollection trEvraklarTumListe = $$("tbody[id*='yeniGidenEvrakForm:ekListesiDataTable_data'] tr[role='row']");
 
+        SelenideElement chkEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihBasId_input"));
+        SelenideElement chkEvrakTarihiBitis = $(By.id("yeniGidenEvrakForm:evrakEkTabView:ekIslemleriEvrakTarihSonId_input"));
+
         //Web Adresini Ekle Tab
         SelenideElement btnEkleriWebAdresiniEkle = $("a[href='#yeniGidenEvrakForm:evrakEkTabView:webAdresindenEkEkle']");
         //Arşivde Kayıtlı Ekle Tab
@@ -3436,15 +3440,27 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
-        @Step("Evrak tarih aralığı - başlangıç")
-        public EkleriTab evrakTarihBaslangicDoldur(String tarihBaslangic) {
+        @Step("Tarama Havuzu Evrak tarih aralığı - başlangıç")
+        public EkleriTab taramaHavuzuEvrakTarihBaslangicDoldur(String tarihBaslangic) {
             chkTaramaHavuzuTarihBaslangic.setValue(tarihBaslangic);
             return this;
         }
 
-        @Step("Evrak tarih aralığı - bitiş")
-        public EkleriTab evrakTarihBitisDoldur(String tarihBitis) {
+        @Step("Tarama Havuzu Evrak tarih aralığı - bitiş")
+        public EkleriTab taramaHavuzuEvrakTarihBitisDoldur(String tarihBitis) {
             chkTaramaHavuzuTarihBitis.setValue(tarihBitis);
+            return this;
+        }
+
+        @Step("EkleriTab - Evrak tarih aralığı - başlangıç")
+        public EkleriTab ekleriEvrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkEvrakTarihiBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("EkleriTab - Evrak tarih aralığı - bitiş")
+        public EkleriTab ekleriEvrakTarihBitisDoldur(String tarihBitis) {
+            chkEvrakTarihiBitis.setValue(tarihBitis);
             return this;
         }
 
@@ -3528,11 +3544,23 @@ public class EvrakOlusturPage extends MainPage {
 
         //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
         @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
-        public EkleriTab dagitimYerlerindeBirimVeKurumSecEk1() {
+        public EkleriTab dagitimYerlerindeKullaniciKaldirEk1(String ekleriAciklamaDosya1, String kullaniciDagitimYeri) {
+            //chkDagitimYerleriBirimEk1.setSelected(false);
+            //chkDagitimYerleriKurumEk1.setSelected(false);
+            //chkDagitimYerleriKullaniciEk1.setSelected(true);
 
-            chkDagitimYerleriBirimEk1.setSelected(false);
-            chkDagitimYerleriKurumEk1.setSelected(false);
-            chkDagitimYerleriKullaniciEk1.setSelected(true);
+             //ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
+             //if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+             //clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(ekleriAciklamaDosya1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
@@ -3547,18 +3575,40 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde birim ve kullanıcı seçimlerini kaldır")
-        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir() {
-            chkDagitimYerleriBirimEk2.setSelected(true);
-            chkDagitimYerleriKullaniciEk2.setSelected(true);
+        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir(String fizikselEkAciklama, String birimDagitimYeri, String kullaniciDagitimYeri) {
+            //chkDagitimYerleriBirimEk2.setSelected(true);
+            //chkDagitimYerleriKullaniciEk2.setSelected(true);
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(fizikselEkAciklama)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
 
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSecEK3() {
-            chkDagitimYerleriBirimEk3.setSelected(true);
-            chkDagitimYerleriKurumEk3.setSelected(true);
-            chkDagitimYerleriKullaniciEk3.setSelected(false);
+        public EkleriTab dagitimYerlerindeBirimKurumKaldirEK3(String evrakSayisi1, String birimDagitimYeri,String  kurumDagitimYeri) {
+            //chkDagitimYerleriBirimEk3.setSelected(true);
+            //chkDagitimYerleriKurumEk3.setSelected(true);
+            //chkDagitimYerleriKullaniciEk3.setSelected(false);
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(evrakSayisi1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+            if(values.filterBy(text(kurumDagitimYeri)).size()>0 && values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
@@ -3639,6 +3689,8 @@ public class EvrakOlusturPage extends MainPage {
         SelenideElement btnEvrakIlgiEkEkle = $("[id^='yeniGidenEvrakForm:ilgiIslemleriTabView:sistemdeKayitliEvrakListesiDataTable:0:'] [class$='document-follow']");
         SelenideElement evrakDetayiPageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
         SelenideElement btnEvrakDetayiPenceresiKapat = $("#windowReadOnlyEvrakDialog > div:nth-of-type(1) .ui-icon-closethick");
+        SelenideElement chkEvrakTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihBasId_input"));
+        SelenideElement chkEvrakTarihiBitis = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:ilgiIslemleriEvrakTarihSonId_input"));
 
         //İlgileri tabı - Arşivde Kayıtlı Evrak Ekle
         SelenideElement dateIlgileriArsivdeEvrakAraTarihiBaslangic = $(By.id("yeniGidenEvrakForm:ilgiIslemleriTabView:arsivdenEvrakAraIlgiEkleTarihBasId_input"));
@@ -3920,6 +3972,18 @@ public class EvrakOlusturPage extends MainPage {
         @Step("Evrakın Aranaği Yer seç")
         public IlgileriTab evrakAranacakYerSec(String aranacakYer) {
             cmbIlgileriSistemdeEvrakAranacakyer.selectOption(aranacakYer);
+            return this;
+        }
+
+        @Step("Ilgileri Tab - Evrak tarih aralığı - başlangıç")
+        public IlgileriTab ilgileriEvrakTarihBaslangicDoldur(String tarihBaslangic) {
+            chkEvrakTarihiBaslangic.setValue(tarihBaslangic);
+            return this;
+        }
+
+        @Step("Ilgileri Tab - Evrak tarih aralığı - bitiş")
+        public IlgileriTab ilgileriEvrakTarihBitisDoldur(String tarihBitis) {
+            chkEvrakTarihiBitis.setValue(tarihBitis);
             return this;
         }
 
@@ -4579,7 +4643,7 @@ public class EvrakOlusturPage extends MainPage {
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
             String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
             String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
-            String pdfDagitim = pdfDagitim3 + "" + pdfDagitim3Devam;
+            String pdfDagitim = pdfDagitim3 + " " + pdfDagitim3Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }
