@@ -272,7 +272,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String dagitimPlani1 = "TS2126_1";
         String metni1 = "TS2126_1 Metni";
         String hitap1 = "Sayın " + dagitimPlaniMap1.get("Kullanıcı");
-        String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase() + "NA";
+        String hitap2 = "CUMHURBAŞKANLIĞINA";
 
         Map<String, String> dagitimPlaniMap2 = new LinkedHashMap<>();
         dagitimPlaniMap2.put("Kullanıcı", "Zübeyde TEKİN");
