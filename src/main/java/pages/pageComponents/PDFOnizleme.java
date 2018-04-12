@@ -74,6 +74,14 @@ public class PDFOnizleme extends MainPage{
 
     @Step("")
     public SelenideElement getPage(int pageNumber) {
+        for (int i = 0; i < Configuration.timeout/1000; i++) {
+            if (pages.get(pageNumber).$(".textLayer").is(Condition.visible))
+                break;
+            sleep(1000);
+        }
+        if (!pages.get(pageNumber).$(".textLayer").is(Condition.visible))
+            open(WebDriverRunner.getWebDriver().getCurrentUrl());
+
         return pages.get(pageNumber).shouldBe(Condition.visible);
     }
 
