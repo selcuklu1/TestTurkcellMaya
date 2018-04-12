@@ -1897,8 +1897,8 @@ public class AntetIslemleri extends BaseTest {
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String antetGuncelBirimTipi = "Normal";
         String antetGuncelBirim = "Normal Antet";
-        String antetUstBirimTipi = "Antet Yok";
-        String antetUstBirim = "";
+        String antetUstBirimTipi = "Normal";
+        String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Normal";
         String antetEnUstBirim = "İki Üst Birim Normal Antet";
         String antetDefault1 = "T.C.";
@@ -1921,7 +1921,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetUstBirimTipi)
-//                .antetBilgisiDoldur(antetUstBirim)
+                .antetBilgisiDoldur(antetUstBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(enUstBirim)
