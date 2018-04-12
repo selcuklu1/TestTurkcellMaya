@@ -185,6 +185,9 @@ public class GelenEvraklarPage extends MainPage {
     SelenideElement genelNotPopupKontrol = $("div[id='evrakOnizlemeNotlarDialogId']");
     SelenideElement genelNotPopupMesajKontrol = $("[id='evrakOnizlemeNotlariDatatableId_data']");
 
+    ElementsCollection tblOnayAkisiSecilen = $$("tbody[id='mainPreviewForm:akisAdimLov_id:LovSecilenTable_data'] > tr[role='row']");
+    SelenideElement btnEvrakKapatOnayAkisiKullan = $(By.id("mainPreviewForm:kullanButton_id"));
+
     @Step("Gelen Evraklar Sayfasını aç")
     public GelenEvraklarPage openPage() {
         solMenu(SolMenuData.IslemBekleyenEvraklar.GelenEvraklar);
@@ -965,12 +968,14 @@ public class GelenEvraklarPage extends MainPage {
         chkEvrakKapatKisiselKlasorler.setSelected(secilen);
         return this;
     }
+
     @Step("Evrak Kapat tıklanır")
     public GelenEvraklarPage evrakKapatEvrakKapat() {
         btnEvrakKapatEvrakKapat.get(1).pressEnter();
         return this;
     }
 
+    @Step("Evrak Kapatma onaya sun")
     public GelenEvraklarPage evrakKapatKapatmaOnayinaSun() {
         btnEvrakKapatKapatmaOnayinaSun.click();
         return this;
@@ -1057,8 +1062,9 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    public GelenEvraklarPage evrakKapatKapatmaTipiSec(String value) {
-        cmbEvrakKapatKapatmaTipi.selectOption(value);
+    @Step("Evrak Kapatma tipi seç: {kapatmaTipi}")
+    public GelenEvraklarPage evrakKapatKapatmaTipiSec(String kapatmaTipi) {
+        cmbEvrakKapatKapatmaTipi.selectOption(kapatmaTipi);
         return this;
     }
 
@@ -1839,10 +1845,19 @@ public class GelenEvraklarPage extends MainPage {
     public GelenEvraklarPage evrakKapatmaEkraniKontrol() {
 
         Assert.assertEquals(cmbEvrakKapatKapatmaTipi.isDisplayed(), true, "Kapatma Tipi");
+        Allure.addAttachment("Kapatma Tipi alanı kontrolu başarılı", "");
+
         Assert.assertEquals(divEvrakKapatKonuKoduLovPanel.isDisplayed(), true, "Konu Kodu");
+        Allure.addAttachment("Konu Kodu alanı kontrolu başarılı", "");
+
         Assert.assertEquals(txtEvrakKapatKaldirilacakKlasorler.isDisplayed(), true, "Kaldırılacak Klasörler");
+        Allure.addAttachment("Kaldırılacak Klasörler alanı kontrolu başarılı", "");
+
         Assert.assertEquals(txtEvrakKapatNot.isDisplayed(), true, "Not");
+        Allure.addAttachment("Not alanı kontrolu başarılı", "");
+
         Assert.assertEquals(txtEvrakKapatOnayAkisi.isDisplayed(), true, "Onay Akışı");
+        Allure.addAttachment("Onay Akışı alanı kontrolu başarılı", "");
 
         return this;
     }
@@ -1861,9 +1876,6 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    ElementsCollection tblOnayAkisiSecilen = $$("tbody[id='mainPreviewForm:akisAdimLov_id:LovSecilenTable_data'] > tr[role='row']");
-    SelenideElement btnEvrakKapatOnayAkisiKullan = $(By.id("mainPreviewForm:kullanButton_id"));
-
     @Step("Evrak kapatma ekranında onay akışı alanında {kullanici} kullanıcısını {kullaniciTipi} olarak seç")
     public GelenEvraklarPage evrakKapatOnayAkisiKullaniciTipiSec(String kullanici, String kullaniciTipi) {
         tblOnayAkisiSecilen
@@ -1881,7 +1893,7 @@ public class GelenEvraklarPage extends MainPage {
         return this;
     }
 
-    @Step("{konu} konulu evrak listede olmalı mı? {evrakOlmali}")
+    @Step("Evrak listesinde {konu} konulu evrak olmali mi? {evrakOlmali}")
     public GelenEvraklarPage evrakKontrol(String konu, boolean evrakOlmali) {
 
         if (evrakOlmali == true) {
@@ -1890,6 +1902,7 @@ public class GelenEvraklarPage extends MainPage {
                     .filterBy(text(konu))
                     .first()
                     .shouldBe(visible);
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
 
         } else {
 
@@ -1897,7 +1910,7 @@ public class GelenEvraklarPage extends MainPage {
                     .filterBy(text(konu))
                     .first()
                     .shouldNotBe(visible);
-
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
         return this;
     }

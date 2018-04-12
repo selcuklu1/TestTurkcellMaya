@@ -313,6 +313,7 @@ public class EvrakOlusturPage extends MainPage {
         return editorTab.open();
     }
 
+
     @Step("Editör Tab Kontrol")
     public EditorTab editorTabKontrol() {
         return editorTab.editorTabKontrol();
@@ -1467,6 +1468,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı alanında kullanıcılarda tümü seçilir")
+        public BilgilerTab onayAkisiTumuSec() throws InterruptedException {
+        $$("[id$='anlikakisOlusturPanelGrid'] div").filterBy(Condition.text("Birim")).first().click();
+        return this;
+        }
+
         @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
         public BilgilerTab kullaniciylaSecimTipiSec(String deger, String secim) {
             $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
@@ -1760,6 +1767,16 @@ public class EvrakOlusturPage extends MainPage {
                     .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size() == 1;
             Assert.assertEquals(durum, true, "Onay akışı kullanıcı adı ve tipi kontrolu");
             Allure.addAttachment("Onay akışı kullanıcı adı ve tipi kontrolu", kullaniciAdi + " " + kullaniciTipi);
+
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı adı, tipi, birim kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\", \"{birim}\" ")
+        public BilgilerTab onayAkisiKullaniciKontrolu(String kullaniciAdi, String kullaniciTipi,String birim) {
+            boolean durum = trOnayAkisiEkleKullanicilar
+                    .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size() == 1;
+            Assert.assertEquals(durum, true, "Onay akışı kullanıcı adı, tipi, birim kontrolu");
+            Allure.addAttachment("Onay akışı kullanıcı adı, tipi, birim kontrolu", kullaniciAdi + " " + kullaniciTipi + " " + birim);
 
             return this;
         }
@@ -2908,14 +2925,25 @@ public class EvrakOlusturPage extends MainPage {
 //        }
 //    }
 
-    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim}  {enUstBirim}")
+    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
     public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+        String antetArray[] = txtAntet.getText().split("\n");
+        String allureNot ="";
+        for(int i = 0 ; i < antetArray.length; i++) {
+            allureNot += antetArray[i];
+            if(antetArray[i].equals(antetDefault2))
+                break;
+            allureNot += " <br> ";
+        }
+        System.out.println(allureNot);
+
         Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+        Allure.addAttachment("| html dünyasında <br> ile ifade ediliyor.Dolayısı ile <br> kontrol edilmiştir:",allureNot);
         takeScreenshot();
         return this;
     }

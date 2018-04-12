@@ -3,6 +3,7 @@ package pages.solMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -25,6 +26,8 @@ public class ImzaBekleyenlerPageKapatmaIslemleri extends MainPage {
         solMenu2(SolMenuData.KapatmaIslemleri.ImzaBekleyenler);
         return this;
     }
+
+    @Step("Evrak Seç")
     public ImzaBekleyenlerPageKapatmaIslemleri evrakSec(String toplantiNo, String konu) {
         int i = 0;
         while (i < 100) {
@@ -68,13 +71,25 @@ public class ImzaBekleyenlerPageKapatmaIslemleri extends MainPage {
                     .filterBy(text("Konu: " + konu))
                     .first()
                     .shouldBe(visible);
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
         }
         else {
             tblImzaBekleyenEvraklar
                     .filterBy(text("Konu: " + konu))
                     .first()
                     .shouldNotBe(visible);
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
+        return this;
+    }
+
+    @Step("Evrakın listelendiği görülür")
+    public ImzaBekleyenlerPageKapatmaIslemleri evrakKonusunaGoreKontrol(String konu){
+
+            tblImzaBekleyenEvraklar
+                    .filterBy(text("Konu: " + konu))
+                    .first()
+                    .shouldBe(visible);
         return this;
     }
 

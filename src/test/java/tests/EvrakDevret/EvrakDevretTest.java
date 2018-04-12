@@ -10,6 +10,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -84,9 +85,16 @@ public class EvrakDevretTest extends BaseTest {
             , description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178a() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
+
         login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
-        imzaBekleyenEvrakOlustur(yeniKonu);
+
+        gelenEvrak(yeniKonu);
+        ilgisiOlanCevapEvrakiOluştur(yeniKonu);
+
+//        imzaBekleyenEvrakOlustur(yeniKonu);
+
         logout();
+
         login(username30);
 
         String btnSilName = "Sil";
@@ -346,7 +354,7 @@ String yeniKonu = konu + getSysDate();
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 
-    @Step("Test datası oluşturuldu.")
+    @Step("Test datası oluşturuldu. Gelen Evrak")
     private void gelenEvrak(String konu) throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -363,7 +371,7 @@ String yeniKonu = konu + getSysDate();
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
 //                .havaleIslemleriKisiDoldur("Username21g")
-                .havaleIslemleriKisiDoldur("Username30")
+                .havaleIslemleriKisiDoldur("Optiim Test")
                 .ilgiliBilgiFiltreAc()
                 .ilgiBilgileriDosyaEkleme(pathToFileText)
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)
@@ -458,5 +466,29 @@ String yeniKonu = konu + getSysDate();
                 .editorIcerikDoldur(icerik)
                 .evrakParafla();
 
+    }
+    @Step("Test datası oluşturuldu. İlgisi Olan Cevap Evraki")
+    private void ilgisiOlanCevapEvrakiOluştur(String konu) {
+
+        String onayAkisi = "TS2178A";
+        CevapYazPage cevapYazPage = new CevapYazPage();
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakOnizlemedeAc(konu)
+                .cevapYaz();
+        cevapYazPage.sayfaAcilmali()
+                .kaldirilacakKlasorlerDoldur("Diğer")
+                .onayAkisiDoldur(onayAkisi)
+                .editorTabOpen()
+                .editorIcerikDoldur(icerik)
+                .ilgileriTabiAc()
+                .ilgileriMetinEkleTabAc()
+                .ilgileriMetinEkleIlgiMetniDoldur(icerik)
+                .ilgileriMetinEkleEkle()
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur("İmza Bekleyenler.")
+                .gonder()
+                .confirmDialog().buttonClick("Evet");
     }
 }

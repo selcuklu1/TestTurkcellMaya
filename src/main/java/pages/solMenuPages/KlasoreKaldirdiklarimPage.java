@@ -4,12 +4,15 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -25,6 +28,9 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
     SelenideElement btnEvrakGoster = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:0:cmdbutton"));
     SelenideElement btnEvrakKopyala = $(By.id("mainPreviewForm:onizlemeRightTab:uiRepeat:1:cmdbutton"));
     ElementsCollection tblKlasoreKaldirdiklarim = $$("[id='mainInboxForm:inboxDataTable_data'] > tr[role='row']");
+    SelenideElement tabEvrakGecmisi = $(By.xpath("//a[text()='Evrak Geçmişi']"));
+    ElementsCollection tblEvrakGecmisi = $$("[id^='mainPreviewForm:j_idt'] [id$='hareketGecmisiDataTable_data'] > tr[role='row']");
+
 
     @Step("Klasöre kaldırdıklarım sayfası aç")
     public KlasoreKaldirdiklarimPage openPage() {
@@ -84,7 +90,7 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
     @Step("Cevap yazılan evrağın listeye düştüğü görülür")
     public KlasoreKaldirdiklarimPage cevapYazilanEvrakListeyeDustuguGorme(String konu) {
         boolean durum = tblKlasoreKaldirdiklarim
-                .filterBy(Condition.text(konu)).size() == 0;
+                .filterBy(text(konu)).size() == 0;
 
         Assert.assertEquals(durum, false);
         return this;
@@ -93,40 +99,70 @@ public class KlasoreKaldirdiklarimPage extends MainPage {
     @Step("Konuya göre tablo kontrol : {konu}")
     public KlasoreKaldirdiklarimPage konuyaGoreTabloKontol(String konu) {
         tblKlasoreKaldirdiklarim
-                .filterBy(Condition.text(konu))
+                .filterBy(text(konu))
                 .shouldHaveSize(1);
         return this;
     }
 
-    @Step("{konu} konulu evrak listede olmalı mı? : {evrakOlmali}")
+    @Step("Evrak listesinde {konu} konulu evrak olmali mi? {evrakOlmali}")
     public KlasoreKaldirdiklarimPage evrakKontrol(String konu, boolean evrakOlmali){
 
         if(evrakOlmali == true){
 
             tblKlasoreKaldirdiklarim
-                    .filterBy(Condition.text(konu))
+                    .filterBy(text(konu))
                     .shouldHave(CollectionCondition.sizeGreaterThan(0));
 
             tblKlasoreKaldirdiklarim
-                    .filterBy(Condition.text(konu))
+                    .filterBy(text(konu))
                     .first()
                     .shouldBe(Condition.visible);
-
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
         } else {
 
             tblKlasoreKaldirdiklarim
-                    .filterBy(Condition.text(konu))
+                    .filterBy(text(konu))
                     .shouldHaveSize(0);
 
             tblKlasoreKaldirdiklarim
-                    .filterBy(Condition.text(konu))
+                    .filterBy(text(konu))
                     .first()
                     .shouldNotBe(Condition.visible);
-
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
 
-
-
         return this;
+    }
+
+    @Step("Evrak Seç")
+    public KlasoreKaldirdiklarimPage evrakSec(String konu, String gidecegiYer, String gonderen, String evrakNo) {
+        tblKlasoreKaldirdiklarim
+                .filterBy(text(konu))
+                .filterBy(text(gidecegiYer))
+                .filterBy(text(gonderen))
+                .filterBy(text(evrakNo))
+                .first()
+                .click();
+        return this;
+    }
+
+    @Step("Evrak Geçmişi tabını aç")
+    public KlasoreKaldirdiklarimPage btnEvrakGecmisiTab() {
+        tabEvrakGecmisi.shouldBe(visible);
+        tabEvrakGecmisi.click();
+        return this;
+    }
+
+    @Step("Evrakın klasöre kaldırılmış olduğu ve görüntülenmek üzere listelendiği  görülür.")
+    public KlasoreKaldirdiklarimPage evrakGoruntulenmekUzereKlasoreKaldirilmasi(String islemSureci){
+
+            tblEvrakGecmisi
+                    .filterBy(text(islemSureci))
+                    .first()
+                    .shouldBe(visible);
+
+            Allure.addAttachment("Evrak Klasöre kaldırıldı görüntülendi.", "");
+
+            return this;
     }
 }

@@ -3,6 +3,7 @@ package pages.ustMenuPages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -84,6 +85,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak tarihi alanını doldur")
     public KlasorEvrakIslemleriPage evrakTarihiDoldur(String evrakTarihi) {
         //sendKeys(evrakTarihiInput, evrakTarihi, false);
         txtEvrakTarihi.sendKeys(evrakTarihi);
@@ -102,7 +104,7 @@ public class KlasorEvrakIslemleriPage extends MainPage {
         return this;
     }
 
-    @Step("Ara tıklanır")
+    @Step("Ara")
     public KlasorEvrakIslemleriPage ara() throws InterruptedException {
         //click(araButton);
         Thread.sleep(2000);
@@ -130,14 +132,14 @@ public class KlasorEvrakIslemleriPage extends MainPage {
                     .filterBy(text(konu))
                     .first()
                     .shouldBe(visible);
-
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
         } else {
 
             tblEvrakListesi
                     .filterBy(text(konu))
                     .first()
                     .shouldNotBe(visible);
-
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
 
         return this;

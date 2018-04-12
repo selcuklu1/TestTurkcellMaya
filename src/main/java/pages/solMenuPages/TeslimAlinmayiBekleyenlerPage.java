@@ -374,8 +374,19 @@ public class TeslimAlinmayiBekleyenlerPage extends MainPage {
         return this;
     }
 
-    @Step("Evrak geldiği görünür")
+    @Step("Evrakın Teslim alınmayı Bekleyenler listesinde doğru bilgilerle listelendiği görülür. Konu:{konuKodu} - Geldiği yer: {geldigiYer} - Evrak tarihi:{tarih}")
     public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih, String geldigiYer) {
+        boolean durum = tblEvraklar
+                .filterBy(Condition.text(konuKodu))
+                .filterBy(Condition.text(tarih))
+                .filterBy(Condition.text(geldigiYer)).size() == 1;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("Evrakın Teslim alınmayı Bekleyenler listesinde doğru bilgilerle listelendiği görülür. Konu:{konuKodu} - Geldiği yer: {geldigiYer}{ifade} - Evrak tarihi:{tarih}")
+    public TeslimAlinmayiBekleyenlerPage evrakGeldigiGorunur(String konuKodu, String tarih, String geldigiYer,String ifade) {
         boolean durum = tblEvraklar
                 .filterBy(Condition.text(konuKodu))
                 .filterBy(Condition.text(tarih))

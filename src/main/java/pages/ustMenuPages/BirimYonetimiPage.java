@@ -793,7 +793,7 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Onay dialogu kontrolu")
+    @Step("Birimin ve bağlı alt birimlerin durumunu değiştirmek istediğinize emin misiniz? sorusunun sorulduğu İşlem Onayı dialogu açılır")
     public BirimYonetimiPage biriminOnaydialoguKontrolu() {
 
         Assert.assertEquals(onayDialogu.isDisplayed(), true, "Birimin Geldigi Görülür");

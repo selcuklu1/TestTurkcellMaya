@@ -2166,4 +2166,5 @@ public class GelenEvrakKayitPage extends MainPage {
                 //.evetDugmesi()
                 .yeniKayitButton();
     }
+
 }

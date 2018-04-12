@@ -112,14 +112,13 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
         birimHavaleEdilenlerPage
                 .openPage()
-                .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Büyük Harflerle Kurum","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",evrakTarihi)
-                .evrakNoIleEvragıGeldigiGorme(konuKoduRandomTS1597);
+                .evrakBilgileriIleEvragıGeldigiGorme(konuKoduRandomTS1597,"Büyük Harflerle Kurum","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ",evrakTarihi);
 
         login(userYakyol);
 
         teslimAlinmayiBekleyenlerPage
                 .openPage()
-                .evrakGeldigiGorunur(konuKoduRandomTS1597,evrakTarihi,"Büyük Harflerle Kurum");
+                .evrakGeldigiGorunur(konuKoduRandomTS1597,evrakTarihi,"Büyük Harflerle Kurum","(G)");
 
         login(userMbozdemir);
 
