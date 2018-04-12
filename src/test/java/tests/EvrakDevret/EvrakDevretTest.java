@@ -354,7 +354,7 @@ String yeniKonu = konu + getSysDate();
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 
-    @Step("Test datası oluşturuldu.")
+    @Step("Test datası oluşturuldu. Gelen Evrak")
     private void gelenEvrak(String konu) throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "Diğer";
@@ -371,7 +371,7 @@ String yeniKonu = konu + getSysDate();
                 .geldigiKurumDoldurLovText(kurum)
                 .evrakSayiSagDoldur(evrakSayiSag)
 //                .havaleIslemleriKisiDoldur("Username21g")
-                .havaleIslemleriKisiDoldur("Username30")
+                .havaleIslemleriKisiDoldur("Optiim Test")
                 .ilgiliBilgiFiltreAc()
                 .ilgiBilgileriDosyaEkleme(pathToFileText)
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)
@@ -467,7 +467,7 @@ String yeniKonu = konu + getSysDate();
                 .evrakParafla();
 
     }
-
+    @Step("Test datası oluşturuldu. İlgisi Olan Cevap Evraki")
     private void ilgisiOlanCevapEvrakiOluştur(String konu) {
 
         String onayAkisi = "TS2178A0";
