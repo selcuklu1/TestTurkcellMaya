@@ -1087,7 +1087,6 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetGuncelBirimTipi)
-//                .antetBilgisiDoldur(antetGuncelBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(ustBirim)
