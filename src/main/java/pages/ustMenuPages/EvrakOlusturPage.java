@@ -1468,6 +1468,12 @@ public class EvrakOlusturPage extends MainPage {
             return this;
         }
 
+        @Step("Onay akışı alanında kullanıcılarda tümü seçilir")
+        public BilgilerTab onayAkisiTumuSec() throws InterruptedException {
+        $$("[id$='anlikakisOlusturPanelGrid'] div").filterBy(Condition.text("Birim")).first().click();
+        return this;
+        }
+
         @Step("{deger} adlı kullanıcının tipi {secim} seçilir")
         public BilgilerTab kullaniciylaSecimTipiSec(String deger, String secim) {
             $$("[id^='yeniGidenEvrakForm:evrakBilgileriList'][id$='akisAdimLov:LovSecilenTable_data'] > tr").filterBy(Condition.text(deger))
