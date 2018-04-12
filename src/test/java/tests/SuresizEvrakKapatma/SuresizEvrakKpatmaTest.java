@@ -330,6 +330,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur("gündem")
+                .aramaKriteriDoldur("TS0383")
                 .evrakTarihiDoldur(tarihBugun)
                 .ara()
                 .evrakListesiKontrol(gelenEvrakKonu, true)
