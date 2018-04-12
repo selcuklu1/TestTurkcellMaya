@@ -22,7 +22,7 @@ import pages.ustMenuPages.SistemLoglariPage;
 
 @Feature("Evrak Teslim Alma")
 public class EvrakTeslimAlmaTest extends BaseTest {
-    static final Logger logger = LogManager.getLogger("EvrakTeslimAlmaTest");
+//    static final Logger logger = LogManager.getLogger("EvrakTeslimAlmaTest");
     KaydedilenGelenEvraklarPage kaydedilenGelenEvraklarPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     GelenEvrakKayitPage gelenEvrakKayitPage;
@@ -51,7 +51,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
     public void TS2314() throws InterruptedException {
         String testid = "TS-2314";
 //        System.setProperty("log4j.filename","EvrakTeslimAlmaTest:");
-        logger.info(testid + " nolu test başladı:");
+//        logger.info(testid + " nolu test başladı:");
         String basariMesaji = "İşlem başarılıdır!";
         String konuKodu = "120.05";
         String konu = "TS-2314-" + getSysDate();
@@ -115,7 +115,7 @@ public class EvrakTeslimAlmaTest extends BaseTest {
                 .secilenEvrakEvrakGecmisi()
                 .evrakGecmisi(kisi, islemSureci, evrakTarihiSaat);
 
-        logger.info(testid + " nolu test bitti.");
+//        logger.info(testid + " nolu test bitti.");
     }
 
     @Severity(SeverityLevel.CRITICAL)

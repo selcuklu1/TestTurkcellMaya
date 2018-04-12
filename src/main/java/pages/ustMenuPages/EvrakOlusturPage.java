@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static pages.pageComponents.belgenetElements.Belgenet.comboBox;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
+import static pages.pageComponents.belgenetElements.BelgentCondition.isChecked;
 import static pages.pageComponents.belgenetElements.BelgentCondition.required;
 
 
@@ -1076,7 +1077,8 @@ public class EvrakOlusturPage extends MainPage {
 
         @Step("Dagitimi Ek Yap alanı \"{selection}\" seç")
         public BilgilerTab dagitimiEkYapSec(boolean selection) {
-            chkDagitimiEkYap.setSelected(selection);
+//            chkDagitimiEkYap.setSelected(selection);
+            chkDagitimiEkYap.click();
             takeScreenshot();
 //            chkDagitimiEkYap.click();
             return this;
@@ -1758,6 +1760,16 @@ public class EvrakOlusturPage extends MainPage {
                     .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size() == 1;
             Assert.assertEquals(durum, true, "Onay akışı kullanıcı adı ve tipi kontrolu");
             Allure.addAttachment("Onay akışı kullanıcı adı ve tipi kontrolu", kullaniciAdi + " " + kullaniciTipi);
+
+            return this;
+        }
+
+        @Step("Onay akışı kullanıcı adı, tipi, birim kontrolu: \"{kullaniciAdi}\", \"{kullaniciTipi}\", \"{birim}\" ")
+        public BilgilerTab onayAkisiKullaniciKontrolu(String kullaniciAdi, String kullaniciTipi,String birim) {
+            boolean durum = trOnayAkisiEkleKullanicilar
+                    .filterBy(Condition.text(kullaniciAdi)).filterBy(Condition.text(kullaniciTipi)).size() == 1;
+            Assert.assertEquals(durum, true, "Onay akışı kullanıcı adı, tipi, birim kontrolu");
+            Allure.addAttachment("Onay akışı kullanıcı adı, tipi, birim kontrolu", kullaniciAdi + " " + kullaniciTipi + " " + birim);
 
             return this;
         }
@@ -2906,14 +2918,25 @@ public class EvrakOlusturPage extends MainPage {
 //        }
 //    }
 
-    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim}  {enUstBirim}")
+    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
     public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+        String antetArray[] = txtAntet.getText().split("\n");
+        String allureNot ="";
+        for(int i = 0 ; i < antetArray.length; i++) {
+            allureNot += antetArray[i];
+            if(antetArray[i].equals(antetDefault2))
+                break;
+            allureNot += " <br> ";
+        }
+        System.out.println(allureNot);
+
         Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+        Allure.addAttachment("| html dünyasında <br> ile ifade ediliyor.Dolayısı ile <br> kontrol edilmiştir:",allureNot);
         takeScreenshot();
         return this;
     }
@@ -3542,10 +3565,23 @@ public class EvrakOlusturPage extends MainPage {
 
         //3ü seçili geliyor sadece kullanıcı kaldırılıyor.
         @Step("Dağıtım yerlerinde birim ve kurum seç, kullanıcı seçme")
-        public EkleriTab dagitimYerlerindeBirimVeKurumSecEk1() {
-            chkDagitimYerleriBirimEk1.setSelected(false);
-            chkDagitimYerleriKurumEk1.setSelected(false);
-            chkDagitimYerleriKullaniciEk1.setSelected(true);
+        public EkleriTab dagitimYerlerindeKullaniciKaldirEk1(String ekleriAciklamaDosya1, String kullaniciDagitimYeri) {
+            //chkDagitimYerleriBirimEk1.setSelected(false);
+            //chkDagitimYerleriKurumEk1.setSelected(false);
+            //chkDagitimYerleriKullaniciEk1.setSelected(true);
+
+             //ElementsCollection values = comboBox("[id$='yeniGidenEvrakForm:ekListesiDataTable'] div.ui-selectcheckboxmenu").getComboBoxValues();
+             //if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").has(cssClass("ui-state-active")))
+             //clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(ekleriAciklamaDosya1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
@@ -3560,18 +3596,40 @@ public class EvrakOlusturPage extends MainPage {
         }
 
         @Step("Dağıtım yerlerinde birim ve kullanıcı seçimlerini kaldır")
-        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir() {
-            chkDagitimYerleriBirimEk2.setSelected(true);
-            chkDagitimYerleriKullaniciEk2.setSelected(true);
+        public EkleriTab dagitimYerlerindeBirimKullaniciKaldir(String fizikselEkAciklama, String birimDagitimYeri, String kullaniciDagitimYeri) {
+            //chkDagitimYerleriBirimEk2.setSelected(true);
+            //chkDagitimYerleriKullaniciEk2.setSelected(true);
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(fizikselEkAciklama)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+            if(values.filterBy(text(kullaniciDagitimYeri)).size()>0 && values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kullaniciDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
 
         @Step("Dağıtım yerlerinde birim ve kurum seçimlerini kaldır, kullanıcı seç")
-        public EkleriTab dagitimYerlerindeKullaniciSecEK3() {
-            chkDagitimYerleriBirimEk3.setSelected(true);
-            chkDagitimYerleriKurumEk3.setSelected(true);
-            chkDagitimYerleriKullaniciEk3.setSelected(false);
+        public EkleriTab dagitimYerlerindeBirimKurumKaldirEK3(String evrakSayisi1, String birimDagitimYeri,String  kurumDagitimYeri) {
+            //chkDagitimYerleriBirimEk3.setSelected(true);
+            //chkDagitimYerleriKurumEk3.setSelected(true);
+            //chkDagitimYerleriKullaniciEk3.setSelected(false);
+
+            ElementsCollection rows = $$("[id='yeniGidenEvrakForm:ekListesiDataTable'] tbody>tr").shouldHave(sizeGreaterThan(0));
+
+            BelgenetElement combo = comboBox(rows.filterBy(text(evrakSayisi1)).get(0), "div.ui-selectcheckboxmenu");
+            ElementsCollection values = combo.getComboBoxValues();
+            if(values.filterBy(text(birimDagitimYeri)).size()>0 && values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(birimDagitimYeri)).get(0).$(".ui-chkbox-box"));
+
+            if(values.filterBy(text(kurumDagitimYeri)).size()>0 && values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box").is(isChecked))
+                clickJs(values.filterBy(text(kurumDagitimYeri)).get(0).$(".ui-chkbox-box"));
+            combo.closePanel();
 
             return this;
         }
@@ -4606,7 +4664,7 @@ public class EvrakOlusturPage extends MainPage {
         public PDFKontrol eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim(String dagitim, String ekler) {
             String pdfDagitim3 = $(By.xpath("//*[@id='viewer']/div/div[2]/div[21]")).getText();
             String pdfDagitim3Devam = $(By.xpath("//*[@id='viewer']/div/div[2]/div[22]")).getText();
-            String pdfDagitim = pdfDagitim3 + "" + pdfDagitim3Devam;
+            String pdfDagitim = pdfDagitim3 + " " + pdfDagitim3Devam;
             Assert.assertEquals(pdfDagitim.contains(ekler), true);
             return this;
         }

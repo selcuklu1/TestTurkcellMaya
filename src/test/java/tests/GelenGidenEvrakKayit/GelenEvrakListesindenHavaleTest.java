@@ -35,7 +35,7 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
     HavaleEttiklerimPage havaleEttiklerimPage;
     BirimeIadeEdilenlerPage birimeIadeEdilenlerPage;
 
-    static final Logger logger = LogManager.getLogger("GelenEvrakListesindenHavale");
+//    static final Logger logger = LogManager.getLogger("GelenEvrakListesindenHavale");
 
     String konuKodu = "010.01";
     String konu = "";

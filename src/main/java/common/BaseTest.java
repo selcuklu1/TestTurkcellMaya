@@ -83,6 +83,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.startMaximized = true;
         Configuration.pollingInterval = 100;
         Configuration.collectionsPollingInterval = 100;
+        Configuration.headless = false;
 
         //Configuration.headless = false;
         //Configuration.clickViaJs = true;
@@ -379,7 +380,7 @@ public class BaseTest extends BaseLibrary {
 
     ElementsCollection birimDegistirme = $$("a[id^='leftMenuForm:edysMenuItem'] span[class='ui-menuitem-text']");
 
-    @Step("Kullanıcının Yeni Birimi \"{birim}\" seçilir")
+    @Step("Kullanıcının Birimi \"{birim}\" seçilir")
     public void birimDegistirme(String birim) {
         birimDegistirme.filterBy(Condition.text(birim)).get(0).click();
 //        waitForLoadingJS(WebDriverRunner.getWebDriver());

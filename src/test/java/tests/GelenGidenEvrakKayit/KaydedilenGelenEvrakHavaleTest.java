@@ -33,7 +33,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
     TopluEvrakOnizleme topluEvrakOnizleme;
     HavaleEdilenEvrakRaporuPage havaleEdilenEvrakRaporuPage;
 
-    static final Logger logger = LogManager.getLogger("KaydedilenGelenEvrakHavaleTest");
+//    static final Logger logger = LogManager.getLogger("KaydedilenGelenEvrakHavaleTest");
 //    User yakyol = new User("yakyol", "123");
 
 
@@ -744,7 +744,7 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
         String dikkatMesaj = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
         String ustBirimKullanici = "alkanseker";
 
-        logger.info(testid + " nolu test başladı:");
+//        logger.info(testid + " nolu test başladı:");
 
         testStatus(testid,"PreCondition Evrak Oluşturma");
         gelenEvrakKayitPage
