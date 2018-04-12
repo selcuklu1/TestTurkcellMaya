@@ -1,6 +1,7 @@
 package pages.ustMenuPages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -48,9 +49,21 @@ public class BirimlerdekiKisilerRaporuPage extends MainPage {
         return this;
     }
 
-    @Step("Alt Birimler Seç")
-    public BirimlerdekiKisilerRaporuPage altBirimlerDahilSec(boolean value) {
-        chkAltBirimiOlmayanlar.setSelected(value);
+    @Step("Alt Birimler Dahil checkboxını kaldırma/seçme: {secim}")
+    public BirimlerdekiKisilerRaporuPage altBirimlerDahilSec(boolean secim) {
+
+      if(secim == true)
+      {
+          chkAltBirimiOlmayanlar.setSelected(secim);
+          Allure.addAttachment("Alt Birimler Dahil checkboxı kaldırıldı", "");
+
+      }
+      else
+      {
+          chkAltBirimiOlmayanlar.setSelected(secim);
+          Allure.addAttachment("Alt Birimler Dahil checkboxı seçildi", "");
+      }
+
         return this;
     }
 
