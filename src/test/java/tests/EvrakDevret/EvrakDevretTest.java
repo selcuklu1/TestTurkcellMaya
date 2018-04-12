@@ -470,7 +470,7 @@ String yeniKonu = konu + getSysDate();
     @Step("Test datası oluşturuldu. İlgisi Olan Cevap Evraki")
     private void ilgisiOlanCevapEvrakiOluştur(String konu) {
 
-        String onayAkisi = "TS2178A0";
+        String onayAkisi = "TS2178A";
         CevapYazPage cevapYazPage = new CevapYazPage();
 
         gelenEvraklarPage
