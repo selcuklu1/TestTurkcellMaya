@@ -1,11 +1,11 @@
 package tests.EvrakDogrulama;
 
-import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.User;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakDetayiPage;
 import pages.newPages.RolYonetimiPage;
@@ -162,7 +162,7 @@ public class EvrakDogrulama extends BaseTest {
     public void TS2081() {
         User user = new User("user6", "123", "User6 TS2081", "AnaBirim1", "Danışman");
 
-        String rolAdi = "TS2081";
+        String rolAdi;// = "TS2081";
         String aksiyonAdi = "Evrak Doğrulama Aktarım - Aktar/Geri Al";
         RolYonetimiPage rolYonetimiPage;
         RolYonetimiPage.YeniAksiyonIliskilendirme yeniAksiyonIliskilendirme;
@@ -172,12 +172,25 @@ public class EvrakDogrulama extends BaseTest {
 
         UserMenu userMenu = new UserMenu();
         UserMenu.Profil profil = userMenu.userMenuAc().profilMenuSec();
-        ArrayList<String> roller = profil.getAllRoles();
         profil.closeDialog();
-
-        rolAdi = roller.get(0);
+        rolAdi = profil.getAllRoles().get(0);
 
         rolYonetimiPage = new RolYonetimiPage();
+        aksiyonAranirYoksaEklenir(user, rolAdi, aksiyonAdi, rolYonetimiPage);
+
+        rolYonetimiPage
+                .bulunanAksiyondaIliskiyiSilBasarili();
+
+        logout();
+        login(user);
+
+        evrakOlusturPage.openPage()
+                .dogrulamaTab().tabKontrol(not(exist));
+
+    }
+
+    @Step("\"{aksiyonAdi}\" aksiyon yoksa eklenir")
+    private void aksiyonAranirYoksaEklenir(User user, String rolAdi, String aksiyonAdi, RolYonetimiPage rolYonetimiPage) {
         rolYonetimiPage.openPage()
                 .sorgulamadaAdGir(rolAdi)
                 .ara()
@@ -202,57 +215,6 @@ public class EvrakDogrulama extends BaseTest {
                     .bulunanRoldeAksiyonlarTikla()
                     .aksiyonListesindeAdGirilir(aksiyonAdi);
         }
-
-        rolYonetimiPage
-                .bulunanAksiyondaIliskiyiSilBasarili();
-
-        logout();
-        login(user);
-
-        evrakOlusturPage.openPage()
-                .dogrulamaTab().tabKontrol(not(exist));
-
-        /*if (rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
-            evrakOlusturPage.openPage()
-                    .dogrulamaTab().tabKontrol(visible);
-
-            rolYonetimiPage.openPage()
-                    .bulunanAksiyondaIliskiyiSilBasarili();
-
-            logout();
-            login(user);
-
-            evrakOlusturPage.openPage()
-                    .dogrulamaTab().tabKontrol(not(exist));
-        } else {
-            evrakOlusturPage.openPage()
-                    .dogrulamaTab().tabKontrol(not(exist));
-
-            rolYonetimiPage.openPage()
-                    .yeniAksiyonEkle()
-                    .sorgulamadaAdGir(aksiyonAdi)
-                    .aksiyonBulunurVeCheckboxSecilir(aksiyonAdi, true)
-                    .ekleBasarili();
-
-            logout();
-            login(user);
-
-            evrakOlusturPage.openPage()
-                    .dogrulamaTab().tabKontrol(visible);
-        }*/
-
-
-        /*UserMenu userMenu = new UserMenu();
-        UserMenu.Profil profil = userMenu.userMenuAc().profilMenuSec();
-
-        ArrayList<String> roller1 = profil.getAllRoles();
-        profil.closeDialog();
-
-        RolYonetimiPage rolYonetimiPage = new RolYonetimiPage();
-        rolYonetimiPage.openPage()
-                .rolYonetimiSorgulamaveFiltrelemeTabAc()
-                .txtRolAdArama("TS2081")*/
-
     }
 
     @Test(description = "TS2082: Onay sürecinde evrak doğrulama checkinin kaldırılması", enabled = true)

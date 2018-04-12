@@ -2,6 +2,7 @@ package pages.newPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -186,9 +187,10 @@ public class RolYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Aksiyon Listesinde {aramaKriteri} arama kritere göre kayıt ")
+    @Step("Aksiyon Listesinde {aramaKriteri} arama kritere göre kayıt var mı bakılır")
     public boolean aksiyonListesindeKayitVarMi(Condition... aramaKriteri){
         aksiyonDataTable.findRows(aramaKriteri);
+        Allure.addAttachment("var mı?", String.valueOf(aksiyonDataTable.isRowsExist()));
         return aksiyonDataTable.isRowsExist();
     }
 
@@ -276,7 +278,7 @@ public class RolYonetimiPage extends MainPage {
             return this;
         }
 
-        @Step("eni Aksiyon İlişkilendirme - \"{aksiyon}\" aksiyon bulunur ve checkbox {aktif} seçilir")
+        @Step("Yeni Aksiyon İlişkilendirme - \"{aksiyon}\" aksiyon bulunur ve checkbox {aktif} seçilir")
         public YeniAksiyonIliskilendirme aksiyonBulunurVeCheckboxSecilir(String aksiyon, boolean aktif){
             aksiyonListesindeKayitBul(text(aksiyon));
             if (aksiyonDataTable.getFoundRow().$("div.ui-chkbox-box").is(isChecked) != aktif)
