@@ -77,7 +77,8 @@ public class AntetIslemleri extends BaseTest {
         String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
-        String user1 = "Gökçe ŞAHİN";
+//        String user1 = "Gökçe ŞAHİN";
+        String user1 = "Antet otomasyontest";
         String user1Details = "Antet Güncel Birim";
         String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
@@ -183,7 +184,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+//        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+        login("antetotomasyontest","123");
         birimDegistirme("Antet Üst Birim");
         imzaBekleyenlerPage
                 .openPage()
