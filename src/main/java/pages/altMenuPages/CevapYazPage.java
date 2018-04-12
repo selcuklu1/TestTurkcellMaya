@@ -2,12 +2,14 @@ package pages.altMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.EvrakPageButtons;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.tabs.BilgilerTab;
@@ -68,12 +70,16 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtEvrakEkTabViewEvrakSayisi = $(By.id("windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
     SelenideElement btnEvrakEkTabViewArsivdeKayitliDokumanAra = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraButtonId']"));
     //İlgileri sekmesi
+    SelenideElement tabIlgileri = Selenide.$("button .kullaniciIlgileri");
     //Dosya Ekle alt sekmesi
     SelenideElement txtIlgiIslemleriTabViewIlgiMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:dosyaAciklama']"));
     SelenideElement btnIlgiIslemleriTabViewDosyaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:fileUploadButtonA_input"));
     SelenideElement btnIlgiIslemleriTabViewEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:dosyaEkleButton"));
     SelenideElement btnIlgiIslemleriTabViewTemizle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:ilgiDosyaTemizleButton"));
     //Metin Ekle alt sekmesi
+    SelenideElement btnIlgileriMetinEkleTab = Selenide.$(By.xpath("//a[@href='#windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleTab']"));
+    SelenideElement txtIlgileriMetinEkleIlgiMetni = Selenide.$(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaTextArea"));
+    SelenideElement btnIlgileriMetinEkleEkle = Selenide.$(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
     SelenideElement txtIlgiIslemleriTabViewMetinEkleIlgiMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaTextArea']"));
     SelenideElement btnIlgiIslemleriTabViewAciklamaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
     //Sistemde Kayitli Evrak Ekle alt sekmesi
@@ -114,6 +120,7 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtIlisikIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraSayiInputTextId"));
     SelenideElement btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId']"));
     //Editor
+    SelenideElement tabEditor = Selenide.$("button .editor");
     SelenideElement btnEditor = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:1:cmdbutton'] [class$='editor']");
     SelenideElement btnBilgiler = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:0:cmdbutton'] [class$='kullaniciBilgileri']");
     SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
@@ -129,6 +136,8 @@ public class CevapYazPage extends MainPage {
     ElementsCollection btnEvrakKopyalaEvet = $$("[id='evrakCopyConfirmForm'] button");
     SelenideElement btnEvrakKopyalaUyariEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
     private SelenideElement page = $("#windowCevapEvrakDialog");
+
+
 
     public EditorTab editorTab() {
         return new EditorTab(page);
@@ -358,6 +367,29 @@ public class CevapYazPage extends MainPage {
         return this;
     }
 
+    @Step("Ilgileri Tabı açılır.")
+    public CevapYazPage ilgileriTabiAc() {
+        tabIlgileri.click();
+        return this;
+    }
+
+    @Step("Ilgileri/Metin Ekle Tab - Açma")
+    public CevapYazPage ilgileriMetinEkleTabAc() {
+        btnIlgileriMetinEkleTab.click();
+        return this;
+    }
+    @Step("İlgileri/Metin Ekle - İlgi Metni")
+    public CevapYazPage ilgileriMetinEkleIlgiMetniDoldur(String ilgiMetni) {
+        txtIlgileriMetinEkleIlgiMetni.setValue(ilgiMetni);
+        return this;
+    }
+
+    @Step("İlgileri/Metin Ekle - Ekle")
+    public CevapYazPage ilgileriMetinEkleEkle() {
+        btnIlgileriMetinEkleEkle.click();
+        return this;
+    }
+
     public CevapYazPage ilgiIslemleriTabViewIlgiMetniDoldur(String ilgiMetni) {
         txtIlgiIslemleriTabViewIlgiMetni.sendKeys(ilgiMetni);
         return this;
@@ -542,6 +574,30 @@ public class CevapYazPage extends MainPage {
         btnEditor.click();
         return this;
     }
+
+    @Step("Editör tabını aç")
+    public CevapYazPage editorTabOpen() {
+            tabEditor.click();
+        //divContainer.shouldBe(visible);
+        return this;
+    }
+
+    @Step("Editör İçerik Doldur")
+    public CevapYazPage editorIcerikDoldur(String icerik) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        TextEditor editor = new TextEditor();
+        editor.type(icerik);
+
+        //divEditor.find(By.tagName("iframe")).click();
+        //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
+        return this;
+    }
+
 
     public CevapYazPage bilgilerTabAc() {
         btnBilgiler.click();

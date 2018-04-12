@@ -784,7 +784,7 @@ public class VekaletIslemleriTest extends BaseTest {
 //                .vekaletVarPopupSeçim(nameVV)
 //                .evrakOnzilemeOnaylayanKisiKontrolu(nameVV,kullaniciTitle);
 
-        login(TestData.userMbozdemir);
+//        login(TestData.userMbozdemir);
 
         gelenEvrakKayitPage
                 .openPage()
