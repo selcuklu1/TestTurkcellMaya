@@ -1525,6 +1525,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetEnUstBirimTipi)
+                .antetBilgisiDoldur(antetEnUstBirim)
                 .kaydet();
 
         testStatus(testid, "Test Başladı");
