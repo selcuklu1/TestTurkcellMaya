@@ -480,10 +480,15 @@ String yeniKonu = konu + getSysDate();
         cevapYazPage.sayfaAcilmali()
                 .kaldirilacakKlasorlerDoldur("Diğer")
                 .onayAkisiDoldur(onayAkisi)
+                .editorTabOpen()
+                .editorIcerikDoldur(icerik)
                 .ilgileriTabiAc()
                 .ilgileriMetinEkleTabAc()
                 .ilgileriMetinEkleIlgiMetniDoldur(icerik)
                 .ilgileriMetinEkleEkle()
-                .kaydetVeOnayaSun();
+                .kaydetVeOnayaSun()
+                .onayIslemiAciklamaDoldur("İmza Bekleyenler.")
+                .gonder()
+                .confirmDialog().buttonClick("Evet");
     }
 }

@@ -1,6 +1,7 @@
 package pages.solMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
@@ -19,19 +20,21 @@ public class ImzaladiklarimPageKapatmaIslemleri extends MainPage {
         return this;
     }
 
-    @Step("{konu} konulu evrak evrak listesinde olmalı mı? : {evrakOlmali}.")
+    @Step("Evrak listesinde {konu} konulu evrak olmali mi? {evrakOlmali}")
     public ImzaladiklarimPageKapatmaIslemleri evrakKontrol(String konu, boolean evrakOlmali){
         if(evrakOlmali == true){
             tblImzaladiklarim
                     .filterBy(text("Konu: " + konu))
                     .first()
                     .shouldBe(visible);
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
         }
         else {
             tblImzaladiklarim
                     .filterBy(text("Konu: " + konu))
                     .first()
                     .shouldNotBe(visible);
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
         return this;
     }
