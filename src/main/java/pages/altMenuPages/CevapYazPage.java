@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 import pages.pageComponents.EvrakPageButtons;
+import pages.pageComponents.TextEditor;
 import pages.pageComponents.UstMenuPageHeader;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageComponents.tabs.BilgilerTab;
@@ -119,6 +120,7 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtIlisikIslemleriTabViewEvrakSayi = $(By.id("windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraSayiInputTextId"));
     SelenideElement btnIlisikIslemleriTabViewArsivdenIlisikEvrakAra = $(By.xpath("//*[@id='windowCevapEvrakForm:ilisikIslemleriTabView:arsivdenIlisikEvrakAraButtonId']"));
     //Editor
+    SelenideElement tabEditor = Selenide.$("button .editor");
     SelenideElement btnEditor = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:1:cmdbutton'] [class$='editor']");
     SelenideElement btnBilgiler = $("[id^='windowCevapEvrakForm:j_idt'] [id$='uiRepeat:0:cmdbutton'] [class$='kullaniciBilgileri']");
     SelenideElement editorIlgiKismi = $(By.id("windowCevapEvrakForm:ilgiOutPanel"));
@@ -134,6 +136,8 @@ public class CevapYazPage extends MainPage {
     ElementsCollection btnEvrakKopyalaEvet = $$("[id='evrakCopyConfirmForm'] button");
     SelenideElement btnEvrakKopyalaUyariEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
     private SelenideElement page = $("#windowCevapEvrakDialog");
+
+
 
     public EditorTab editorTab() {
         return new EditorTab(page);
@@ -570,6 +574,30 @@ public class CevapYazPage extends MainPage {
         btnEditor.click();
         return this;
     }
+
+    @Step("Editör tabını aç")
+    public CevapYazPage editorTabOpen() {
+            tabEditor.click();
+        //divContainer.shouldBe(visible);
+        return this;
+    }
+
+    @Step("Editör İçerik Doldur")
+    public CevapYazPage editorIcerikDoldur(String icerik) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        TextEditor editor = new TextEditor();
+        editor.type(icerik);
+
+        //divEditor.find(By.tagName("iframe")).click();
+        //divEditor.find(By.tagName("iframe")).getWrappedElement().sendKeys(icerik);
+        return this;
+    }
+
 
     public CevapYazPage bilgilerTabAc() {
         btnBilgiler.click();

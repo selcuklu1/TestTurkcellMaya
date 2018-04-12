@@ -313,6 +313,7 @@ public class EvrakOlusturPage extends MainPage {
         return editorTab.open();
     }
 
+
     @Step("Editör Tab Kontrol")
     public EditorTab editorTabKontrol() {
         return editorTab.editorTabKontrol();
