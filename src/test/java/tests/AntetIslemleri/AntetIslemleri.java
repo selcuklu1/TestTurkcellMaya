@@ -1762,7 +1762,7 @@ public class AntetIslemleri extends BaseTest {
 //        String basariMesaji = "İşlem başarılıdır!";
         String user1 = "Gökçe ŞAHİN";
         String user1Details = "Antet Güncel Birim";
-        String user2 = "Can Şeker";
+        String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "Otomasyon.pdf";
         String fileName = "Otomasyon.pdf";
@@ -1808,7 +1808,8 @@ public class AntetIslemleri extends BaseTest {
 
 
         testStatus(testid, "Test Başladı");
-        login(TestData.userCanSeker);
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme(ustBirim);
 
         evrakOlusturPage
                 .openPage()
@@ -1835,8 +1836,7 @@ public class AntetIslemleri extends BaseTest {
                 .dagitimiEkYapSec(true)
                 .dagitimiEkYapSecKontrol()
                 .onayAkisiEkle()
-                .onayAkisiTumuSec()
-                .onayAkisiKullaniciKontrolu(user2 , "Paraflama", "BHUPGMY")
+                .onayAkisiKullaniciKontrolu(user2 , "Paraflama", details)
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
