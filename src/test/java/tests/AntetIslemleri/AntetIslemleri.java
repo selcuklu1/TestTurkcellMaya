@@ -1612,7 +1612,7 @@ public class AntetIslemleri extends BaseTest {
         String testid = "TS2371";
         String konu = "TS2371-" + getSysDate();
         String konuKodu = "Kanunlar";
-        String kaldirilacakKlasorler = "TS2372";
+        String kaldirilacakKlasorler = "Kanunlar";
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
@@ -1625,6 +1625,7 @@ public class AntetIslemleri extends BaseTest {
 
         String guncelBirim = "Antet Güncel Birim";
         String ustBirim = "Antet Üst Birim";
+        String ustustbirim ="YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ";
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String antetGuncelBirimTipi = "Antet Yok";
         String antetGuncelBirim = "";
@@ -1640,6 +1641,19 @@ public class AntetIslemleri extends BaseTest {
         testStatus(testid, "PreCondition");
         birimYonetimiPage
                 .openPage()
+
+                .birimFiltreDoldur(guncelBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetGuncelBirimTipi)
+                .kaydet()
+
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetGuncelBirimTipi)
+                .kaydet()
+
                 .birimFiltreDoldur(enUstBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
@@ -1650,7 +1664,7 @@ public class AntetIslemleri extends BaseTest {
         testStatus(testid, "Test Başladı");
 
         login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
-        birimDegistirme(enUstBirim);
+        birimDegistirme(ustBirim);
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
@@ -1712,7 +1726,7 @@ public class AntetIslemleri extends BaseTest {
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
         login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
-        birimDegistirme("Antet Üst Birim");
+        birimDegistirme(ustBirim);
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
