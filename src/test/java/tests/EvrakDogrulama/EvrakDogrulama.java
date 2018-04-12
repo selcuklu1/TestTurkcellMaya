@@ -9,11 +9,14 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import pages.newPages.EvrakDetayiPage;
 import pages.newPages.RolYonetimiPage;
+import pages.pageComponents.UserMenu;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.solMenuPages.ImzaBekleyenlerPage;
 import pages.solMenuPages.ImzaladiklarimPage;
 import pages.solMenuPages.ParafladiklarimPage;
 import pages.ustMenuPages.EvrakOlusturPage;
+
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.Condition.*;
 
@@ -167,6 +170,13 @@ public class EvrakDogrulama extends BaseTest {
 
         login(user);
 
+        UserMenu userMenu = new UserMenu();
+        UserMenu.Profil profil = userMenu.userMenuAc().profilMenuSec();
+        ArrayList<String> roller = profil.getAllRoles();
+        profil.closeDialog();
+
+        rolAdi = roller.get(0);
+
         rolYonetimiPage = new RolYonetimiPage();
         rolYonetimiPage.openPage()
                 .sorgulamadaAdGir(rolAdi)
@@ -175,7 +185,34 @@ public class EvrakDogrulama extends BaseTest {
                 .bulunanRoldeAksiyonlarTikla()
                 .aksiyonListesindeAdGirilir(aksiyonAdi);
 
-        if (rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
+        if (!rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
+            rolYonetimiPage
+                    .yeniAksiyonEkle()
+                    .sorgulamadaAdGir(aksiyonAdi)
+                    .aksiyonBulunurVeCheckboxSecilir(aksiyonAdi, true)
+                    .ekleBasarili();
+
+            logout();
+            login(user);
+
+            rolYonetimiPage.openPage()
+                    .sorgulamadaAdGir(rolAdi)
+                    .ara()
+                    .rolListesindeKayitBul(text(rolAdi))
+                    .bulunanRoldeAksiyonlarTikla()
+                    .aksiyonListesindeAdGirilir(aksiyonAdi);
+        }
+
+        rolYonetimiPage
+                .bulunanAksiyondaIliskiyiSilBasarili();
+
+        logout();
+        login(user);
+
+        evrakOlusturPage.openPage()
+                .dogrulamaTab().tabKontrol(not(exist));
+
+        /*if (rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
             evrakOlusturPage.openPage()
                     .dogrulamaTab().tabKontrol(visible);
 
@@ -202,7 +239,7 @@ public class EvrakDogrulama extends BaseTest {
 
             evrakOlusturPage.openPage()
                     .dogrulamaTab().tabKontrol(visible);
-        }
+        }*/
 
 
         /*UserMenu userMenu = new UserMenu();

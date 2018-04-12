@@ -363,6 +363,7 @@ public class DagitimHitapDuzenle extends MainPage {
     @Step("Evrakta Görünecek Hitap tekst kotrollü")
     public DagitimHitapDuzenle evraktaGorunecekHitapKotrollu(Condition... conditions) {
         getEvraktaGorunecekHitap("").shouldHave(conditions);
+        takeScreenshot();
         return this;
     }
 

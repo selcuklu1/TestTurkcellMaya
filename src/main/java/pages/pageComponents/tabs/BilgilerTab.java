@@ -510,6 +510,7 @@ public class BilgilerTab extends MainPage {
             collection = collection.filterBy(condition);
         }
         collection.shouldHave(sizeGreaterThan(0));
+        takeScreenshot();
         return this;
     }
 

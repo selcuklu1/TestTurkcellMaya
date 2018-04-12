@@ -478,8 +478,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
     }
 
-    @Test(description = "TS0980b: Olur yazısı - Koordine parafçısından evrakın parafçı tarafından geri alınması", enabled = true)
-    public void TS0980b() {
+    @Test(description = "TS0980b: Olur yazısı - Koordine parafçısından evrakın parafçı tarafından geri alınması", enabled = false)
+    public void TS0980b000() {
         User parafci = user1;
         User kontolcu = optiim;
         User imzaci = ztekin;
@@ -537,6 +537,147 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
     }
 
+    @Test(description = "TS0980b: Evrak - İmzacıdan evrakın kontrolcü tarafından geri alınması", enabled = true)
+    public void TS0980b() {
+        User parafci = user1;
+        User kontolcu = optiim;
+        User imzaci = ztekin;
+
+        String konu = "TS0980b - " + getDateTime();
+        String geriAlNotu = "Gerial not teksti";
+
+        KontrolBekleyenlerPage kontrolBekleyenlerPage;
+        EvrakOnizleme evrakOnizleme;
+
+        login(parafci);
+        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec("010.01")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorleriSec("Diğer")
+                .bilgiSec(BIRIM, parafci.getBirimAdi())
+                .onayAkisiTemizle()
+                .onayAkisiEkleButonaTikla()
+                .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
+                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .kullan();
+        page.editorTab().openTab().getEditor().type("Editör tekst")
+                .evrakPageButtons().evrakParafla()
+                .islemMesaji().basariliOlmali();
+
+        login(kontolcu);
+        kontrolBekleyenlerPage = new KontrolBekleyenlerPage().openPage();
+        kontrolBekleyenlerPage.searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().kontrolEt();
+        evrakOnizleme = new EvrakOnizleme();
+        evrakOnizleme.new EvrakGecmisi().tabiAc()
+                .sonHareketKontrol(text("İmza bekliyor"), text(imzaci.getFullname()))
+                .evrakPageButtons().geriAl()
+                .geriAlGeriAl()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
+                .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        new KoordineBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .gonderenNotuTooltip(geriAlNotu);
+
+    }
+
+    @Test(description = "TS0980c: Olur yazısı- Koordine parafçısından evrakın parafçı tarafından geri alınması", enabled = true)
+    public void TS0980c() {
+        User parafci = user1;
+        User koordeneli = user5;
+        User imzaci = optiim;
+        //User imzaci = ztekin;
+
+        String konu = "TS0980b - " + getDateTime();
+        String geriAlNotu = "Gerial not teksti";
+
+        KontrolBekleyenlerPage kontrolBekleyenlerPage;
+        EvrakOnizleme evrakOnizleme;
+
+        login(parafci);
+        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec("010.01")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorleriSec("Diğer")
+                .bilgiSec(BIRIM, parafci.getBirimAdi())
+                .onayAkisiTemizle()
+                .onayAkisiEkleButonaTikla()
+                .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
+                .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
+                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .kullan();
+        page.editorTab().openTab().getEditor().type("Editör tekst")
+                .evrakPageButtons().evrakParafla()
+                .islemMesaji().basariliOlmali();
+
+        new ParafladiklarimPage().openPage()
+            .searchTable().findRowAndSelect(text(konu));
+        new EvrakOnizleme().new EvrakGecmisi().tabiAc()
+                .sonHareketKontrol(text("Evrak Koordine bekliyor"))
+                .evrakPageButtons().geriAl()
+                .geriAlGeriAl()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
+                .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        new KoordineBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .gonderenNotuTooltip(geriAlNotu);
+
+    }
+
+    @Test(description = "TS0980d: Olur yazısı - Koordine parafçısından evrakın kontrolcü tarafından geri alınması", enabled = true)
+    public void TS0980d() {
+        User parafci = user1;
+        User koordeneli = user5;
+        User imzaci = optiim;
+
+        String konu = "TS0980b - " + getDateTime();
+        String geriAlNotu = "Gerial not teksti";
+
+        KontrolBekleyenlerPage kontrolBekleyenlerPage;
+        EvrakOnizleme evrakOnizleme;
+
+        login(parafci);
+        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
+        page.bilgileriTab()
+                .konuKoduSec("010.01")
+                .konuDoldur(konu)
+                .kaldiralacakKlasorleriSec("Diğer")
+                .bilgiSec(BIRIM, parafci.getBirimAdi())
+                .onayAkisiTemizle()
+                .onayAkisiEkleButonaTikla()
+                .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
+                .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
+                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .kullan();
+        page.editorTab().openTab().getEditor().type("Editör tekst")
+                .evrakPageButtons().evrakParafla()
+                .islemMesaji().basariliOlmali();
+
+        new ParafladiklarimPage().openPage()
+                .searchTable().findRowAndSelect(text(konu));
+        new EvrakOnizleme().new EvrakGecmisi().tabiAc()
+                .sonHareketKontrol(text("Evrak Koordine bekliyor"))
+                .evrakPageButtons().geriAl()
+                .geriAlGeriAl()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
+                .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        new KoordineBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .gonderenNotuTooltip(geriAlNotu);
+
+    }
 
     @Test(description = "TS0979: Postalanmayı bekleyen evrakın önizlemeden geri alınması ve iade işlemleri", enabled = true)
     public void TS0979() {
@@ -654,7 +795,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User parafci = user1;
         User kontolcu = user5;
         User koordeneli = optiim;
-        User imzaci = ztekin;
+        User kontolcu2 = ztekin;
+        //User imzaci = ztekin;
 
         String konu = "TS0976a - " + getDateTime();
         String kurum = "Cumhurbaşkanlığı";
@@ -673,7 +815,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
                 .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
-                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(kontolcu2, KONTROL)
+                //.anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
                 .kullan();
         page.editorTab().openTab().getEditor().type("Editör tekst")
                 .evrakPageButtons().evrakParafla()
@@ -687,7 +830,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .kontolEtEkrani(text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname()))
                 .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
                 .kontolEtEkrani(text("Koordine\n" + koordeneli.getFullname()))
-                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+                .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu2.getFullname()))
+                //.kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 
@@ -723,7 +867,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         login(parafci);
 
         System.out.println("Konu: " + konu);
-        EvrakOlusturPage page = new EvrakOlusturPage().openPage();
+        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
         page.bilgileriTab()
                 .alanlariDoldur(konu, GeregiSecimTipi.KURUM, kurum)
                 .onayAkisiEkleButonaTikla()

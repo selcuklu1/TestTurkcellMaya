@@ -452,6 +452,12 @@ public class EvrakPageButtons extends MainPage {
         return this;
     }
 
+    @Step("Evrak Önizleme Geri Al buton kotrolu: {condition}")
+    public EvrakPageButtons geriAlButonKotrolu(Condition condition) {
+        getGeriAl().should(condition);
+        return this;
+    }
+
     @Step("Geri Al notu doldur")
     public EvrakPageButtons geriAlNotDoldur(String not){
         container.$("[id$='evrakGeriAlInputTextareaId']").setValue(not);
