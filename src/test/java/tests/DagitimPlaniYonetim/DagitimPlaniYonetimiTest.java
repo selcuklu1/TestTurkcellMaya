@@ -345,10 +345,16 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(user5);
+
+        new GidenEvrakKayitPage().openPage()
+                .geregiSecimTipiSecByText("Dağıtım Planları")
+                .geregiDoldur(planAdi1280, "Dağıtım Planı seçilebilir olmalı");
+
         evrakOlusturPage.openPage()
                 .bilgileriTab().openTab()
-                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
-                .geregiSec(planAdi1280);
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
+                .bilgiSec(planAdi1280);
+
 
     }
 
@@ -912,7 +918,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
         page.yeni()
                 .adiGir(planAdi)
-                .aciklamaGir("Medya Şirketi")
+                .aciklamaGir("Medya Şirketi Hariç Diğer Tiplerde")
                 .kullanildigiBirimSec(user.getBirimAdi())
                 .altBirimlerGorsunSec(true)
                 .dagitimElemanlariTipiSec("Tüzel Kişi")

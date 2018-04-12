@@ -34,13 +34,13 @@ public class PDFOnizleme extends MainPage{
         switchTo().window(windowIndex);
         WebDriverRunner.getWebDriver().manage().window().maximize();
         waitForLoadingJS();
-        setScale100();
+        //setScale100();
     }
 
     public PDFOnizleme(String title) {
         switchTo().window(title);
         waitForLoadingJS(WebDriverRunner.getWebDriver());
-        setScale100();
+        //setScale100();
     }
 
     @Step("Set 100% scale")
