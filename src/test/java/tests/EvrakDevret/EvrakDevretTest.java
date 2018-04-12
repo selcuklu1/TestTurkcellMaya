@@ -10,6 +10,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.altMenuPages.CevapYazPage;
 import pages.altMenuPages.EvrakDetayiPage;
 import pages.solMenuPages.*;
 import pages.ustMenuPages.EvrakOlusturPage;
@@ -84,9 +85,16 @@ public class EvrakDevretTest extends BaseTest {
             , description = "TS2178a : İlgisi olan İşlem Bekleyen Cevap Evrakı Devretme ve Sonrasında Devralandan Silinmesi ve İlginin Kontrolü")
     public void TS2178a() throws InterruptedException {
         String yeniKonu=konu +getSysDate();
+
         login(TestData.usernameOPTIIM,TestData.passwordOPTIIM);
-        imzaBekleyenEvrakOlustur(yeniKonu);
+
+        gelenEvrak(yeniKonu);
+        ilgisiOlanCevapEvrakiOluştur(yeniKonu);
+
+//        imzaBekleyenEvrakOlustur(yeniKonu);
+
         logout();
+
         login(username30);
 
         String btnSilName = "Sil";
@@ -458,5 +466,24 @@ String yeniKonu = konu + getSysDate();
                 .editorIcerikDoldur(icerik)
                 .evrakParafla();
 
+    }
+
+    private void ilgisiOlanCevapEvrakiOluştur(String konu) {
+
+        String onayAkisi = "TS2178A0";
+        CevapYazPage cevapYazPage = new CevapYazPage();
+
+        gelenEvraklarPage
+                .openPage()
+                .konuyaGoreEvrakOnizlemedeAc(konu)
+                .cevapYaz();
+        cevapYazPage.sayfaAcilmali()
+                .kaldirilacakKlasorlerDoldur("Diğer")
+                .onayAkisiDoldur(onayAkisi)
+                .ilgileriTabiAc()
+                .ilgileriMetinEkleTabAc()
+                .ilgileriMetinEkleIlgiMetniDoldur(icerik)
+                .ilgileriMetinEkleEkle()
+                .kaydetVeOnayaSun();
     }
 }

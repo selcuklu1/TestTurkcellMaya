@@ -2,6 +2,7 @@ package pages.altMenuPages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -68,12 +69,16 @@ public class CevapYazPage extends MainPage {
     SelenideElement txtEvrakEkTabViewEvrakSayisi = $(By.id("windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraSayiInputTextId"));
     SelenideElement btnEvrakEkTabViewArsivdeKayitliDokumanAra = $(By.xpath("//*[@id='windowCevapEvrakForm:evrakEkTabView:arsivdenEvrakAraButtonId']"));
     //İlgileri sekmesi
+    SelenideElement tabIlgileri = Selenide.$("button .kullaniciIlgileri");
     //Dosya Ekle alt sekmesi
     SelenideElement txtIlgiIslemleriTabViewIlgiMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:dosyaAciklama']"));
     SelenideElement btnIlgiIslemleriTabViewDosyaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:fileUploadButtonA_input"));
     SelenideElement btnIlgiIslemleriTabViewEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:dosyaEkleButton"));
     SelenideElement btnIlgiIslemleriTabViewTemizle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:ilgiDosyaTemizleButton"));
     //Metin Ekle alt sekmesi
+    SelenideElement btnIlgileriMetinEkleTab = Selenide.$(By.xpath("//a[@href='#windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleTab']"));
+    SelenideElement txtIlgileriMetinEkleIlgiMetni = Selenide.$(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaTextArea"));
+    SelenideElement btnIlgileriMetinEkleEkle = Selenide.$(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
     SelenideElement txtIlgiIslemleriTabViewMetinEkleIlgiMetni = $(By.xpath("//*[@id='windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaTextArea']"));
     SelenideElement btnIlgiIslemleriTabViewAciklamaEkle = $(By.id("windowCevapEvrakForm:ilgiIslemleriTabView:aciklamaEkleButton"));
     //Sistemde Kayitli Evrak Ekle alt sekmesi
@@ -355,6 +360,29 @@ public class CevapYazPage extends MainPage {
 
     public CevapYazPage evrakEkTabViewArsivdeKayitliDokumanAra() {
         btnEvrakEkTabViewArsivdeKayitliDokumanAra.click();
+        return this;
+    }
+
+    @Step("Ilgileri Tabı açılır.")
+    public CevapYazPage ilgileriTabiAc() {
+        tabIlgileri.click();
+        return this;
+    }
+
+    @Step("Ilgileri/Metin Ekle Tab - Açma")
+    public CevapYazPage ilgileriMetinEkleTabAc() {
+        btnIlgileriMetinEkleTab.click();
+        return this;
+    }
+    @Step("İlgileri/Metin Ekle - İlgi Metni")
+    public CevapYazPage ilgileriMetinEkleIlgiMetniDoldur(String ilgiMetni) {
+        txtIlgileriMetinEkleIlgiMetni.setValue(ilgiMetni);
+        return this;
+    }
+
+    @Step("İlgileri/Metin Ekle - Ekle")
+    public CevapYazPage ilgileriMetinEkleEkle() {
+        btnIlgileriMetinEkleEkle.click();
         return this;
     }
 
