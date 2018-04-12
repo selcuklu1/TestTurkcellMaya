@@ -2,6 +2,7 @@ package pages.solMenuPages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.MainPage;
@@ -50,7 +51,7 @@ public class KapattiklarimPage extends MainPage {
         return this;
     }
 
-    @Step("{konu} konulu evrak listede olmalı mı? {evrakOlmali}")
+    @Step("Evrak listesinde {konu} konulu evrak olmali mi? {evrakOlmali}")
     public KapattiklarimPage evrakKontrol(String konu, boolean evrakOlmali){
 
         if(evrakOlmali == true){
@@ -59,6 +60,7 @@ public class KapattiklarimPage extends MainPage {
                     .filterBy(text(konu))
                     .first()
                     .shouldBe(visible);
+            Allure.addAttachment("Evrakın listelendiği görülür.", "");
 
         } else {
 
@@ -66,7 +68,7 @@ public class KapattiklarimPage extends MainPage {
                     .filterBy(text(konu))
                     .first()
                     .shouldNotBe(visible);
-
+            Allure.addAttachment("Evrakın listelenmediği görülür.", "");
         }
 
         return this;

@@ -1,5 +1,6 @@
 package tests.SuresizEvrakKapatma;
 
+import com.codeborne.selenide.Selenide;
 import common.BaseTest;
 import data.TestData;
 import org.testng.annotations.BeforeMethod;
@@ -24,6 +25,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     KapattiklarimPage kapattiklarimPage;
     TeslimAlinmayiBekleyenlerPage teslimAlinmayiBekleyenlerPage;
     PersonelVeAcikEvrakIstatigiPage personelVeAcikEvrakIstatigiPage;
+    ImzaladiklarimPageKapatmaIslemleri imzaladiklarimPageKapatmaIslemleri;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -37,18 +39,21 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
         kapattiklarimPage = new KapattiklarimPage();
         teslimAlinmayiBekleyenlerPage = new TeslimAlinmayiBekleyenlerPage();
         personelVeAcikEvrakIstatigiPage = new PersonelVeAcikEvrakIstatigiPage();
-
+        imzaladiklarimPageKapatmaIslemleri = new ImzaladiklarimPageKapatmaIslemleri();
     }
 
     @Test(enabled = true, description = "TS0073 : Gelen Evrakın Kapatılması ve Klasöre kaldırılması")
     public void TS0073() throws InterruptedException {
 
         // Gelen evrak kayıt oluşturma>>>
-
-        login("huser1", "123");
+        testStatus("Data Oluşturma", "Gelen evrak kayıt oluşturma");
 
         String randomNumber = "" + getSysDate();
         String gelenEvrakKonu = "TS0073-" + randomNumber;
+        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -68,6 +73,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .popUps(true);
 
         // Gelen evrak kayıt oluşturma <<<
+        testStatus("TS0073", "Test Başlamıştır");
 
         gelenEvraklarPage
                 .openPage()
@@ -75,13 +81,13 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapat()
                 .evrakKapatmaEkraniKontrol()
                 .evrakKapatKaldirilacakKlasorlerDoldur("gündem","")
-                .evrakiKapat();
-
-        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                .evrakiKapat()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur("gündem")
+                .aramaKriteriDoldur("TS0073")
                 .evrakTarihiDoldur(tarihBugun)
                 .ara()
                 .evrakListesiKontrol(gelenEvrakKonu, true);
@@ -96,11 +102,14 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     public void TS0074() throws InterruptedException {
 
         // Gelen evrak kayıt oluşturma>>>
+        testStatus("Data Oluşturma", "Gelen evrak kayıt oluşturma");
 
-        login("huser1", "123");
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         String randomNumber = "" + getSysDate();
         String gelenEvrakKonu = "TS0074-" + randomNumber;
+        String basariMesaji = "İşlem başarılıdır!";
+        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
         gelenEvrakKayitPage
                 .openPage()
@@ -120,6 +129,8 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .popUps(true);
 
         // Gelen evrak kayıt oluşturma <<<
+
+        testStatus("TS0074", "Test Başlamıştır");
 
         gelenEvraklarPage
                 .openPage()
@@ -134,33 +145,34 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatOnayAkisiKullaniciSec("Huser TUMER")
                 .evrakKapatOnayAkisiKullaniciTipiSec("Huser TUMER", "Kapatma İmzası")
                 .evrakKapatOnayAkisiKullan()
-                .evrakKapatKapatmaOnayinaSun();
+                .evrakKapatKapatmaOnayinaSun()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         onayaSunduklarimPage
                 .openPage()
                 .evrakKontrol(gelenEvrakKonu, true);
 
-        login("huser", "123");
-
+        login(TestData.usernameHuser, TestData.passwordHuser);
 
         imzaBekleyenlerPageKapatmaIslemleri
                 .openPage()
+                .evrakKonusunaGoreKontrol(gelenEvrakKonu)
                 .evrakSec(gelenEvrakKonu, "", "", "")
                 .kapatmaImzala()
                 .kapatmayIptalEt()
-                .islemMesaji().basariliOlmali();
+                .islemMesaji().basariliOlmali(basariMesaji);
+
+        Selenide.refresh();
 
         logout();
 
-        login("huser", "123");
+        login(TestData.usernameHuser, TestData.passwordHuser);
 
-        imzaBekleyenlerPageKapatmaIslemleri
+        imzaladiklarimPageKapatmaIslemleri
                 .openPage()
                 .evrakKontrol(gelenEvrakKonu, false);
 
-        login("huser1", "123");
-
-        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         klasorEvrakIslemleriPage
                 .openPage()
@@ -175,15 +187,18 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS0077 : Klasörden çıkartılan evrak - \"Gelen Evrak\", \"Kapattıklarım\" ve \"Klasöre Kaldırdıklarım\" listelerinden kontrolü")
+    @Test(enabled = true, description = "TS0077: Klasörden çıkartılan evrak - \"Gelen Evrak\", \"Kapattıklarım\" ve \"Klasöre Kaldırdıklarım\" listelerinden kontrolü")
     public void TS0077() throws InterruptedException {
 
         // Gelen evrak kayıt oluşturma>>>
-
-        login("huser1", "123");
+        testStatus("Data Oluşturma", "Gelen evrak kayıt oluşturma");
 
         String randomNumber = "" + getSysDate();
         String gelenEvrakKonu = "TS0077-" + randomNumber;
+        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String basariMesaji = "İşlem başarılıdır!";
+
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -203,6 +218,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .popUps(true);
 
         // Gelen evrak kayıt oluşturma <<<
+        testStatus("TS0077", "Test Başlamıştır");
 
         gelenEvraklarPage
                 .openPage()
@@ -210,20 +226,20 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapat()
                 .evrakKapatmaEkraniKontrol()
                 .evrakKapatKaldirilacakKlasorlerDoldur("gündem","")
-                .evrakiKapat();
-
-        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                .evrakiKapat()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         klasorEvrakIslemleriPage
                 .openPage()
                 .klasorDoldur("gündem")
+                .aramaKriteriDoldur("TS0077")
                 .evrakTarihiDoldur(tarihBugun)
                 .ara()
                 .evrakListesiKontrol(gelenEvrakKonu, true)
-                .evrakiKlasordenCikar(gelenEvrakKonu);
+                .evrakiKlasordenCikar(gelenEvrakKonu)
+                .islemMesaji().basariliOlmali(basariMesaji);
 
-        kapattiklarimPage
-                .openPage();
+        Selenide.refresh();
 
         gelenEvraklarPage
                 .openPage()
@@ -239,15 +255,18 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
 
     }
 
-    @Test(enabled = true, description = "TS0383 : Evrak Onaylı Kapatma ve Klasöre Kaldırılması Kontrolü")
+    @Test(enabled = true, description = "TS0383: Evrak Onaylı Kapatma ve Klasöre Kaldırılması Kontrolü")
     public void TS0383() throws InterruptedException {
 
         // Gelen evrak kayıt oluşturma>>>
+        testStatus("Data Oluşturma", "Gelen evrak kayıt oluşturma");
 
-        login("huser1", "123");
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         String randomNumber = "" + getSysDate();
         String gelenEvrakKonu = "TS0383-" + randomNumber;
+        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String basariMesaji = "İşlem başarılıdır!";
 
         gelenEvrakKayitPage
                 .openPage()
@@ -267,6 +286,7 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .popUps(true);
 
         // Gelen evrak kayıt oluşturma <<<
+        testStatus("TS0383", "Test Başlamıştır");
 
         gelenEvraklarPage
                 .openPage()
@@ -281,28 +301,31 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakKapatOnayAkisiKullaniciSec("Huser TUMER")
                 .evrakKapatOnayAkisiKullaniciTipiSec("Huser TUMER", "Kapatma İmzası")
                 .evrakKapatOnayAkisiKullan()
-                .evrakKapatKapatmaOnayinaSun();
+                .evrakKapatKapatmaOnayinaSun()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
         onayaSunduklarimPage
                 .openPage()
                 .evrakKontrol(gelenEvrakKonu, true);
 
-        login("huser", "123");
-
+        login(TestData.usernameHuser, TestData.passwordHuser);
 
         imzaBekleyenlerPageKapatmaIslemleri
                 .openPage()
                 .evrakSec(gelenEvrakKonu, "", "", "")
                 .kapatmaImzala()
-                .kapatmaImzalaImzala();
+                .kapatmaImzalaImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
 
-        login("huser1", "123");
+        imzaladiklarimPageKapatmaIslemleri
+                .openPage()
+                .evrakKontrol(gelenEvrakKonu, true);
+
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         kapattiklarimPage
                 .openPage()
                 .evrakKontrol(gelenEvrakKonu, true);
-
-        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
         klasorEvrakIslemleriPage
                 .openPage()
@@ -312,16 +335,22 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
                 .evrakListesiKontrol(gelenEvrakKonu, true)
                 .evrakiKlasordenCikarButonKontrolu(gelenEvrakKonu);
 
-
+        klasoreKaldirdiklarimPage
+                .openPage()
+                .evrakKontrol(gelenEvrakKonu, true)
+                .evrakSec(gelenEvrakKonu, "", "", "")
+                .btnEvrakGecmisiTab()
+                .evrakGoruntulenmekUzereKlasoreKaldirilmasi("Evrak Klasöre kaldırıldı");
     }
 
     @Test(enabled = true, description = "TS2167 : Evrakın Teslim Alınıp Kapatılması ve Klasöre Kaldırılması")
     public void TS2167() throws InterruptedException {
 
-        login("huser1", "123");
-
         String randomNumber = "" + getSysDate();
         String gelenEvrakKonu = "TS2167-" + randomNumber;
+        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         gelenEvrakKayitPage
                 .openPage()
@@ -346,8 +375,6 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
         klasoreKaldirdiklarimPage
                 .openPage()
                 .evrakKontrol(gelenEvrakKonu, true);
-
-        String tarihBugun = "" + new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
         klasorEvrakIslemleriPage
                 .openPage()
@@ -438,8 +465,9 @@ public class SuresizEvrakKpatmaTest extends BaseTest {
     @Test(enabled = true, description = "TS2169 : Kapatılan evrakın Personel ve Açık Evrak İstatistiği raporunda kontrolü")
     public void TS2169() {
 
-        login("huser1", "123");
         String gelenEvrakKonu = "TS0073-20180221100551";
+
+        login(TestData.usernameHuser1, TestData.passwordHuser1);
 
         /*
         String randomNumber = "" + getSysDate();

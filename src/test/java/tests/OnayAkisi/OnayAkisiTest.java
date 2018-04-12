@@ -222,7 +222,7 @@ public class OnayAkisiTest extends BaseTest {
         String vekilKullanici = "Optiim TEST7";
         String parafciKullanici2 = "Zübeyde TEKİN";
         String parafciKullanici1 = "Mehmet BOZDEMİR";
-        String imzaciKullanici = "Demo AMİR";
+        String imzaciKullanici = "Hamza KANDUR";
         String kaldirilacakKlasorler = "ESK05";
 
         login(TestData.usernameOPTIIMTEST6, TestData.passwordPTIIMTEST6); //optiimtest6 123
