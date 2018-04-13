@@ -571,7 +571,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         kontrolBekleyenlerPage.searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
         evrakOnizleme = new EvrakOnizleme();
-        evrakOnizleme.new EvrakGecmisi().tabiAc()
+        evrakOnizleme.new EvrakGecmisi()
                 .sonHareketKontrol(text("İmza bekliyor"), text(imzaci.getFullname()))
                 .evrakPageButtons().geriAl()
                 .geriAlGeriAl()
