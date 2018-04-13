@@ -597,7 +597,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
     @Test(description = "TS0980c: Olur yazısı- Koordine parafçısından evrakın parafçı tarafından geri alınması", enabled = true)
     public void TS0980c() {
         User parafci = user1;
-        User kontrolcu = user5;
+        User koordeneli = user5;
         User imzaci = optiim;
         //User imzaci = ztekin;
 
@@ -617,18 +617,17 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .onayAkisiTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
-                .anlikOnayAkisKullanicininTipiSec(kontrolcu, KONTROL)
+                .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
                 .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
                 .kullan();
         page.editorTab().openTab().getEditor().type("Editör tekst")
                 .evrakPageButtons().evrakParafla()
                 .islemMesaji().basariliOlmali();
 
-        login(kontrolcu);
-        new KontrolBekleyenlerPage().openPage()
+        new ParafladiklarimPage().openPage()
             .searchTable().findRowAndSelect(text(konu));
         new EvrakOnizleme().new EvrakGecmisi().tabiAc()
-                .sonHareketKontrol(text("İmza bekliyor"))
+                .sonHareketKontrol(text("Evrak Koordine bekliyor"))
                 .evrakPageButtons().geriAl()
                 .geriAlGeriAl()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
