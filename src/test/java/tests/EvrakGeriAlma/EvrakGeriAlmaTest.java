@@ -597,7 +597,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
     @Test(description = "TS0980c: Olur yazısı- Koordine parafçısından evrakın parafçı tarafından geri alınması", enabled = true)
     public void TS0980c() {
         User parafci = user1;
-        User koordeneli = user5;
+        User kontrolcu = user5;
         User imzaci = optiim;
         //User imzaci = ztekin;
 
@@ -607,7 +607,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
         EvrakOnizleme evrakOnizleme;
 
-        login(koordeneli);
+        login(parafci);
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
         page.bilgileriTab()
                 .konuKoduSec("010.01")
@@ -617,23 +617,25 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .onayAkisiTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
-                .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
+                .anlikOnayAkisKullanicininTipiSec(kontrolcu, KONTROL)
                 .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
                 .kullan();
         page.editorTab().openTab().getEditor().type("Editör tekst")
                 .evrakPageButtons().evrakParafla()
                 .islemMesaji().basariliOlmali();
 
-        new ParafladiklarimPage().openPage()
+        login(kontrolcu);
+        new KontrolBekleyenlerPage().openPage()
             .searchTable().findRowAndSelect(text(konu));
         new EvrakOnizleme().new EvrakGecmisi().tabiAc()
-                .sonHareketKontrol(text("Evrak Koordine bekliyor"))
+                .sonHareketKontrol(text("İmza bekliyor"))
                 .evrakPageButtons().geriAl()
                 .geriAlGeriAl()
                 .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
                 .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
                 .geriAlGeriAl()
                 .islemMesaji().basariliOlmali();
+
 
         new KoordineBekleyenlerPage().openPage()
                 .searchTable().findRowAndSelect(text(konu))
