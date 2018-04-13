@@ -81,6 +81,7 @@ public class AntetIslemleri extends BaseTest {
 //        String user1 = "Antet otomasyontest";
         String user1Details = "Antet Güncel Birim";
         String user2 = "Antet İSLEMLERİ";
+
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "Otomasyon.pdf";
         String fileName = "Otomasyon.pdf";
