@@ -548,7 +548,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         String geriAlNotu = "Gerial not teksti";
 
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
-        EvrakOnizleme evrakOnizleme;
+        EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
 
         login(parafci);
         EvrakOlusturPage page = new EvrakOlusturPage().openPage();
@@ -568,8 +568,8 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(kontolcu);
-        new KontrolBekleyenlerPage().openPage().searchTable().findRowAndSelect(text(konu));
-        evrakOnizleme = new EvrakOnizleme();
+        new KontrolBekleyenlerPage().openPage().searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().kontrolEt();
         evrakOnizleme.new KontrolEt().kontolEtEkrani(
                 text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
                 ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
