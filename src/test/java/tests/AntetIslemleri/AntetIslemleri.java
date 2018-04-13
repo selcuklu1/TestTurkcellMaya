@@ -2040,7 +2040,7 @@ public class AntetIslemleri extends BaseTest {
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
-        String user1 = "Gökçe ŞAHİN";
+        String user1 = "Antet İslemleri";
         String user1Details = "Antet Güncel Birim";
         String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
@@ -2054,7 +2054,7 @@ public class AntetIslemleri extends BaseTest {
         String antetGuncelBirimTipi = "Antet Yok";
         String antetGuncelBirim = "";
         String antetUstBirimTipi = "Normal";
-        String antetUstBirim = "";
+        String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Özel";
         String antetEnUstBirim = "İki Üst Birim Özel Antet";
         String antetDefault1 = "T.C.";
@@ -2076,26 +2076,23 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetUstBirimTipi)
-                .antetBilgisiDoldur(ustBirim)
+                .antetBilgisiDoldur(antetUstBirim)
                 .kaydet()
 
                 .birimFiltreDoldur(guncelBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
-                .antetTipiSec(antetUstBirimTipi)
-                .antetBilgisiDoldur(normalAntet)
+                .antetTipiSec(antetGuncelBirim)
                 .kaydet();
 
 
         testStatus(testid, "Test Başladı");
 
-        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
-        birimDegistirme(guncelBirim);
+        login(TestData.userYakyol);
+
         evrakOlusturPage
                 .openPage()
-                .editorTabAc()
-                .editorAntetKontrol("","",guncelBirim, ustBirim, antetEnUstBirim);
-
+                .editorTabAc();
 
         editor
                 .type(editorIcerik)
@@ -2119,13 +2116,14 @@ public class AntetIslemleri extends BaseTest {
                 .geregiKontrol(geregiKurum)
                 .bilgiSecimTipiSecByText("Kurum")
                 .bilgiDoldur(bilgiKurum,"Kurum")
-                .onayAkisiEkle()
-                .onayAkisiKullaniciKontrolu(user2 , "Paraflama", user1Details)
-                .onayAkisiKullaniciEkle(user1,details)
-                .onayAkisiKullaniciTipiSec(user1,"İmzalama")
-                .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .dagitimiEkYapSec(true)
                 .dagitimiEkYapSecKontrol()
+                .onayAkisiEkle()
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiTumuSec()
+                .onayAkisiKullaniciEkle(user1,guncelBirim)
+                .onayAkisiKullaniciTipiSec(user1,"İmzalama")
+                .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .kullan();
 
 
@@ -2148,17 +2146,18 @@ public class AntetIslemleri extends BaseTest {
 
 
         evrakOlusturPage
-                .parafla()
+                .kaydetOnayaSun()
+                .kaydetOnayaSunAciklamaDoldur2(editorIcerik)
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
-        birimDegistirme("Antet Üst Birim");
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme(guncelBirim);
         imzaBekleyenlerPage
                 .openPage()
                 .searchTable().findRowAndSelect(Condition.text(konu));
 
         imzaBekleyenlerPage
-                .ekOnizlemePDFKontrol(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim);
+                .ekOnizlemePDFKontrol("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim);
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
@@ -2167,9 +2166,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,"","","")
+                .dagitimListesiPDFKontrolu("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim);
+                .ekListesiPDFKontrolu("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim);
     }
 
     @Severity(SeverityLevel.CRITICAL)
