@@ -613,7 +613,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .konuKoduSec("010.01")
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
-                .bilgiSec(KURUM, "Cumhurbaşkanlığı")
+                .bilgiSec(BIRIM, imzaci.getBirimAdi())
                 .onayAkisiTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
