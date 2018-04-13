@@ -605,7 +605,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         String geriAlNotu = "Gerial not teksti";
 
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
-        EvrakOnizleme evrakOnizleme;
+        EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
 
         login(parafci);
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
@@ -624,6 +624,20 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .evrakPageButtons().evrakParafla()
                 .islemMesaji().basariliOlmali();
 
+        /*login(koordeneli);
+        new KoordineBekleyenlerPage().openPage().searchTable().findRowAndSelect(text(konu));
+        evrakOnizleme.new EvrakGecmisi().tabiAc()
+                .sonHareketKontrol(text("Evrak Koordine bekliyor"), text(imzaci.getFullname()))
+                .evrakPageButtons().geriAl()
+                .geriAlGeriAl()
+                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
+                .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
+                .geriAlGeriAl()
+                .islemMesaji().basariliOlmali();
+
+        new KoordineBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .gonderenNotuTooltip(geriAlNotu);*/
         new ParafladiklarimPage().openPage()
             .searchTable().findRowAndSelect(text(konu));
         new EvrakOnizleme().new EvrakGecmisi().tabiAc()
@@ -635,53 +649,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .geriAlGeriAl()
                 .islemMesaji().basariliOlmali();
 
-
-        new KoordineBekleyenlerPage().openPage()
-                .searchTable().findRowAndSelect(text(konu))
-                .gonderenNotuTooltip(geriAlNotu);
-
-    }
-
-    @Test(description = "TS0980d: Olur yazısı - Koordine parafçısından evrakın kontrolcü tarafından geri alınması", enabled = true)
-    public void TS0980d() {
-        User parafci = user1;
-        User koordeneli = user5;
-        User imzaci = optiim;
-
-        String konu = "TS0980d - " + getDateTime();
-        String geriAlNotu = "Gerial not teksti";
-
-        KontrolBekleyenlerPage kontrolBekleyenlerPage;
-        EvrakOnizleme evrakOnizleme;
-
-        login(parafci);
-        OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
-        page.bilgileriTab()
-                .konuKoduSec("010.01")
-                .konuDoldur(konu)
-                .kaldiralacakKlasorleriSec("Diğer")
-                .bilgiSec(BIRIM, parafci.getBirimAdi())
-                .onayAkisiTemizle()
-                .onayAkisiEkleButonaTikla()
-                .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
-                .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
-                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
-                .kullan();
-        page.editorTab().openTab().getEditor().type("Editör tekst")
-                .evrakPageButtons().evrakParafla()
-                .islemMesaji().basariliOlmali();
-
-        new ParafladiklarimPage().openPage()
-                .searchTable().findRowAndSelect(text(konu));
-        new EvrakOnizleme().new EvrakGecmisi().tabiAc()
-                .sonHareketKontrol(text("Evrak Koordine bekliyor"))
-                .evrakPageButtons().geriAl()
-                .geriAlGeriAl()
-                .islemMesaji().uyariOlmali("Zorunlu alanları doldurunuz")
-                .evrakPageButtons().geriAlNotDoldur(geriAlNotu)
-                .geriAlGeriAl()
-                .islemMesaji().basariliOlmali();
-
+        //login(koordeneli);
         new KoordineBekleyenlerPage().openPage()
                 .searchTable().findRowAndSelect(text(konu))
                 .gonderenNotuTooltip(geriAlNotu);
