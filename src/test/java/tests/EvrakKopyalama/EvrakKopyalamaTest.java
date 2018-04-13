@@ -61,6 +61,7 @@ public class EvrakKopyalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS2233: Beklemeye alınanlar listesinden evrak kopyalanması ve imzalanması")
     public void TS2233() {
+
         String konuKoduTS2233 = "TS2233-" + createRandomNumber(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullanici = "Mehmet Bozdemir";
@@ -85,7 +86,18 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         beklemeyeAlinanlarPage
                 .openPage()
-                .evrakSecKonuyaGoreIcerikGoster(konuKoduTS2233);
+                .evrakSecKonuyagore(konuKoduTS2233)
+                .evrakKopyalaGeldigiGorme()
+                .evrakKopyala()
+                .evrakKopyalamaSorusununGeldiginiGorme()
+                .evrakKopyalaEvet();
+
+
+
+
+
+
+        ;
 
         evrakDetayiPage
                 .evrakImzala();
