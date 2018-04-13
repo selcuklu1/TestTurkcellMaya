@@ -16,6 +16,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static pages.pageData.alanlar.BilgiSecimTipi.BIRIM;
 import static pages.pageData.alanlar.BilgiSecimTipi.KULLANICI;
+import static pages.pageData.alanlar.BilgiSecimTipi.KURUM;
 import static pages.pageData.alanlar.OnayKullaniciTipi.*;
 
 /**
@@ -606,13 +607,13 @@ public class EvrakGeriAlmaTest extends BaseTest {
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
         EvrakOnizleme evrakOnizleme;
 
-        login(parafci);
+        login(koordeneli);
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
         page.bilgileriTab()
                 .konuKoduSec("010.01")
                 .konuDoldur(konu)
                 .kaldiralacakKlasorleriSec("Diğer")
-                .bilgiSec(BIRIM, parafci.getBirimAdi())
+                .bilgiSec(KURUM, "Cumhurbaşkanlığı")
                 .onayAkisiTemizle()
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
