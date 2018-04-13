@@ -176,6 +176,13 @@ public class EvrakDogrulama extends BaseTest {
         rolAdi = profil.getAllRoles().get(0);
 
         rolYonetimiPage = new RolYonetimiPage();
+        rolYonetimiPage.openPage()
+                .sorgulamadaAdGir(rolAdi)
+                .ara()
+                .rolListesindeKayitBul(text(rolAdi))
+                .bulunanRoldeAksiyonlarTikla()
+                .aksiyonListesindeAdGirilir(aksiyonAdi);
+
         aksiyonAranirYoksaEklenir(user, rolAdi, aksiyonAdi, rolYonetimiPage);
 
         rolYonetimiPage
@@ -191,12 +198,6 @@ public class EvrakDogrulama extends BaseTest {
 
     @Step("\"{aksiyonAdi}\" aksiyon yoksa eklenir")
     private void aksiyonAranirYoksaEklenir(User user, String rolAdi, String aksiyonAdi, RolYonetimiPage rolYonetimiPage) {
-        rolYonetimiPage.openPage()
-                .sorgulamadaAdGir(rolAdi)
-                .ara()
-                .rolListesindeKayitBul(text(rolAdi))
-                .bulunanRoldeAksiyonlarTikla()
-                .aksiyonListesindeAdGirilir(aksiyonAdi);
 
         if (!rolYonetimiPage.aksiyonListesindeKayitVarMi(text(aksiyonAdi))) {
             rolYonetimiPage
