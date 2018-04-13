@@ -937,7 +937,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .biriminOnaydialoguKontrolu()
                 .popupIslemOnayiAciklamaDoldur("Ts için yazılmıştır")
                 .popupIslemOnayiEvet()
-                .islemMesaji().dikkatOlmali("Birimde tanımlı kullanıcılar bulunmaktadır. Lütfen kullanıcıları başka birime taşıyınız ya da siliniz.");
+                .islemMesaji().isDikkat("Birimde tanımlı kullanıcılar bulunmaktadır. Lütfen kullanıcıları başka birime taşıyınız ya da siliniz.");
 
         Thread.sleep(500);
 
