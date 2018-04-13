@@ -440,10 +440,14 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage ekOnizlemePDFKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
         switchTo().frame($("iframe[class='onizlemeFrame']"));
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
+
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
@@ -523,10 +527,13 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         Selenide.sleep(3000);
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
@@ -573,10 +580,14 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         Selenide.sleep(3000);
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
+
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
