@@ -568,11 +568,17 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .islemMesaji().basariliOlmali();
 
         login(kontolcu);
-        kontrolBekleyenlerPage = new KontrolBekleyenlerPage().openPage();
-        kontrolBekleyenlerPage.searchTable().findRowAndSelect(text(konu))
-                .evrakPageButtons().kontrolEt();
+        new KontrolBekleyenlerPage().openPage().searchTable().findRowAndSelect(text(konu));
         evrakOnizleme = new EvrakOnizleme();
-        evrakOnizleme.new EvrakGecmisi()
+        evrakOnizleme.new KontrolEt().kontolEtEkrani(
+                text(PARAFLAMA.getOptionText() + "\n" + parafci.getFullname())
+                ,text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname())
+                ,text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+                .onayla()
+                .islemMesaji().basariliOlmali();
+
+        new KontrolEttiklerim().openPage().searchTable().findRowAndSelect(text(konu));
+        evrakOnizleme.new EvrakGecmisi().tabiAc()
                 .sonHareketKontrol(text("İmza bekliyor"), text(imzaci.getFullname()))
                 .evrakPageButtons().geriAl()
                 .geriAlGeriAl()
