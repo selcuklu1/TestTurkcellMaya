@@ -588,7 +588,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .geriAlGeriAl()
                 .islemMesaji().basariliOlmali();
 
-        new KoordineBekleyenlerPage().openPage()
+        new KontrolBekleyenlerPage().openPage()
                 .searchTable().findRowAndSelect(text(konu))
                 .gonderenNotuTooltip(geriAlNotu);
 
