@@ -532,6 +532,30 @@ public class BirimYonetimiPage extends MainPage {
         return this;
     }
 
+    @Step("Antent Özel bilgisi alanlar doldur")
+    public BirimYonetimiPage antetOzelBilgisiTumuDoldur(String ozel1,String ozel2,String ozel3,String ozel4){
+        Allure.addAttachment("1 inci antet satırını doldur:"+ozel1,"");
+        $$("span[id$='_display']").get(0).click();
+        $("[id='birimYonetimiEditorForm:headerSatir0'] input[id^='birimYonetimiEditorForm:j_idt']").setValue(ozel1);
+        $$("span[id$='_editor'] button[class$='save']").get(0).click();
+
+        Allure.addAttachment("2 inci antet satırını doldur:"+ozel2,"");
+        $$("span[id$='_display']").get(1).click();
+        $("[id='birimYonetimiEditorForm:headerSatir1'] input[id^='birimYonetimiEditorForm:j_idt']").setValue(ozel2);
+        $$("span[id$='_editor'] button[class$='save']").get(1).click();
+
+        Allure.addAttachment("3 inci antet satırını doldur:"+ozel3,"");
+        $$("span[id$='_display']").get(2).click();
+        $("[id='birimYonetimiEditorForm:headerSatir2'] input[id^='birimYonetimiEditorForm:j_idt']").setValue(ozel3);
+        $$("span[id$='_editor'] button[class$='save']").get(2).click();
+
+        Allure.addAttachment("4 inci antet satırını doldur:"+ozel4,"");
+        $$("span[id$='_display']").get(3).click();
+        $("[id='birimYonetimiEditorForm:headerSatir3'] input[id^='birimYonetimiEditorForm:j_idt']").setValue(ozel4);
+        $$("span[id$='_editor'] button[class$='save']").get(3).click();
+        return this;
+    }
+
     @Step("Birim Yönetimi alan kontrolleri")
     public BirimYonetimiPage birimYonetimiAlanKontrolleri() {
 
