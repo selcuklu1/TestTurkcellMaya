@@ -2946,8 +2946,8 @@ public class EvrakOlusturPage extends MainPage {
 //        if(antetDefault1.equals("") && antetDefault2.equals(""))
 //            ozelFlag =false;
 
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),ozelFlag, "Default Antet Kontrol");
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),ozelFlag, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
