@@ -77,8 +77,8 @@ public class AntetIslemleri extends BaseTest {
         String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
-//        String user1 = "Gökçe ŞAHİN";
-        String user1 = "Antet otomasyontest";
+        String user1 = "Gökçe ŞAHİN";
+//        String user1 = "Antet otomasyontest";
         String user1Details = "Antet Güncel Birim";
         String user2 = "Antet İSLEMLERİ";
         String details = "Antet Üst Birim";
@@ -184,8 +184,8 @@ public class AntetIslemleri extends BaseTest {
                 .parafla()
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-//        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
-        login("antetotomasyontest","123");
+        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
+//        login("antetotomasyontest","123");
         birimDegistirme("Antet Üst Birim");
         imzaBekleyenlerPage
                 .openPage()
@@ -342,7 +342,7 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,"","","")
+                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
                 .ekListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim);
     }
