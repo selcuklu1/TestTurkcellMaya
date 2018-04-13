@@ -1760,7 +1760,7 @@ public class AntetIslemleri extends BaseTest {
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
-        String user1 = "Gökçe ŞAHİN";
+        String user1 = "Antet İslemleri";
         String user1Details = "Antet Güncel Birim";
         String user2 = "Yasemin Çakıl Akyol";
         String details = "BHUPGMY";
@@ -1835,9 +1835,9 @@ public class AntetIslemleri extends BaseTest {
                 .dagitimiEkYapSec(true)
                 .dagitimiEkYapSecKontrol()
                 .onayAkisiEkle()
-                .onayAkisiKullaniciKontrolu(user2 , "Paraflama", details)
+                .onayAkisiKullanicilariTemizle()
                 .onayAkisiTumuSec()
-                .onayAkisiKullaniciEkle(user1,"Antet Üst Birim")
+                .onayAkisiKullaniciEkle(user1,guncelBirim)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
                 .onayAkisiKullaniciKontrolu(user1 , "İmzalama")
                 .kullan();
@@ -1860,13 +1860,13 @@ public class AntetIslemleri extends BaseTest {
                 .type(editorIcerik)
                 .editorShouldHave(text(editorIcerik));
 
-
         evrakOlusturPage
-                .parafla()
+                .kaydetOnayaSun()
+                .kaydetOnayaSunAciklamaDoldur2(editorIcerik)
                 .islemMesaji().basariliOlmali("İşlem başarılıdır!");
 
-        login(TestData.usernameGSAHIN,TestData.passwordGSAHIN);
-        birimDegistirme("Antet Üst Birim");
+        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
+        birimDegistirme(guncelBirim);
 
         imzaBekleyenlerPage
                 .openPage()
@@ -1882,9 +1882,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,"","","")
+                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,"");
+                .ekListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim);
             }
 
     @Severity(SeverityLevel.CRITICAL)
