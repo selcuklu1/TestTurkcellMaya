@@ -27,6 +27,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1", "Altyapı ve Sistem Yönetim Uzmanı");
     User user5 = new User("user5", "123", "User5 TEST", "AnaBirim1", "Ağ (Network) Uzmanı");
+    User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1");
     User optiim = new User("optiim", "123", "Optiim TEST", "Optiim Birim", "Ağ (Network) Uzman Yardımcısı");
     //User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YGD/BHUPGMY", "Genel Müdür");
     User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Genel Müdür");
@@ -795,7 +796,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User parafci = user1;
         User kontolcu = user5;
         User koordeneli = optiim;
-        User kontolcu2 = ztekin;
+        User kontolcu2 = user2;
         User imzaci = ztekin;
 
         String konu = "TS0976a - " + getDateTime();
@@ -831,7 +832,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu.getFullname()))
                 .kontolEtEkrani(text("Koordine\n" + koordeneli.getFullname()))
                 .kontolEtEkrani(text(KONTROL.getOptionText() + "\n" + kontolcu2.getFullname()))
-                //.kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
+                .kontolEtEkrani(text(IMZALAMA.getOptionText() + "\n" + imzaci.getFullname()))
                 .onayla()
                 .islemMesaji().basariliOlmali();
 
