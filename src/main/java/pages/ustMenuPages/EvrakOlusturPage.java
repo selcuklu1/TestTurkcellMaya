@@ -10,6 +10,10 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -4769,6 +4773,28 @@ public class EvrakOlusturPage extends MainPage {
                 .editorIcerikDoldur(icerik);
         parafla();
     }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturParafla(String konu,String konuKodu,String kaldirilacakKlasor,String icerik, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
+
+        openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2, kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2, OnayAkisiKullanici2Turu)
+                .kullan();
+        editorTabAc()
+                .editorIcerikDoldur(icerik);
+        parafla();
+    }
+
+
 
     @Step("Evrak türüne göre vrak oluşturulur.")
     public void evrakOlusturEvrakTuruneGore(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu, String evrakTuru, String sablon) {

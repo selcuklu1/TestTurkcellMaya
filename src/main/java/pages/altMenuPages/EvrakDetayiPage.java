@@ -16,6 +16,12 @@ import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 public class EvrakDetayiPage extends MainPage {
 
     SelenideElement pageTitle = $(By.xpath("//span[. = 'Evrak Detayı' and @class = 'ui-dialog-title']"));
+    ElementsCollection txtkonuKodu = $$("[id^='inboxItemInfoForm:evrakBilgileriList'][id$='konuKoduLov:lovContainer']");
+    SelenideElement txtkonu = $("[id$='konuTextArea']");
+    ElementsCollection secilenKaldirilicakKlasor = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']");
+    SelenideElement cmbEvrakTuru = $("[id$='evrakTuruCombo']");
+    SelenideElement cmbGizlilik = $("[id$='guvenlikKodu']");
+    ElementsCollection cmbGeregiSecilen = $$("[id$='geregiLov:LovSecilenTable_data']");
     SelenideElement btnTebellugEt = $("button .tebellugEt");
     SelenideElement btnPanelHayir = $(By.id("mainInboxForm:tebellugEtHayirButton"));
     SelenideElement dialogTabMenuRight = $(By.id("inboxItemInfoForm:dialogTabMenuRight:dialogTabMenuRight"));
@@ -176,12 +182,12 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("\"{text}\" butonu kontrolu. Ekranda görünüyor mu : {shoulBeExist} ")
-    public EvrakDetayiPage butonKontrolu(String text,boolean shoulBeExist) {
+    public EvrakDetayiPage butonKontrolu(String text, boolean shoulBeExist) {
         SelenideElement btn = $(By.xpath("descendant::*[text()='" + text + "']/ancestor::tbody[1]//button"));
-        if(shoulBeExist)
-            Assert.assertEquals(btn.isDisplayed(),true);
+        if (shoulBeExist)
+            Assert.assertEquals(btn.isDisplayed(), true);
         else
-            Assert.assertEquals(btn.isDisplayed(),false);
+            Assert.assertEquals(btn.isDisplayed(), false);
         return this;
     }
 
@@ -215,7 +221,7 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Kullanici Grup Detay ekranı kapatılır.")
-    public EvrakDetayiPage kullaniciGrupDetayEkraniKapat(){
+    public EvrakDetayiPage kullaniciGrupDetayEkraniKapat() {
         btnKullaniciGrupDetayEkraniKapat.click();
         return this;
     }
@@ -223,7 +229,7 @@ public class EvrakDetayiPage extends MainPage {
     @Step("Kullanici Grup Detay ekran kontrolü yapılır.")
     public EvrakDetayiPage tebligEtKullaniciGrupDetayKontrol() {
         SelenideElement popUpKullaniciGrupDetay = $(By.id("inboxItemInfoForm:tebligKullaniciGrubuDetayViewDialog"));
-        Assert.assertEquals(popUpKullaniciGrupDetay.isDisplayed(),true,"Kullanıcı Grup Detay popupı gelir.");
+        Assert.assertEquals(popUpKullaniciGrupDetay.isDisplayed(), true, "Kullanıcı Grup Detay popupı gelir.");
         return this;
     }
 
@@ -353,8 +359,8 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Kullanici Lisesi alanında kullaniciListesi kontrolü. \"{kullaniciListesi}\" , {shouldBeExist}")
-    public EvrakDetayiPage kullaniciListesiKontrolu(String kullaniciListesi,boolean shouldBeExist) {
-        if(shouldBeExist)
+    public EvrakDetayiPage kullaniciListesiKontrolu(String kullaniciListesi, boolean shouldBeExist) {
+        if (shouldBeExist)
             txtKullaniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(1);
         else
             txtKullaniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(0);
@@ -381,7 +387,6 @@ public class EvrakDetayiPage extends MainPage {
     }
 
 
-
     @Step("Kullanici Lisesi alanında \"{kullaniciListesi}\" seçilir. ")
     public EvrakDetayiPage tebligEtKullaniciListesiSec(String kullaniciListesi) {
         txtTebligEtKullniciListesi.selectLov(kullaniciListesi);
@@ -389,8 +394,8 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Kullanici Lisesi alanında kullaniciListesi kontrolü. \"{kullaniciListesi}\" , {shouldBeExist}")
-    public EvrakDetayiPage tebligEtKullaniciListesiKontrolu(String kullaniciListesi,boolean shouldBeExist) {
-        if(shouldBeExist)
+    public EvrakDetayiPage tebligEtKullaniciListesiKontrolu(String kullaniciListesi, boolean shouldBeExist) {
+        if (shouldBeExist)
             txtTebligEtKullniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(1);
         else
             txtTebligEtKullniciListesi.openTreePanel().getSelectableItems().filterBy(text(kullaniciListesi)).shouldHaveSize(0);
@@ -399,9 +404,42 @@ public class EvrakDetayiPage extends MainPage {
     }
 
     @Step("Havale yap ekran geldigi gorulur")
-    public EvrakDetayiPage havaleYapEkranGeldigiGorme(){
+    public EvrakDetayiPage havaleYapEkranGeldigiGorme() {
         boolean durum = $(By.id("inboxItemInfoForm:havaleDagitimLovPanel")).isDisplayed();
-        Assert.assertEquals(durum,true);
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
+    @Step("İçerik alanın {icerik} bilgisi ile doğru geldiği görülür")
+    public EvrakDetayiPage editorIcerigiGeldigiGorme(String icerik) {
+        $$(By.id("cke_96_contents")).filterBy(Condition.text(icerik)).first().isDisplayed();
+        return this;
+    }
+
+    @Step("Alan bilgileri kontrolü")
+    public EvrakDetayiPage bilgilerAlanlarDogruGeldigiGorme(String konukodu, String konu, String kaldirilicakKlasor, String evrakTuru, String gizlilik, String geregi, String onayAkisiKull1, String onayAkisi2) {
+        Allure.addAttachment("Konu kodu alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(txtkonuKodu.filterBy(Condition.text(konukodu)).first().isDisplayed(), true, "Konu Kodu Alanı Görüntülendi");
+
+        Allure.addAttachment("Konu alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(txtkonu.getText(), konu, "Konu Alanı Görüntülendi");
+
+        Allure.addAttachment("Kaldırılacak Klasörler alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(secilenKaldirilicakKlasor.filterBy(Condition.text(kaldirilicakKlasor)).first().isDisplayed(), true, "Kaldırılacak Klasörler Alanı Görüntülendi");
+
+        Allure.addAttachment("Evrak Türü alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(cmbEvrakTuru.getSelectedText(), evrakTuru, "Evrak Türü Alanı Görüntülendi");
+
+        Allure.addAttachment("Gizlilik Derecesi alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(cmbGizlilik.getSelectedText(), gizlilik, "Gizlilik Derecesi Alanı Görüntülendi");
+
+        Allure.addAttachment("Gereği alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals(cmbGeregiSecilen.filterBy(Condition.text(geregi)).first().isDisplayed(), true, "Gereği Alanı Görüntülendi");
+
+        Allure.addAttachment("Onay Akışı alanı doğru bilgiler geldiği görülür", "");
+        Assert.assertEquals($$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisiKull1)).filterBy(Condition.text(onayAkisi2)).first().isDisplayed(), true, "Onay Akışı Alanı Görüntülendi");
+
         takeScreenshot();
         return this;
     }
@@ -426,13 +464,13 @@ public class EvrakDetayiPage extends MainPage {
         Assert.assertEquals(txtIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
         Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
 
-        boolean durum8 =btnIcerikHavaleGonder.isDisplayed();
-        Assert.assertEquals(durum8,true);
-        Allure.addAttachment("Gonder buttonun geldiği görülür","Gonder");
+        boolean durum8 = btnIcerikHavaleGonder.isDisplayed();
+        Assert.assertEquals(durum8, true);
+        Allure.addAttachment("Gonder buttonun geldiği görülür", "Gonder");
 
-        boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,true);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 = btnIcerikHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9, true);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür", "Havale Onayına Gönder");
         return this;
     }
 
@@ -456,17 +494,17 @@ public class EvrakDetayiPage extends MainPage {
         Assert.assertEquals(txtTeslimAlinmayiIcerikIslemSureKontrol.isDisplayed(), true, "İşlem Süre Alanı Görüntülendi");
         Allure.addAttachment("İslem Sure Alanı Görüntülendi : ", "");
 
-        boolean durum9 =btnIcerikHavaleOnayinaGonder.isDisplayed();
-        Assert.assertEquals(durum9,true);
-        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür","Havale Onayına Gönder");
+        boolean durum9 = btnIcerikHavaleOnayinaGonder.isDisplayed();
+        Assert.assertEquals(durum9, true);
+        Allure.addAttachment("Havale Onayına Gönder buttonun geldiği görülür", "Havale Onayına Gönder");
 
-        boolean durum8 =btnIcerikTeslimAlGonder.isDisplayed();
-        Assert.assertEquals(durum8,true);
-        Allure.addAttachment("Teslim Al Gonder buttonun geldiği görülür","Teslim Al Gönder");
+        boolean durum8 = btnIcerikTeslimAlGonder.isDisplayed();
+        Assert.assertEquals(durum8, true);
+        Allure.addAttachment("Teslim Al Gonder buttonun geldiği görülür", "Teslim Al Gönder");
 
-        boolean durum10 =btnIcerikVazgec.isDisplayed();
-        Assert.assertEquals(durum10,true);
-        Allure.addAttachment("Vazgeç buttonun geldiği görülür","Vazgeç");
+        boolean durum10 = btnIcerikVazgec.isDisplayed();
+        Assert.assertEquals(durum10, true);
+        Allure.addAttachment("Vazgeç buttonun geldiği görülür", "Vazgeç");
 
         return this;
     }
@@ -617,7 +655,7 @@ public class EvrakDetayiPage extends MainPage {
     public EvrakDetayiPage eklerinDagitimdaGitmeyecegiYerlerKontroluDagitim1(String dagitim, String ekler) {
         String pdfDagitim = $(By.xpath("//*[@id='viewer']/div/div[2]/div[30]")).getText();
         //String pdfDagitim = $(By.xpath("//*[contains(text(),'"+ekler+"')]")).getText();
-       Assert.assertEquals(pdfDagitim.contains(ekler), true);
+        Assert.assertEquals(pdfDagitim.contains(ekler), true);
 
         return this;
     }
@@ -742,6 +780,7 @@ public class EvrakDetayiPage extends MainPage {
         SelenideElement tabBilgileri = $(By.xpath("//span[. = 'Bilgileri']/../../..//button"));
         BelgenetElement txtOnayAkisi = comboLov("[id^='inboxItemInfoForm:evrakBilgileriList:'][id$=':akisLov:LovText']");
         SelenideElement txtKonu = $(By.id("inboxItemInfoForm:evrakBilgileriList:3:konuTextArea"));
+
         private BilgileriTab open() {
             tabBilgileri.click();
             return this;
@@ -755,19 +794,19 @@ public class EvrakDetayiPage extends MainPage {
         }
 
         @Step("Kopyası oluşturulan evrak bilgilerinin aynısının geldiği ve değiştirilebildiği görülür")
-        public BilgileriTab kopyasiOlusturulanEvrakBilgilerininDegitirilebilgiGorme(){
+        public BilgileriTab kopyasiOlusturulanEvrakBilgilerininDegitirilebilgiGorme() {
             boolean durum = txtKonu.shouldBe(visible).exists();
-            Assert.assertEquals(durum,true);
+            Assert.assertEquals(durum, true);
             return this;
         }
-        
+
         @Step("Kaldırılacak klasör, Gereği, Onay akışı, bilgilerinin girildiği şekilde geldiği görülür.")
-        public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor,String geregi,String onayAkisi){
-            boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size()==1;
-            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable']").filterBy(Condition.text(geregi)).size()==1;
-            boolean durum2 = $$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisi)).size()==1;
-            Assert.assertEquals(durum,durum1);
-            Assert.assertEquals(durum2,durum1);
+        public BilgileriTab bilgileriTabKaldirilacakKlasorOnayAkisiGeregiGeldigiGorme(String kaldirilacakKlasor, String geregi, String onayAkisi) {
+            boolean durum = $$("[id$='eklenecekKlasorlerLov:LovSecilenTable_data']").filterBy(Condition.text(kaldirilacakKlasor)).size() == 1;
+            boolean durum1 = $$("[id$='geregiLov:LovSecilenTable']").filterBy(Condition.text(geregi)).size() == 1;
+            boolean durum2 = $$("[id$='akisLov:LovSecilen']").filterBy(Condition.text(onayAkisi)).size() == 1;
+            Assert.assertEquals(durum, durum1);
+            Assert.assertEquals(durum2, durum1);
             return this;
         }
     }
@@ -783,23 +822,23 @@ public class EvrakDetayiPage extends MainPage {
 
 
         @Step("Eklenen dosyanın geldiği görülür.")
-        public EkleriTab eklenenDosyaninGeldigiGorulur(String dosya){
-            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text(dosya)).size()==1;
-            Assert.assertEquals(durum,true);
+        public EkleriTab eklenenDosyaninGeldigiGorulur(String dosya) {
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text(dosya)).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
         @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
-        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur(){
-            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
-            Assert.assertEquals(durum,true);
+        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulur() {
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
         @Step("Kopyası oluşturulan evrak eklerinin aynısının geldiği ve değiştirilebildiği görülür")
-        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulurDegistirelbildigiGorme(){
-            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
-            Assert.assertEquals(durum,true);
+        public EkleriTab eklenenDosyaninKopyalananDosyaAyniGeldigiGorulurDegistirelbildigiGorme() {
+            boolean durum = $$(By.id("inboxItemInfoForm:ekListesiDataTable_data")).filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
@@ -816,16 +855,16 @@ public class EvrakDetayiPage extends MainPage {
 
 
         @Step("Cevap yazılan evrak bilgisinin geldiği görülür.")
-        public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme(){
-            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size()==1;
-            Assert.assertEquals(durum,true);
+        public IlgileriTab cevapYazilanEvrakBilgisiGeldigiGorme() {
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 
         @Step("Kopyası oluşturulan evrak ilgilerinin aynısının geldiği ve değiştirilebildiği görülür")
-        public IlgileriTab cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme(){
-            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size()==1;
-            Assert.assertEquals(durum,true);
+        public IlgileriTab cevapYazilanEvrakBilgisiKopyalananBosEvrakAyniGeldigiGorme() {
+            boolean durum = $$("[id='inboxItemInfoForm:ilgiListesiDataTable_data'] > tr").filterBy(Condition.text("Listelenecek Veri Bulunamamıştır.")).size() == 1;
+            Assert.assertEquals(durum, true);
             return this;
         }
 

@@ -61,46 +61,58 @@ public class EvrakKopyalamaTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS2233: Beklemeye alınanlar listesinden evrak kopyalanması ve imzalanması")
     public void TS2233() {
-
+        String evrakTarihi = getSysDateForKis();
         String konuKoduTS2233 = "TS2233-" + createRandomNumber(15);
+        String konuKodu = "Diğer";
+        String evrakturu="Resmi Yazışma";
+        String gizlilikderecesi ="Normal";
+        String ivedilik ="Normal";
+        String kaldirilicakKlasor = "Diğer";
+        String icerik = createRandomText(15);
         String kurum = "BÜYÜK HARFLERLE KURUM";
         String kullanici = "Mehmet Bozdemir";
+        String kullanici2 = "Yasemin Çakıl Akyol";
         String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
-
+        String basariMesaji = "İşlem başarılıdır!";
+        String mesaj ="Evrakı kopyalamak istediğinize emin misiniz?";
         login(userYakyol);
 
         reusableSteps
-                .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
+                .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,konuKodu,kaldirilicakKlasor,icerik,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
         login(userMbozdemir);
         beklemeyeAlinanlarPage
                 .openPage()
                 .evrakSecKonuyagore(konuKoduTS2233)
                 .evrakKopyalaGeldigiGorme()
                 .evrakKopyala()
+                .evrakKopyalamaSorusununGeldiginiGormeUyariMesaj(mesaj)
                 .evrakKopyalaEvet()
                 .islemMesaji().basariliOlmali(basariMesaji2);
 
         taslakEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKoduTS2233);
+                .evrakGeldigiGorme(konuKoduTS2233,kurum,evrakTarihi)
+                .evrakNoIleIcerikGoster(konuKoduTS2233);
+
+        evrakDetayiPage
+                 .editorIcerigiGeldigiGorme(icerik)
+                .bilgileriTabAc();
+        evrakDetayiPage
+                .bilgilerAlanlarDogruGeldigiGorme(konuKodu,konuKoduTS2233,kaldirilicakKlasor,evrakturu,gizlilikderecesi,kurum,kullanici,kullanici2);
+
+        //İmzala butonu 6.adımda gelmektedir. Beklemeye alınanlar sayfası bu nedenle tekrar açılarak bu alanda imzalanmktadır
 
         beklemeyeAlinanlarPage
                 .openPage()
                 .evrakSecKonuyagore(konuKoduTS2233)
                 .evrakKopyalaGeldigiGorme()
                 .evrakKopyala()
-                .evrakKopyalamaSorusununGeldiginiGorme()
+                .evrakKopyalamaSorusununGeldiginiGormeUyariMesaj(mesaj)
                 .evrakKopyalaEvet();
 
-
-
-
-
-
-        ;
-
         evrakDetayiPage
-                .evrakImzala();
+                .evrakImzala()
+                .islemMesaji().basariliOlmali(basariMesaji);
     }
 
     @Severity(SeverityLevel.CRITICAL)

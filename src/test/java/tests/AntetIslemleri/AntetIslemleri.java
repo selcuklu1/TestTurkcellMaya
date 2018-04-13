@@ -1773,9 +1773,9 @@ public class AntetIslemleri extends BaseTest {
         String antetGuncelBirimTipi = "Normal";
         String antetGuncelBirim = "Normal Antet";
         String antetUstBirimTipi = "Normal";
-        String antetUstBirim = "Üst Birim | Normal Antet";
+        String antetUstBirim = "Üst Birim Normal Antet";
         String antetEnUstBirimTipi = "Normal";
-        String antetEnUstBirim = "İki Üst Birim | Normal Antet";
+        String antetEnUstBirim = "İki Üst Birim Normal Antet";
         String antetDefault1 = "T.C.";
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
@@ -2450,7 +2450,7 @@ public class AntetIslemleri extends BaseTest {
         String testid = "TS2398";
         String konu = "TS2398-" + getSysDate();
         String konuKodu = "Kanunlar";
-        String kaldirilacakKlasorler = "TS2372";
+        String kaldirilacakKlasorler = "Kanunlar";
         String geregiKurum = "Adalet Bakanlığı Döner Sermaye İşletmesi";
         String editorIcerik = "Bu bir deneme mesajıdır. Lütfen dikkate almayınız.";
 //        String basariMesaji = "İşlem başarılıdır!";
@@ -2460,12 +2460,14 @@ public class AntetIslemleri extends BaseTest {
         String details = "Antet Üst Birim";
         String pathToFileText = getUploadPath() + "Otomasyon.pdf";
         String fileName = "Otomasyon.pdf";
+        String antetGuncelBirimTipi = "Antet Yok";
 
         String guncelBirim = "Antet Güncel Birim";
         String ustBirim = "Antet Üst Birim";
         String antetGuncelBirim = "Özel Antet";
         String antetUstBirim = "";
         String antetEnUstBirimTipi = "Özel";
+        String antetUstBirimTipi = "Antet Yok";
         String antetEnUstBirim = "İki Üst Birim Özel Antet";
         String enUstBirim = "GENEL MÜDÜRLÜK MAKAMI";
         String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
@@ -2475,6 +2477,18 @@ public class AntetIslemleri extends BaseTest {
         testStatus(testid, "PreCondition");
         birimYonetimiPage
                 .openPage()
+                .birimFiltreDoldur(guncelBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetGuncelBirimTipi)
+                .kaydet()
+
+                .birimFiltreDoldur(ustBirim)
+                .ara()
+                .aktiflerIlkBirimGuncelle()
+                .antetTipiSec(antetUstBirimTipi)
+                .kaydet()
+
                 .birimFiltreDoldur(enUstBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
@@ -2485,13 +2499,10 @@ public class AntetIslemleri extends BaseTest {
 
         testStatus(testid, "Test Başladı");
 
-        login(TestData.usernameAntetIslem1,TestData.passwordAntetIslem1);
-        birimDegistirme(enUstBirim);
+        login(TestData.userYakyol);
         evrakOlusturPage
                 .openPage()
-                .editorTabAc()
-                .editorAntetKontrol("","","", "",antetEnUstBirim);
-
+                .editorTabAc();
 
         editor
                 .type(editorIcerik)
@@ -2516,6 +2527,10 @@ public class AntetIslemleri extends BaseTest {
                 .bilgiSecimTipiSecByText("Kurum")
                 .bilgiDoldur(bilgiKurum,"Kurum")
                 .onayAkisiEkle()
+                .onayAkisiTumuSec()
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiKullaniciEkle(user2,user1Details)
+                .onayAkisiKullaniciTipiSec(user2,"Paraflama")
                 .onayAkisiKullaniciKontrolu(user2 , "Paraflama", user1Details)
                 .onayAkisiKullaniciEkle(user1,details)
                 .onayAkisiKullaniciTipiSec(user1,"İmzalama")
