@@ -15,6 +15,7 @@ import pages.newPages.EvrakOlusturPage;
 import pages.pageComponents.DagitimHitapDuzenle;
 import pages.pageComponents.EvrakOnizleme;
 import pages.pageComponents.PDFOnizleme;
+import pages.pageComponents.TuzelKisiEkleDialog;
 import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
@@ -37,7 +38,7 @@ import static pages.pageData.alanlar.DagitimElemanlariTipi.KULLANICI;
  */
 //@Test(suiteName = "Dağıtım Plan Yönetimi")
 @Feature("Dağıtım Planı Yönetimi")
-@Listeners({TextReport.class})
+//@Listeners({TextReport.class})
 @Report
 public class DagitimPlaniYonetimiTest extends BaseTest {
 
@@ -722,8 +723,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         });*/
     }
 
-    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Tüzel Kişi Arama Detayları Alan Kontrolleri", enabled = true, priority = 4)
-    public void TS2296a() {
+    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Tüzel Kişi Arama Detayları Alan Kontrolleri", enabled = false, priority = 4)
+    public void TS2296a0() {
         User user = user1;
         login(user);
 
@@ -746,6 +747,72 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
                 .alanlariKonrolu()
                 .tuzelKisiAdiGirilir(tuzelKisi)
+                .uyduTvSecilir(true)
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true)
+                .tuzelKisiEkle();
+
+        page.getDagitimHitapDuzenlemeSilButton(tuzelKisi, "bulunur").shouldBe(visible);
+        page.getDagitimHitapDuzenlemeGuncelleButton(tuzelKisi, "bulunur").shouldBe(visible);
+        page.ekle(text(tuzelKisi));
+    }
+
+    @Test(description = "TS2296: Dağıtım Planı Kaydet/Güncelle Ekranı Tüzel Kişi Arama Detayları Alan Kontrolleri", enabled = true, priority = 4)
+    public void TS2296a() {
+        User user = user1;
+        login(user);
+
+        String planAdi = "TS2296a_" + getSysDate();
+        System.out.println("Dağınım Planı: " + planAdi);
+
+        String tuzelKisi = "TS2296a Uydu Tv";
+        String vergiNo = "11112222";
+        String tipi = "MEDYA ŞİRKETİ";
+
+        DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage().openPage();
+
+        page.yeni();
+        //Step 6 Dağıtım elemanları eklemeden kaydet
+        page.adiGir(planAdi)
+                .aciklamaGir("TS2296 açıklama")
+                .kullanildigiBirimSec(user.getBirimAdi())
+                .altBirimlerGorsunSec(true)
+                .dagitimElemanlariTipiSec("Tüzel Kişi");
+
+        TuzelKisiEkleDialog dialog = page.tuzelKisiAramaDetaylari();
+        dialog.ara()
+                .islemMesaji().dikkatOlmali("Arama kriteri seçiniz!");
+
+        dialog
+                .tuzelKisiAdiGirilir(tuzelKisi)
+                .vergiKimlikNumarasiGirilir(vergiNo)
+                .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true);
+
+        dialog
+                .tuzelKisiAdiGirilir(tuzelKisi)
+                .vergiKimlikNumarasiGirilir("")
+                .tuzelKisiTipiSecilir("Seçiniz")
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true);
+
+        dialog
+                .tuzelKisiAdiGirilir("")
+                .vergiKimlikNumarasiGirilir(vergiNo)
+                .tuzelKisiTipiSecilir("Seçiniz")
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true);
+
+        dialog
+                .tuzelKisiAdiGirilir("")
+                .vergiKimlikNumarasiGirilir("")
+                .tuzelKisiTipiSecilir("MEDYA ŞİRKETİ")
+                .ara()
+                .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true);
+
+        dialog
+                .alanlariKonrolu()
                 .uyduTvSecilir(true)
                 .ara()
                 .listelenKayidinCheckboxIsaretlenir(text(tuzelKisi), true)
@@ -787,8 +854,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         //page.dagitimPlaniOlustur(adi, "Medya Şirketi", user.getBirimAdi(),true, "Tüzel Kişi", tuzelKisi.get(0));
     }
 
-    @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = true)
-    public void TS1942() {
+    @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = false)
+    public void TS1942_old() {
         User parafci = mbozdemir;
         User imzaci = ztekin;
         //User user = optiim;
@@ -837,6 +904,59 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         //login(birimDagitimPlanUser);
         new TeslimAlinmayiBekleyenlerPage().openPage()
                 .searchTable().findRows(text(konu)).shouldHaveSize(1);
+    }
+
+    @Test(description = "TS1942: Onay Akışındaki sırasında dağıtım planının güncellenemesi", enabled = true)
+    public void TS1942() {
+        User parafci = mbozdemir;
+        User imzaci = ztekin;
+
+        User dagitimUser1 = user1;
+        User dagitimUser2 = user2;
+        User dagitimBirimUser = user4;
+
+        String konu = "TS1942_" + getSysDate();
+        System.out.println("Dağınım Planı: " + konu);
+        String aciklama = "Dağıtım Elemanları: 2 kullanıcı + 1 birim";
+
+        String[][] dagitimElemanlari = new String[][]{
+                {KULLANICI.getOptionText(), user1.getFullname(), user1.getBirimAdi()}
+                , {KULLANICI.getOptionText(), user2.getFullname(), user2.getBirimAdi()}
+                , {BIRIM.getOptionText(), dagitimBirimUser.getBirimAdi(), ""}
+        };
+
+        login(parafci);
+        DagitimPlaniYonetimiPage dagitimPlaniYonetimiPage = new DagitimPlaniYonetimiPage()
+                .openPage()
+                .dagitimPlaniOlustur(konu, aciklama, parafci.getBirimAdi(), true, dagitimElemanlari);
+
+        new ReusableSteps().evrakOlusturVeParafla(konu, GeregiSecimTipi.DAGITIM_PLANLARI, konu, parafci, imzaci);
+
+
+        dagitimPlaniYonetimiPage.openPage()
+                .bulVeGuncelleTikla(konu)
+                .dagitimPlaniListesindeAra(text(dagitimUser1.getFullname()))
+                .sil(text(dagitimUser1.getFullname()))
+                .kaydet()
+                .islemMesaji().basariliOlmali();
+
+        login(imzaci);
+        new ImzaBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu))
+                .evrakPageButtons().evrakImzala()
+                .islemMesaji().basariliOlmali();
+
+        login(dagitimUser1);
+        new GelenEvraklarPage().openPage()
+                .searchTable().findRowAndSelect(text(konu));
+
+        login(dagitimUser2);
+        new GelenEvraklarPage().openPage()
+                .searchTable().findRowAndSelect(text(konu));
+
+        login(dagitimBirimUser);
+        new TeslimAlinmayiBekleyenlerPage().openPage()
+                .searchTable().findRowAndSelect(text(konu));
     }
 
     @Test(description = "TS1949: Dağıtım Hitap Düzenleme (Evrak Oluştur Ekranından)", enabled = true)
