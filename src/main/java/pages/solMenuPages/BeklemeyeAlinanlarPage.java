@@ -29,6 +29,9 @@ public class BeklemeyeAlinanlarPage extends MainPage {
     //Filtreler Acordion
     SelenideElement acordion = $(By.id("mainInboxForm:inboxDataTable:filtersAccordion"));
     SelenideElement btnEvrakKopyala = $("[class='ui-button-icon-left ui-icon evrakKopyala']");
+
+    SelenideElement evrakKopyalamaSorusu = $("[onload] div:nth-child(106) .ui-dialog-content");
+
     SelenideElement btnEvrakKopyalaEvet = $(By.id("evrakCopyConfirmForm:copyEvrakEvetButton"));
 
     @Step("Beklemeye Alınanlar sayfası aç")
@@ -64,6 +67,13 @@ public class BeklemeyeAlinanlarPage extends MainPage {
     @Step("Evrak kopyala ikonunun geldiği görülür")
     public BeklemeyeAlinanlarPage evrakKopyalaGeldigiGorme(){
         Assert.assertEquals(btnEvrakKopyala.isDisplayed(),true);
+        return this;
+    }
+
+    @Step("Evrakı kopyalamak istediğinize emin misiniz? sorusunun geldiği görülür.")
+    public BeklemeyeAlinanlarPage evrakKopyalamaSorusununGeldiginiGorme(){
+        Assert.assertEquals(evrakKopyalamaSorusu.isDisplayed(),true);
+        
         return this;
     }
 
