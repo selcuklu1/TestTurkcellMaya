@@ -859,6 +859,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
         String konu = "TS0976b - " + getDateTime();
         String kurum = "Cumhurbaşkanlığı";
+        String birim = "GENEL MÜDÜRLÜK MAKAMI";
         String geriAlNotu = "Gerial not teksti";
 
         EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
@@ -869,7 +870,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         System.out.println("Konu: " + konu);
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
         page.bilgileriTab()
-                .alanlariDoldur(konu, GeregiSecimTipi.KURUM, kurum)
+                .alanlariDoldur(konu, GeregiSecimTipi.BIRIM, birim)
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
