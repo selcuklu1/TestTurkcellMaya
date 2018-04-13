@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.MainPage;
 import pages.pageData.SolMenuData;
 
@@ -57,6 +58,12 @@ public class BeklemeyeAlinanlarPage extends MainPage {
     @Step("Evrak kopyala tıklanır")
     public BeklemeyeAlinanlarPage evrakKopyala(){
         btnEvrakKopyala.click();
+        return this;
+    }
+
+    @Step("Evrak kopyala ikonunun geldiği görülür")
+    public BeklemeyeAlinanlarPage evrakKopyalaGeldigiGorme(){
+        Assert.assertEquals(btnEvrakKopyala.isDisplayed(),true);
         return this;
     }
 

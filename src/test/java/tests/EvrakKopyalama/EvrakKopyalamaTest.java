@@ -74,6 +74,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         beklemeyeAlinanlarPage
                 .openPage()
                 .evrakSecKonuyagore(konuKoduTS2233)
+                .evrakKopyalaGeldigiGorme()
                 .evrakKopyala()
                 .evrakKopyalaEvet()
                 .islemMesaji().basariliOlmali(basariMesaji2);
