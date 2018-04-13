@@ -801,8 +801,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         String[][] dagitimElemanlari = new String[][]{
                 {KULLANICI.getOptionText(), parafci.getFullname(), ""}
-               /* , {KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
-                , {BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}*/
+                , {KULLANICI.getOptionText(), birimDagitimPlanUser.getFullname(), birimDagitimPlanUser.getBirimAdi()}
+                , {BIRIM.getOptionText(), imzaci.getBirimAdi(), ""}
 
                 //,{KULLANICI.getOptionText(), silenecekDagitimPlanUser.getFullname(), ""}
                 //,{KULLANICI.getOptionText(), user.getFullname()}

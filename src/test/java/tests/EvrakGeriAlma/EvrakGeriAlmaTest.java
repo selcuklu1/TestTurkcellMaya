@@ -571,7 +571,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         kontrolBekleyenlerPage.searchTable().findRowAndSelect(text(konu))
                 .evrakPageButtons().kontrolEt();
         evrakOnizleme = new EvrakOnizleme();
-        evrakOnizleme.new EvrakGecmisi().tabiAc()
+        evrakOnizleme.new EvrakGecmisi()
                 .sonHareketKontrol(text("İmza bekliyor"), text(imzaci.getFullname()))
                 .evrakPageButtons().geriAl()
                 .geriAlGeriAl()
@@ -796,7 +796,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User kontolcu = user5;
         User koordeneli = optiim;
         User kontolcu2 = ztekin;
-        //User imzaci = ztekin;
+        User imzaci = ztekin;
 
         String konu = "TS0976a - " + getDateTime();
         String kurum = "Cumhurbaşkanlığı";
@@ -816,7 +816,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
                 .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu2, KONTROL)
-                //.anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
                 .kullan();
         page.editorTab().openTab().getEditor().type("Editör tekst")
                 .evrakPageButtons().evrakParafla()
@@ -859,6 +859,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
 
         String konu = "TS0976b - " + getDateTime();
         String kurum = "Cumhurbaşkanlığı";
+        String birim = "GENEL MÜDÜRLÜK MAKAMI";
         String geriAlNotu = "Gerial not teksti";
 
         EvrakOnizleme evrakOnizleme = new EvrakOnizleme();
@@ -869,7 +870,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         System.out.println("Konu: " + konu);
         OlurYazisiOlusturPage page = new OlurYazisiOlusturPage().openPage();
         page.bilgileriTab()
-                .alanlariDoldur(konu, GeregiSecimTipi.KURUM, kurum)
+                .alanlariDoldur(konu, GeregiSecimTipi.BIRIM, birim)
                 .onayAkisiEkleButonaTikla()
                 .anlikOnayAkisKullanicininTipiSec(parafci, PARAFLAMA)
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
