@@ -2952,6 +2952,8 @@ public class EvrakOlusturPage extends MainPage {
         return this;
     }
 
+
+
     @Step("Sayı alanındaki idari birim kodunun güncel hali ile geldiği görülür")
         public EditorTab sayiAlanindaIdariBirimKimlikKoduKontrolu(String idariBirimKimlikKodu) {
         editorTarihKonuSayi.shouldBe(visible);
