@@ -600,7 +600,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User imzaci = optiim;
         //User imzaci = ztekin;
 
-        String konu = "TS0980b - " + getDateTime();
+        String konu = "TS0980c - " + getDateTime();
         String geriAlNotu = "Gerial not teksti";
 
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
@@ -646,7 +646,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User koordeneli = user5;
         User imzaci = optiim;
 
-        String konu = "TS0980b - " + getDateTime();
+        String konu = "TS0980d - " + getDateTime();
         String geriAlNotu = "Gerial not teksti";
 
         KontrolBekleyenlerPage kontrolBekleyenlerPage;
