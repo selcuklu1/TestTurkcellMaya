@@ -796,7 +796,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
         User kontolcu = user5;
         User koordeneli = optiim;
         User kontolcu2 = ztekin;
-        //User imzaci = ztekin;
+        User imzaci = ztekin;
 
         String konu = "TS0976a - " + getDateTime();
         String kurum = "Cumhurbaşkanlığı";
@@ -816,7 +816,7 @@ public class EvrakGeriAlmaTest extends BaseTest {
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu, KONTROL)
                 .anlikOnayAkisKoordeneliKullaniciSec(koordeneli)
                 .anlikOnayAkisKullaniciVeTipiSec(kontolcu2, KONTROL)
-                //.anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
+                .anlikOnayAkisKullaniciVeTipiSec(imzaci, IMZALAMA)
                 .kullan();
         page.editorTab().openTab().getEditor().type("Editör tekst")
                 .evrakPageButtons().evrakParafla()
