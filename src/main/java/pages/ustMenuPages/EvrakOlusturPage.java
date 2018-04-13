@@ -2932,7 +2932,9 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
     public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
-//        boolean ozelFlag = true;
+        boolean ozelFlag = true;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =false;
         String antetArray[] = txtAntet.getText().split("\n");
         String allureNot ="";
         for(int i = 0 ; i < antetArray.length; i++) {
@@ -2943,11 +2945,8 @@ public class EvrakOlusturPage extends MainPage {
         }
         System.out.println(allureNot);
 
-//        if(antetDefault1.equals("") && antetDefault2.equals(""))
-//            ozelFlag =false;
-
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),ozelFlag, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),ozelFlag, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
