@@ -1144,6 +1144,8 @@ public class AntetIslemleri extends BaseTest {
                 .geregiKontrol(geregiKurum)
                 .bilgiSecimTipiSecByText("Kurum")
                 .bilgiDoldur(bilgiKurum,"Kurum")
+                .dagitimiEkYapSec(true)
+                .dagitimiEkYapSecKontrol()
                 .onayAkisiEkle()
                 .onayAkisiKullanicilariTemizle()
                 .onayAkisiTumuSec()
