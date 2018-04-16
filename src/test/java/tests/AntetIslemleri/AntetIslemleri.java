@@ -1157,7 +1157,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .ekleriTabAc()
                 .ekListesiKontrol("EK-1", "Dağıtım Listesi")
-                .dosyaEkle(pathToFileText,fileName)
+                .ekleriDosyaEkle(pathToFileText)
                 .ekleriEkMetniDoldur(konu)
                 .ekleriEkle()
                 .ekListesiKontrol("EK-2", fileName)
@@ -1678,7 +1678,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol("","",antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol2("","",antetGuncelBirim, antetUstBirim, antetEnUstBirim);
 
 
         editor
@@ -2089,7 +2089,7 @@ public class AntetIslemleri extends BaseTest {
                 .birimFiltreDoldur(guncelBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
-                .antetTipiSec(antetGuncelBirim)
+                .antetTipiSec(antetGuncelBirimTipi)
                 .kaydet();
 
 
@@ -2223,8 +2223,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol("","",antetGuncelBirim, "","");
-
+                .editorAntetKontrol2("","",antetGuncelBirim, "","");
 
         editor
                 .type(editorIcerik)
@@ -2651,7 +2650,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol("","",antetnormalBirim, antetUstBirim,antetEnUstBirim);
+                .editorAntetKontrol2("","",antetnormalBirim, antetUstBirim,antetEnUstBirim);
 
 
         editor
