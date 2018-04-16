@@ -246,7 +246,7 @@ public class OnayAkisiTest extends BaseTest {
                 .otomatikOnayAkisiKullaniciSec(parafciKullanici1, true, "Parafçı Kullanıcı1")
                 .otomatikOnayAkisiKullaniciSec(parafciKullanici2, true, "Parafçı Kullanıcı2")
                 .otomatikOnayAkisiKullaniciSec(imzaciKullanici, true, "İmzaci Kullanıcı")
-                .otomatikOnayAkisiVekilKullaniciKaldir(vekilKullanici, true, "Vekil Kullanıcı")
+                //.otomatikOnayAkisiVekilKullaniciKaldir(vekilKullanici, true, "Vekil Kullanıcı")
 
                 .otomatikOnayAkisiKullan()
                 .onayAkisiGuncelle()
@@ -261,6 +261,7 @@ public class OnayAkisiTest extends BaseTest {
         evrakOlusturPage
                 .kaydetOnayaSun()
 
+                .kullaniciIslemVeSiraKontrolu(vekilKullanici, "Paraflama")
                 .kullaniciIslemVeSiraKontrolu(parafciKullanici1, "Paraflama")
                 .kullaniciIslemVeSiraKontrolu(parafciKullanici2, "Paraflama")
                 .kullaniciIslemVeSiraKontrolu(imzaciKullanici, "İmzalama");
