@@ -2089,7 +2089,7 @@ public class AntetIslemleri extends BaseTest {
                 .birimFiltreDoldur(guncelBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
-                .antetTipiSec(antetGuncelBirim)
+                .antetTipiSec(antetGuncelBirimTipi)
                 .kaydet();
 
 

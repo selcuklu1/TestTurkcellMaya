@@ -91,7 +91,7 @@ public class TeslimAldiklarimHavaleTest extends BaseTest {
 
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true, description = "TS1597: Havale onayı bekleyen evrakın geri çekilmesi ve tekrar havalesi (içerik ekranından)")
-    public void TS1597() {
+    public void TS1597ta() {
 
         TS1597PreCondition();
 
