@@ -567,7 +567,6 @@ public class KullaniciYonetimiPage extends MainPage {
                 .filterBy(Condition.text(birimAdi))
                 .get(0)
                 .$(By.cssSelector("[id$='deleteKullaniciRolBirimButton']"))
-                .scrollTo()
                 .pressEnter()
                 .click();
 
