@@ -71,7 +71,7 @@ public class TakibeEvrakEklemeTest extends BaseTest {
                 .sImzaImzala()
                 .popupSimzaEvet();
 
-        Thread.sleep(2000);
+        Thread.sleep(10000);
 
         // İmzaladıklarım sayfasına evrak gönderme <<<
 
