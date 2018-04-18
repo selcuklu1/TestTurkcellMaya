@@ -29,7 +29,6 @@ import static com.codeborne.selenide.Condition.*;
  * Class: "Dağıtım Hitap Güncelleme" konulu senaryoları içerir
  * Yazan: Can Şeker
  ****************************************************/
-
 @Epic("Dağıtım Hitap Güncelleme")
 public class DagitimHitapGuncellemeTest extends BaseTest {
 
