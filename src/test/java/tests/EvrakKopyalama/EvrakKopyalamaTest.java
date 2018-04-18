@@ -12,6 +12,7 @@ import data.User;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.altMenuPages.CevapYazPage;
@@ -42,6 +43,7 @@ public class EvrakKopyalamaTest extends BaseTest {
     EvrakDetayiPage evrakDetayiPage;
     ParafladiklarimPage parafladiklarimPage;
     ImzaladiklarimPage imzaladiklarimPage;
+    ImzaBekleyenlerPage imzaBekleyenlerPage;
 
     @BeforeMethod
     public void loginBeforeTests() {
@@ -54,31 +56,58 @@ public class EvrakKopyalamaTest extends BaseTest {
         evrakDetayiPage = new EvrakDetayiPage();
         parafladiklarimPage = new ParafladiklarimPage();
         imzaladiklarimPage = new ImzaladiklarimPage();
+        imzaBekleyenlerPage = new ImzaBekleyenlerPage();
     }
 
     User user1 = new User("user1", "123", "User1 TEST", "AnaBirim1");
 
+    String evrakTarihi = getSysDateForKis();
+    String konuKoduTS2233 = "TS2233-" + createRandomNumber(15);
+    String konuKodu = "Diğer";
+    String evrakturu="Resmi Yazışma";
+    String gizlilikderecesi ="Normal";
+    String ivedilik ="Normal";
+    String kaldirilicakKlasor = "Diğer";
+    String icerik = createRandomText(15);
+    String kurum = "BÜYÜK HARFLERLE KURUM";
+    String kullanici = "Mehmet Bozdemir";
+    String kullanici2 = "Yasemin Çakıl Akyol";
+    String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
+    String basariMesaji = "İşlem başarılıdır!";
+    String mesaj ="Evrakı kopyalamak istediğinize emin misiniz?";
+
+    @Step("Beklemeye Alınanlar evrak Oluştur.")
+    public void TS2233_PreCondition(){
+        evrakOlusturPage
+                .openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konuKoduTS2233)
+                .kaldiralacakKlasorlerSec(kaldirilicakKlasor)
+                .geregiSecimTipiSec("Kurum")
+                .geregiSec(kurum)
+                .onayAkisiEkle()
+                .onayAkisiKullanicilariTemizle()
+                .onayAkisiKullaniciEkle(kullanici,"BHUPGMY")
+                .onayAkisiEkleIlkSelectSec("İmzalama")
+                .kullan();
+        evrakOlusturPage.editorTabAc()
+                .editorIcerikDoldur(icerik);
+        evrakOlusturPage
+        .kaydetOnayaSun()
+        .kaydetOnayaSunAciklamaDoldur2(icerik);
+        login(userMbozdemir);
+        imzaBekleyenlerPage.imzaBekleyenlerEvrakSecBeklemeyeAl(konuKoduTS2233);
+    }
+
     @Severity(SeverityLevel.CRITICAL)
     @Test(enabled = true,description = "TS2233: Beklemeye alınanlar listesinden evrak kopyalanması ve imzalanması")
     public void TS2233() {
-        String evrakTarihi = getSysDateForKis();
-        String konuKoduTS2233 = "TS2233-" + createRandomNumber(15);
-        String konuKodu = "Diğer";
-        String evrakturu="Resmi Yazışma";
-        String gizlilikderecesi ="Normal";
-        String ivedilik ="Normal";
-        String kaldirilicakKlasor = "Diğer";
-        String icerik = createRandomText(15);
-        String kurum = "BÜYÜK HARFLERLE KURUM";
-        String kullanici = "Mehmet Bozdemir";
-        String kullanici2 = "Yasemin Çakıl Akyol";
-        String basariMesaji2 = "Kopyalanan evraka \"Taslak Evraklar\" kısmından erişebilirsiniz.";
-        String basariMesaji = "İşlem başarılıdır!";
-        String mesaj ="Evrakı kopyalamak istediğinize emin misiniz?";
+
         login(userYakyol);
 
-        reusableSteps
-                .beklemeyeAlinanlarEvrakOlustur(konuKoduTS2233,konuKodu,kaldirilicakKlasor,icerik,"Kurum",kurum,"Paraflama",kullanici,"BHUPGMY","İmzalama",usernameMBOZDEMIR,passwordMBOZDEMIR);
+        TS2233_PreCondition();
+
         login(userMbozdemir);
         beklemeyeAlinanlarPage
                 .openPage()
@@ -98,21 +127,13 @@ public class EvrakKopyalamaTest extends BaseTest {
                  .editorIcerigiGeldigiGorme(icerik)
                 .bilgileriTabAc();
         evrakDetayiPage
-                .bilgilerAlanlarDogruGeldigiGorme(konuKodu,konuKoduTS2233,kaldirilicakKlasor,evrakturu,gizlilikderecesi,kurum,kullanici,kullanici2);
-
-        //İmzala butonu 6.adımda gelmektedir. Beklemeye alınanlar sayfası bu nedenle tekrar açılarak bu alanda imzalanmktadır
-
-        beklemeyeAlinanlarPage
-                .openPage()
-                .evrakSecKonuyagore(konuKoduTS2233)
-                .evrakKopyalaGeldigiGorme()
-                .evrakKopyala()
-                .evrakKopyalamaSorusununGeldiginiGormeUyariMesaj(mesaj)
-                .evrakKopyalaEvet();
+                .bilgilerAlanlarDogruGeldigiGorme(konuKodu,konuKoduTS2233,kaldirilicakKlasor,evrakturu,gizlilikderecesi,kurum,kullanici,"");
 
         evrakDetayiPage
                 .evrakImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        takeScreenshot();
     }
 
     @Severity(SeverityLevel.CRITICAL)
