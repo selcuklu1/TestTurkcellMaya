@@ -371,7 +371,7 @@ public class BaseTest extends BaseLibrary {
     }
 
 
-    @Step("Login")
+    @Step("Login: {user.fullname}")
     public void login(User user) {
         LoginPage loginPage = new LoginPage().login(user.getUsername(), user.getPassword());
         if (!user.getBirimAdi().isEmpty() && user.getBirimAdi() != null)

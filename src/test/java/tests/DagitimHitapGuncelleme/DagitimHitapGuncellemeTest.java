@@ -14,6 +14,7 @@ import pages.pageComponents.PDFOnizleme;
 import pages.pageData.alanlar.BilgiSecimTipi;
 import pages.pageData.alanlar.GeregiSecimTipi;
 import pages.pageData.alanlar.OnayKullaniciTipi;
+import pages.solMenuPages.GelenEvraklarPage;
 import pages.solMenuPages.PostalanacakEvraklarPage;
 
 import java.util.LinkedHashMap;
@@ -33,6 +34,7 @@ import static com.codeborne.selenide.Condition.*;
 public class DagitimHitapGuncellemeTest extends BaseTest {
 
     User user = new User("user1", "123", "User1 TEST", "AnaBirim1");
+    User ztekin = new User("ztekin", "123", "Zübeyde TEKİN", "YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ/YGD", "Genel Müdür");//, "Uzman Test Mühendis");
 
     String adres1 = "GÖLBAŞI / ANKARA";
     String adres2 = "ATAŞEHİR / İSTANBUL";
@@ -261,6 +263,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
     public void TS2126() {
         useFirefox();
         String konu = "TS2126_" + getSysDate();
+        User haricKullanici = ztekin;
 
         //Yaratılmış 2 dağıtım planı olmalı:
         //1. TS2126_1 ["Kullanıcı", "Optiim TEST"],["Kurum", "Cumhurbaşkanliği"]
@@ -276,7 +279,7 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String hitap2 = dagitimPlaniMap1.get("Kurum").toUpperCase();
 
         Map<String, String> dagitimPlaniMap2 = new LinkedHashMap<>();
-        dagitimPlaniMap2.put("Kullanıcı", "Zübeyde TEKİN");
+        dagitimPlaniMap2.put("Kullanıcı", haricKullanici.getFullname());
         dagitimPlaniMap2.put("Birim", "AD MÜDÜRLÜĞÜ");
         String dagitimPlani2 = "TS2126_2";
         String metni2 = "TS2126_2 Metni";//defect oluduğu için kullanılmıyor
@@ -369,9 +372,13 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
                 .checkText(1, textCaseSensitive(hitap4), textCaseSensitive(metni1), textCaseSensitive(haricMetni))
                 .closeAndReturnToMainWindow();*/
 
+        login(haricKullanici);
+        new GelenEvraklarPage().openPage()
+                .searchTable().findRows(text(konu)).shouldHaveSize(0);
+
     }
 
-    @Test(description = "TS2127: Hitabına NA NE eklenmesi", enabled = true)
+    @Test(description = "TS2127: Dağıtım planı hitabına NA NE eklenmesi", enabled = true)
     public void TS2127() {
 
         String dagitimPlani = "TS2126_1";
