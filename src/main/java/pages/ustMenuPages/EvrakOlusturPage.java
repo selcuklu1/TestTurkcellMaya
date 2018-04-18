@@ -10,6 +10,10 @@ import pages.MainPage;
 import pages.pageComponents.TextEditor;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -2928,6 +2932,9 @@ public class EvrakOlusturPage extends MainPage {
     @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
     public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
 //            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+        boolean ozelFlag = true;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =false;
         String antetArray[] = txtAntet.getText().split("\n");
         String allureNot ="";
         for(int i = 0 ; i < antetArray.length; i++) {
@@ -2938,15 +2945,72 @@ public class EvrakOlusturPage extends MainPage {
         }
         System.out.println(allureNot);
 
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
-        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault1),ozelFlag, "Default Antet Kontrol");
+        Assert.assertEquals(txtAntet.getText().contains(antetDefault2),ozelFlag, "Default Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
         Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+
         Allure.addAttachment("| html dünyasında <br> ile ifade ediliyor.Dolayısı ile <br> kontrol edilmiştir:",allureNot);
         takeScreenshot();
         return this;
     }
+
+    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public EditorTab editorAntetKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim,boolean ozelFlag) {
+//            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+//            boolean ozelFlag = true;
+//            if(antetDefault1.equals("") && antetDefault2.equals(""))
+//                ozelFlag =false;
+            String antetArray[] = txtAntet.getText().split("\n");
+            String allureNot ="";
+            for(int i = 0 ; i < antetArray.length; i++) {
+                allureNot += antetArray[i];
+                if(antetArray[i].equals(antetDefault2))
+                    break;
+                allureNot += " <br> ";
+            }
+            System.out.println(allureNot);
+
+            Assert.assertEquals(txtAntet.getText().contains(antetDefault1),ozelFlag, "Default Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetDefault2),ozelFlag, "Default Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+
+            Allure.addAttachment("| html dünyasında <br> ile ifade ediliyor.Dolayısı ile <br> kontrol edilmiştir:",allureNot);
+            takeScreenshot();
+            return this;
+        }
+
+
+    @Step("Editorde Antet kontrolu Default Antet: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public EditorTab editorAntetKontrol2(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
+//            System.out.println("guncel" + txtAntetGuncel.getText() + "ustbirim" + txtAntetUstBirim.getText() + "enustbirim" + txtAntetEnUstBirim.getText()) ;
+            boolean ozelFlag = true;
+            if(antetDefault1.equals("") && antetDefault2.equals(""))
+                ozelFlag =false;
+            String allureNot = "";
+            if(ozelFlag==false) {
+                String antetArray[] = txtAntet.getText().split("\n");
+                for (int i = 0; i < antetArray.length; i++) {
+                    allureNot += antetArray[i];
+                    if (antetArray[i].equals(antetDefault2))
+                        break;
+                    allureNot += " <br> ";
+                }
+                System.out.println(allureNot);
+            }
+            Assert.assertEquals(txtAntet.getText().contains(antetDefault1),true, "Default Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetDefault2),true, "Default Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetGuncel),true, "Guncel Birim Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(antetUstBirim),true, "Üst Birim Antet Kontrol");
+            Assert.assertEquals(txtAntet.getText().contains(enUstBirim),true, "En Üst Birim Antet Kontrol");
+
+            Allure.addAttachment("| html dünyasında <br> ile ifade ediliyor.Dolayısı ile <br> kontrol edilmiştir:",allureNot);
+            takeScreenshot();
+            return this;
+        }
 
     @Step("Sayı alanındaki idari birim kodunun güncel hali ile geldiği görülür")
         public EditorTab sayiAlanindaIdariBirimKimlikKoduKontrolu(String idariBirimKimlikKodu) {
@@ -4769,6 +4833,28 @@ public class EvrakOlusturPage extends MainPage {
                 .editorIcerikDoldur(icerik);
         parafla();
     }
+
+    @Step("Evrak oluştur alanında parafla tıklanır")
+    public void evrakOlusturParafla(String konu,String konuKodu,String kaldirilacakKlasor,String icerik, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu) {
+
+        openPage()
+                .bilgilerTabiAc()
+                .konuKoduSec(konuKodu)
+                .konuDoldur(konu)
+                .kaldiralacakKlasorlerSec(kaldirilacakKlasor)
+                .geregiSecimTipiSec(geregiSecimTipi)
+                .geregiSec(geregi)
+                .onayAkisiEkle()
+                .onayAkisiEkleIlkSelectSec(OnayAkisiKullanici1Turu)
+                .kullanicilarDoldur(kullanici2, kullaniciBirim)
+                .kullaniciylaSecimTipiSec(kullanici2, OnayAkisiKullanici2Turu)
+                .kullan();
+        editorTabAc()
+                .editorIcerikDoldur(icerik);
+        parafla();
+    }
+
+
 
     @Step("Evrak türüne göre vrak oluşturulur.")
     public void evrakOlusturEvrakTuruneGore(String konu, String geregiSecimTipi, String geregi, String OnayAkisiKullanici1Turu, String kullanici2, String kullaniciBirim, String OnayAkisiKullanici2Turu, String evrakTuru, String sablon) {

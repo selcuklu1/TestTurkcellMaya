@@ -13,9 +13,11 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.SolMenuData;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.pageComponents.belgenetElements.Belgenet.comboLov;
 
 
@@ -142,6 +144,33 @@ public class ParafBekleyenlerPage extends MainPage {
 
     public ParafBekleyenlerPage takipListeKapat() {
         btnTakipListesiKapat.click();
+        return this;
+    }
+
+    @Step("Evrak ekleri tabını aç")
+    public ParafBekleyenlerPage evrakEkleriTabAc() {
+        tabEvrakEkleri.click();
+        return this;
+    }
+
+    @Step("Önizleme ekranında PDF EK Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ParafBekleyenlerPage ekOnizlemePDFKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
+        switchTo().frame($("iframe[class='onizlemeFrame']"));
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        switchTo().defaultContent();
         return this;
     }
 

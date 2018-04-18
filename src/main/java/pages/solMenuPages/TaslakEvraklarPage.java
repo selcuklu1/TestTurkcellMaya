@@ -91,6 +91,16 @@ public class TaslakEvraklarPage extends MainPage {
         return this;
     }
 
+    @Step("Evrak Geldiği görülür. Konu:{konuKodu}, Geldiği Yer:{geldigiYer}, Evrak Tarihi:{evraktarihi}")
+    public TaslakEvraklarPage evrakGeldigiGorme(String konuKodu,String geldigiYer, String evraktarihi) {
+        boolean durum = tableEvraklar.filterBy(Condition.text(konuKodu))
+                .filterBy(Condition.text(geldigiYer))
+                .filterBy(Condition.text(evraktarihi)).size() > 0;
+        Assert.assertEquals(durum, true);
+        takeScreenshot();
+        return this;
+    }
+
     @Step("Evrak seçilir")
     public TaslakEvraklarPage evrakNoIleIcerikGoster(String konu) {
         tableEvraklar.filterBy(Condition.text(konu)).first().$("[id$='detayGosterButton']").click();

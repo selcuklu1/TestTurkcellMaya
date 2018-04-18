@@ -76,7 +76,13 @@ public class BeklemeyeAlinanlarPage extends MainPage {
         
         return this;
     }
+    @Step("Evrakı kopyalamak istediğinize emin misiniz? sorusunun geldiği görülür.")
+    public BeklemeyeAlinanlarPage evrakKopyalamaSorusununGeldiginiGormeUyariMesaj(String uyariMesaji){
+        boolean durum = $$("[class='ui-dialog-content ui-widget-content'] p").filterBy(Condition.text(uyariMesaji)).size()>0;
+        Assert.assertEquals(durum,true);
 
+        return this;
+    }
     @Step("Evet tıklanır")
     public BeklemeyeAlinanlarPage evrakKopyalaEvet(){
         btnEvrakKopyalaEvet.click();

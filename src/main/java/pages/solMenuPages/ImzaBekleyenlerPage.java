@@ -440,16 +440,68 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage ekOnizlemePDFKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim) {
         switchTo().frame($("iframe[class='onizlemeFrame']"));
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
+
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
         if(!enUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        switchTo().defaultContent();
+        return this;
+    }
+
+    @Step("Önizleme ekranında PDF EK Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage ekOnizlemePDFKontrol(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim,int ozelFlag) {
+        switchTo().frame($("iframe[class='onizlemeFrame']"));
+
+//        int ozelFlag = 1;
+//        if(antetDefault1.equals("") && antetDefault2.equals(""))
+//            ozelFlag =0;
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        switchTo().defaultContent();
+        return this;
+    }
+
+    @Step("Önizleme ekranında PDF EK Kontrolü: {antetDefault1} {antetDefault2} - Özel Antet 1: {ozel1} - Özel Antet 1: {ozel2} -Özel Antet 3: {ozel3} -Özel Antet 4: {ozel4}")
+    public ImzaBekleyenlerPage ekOnizlemePDFKontrolOzelAntet(String antetDefault1,String antetDefault2,String ozel1,String ozel2, String ozel3, String ozel4,String normalAntet) {
+        switchTo().frame($("iframe[class='onizlemeFrame']"));
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!ozel1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel1)).shouldHaveSize(1);
+        if(!ozel2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel2)).shouldHaveSize(1);
+        if(!ozel3.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel3)).shouldHaveSize(1);
+        if(!ozel4.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel4+", "+normalAntet)).shouldHaveSize(1);
         Allure.addAttachment("| kontrolü: ","yapılmıştır.");
 
         takeScreenshot();
@@ -500,16 +552,74 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         Selenide.sleep(3000);
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
         if(!enUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Dağıtım Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage dagitimListesiPDFKontrolu(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim,int ozelFlag) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+//        int ozelFlag = 1;
+//        if(antetDefault1.equals("") && antetDefault2.equals(""))
+//            ozelFlag =0;
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Dağıtım Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Özel Antet 1: {ozel1} - Özel Antet 1: {ozel2} -Özel Antet 3: {ozel3} -Özel Antet 4: {ozel4}")
+    public ImzaBekleyenlerPage dagitimListesiPDFOzelKontrolu(String antetDefault1,String antetDefault2,String ozel1,String ozel2, String ozel3, String ozel4,String normalAntet) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!ozel1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel1)).shouldHaveSize(1);
+        if(!ozel2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel2)).shouldHaveSize(1);
+        if(!ozel3.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel3)).shouldHaveSize(1);
+        if(!ozel4.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel4)).shouldHaveSize(1);
         Allure.addAttachment("| kontrolü: ","yapılmıştır.");
 
         takeScreenshot();
@@ -524,16 +634,76 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         Selenide.sleep(3000);
 
+        int ozelFlag = 1;
+        if(antetDefault1.equals("") && antetDefault2.equals(""))
+            ozelFlag =0;
+
         if(!antetDefault1.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
         if(!antetDefault2.equals(""))
-            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
         if(!antetGuncel.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
         if(!antetUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
         if(!enUstBirim.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Ek Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Güncel Birim Antet: {antetGuncel} - Üst Birim Antet:{antetUstBirim} - En Üst Birim Antet: {enUstBirim}")
+    public ImzaBekleyenlerPage ekListesiPDFKontrolu(String antetDefault1,String antetDefault2,String antetGuncel,String antetUstBirim, String enUstBirim,int ozelFlag) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+//        int ozelFlag = 1;
+//        if(antetDefault1.equals("") && antetDefault2.equals(""))
+//            ozelFlag =0;
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelFlag);
+        if(!antetGuncel.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetGuncel)).shouldHaveSize(1);
+        if(!antetUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetUstBirim)).shouldHaveSize(1);
+        if(!enUstBirim.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(enUstBirim)).shouldHaveSize(1);
+        Allure.addAttachment("| kontrolü: ","yapılmıştır.");
+
+        takeScreenshot();
+        closeNewWindow();
+        switchTo().window(0);
+        return this;
+    }
+
+    @Step("Ek Listesi PDF Kontrolü: {antetDefault1} {antetDefault2} - Özel Antet 1: {ozel1} - Özel Antet 1: {ozel2} -Özel Antet 3: {ozel3} -Özel Antet 4: {ozel4} - Normal Antet:{normalAntet}")
+    public ImzaBekleyenlerPage ekListesiPDFOzelKontrolu(String antetDefault1,String antetDefault2,String ozel1,String ozel2, String ozel3, String ozel4,String normalAntet) {
+        switchTo().window(1);
+        maximazeBrowser();
+
+        Selenide.sleep(3000);
+
+        if(!antetDefault1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
+        if(!antetDefault2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(1);
+        if(!ozel1.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel1)).shouldHaveSize(1);
+        if(!ozel2.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel2)).shouldHaveSize(1);
+        if(!ozel3.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel3)).shouldHaveSize(1);
+        if(!ozel4.equals(""))
+            $$(".textLayer div[style^='left']").filterBy(exactText(ozel4+", "+normalAntet)).shouldHaveSize(1);
         Allure.addAttachment("| kontrolü: ","yapılmıştır.");
 
         takeScreenshot();
