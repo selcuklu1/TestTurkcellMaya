@@ -82,7 +82,7 @@ public class EvrakKopyalamaTest extends BaseTest {
                 .openPage()
                 .bilgilerTabiAc()
                 .konuKoduSec(konuKodu)
-                .konuDoldur(konuKodu)
+                .konuDoldur(konuKoduTS2233)
                 .kaldiralacakKlasorlerSec(kaldirilicakKlasor)
                 .geregiSecimTipiSec("Kurum")
                 .geregiSec(kurum)
@@ -97,7 +97,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         .kaydetOnayaSun()
         .kaydetOnayaSunAciklamaDoldur2(icerik);
         login(userMbozdemir);
-        imzaBekleyenlerPage.imzaBekleyenlerEvrakSecBeklemeyeAl(konuKodu);
+        imzaBekleyenlerPage.imzaBekleyenlerEvrakSecBeklemeyeAl(konuKoduTS2233);
     }
 
     @Severity(SeverityLevel.CRITICAL)
@@ -111,7 +111,7 @@ public class EvrakKopyalamaTest extends BaseTest {
         login(userMbozdemir);
         beklemeyeAlinanlarPage
                 .openPage()
-                .evrakSecKonuyagore(konuKodu)
+                .evrakSecKonuyagore(konuKoduTS2233)
                 .evrakKopyalaGeldigiGorme()
                 .evrakKopyala()
                 .evrakKopyalamaSorusununGeldiginiGormeUyariMesaj(mesaj)
@@ -120,18 +120,20 @@ public class EvrakKopyalamaTest extends BaseTest {
 
         taslakEvraklarPage
                 .openPage()
-                .evrakGeldigiGorme(konuKodu,kurum,evrakTarihi)
-                .evrakNoIleIcerikGoster(konuKodu);
+                .evrakGeldigiGorme(konuKoduTS2233,kurum,evrakTarihi)
+                .evrakNoIleIcerikGoster(konuKoduTS2233);
 
         evrakDetayiPage
                  .editorIcerigiGeldigiGorme(icerik)
                 .bilgileriTabAc();
         evrakDetayiPage
-                .bilgilerAlanlarDogruGeldigiGorme(konuKodu,konuKodu,kaldirilicakKlasor,evrakturu,gizlilikderecesi,kurum,kullanici,"");
+                .bilgilerAlanlarDogruGeldigiGorme(konuKodu,konuKoduTS2233,kaldirilicakKlasor,evrakturu,gizlilikderecesi,kurum,kullanici,"");
 
         evrakDetayiPage
                 .evrakImzala()
                 .islemMesaji().basariliOlmali(basariMesaji);
+
+        takeScreenshot();
     }
 
     @Severity(SeverityLevel.CRITICAL)
