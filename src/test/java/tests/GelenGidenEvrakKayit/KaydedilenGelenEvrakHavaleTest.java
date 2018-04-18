@@ -115,8 +115,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .icerikHavaleAlanKontrolleri()
                 .icerikHavaleIslemleriKisiDoldur(onaylayacakKisi, onayKisiDetails)
                 .eklenenIcerikKisiKontrolu(onaylayacakKisi)
-                .icerikHavaleOnayinaGonder();
-//                .islemMesaji().basariliOlmali();
+                .icerikHavaleOnayinaGonder()
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -596,8 +596,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu1)
-                .icerikGeriAl();
-//                .islemMesaji().basariliOlmali();
+                .icerikGeriAl()
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
@@ -611,8 +611,8 @@ public class KaydedilenGelenEvrakHavaleTest extends BaseTest {
                 .ekranKontrolEvrakDetayi()
                 .havaleGeriAl()
                 .notAlanınıDoldur(konu2)
-                .icerikGeriAl();
-//                .islemMesaji().basariliOlmali();
+                .icerikGeriAl()
+                .islemMesaji().basariliOlmali();
 
         birimHavaleEdilenlerPage
                 .openPage()
