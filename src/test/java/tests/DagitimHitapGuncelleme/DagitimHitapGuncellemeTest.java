@@ -349,7 +349,6 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(0);
         evrakPostala.evrakDetayDialogClose();
-//        evrakOnizleme.new EvrakDetaylari().close();
 
         evrakPostala
                 .postalanacakYerlerdeAra(text(metni1))
