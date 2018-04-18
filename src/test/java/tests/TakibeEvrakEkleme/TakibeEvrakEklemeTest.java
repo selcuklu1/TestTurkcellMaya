@@ -263,13 +263,12 @@ public class TakibeEvrakEklemeTest extends BaseTest {
 
         takibimdekiEvraklarPage
                 .openPage()
-                .evrakKontrol(gelenEvrakKonu, true)
-                .takiptenCikart(gelenEvrakKonu)
+                .evraklarinListelendigiGorme()
+                .takiptenCikart2(gelenEvrakKonu)
                 .islemMesaji().basariliOlmali();
 
         takibimdekiEvraklarPage
-                .evrakKontrol(gelenEvrakKonu, false);
-
+                .evrakGelmedigiGorme(gelenEvrakKonu);
     }
 
     @Test(enabled = true, description = "TS2143 : Takibe evrak eklemede alan kontrolleri")
