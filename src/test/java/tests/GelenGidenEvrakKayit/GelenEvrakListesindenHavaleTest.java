@@ -346,15 +346,15 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .tabHavaleYap()
                 .onizlemeHavaleAlanKontrolleri()
 
-                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .eklenenBirimKontrolu(birim)
-                .eklenenBirimOpsiyonKontrolu(gerek)
-
                 .havaleIslemleriKisiSec(onaylayacakKisi,details)
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .eklenenKisiOpsiyonKontrolu(gerek)
                 .havaleIslemleriKisiOpsiyonSec(bilgi)
                 .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
 
                 .kullaniciListesiSec(kullaniciListesi)
                 .kullaniciListesiKullaniciGrupDetayEvet()
@@ -435,15 +435,15 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .tabHavaleYap()
                 .onizlemeHavaleAlanKontrolleri()
 
-                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
-                .eklenenBirimKontrolu(birim)
-                .eklenenBirimOpsiyonKontrolu(gerek)
-
                 .havaleIslemleriKisiSec(onaylayacakKisi,details)
                 .eklenenKisiKontrolu(onaylayacakKisi)
                 .eklenenKisiOpsiyonKontrolu(gerek)
                 .havaleIslemleriKisiOpsiyonSec(bilgi)
                 .eklenenKisiOpsiyonKontrolu(bilgi)
+
+                .dagitimBilgileriBirimDoldurWithDetails(birim, details)
+                .eklenenBirimKontrolu(birim)
+                .eklenenBirimOpsiyonKontrolu(gerek)
 
                 .kullaniciListesiSec(kullaniciListesi)
                 .kullaniciListesiKullaniciGrupDetayEvet()
@@ -540,8 +540,8 @@ public class GelenEvrakListesindenHavaleTest extends BaseTest {
                 .openPage()
                 .tabloEvrakNoSec(konu)
                 .tabHavaleYap()
-                .dagitimBilgileriBirimDoldurWithDetails(birim,details)
                 .havaleIslemleriKisiSec(kisi,details)
+                .dagitimBilgileriBirimDoldurWithDetails(birim,details)
                 .havaleYapGonder()
                 .islemMesaji().dikkatOlmali(uyarıMesajı);
 
