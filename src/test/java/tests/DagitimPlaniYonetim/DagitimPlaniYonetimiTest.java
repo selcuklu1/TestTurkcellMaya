@@ -198,18 +198,22 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         if (aktif) {
             aktifPasifYap(page, adi, false);
             evrakOlusturSayfadaPasifKontrolu(adi);
+            gidenEvrakSayfadaPasifKontrolu(adi);
 
             page.openPage();
             aktifPasifYap(page, adi, true);
             evrakOlusturSayfadaAktifKontrolu(adi);
+            gidenEvrakSayfadaAktifKontrolu(adi);
         }
         else {
             aktifPasifYap(page, adi, true);
             evrakOlusturSayfadaAktifKontrolu(adi);
+            gidenEvrakSayfadaAktifKontrolu(adi);
 
             page.openPage();
             aktifPasifYap(page, adi, false);
             evrakOlusturSayfadaPasifKontrolu(adi);
+            gidenEvrakSayfadaPasifKontrolu(adi);
         }
     }
 
@@ -1069,6 +1073,16 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .bilgiDegerSecilemez(adi);
     }
 
+    @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
+    private void gidenEvrakSayfadaPasifKontrolu(String adi) {
+        new GidenEvrakKayitPage().openPage()
+                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI.getOptionText())
+                .geregiAlanindaDegerKontrolu(adi, false)
+                .geregiTemizle()
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI.getOptionText())
+                .bilgiAlanindaDegerKontrolu(adi, false);
+    }
+
     @Step("Dağıtım Planı Aktif/Pasif yapılır")
     private void aktifPasifYap(DagitimPlaniYonetimiPage page, String adi, boolean aktif) {
 
@@ -1144,6 +1158,17 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .bilgiSec(dagitimPlanAdi, exactValue);
         evrakOlusturPage.closePage(false);
     }
+
+    @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
+    private void gidenEvrakSayfadaAktifKontrolu(String adi) {
+        new GidenEvrakKayitPage().openPage()
+                .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI.getOptionText())
+                .geregiAlanindaDegerKontrolu(adi, true)
+                .geregiTemizle()
+                .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI.getOptionText())
+                .bilgiAlanindaDegerKontrolu(adi, true);
+    }
+
 
     @Step("Giden Evrak Kayıt ekranda gereği/bilgi alanlarından kontrol edilir")
     public void gidenEvrakSayfadaAktifKontrolu(String dagitimPlanAdi, boolean... exactValue) {
