@@ -306,11 +306,15 @@ public class BaseLibrary extends ElementsContainer {
 //                    System.out.println("manage().window().maximize()");
                 }
             } else {
-                WebDriverRunner.getWebDriver().manage().window().maximize();
-                System.out.println("manage().window().maximize()");
+                try {
+                    WebDriverRunner.getWebDriver().manage().window().maximize();
+                    System.out.println("manage().window().maximize()");
+                }catch (Exception e) {
+                    System.out.println("maximize:" + e.getMessage());
+                }
             }
         } catch (Exception e) {
-//            System.out.println("ResultListener maximize:" + e.getMessage());
+            System.out.println("maximize:" + e.getMessage());
         }
     }
 
