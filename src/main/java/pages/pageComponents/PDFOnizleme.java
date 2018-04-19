@@ -32,7 +32,8 @@ public class PDFOnizleme extends MainPage{
 
     public PDFOnizleme(int windowIndex) {
         switchTo().window(windowIndex);
-        WebDriverRunner.getWebDriver().manage().window().maximize();
+        //Hata Docker chrome
+        //WebDriverRunner.getWebDriver().manage().window().maximize();
         waitForLoadingJS();
         //setScale100();
     }
