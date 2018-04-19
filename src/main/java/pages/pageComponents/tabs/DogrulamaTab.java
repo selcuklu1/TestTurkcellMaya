@@ -62,7 +62,7 @@ public class DogrulamaTab extends MainPage {
         return getContainer().$x(".//td[contains(@class,'tabMenuContainer') and .//span[contains(@class,'tabMenu') and .='" + tabName + "']]");
     }
 
-    @Step(tabName + " {conditions} kriterlere göre kontrol")
+    @Step(tabName + " tab {conditions} olmalı")
     public DogrulamaTab tabKontrol(Condition... conditions) {
         getTabButtonTextElement().should(conditions);
         return this;
