@@ -57,7 +57,8 @@ public class UstMenuPageHeader extends MainPage {
     }
 
     public void closePage() {
-        getPageCloseButton().click();
+        //getPageCloseButton().click();
+        clickJs(getPageCloseButton());
     }
 
     /*@Step("İmzala butonu ara")

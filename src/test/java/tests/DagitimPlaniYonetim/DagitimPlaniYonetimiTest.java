@@ -351,15 +351,14 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         login(user5);
 
-        new GidenEvrakKayitPage().openPage()
-                .geregiSecimTipiSecByText("Dağıtım Planları")
-                .geregiDoldur(planAdi1280, "Dağıtım Planı seçilebilir olmalı");
-
         evrakOlusturPage.openPage()
                 .bilgileriTab().openTab()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
                 .bilgiSec(planAdi1280);
 
+        new GidenEvrakKayitPage().openPage()
+                .geregiSecimTipiSecByText("Dağıtım Planları")
+                .geregiDoldur(planAdi1280, "Dağıtım Planı seçilebilir olmalı");
 
     }
 
@@ -1065,12 +1064,14 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     //region Steps
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void evrakOlusturSayfadaPasifKontrolu(String adi) {
-        new EvrakOlusturPage().openPage().bilgileriTab()
+        EvrakOlusturPage page = new EvrakOlusturPage();
+        page.openPage().bilgileriTab()
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI)
                 .geregiDegerSecilemez(adi)
                 .geregiTemizle()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI)
                 .bilgiDegerSecilemez(adi);
+        page.closePage(false);
     }
 
     @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
@@ -1080,7 +1081,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiAlanindaDegerKontrolu(adi, false)
                 .geregiTemizle()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI.getOptionText())
-                .bilgiAlanindaDegerKontrolu(adi, false);
+                .bilgiAlanindaDegerKontrolu(adi, false)
+                .panelKapat(false);
     }
 
     @Step("Dağıtım Planı Aktif/Pasif yapılır")
@@ -1166,7 +1168,8 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
                 .geregiAlanindaDegerKontrolu(adi, true)
                 .geregiTemizle()
                 .bilgiSecimTipiSec(BilgiSecimTipi.DAGITIM_PLANLARI.getOptionText())
-                .bilgiAlanindaDegerKontrolu(adi, true);
+                .bilgiAlanindaDegerKontrolu(adi, true)
+                .panelKapat(false);
     }
 
 

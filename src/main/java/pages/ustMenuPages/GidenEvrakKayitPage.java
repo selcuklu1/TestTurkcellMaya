@@ -19,6 +19,7 @@ import pages.MainPage;
 import pages.pageComponents.belgenetElements.BelgenetElement;
 import pages.pageData.UstMenuData;
 
+import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -267,13 +268,17 @@ public class GidenEvrakKayitPage extends MainPage {
         //$(By.xpath("//div[@id='mainTaskBar']//span[text()='[Giden Evrak Kayıt]']")).contextClick();
 
         SelenideElement closeButton = $$(By.xpath("//span[@class='ui-dialog-title' and text()='Giden Evrak Kayıt']/..//span[@class='ui-icon ui-icon-closethick']")).last().waitUntil(visible, 5000);
-        Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
-        closeButton.click();
+        //Selenide.executeJavaScript("arguments[0].scrollIntoView(true);", closeButton);
+        clickJs(closeButton);
 
-        if (kaydet)
+        if (kaydet) {
             $(By.id("kapatKaydetEvetButton")).click();
-        else
+            $(By.id("kapatKaydetEvetButton")).should(disappear);
+        }
+        else {
             $(By.id("kapatKaydetHayirButton")).click();
+            $(By.id("kapatKaydetHayirButton")).should(disappear);
+        }
 
         return this;
     }
