@@ -391,6 +391,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
 
         login(u);
         evrakOlusturSayfadaAktifKontrolu(adi);
+        gidenEvrakSayfadaAktifKontrolu(adi);
 
         /*User u1 = ztekin;
         User u2 = ztekin1;
