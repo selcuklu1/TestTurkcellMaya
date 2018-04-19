@@ -79,7 +79,7 @@ public class ConfirmDialog extends MainPage {
         return this;
     }
 
-    @Step("Onya mesaj kontrol edilir")
+    @Step("Onay mesaj kontrol edilir")
     public ConfirmDialog onayMesajKontrolu(Condition... conditions) {
         for (Condition condition : conditions) {
             getDialog().shouldHave(condition);

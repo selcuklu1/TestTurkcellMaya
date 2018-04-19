@@ -366,19 +366,30 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
     public void TS2324() {
 
         User u1 = ztekin;
-        User u2 = user4;
+        User u2 = user1;
+        User u3 = user4;
+        User u;
         String adi = "TS1280b";
 
         login(u1);
         DagitimPlaniYonetimiPage page = new DagitimPlaniYonetimiPage()
                 .openPage()
-                .bulVeGuncelleTikla(adi, "AnaBirim1");
+                .bulVeGuncelleTikla(adi, "AnaBirim");
         adi = page.getAdi().val();
-        page.kullanildigiBirimSec(u2.getBirimAdi())
+
+        String birim = page.getKullanildigiBirim()
+                    .getSelectedTitles().shouldHave(sizeGreaterThan(0))
+                    .last().shouldNotBe(empty).text();
+        u = birim.contains(u1.getBirimAdi()) ? u3 : u2;
+
+        page.dagitimPlaniListesindeAra()
+                .sil()
+                .dagitimElemanlariEkle("Kullanıcı", "User1 TEST")
+                .kullanildigiBirimSec(u.getBirimAdi())
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 
-        login(u2);
+        login(u);
         evrakOlusturSayfadaAktifKontrolu(adi);
 
         /*User u1 = ztekin;
