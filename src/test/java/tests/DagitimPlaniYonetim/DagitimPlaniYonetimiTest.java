@@ -178,7 +178,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         gidenEvrakSayfadaAktifKontrolu(newAd);
     }
 
-    @Test(description = "TS1279: Pasif / Aktif Yapma", enabled = true)
+    @Test(description = "TS1279: Dağıtım Planı Pasif/Aktif Yapma", enabled = true)
     public void TS1279() {
         String adi = "TS1279";
         boolean aktif = false;
