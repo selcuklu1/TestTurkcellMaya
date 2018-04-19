@@ -1413,6 +1413,8 @@ public class GelenEvraklarPage extends MainPage {
 
     @Step("Kullacici listesinde \"{kullanici}\" kullanıcısını seç.")
     public GelenEvraklarPage kullaniciListesiSec(String kullanici) {
+        txtKullaniciListesi.openTreePanel();
+        txtKullaniciListesi.closeTreePanel();
         txtKullaniciListesi.selectLov(kullanici);
         return this;
     }
