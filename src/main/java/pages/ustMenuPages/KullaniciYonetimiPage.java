@@ -303,9 +303,21 @@ public class KullaniciYonetimiPage extends MainPage {
         return this;
     }
 
-    @Step("Alt Birimler Dahil Seç")
-    public KullaniciYonetimiPage altBirimlerDahilSec(boolean value) {
-        chkAltBirimiOlmayanlar.setSelected(value);
+    @Step("Alt Birimler Dahil checkboxını kaldırma/seçme: {secim}")
+    public KullaniciYonetimiPage altBirimlerDahilSec(boolean secim) {
+
+        if(secim == true)
+        {
+            chkAltBirimiOlmayanlar.setSelected(secim);
+            Allure.addAttachment("Alt Birimler Dahil checkboxı kaldırıldı", "");
+
+        }
+        else
+        {
+            chkAltBirimiOlmayanlar.setSelected(secim);
+            Allure.addAttachment("Alt Birimler Dahil checkboxı seçildi", "");
+        }
+
         return this;
     }
 
