@@ -78,6 +78,8 @@ public class BelgenetFramework {
                         if (!type.equals("checkbox") && !type.equals("radio")) {
                             throw new InvalidStateException("Only use setSelected on checkbox/option/radio");
                         }
+                    } else if (element.getAttribute("class").contains(belgenetCheckboxClass)){
+
                     } else if (!element.getAttribute("class").contains(belgenetCheckboxClass)){
                         if (!element.findElement(By.className(belgenetCheckboxClass)).isDisplayed())
                             throw new InvalidStateException("Only use setSelected on checkbox/option/radio");
@@ -89,7 +91,7 @@ public class BelgenetFramework {
 
                 if (element.getAttribute("readonly") != null || element.getAttribute("disabled") != null)
                     throw new InvalidStateException("Cannot change value of readonly/disabled element");
-                if (element.isSelected() != selected && element.getAttribute("class").contains("ui-state-active")!=selected) {
+                if (element.isSelected() != selected || element.getAttribute("class").contains("ui-state-active")!=selected) {
                     click.execute(proxy, locator, NO_ARGS);
                 }
 
