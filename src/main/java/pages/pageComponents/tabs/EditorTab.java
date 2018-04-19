@@ -175,13 +175,13 @@ public class EditorTab extends MainPage {
         return page.$("div[id$=editorDagitimPanel]");
     }
 
-    @Step("Hitapta alanda \"{dagitimAramaKriteri}\" tesks bulunmalı")
+    @Step("Dağıtım alanında \"{dagitimAramaKriteri}\" tesks bulunmalı")
     public EditorTab dagitimPaneldeTekstBulunmali(Condition... dagitimAramaKriteri){
         getDagitimPanel().scrollIntoView(true).shouldHave(dagitimAramaKriteri);
         return this;
     }
 
-    @Step("Hitapta alanda \"{dagitimAramaKriteri}\" tesks bulunmamalı")
+    @Step("Dağıtım alanında \"{dagitimAramaKriteri}\" tesks bulunmamalı")
     public EditorTab dagitimPaneldeTekstBulunmamali(Condition... dagitimAramaKriteri){
         getDagitimPanel().scrollIntoView(true).shouldNotHave(dagitimAramaKriteri);
         return this;
