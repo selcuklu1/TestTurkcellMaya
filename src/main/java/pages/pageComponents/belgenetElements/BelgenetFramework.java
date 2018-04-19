@@ -89,7 +89,7 @@ public class BelgenetFramework {
 
                 if (element.getAttribute("readonly") != null || element.getAttribute("disabled") != null)
                     throw new InvalidStateException("Cannot change value of readonly/disabled element");
-                if (element.isSelected() != selected || element.getAttribute("class").contains("ui-state-active")!=selected) {
+                if (element.isSelected() != selected && element.getAttribute("class").contains("ui-state-active")!=selected) {
                     click.execute(proxy, locator, NO_ARGS);
                 }
 

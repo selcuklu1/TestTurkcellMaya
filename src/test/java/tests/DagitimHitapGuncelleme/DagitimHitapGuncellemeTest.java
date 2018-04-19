@@ -400,7 +400,9 @@ public class DagitimHitapGuncellemeTest extends BaseTest {
         String eskiEk = hitapDuzenle.getEkValue(value(hitap));
         ek = eskiEk.equalsIgnoreCase("e") ? "NA" : "E";
         //step(String.format("Hitapta \"%s\" ek \"%s\" ile değiştirildi", eskiEk, ek), "");
-        hitapDuzenle.ekGuncelle(hitap, ek)
+        hitapDuzenle
+                //.ekGuncelle(hitap, ek)
+                .dagitimMetniGirilir(hitap + ek)
                 .kaydet();
 
         page.editorTab().openTab()
