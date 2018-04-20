@@ -55,13 +55,13 @@ public class BirimlerdekiKisilerRaporuPage extends MainPage {
       if(secim == true)
       {
           chkAltBirimiOlmayanlar.setSelected(secim);
-          Allure.addAttachment("Alt Birimler Dahil checkboxı kaldırıldı", "");
+          Allure.addAttachment("Alt Birimler Dahil checkboxı seçildi", "");
 
       }
       else
       {
           chkAltBirimiOlmayanlar.setSelected(secim);
-          Allure.addAttachment("Alt Birimler Dahil checkboxı seçildi", "");
+          Allure.addAttachment("Alt Birimler Dahil checkboxı kaldırıldı", "");
       }
 
         return this;

@@ -986,7 +986,7 @@ public class BirimYonetimiTest extends BaseTest {
 
         kullaniciYonetimiPage
                 .birimKontrol(birimAdi)
-                .altBirimlerDahilSec(true)
+                .altBirimlerDahilSec(false)
                 .ara()
                 .kullaniciListesiGeldigiGorme();
 
@@ -996,7 +996,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .openPage()
                 .birimKontrol(defaultBirim)
                 .birimDoldur(birimAdi)
-                .altBirimlerDahilSec(true)
+                .altBirimlerDahilSec(false)
                 .durumSec("Sadece Aktifler")
                 .sorgula()
                 .kullaniciListesiGeldigiGorme();
