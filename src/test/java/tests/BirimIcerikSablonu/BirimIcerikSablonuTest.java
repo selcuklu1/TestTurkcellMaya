@@ -43,7 +43,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
     private String evrakTipi = "Giden Evrak";
     //private String onizlemeText = "T.C.\nGENEL MÜDÜRLÜK MAKAMI\nBİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI\nYAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ\n";
     //private static String onizlemeText = "T.C.\nANKARA\nİki Üst Birim Özel Antet\n";
-    private static String onizlemeText = "T.C.\nANKARA\nİki Üst Birim Özel Antet\nBirim\nÖzel Antet\nÜst Birimin Özel Antet, BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI, normal|normal\n";
+    //private static String onizlemeText = "T.C.\nANKARA\nİki Üst Birim Özel Antet\nBirim\nÖzel Antet\nÜst Birimin Özel Antet, BİLİŞİM HİZMETLERİ GENEL MÜDÜR YARDIMCISI, normal|normal\n";
+    private static String onizlemeText = "";
 
     private BirimIcerikSablonlarPage birimIcerikSablonlarPage = new BirimIcerikSablonlarPage();
     private pages.newPages.EvrakOlusturPage evrakOlusturPage = new pages.newPages.EvrakOlusturPage();
@@ -83,7 +84,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .getText();
 
         birimIcerikSablonlarPage
-                .pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1082), text("(@BIRIM)"))
+                //.pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1082), text("(@BIRIM)"))
+                .pdfOnzilemeTextKontol(text(sablonAdi1082), text("(@BIRIM)"))
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 
@@ -162,7 +164,8 @@ public class BirimIcerikSablonuTest extends BaseTest {
                 .getText();
 
         birimIcerikSablonlarPage
-                .pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1085), text("(@BIRIM)"))
+                //.pdfOnzilemeTextKontol(text(onizlemeText + user1.getBirimAdi()), text(sablonAdi1085), text("(@BIRIM)"))
+                .pdfOnzilemeTextKontol(text(sablonAdi1085), text("(@BIRIM)"))
                 .kaydet()
                 .islemMesaji().basariliOlmali();
 
