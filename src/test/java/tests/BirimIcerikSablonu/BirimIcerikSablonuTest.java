@@ -35,9 +35,9 @@ public class BirimIcerikSablonuTest extends BaseTest {
     User user2 = new User("user2", "123", "User2 TEST", "AnaBirim1AltBirim1");
     User user3 = new User("user3", "123", "User3 TEST", "AnaBirim1");
     public static BaseLibrary baseLibrary = new BaseLibrary();
-    public static String sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
+    public static String sablonAdi1082;
     public static String editorText1082;
-    private String sablonAdi1085 = "TS1085_" + getSysDate();
+    private String sablonAdi1085;
     private String editorText1085;
     private String sablonAdi1079;
     private String evrakTipi = "Giden Evrak";
@@ -63,6 +63,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
 
     @Test(description = "TS1082: Yeni şablon oluştur (Alt birimler görsün)", enabled = true, priority = 2)
     public static void TS1082() {
+        sablonAdi1082 = "TS1082_" + baseLibrary.getSysDate();
         LoginPage loginPage = new LoginPage();
         BaseLibrary baseLibrary = new BaseLibrary();
         String ALT_BIRIMLER_GORMESIN = "ALT BİRİMLER GÖRMESİN";
@@ -149,6 +150,7 @@ public class BirimIcerikSablonuTest extends BaseTest {
     @Description("TS1085: Yeni şablon \"Alt birimler görmesin\" olarak oluştur")
     public void TS1085() {
 
+        sablonAdi1085 = "TS1085_" + getSysDate();
         login(user1);
         birimIcerikSablonlarPage
                 .openPage()
