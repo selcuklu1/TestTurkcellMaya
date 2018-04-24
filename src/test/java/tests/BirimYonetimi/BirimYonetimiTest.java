@@ -1057,6 +1057,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .ekle()
                 .gorunurlukTipiSec("Görünür")
                 .adDoldur(birimAdi)
+                .antetBilgisiDoldur(atentBilgisi)
                 .postaBirimiSec(postaBirimi, postaBirimDetail)
                 .kepPostaBirimiSec(postaBirimi, postaBirimDetail)
                 .kaydet()
