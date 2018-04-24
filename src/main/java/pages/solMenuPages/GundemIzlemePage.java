@@ -113,7 +113,7 @@ public class GundemIzlemePage extends MainPage {
 
     public String indirilenDosyaAd(String path) {
         int i = 0;
-        while (i < 140) {
+        while (i < 200) {
             sleep(i);
             i++;
         }
