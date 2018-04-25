@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="3" name="Emre Sencan SuiteV1.1" parallel="classes" verbose="1">
+<suite thread-count="5" name="Emre Sencan SuiteV1.1" parallel="classes" verbose="1">
     <!--By Sezai-->
 
     <test name="Emre Sencan Tests">
@@ -8,6 +8,8 @@
             <package name="tests.EvrakDevret"/>
             <package name="tests.KullaniciListesiYonetimi"/>
             <package name="tests.HavaleYetkisi"/>
+            <package name="tests.VekaletIslemleri"/>
+            <package name="tests.PulYonetimi"/>
         </packages>
     </test>
 </suite>

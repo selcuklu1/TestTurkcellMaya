@@ -289,7 +289,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
         kararYazisiOlusturPage
                 .iliskiliEvraklarTabAc()
                 .sistemdeKayitliEvrakEkleTabAc()
-                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("9")
+                .sistemdeKayitliEvrakEkleEvrakAramaDoldur("3")
                 .sistemdeKayitliEvrakEkleEvrakDokumanAra()
                 .sistemdeKayitliEvrakEkleArti()
                 .tercumeEkleTabAc()
@@ -415,7 +415,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .konuDoldur(konuKoduRandom)
                 .ivedilikSec(ivedilik)
                 .onayAkisiEkle()
-                .kullanicilarDoldur(kullanici, birim)
+                .kullanicilarDoldur(kullanici, "BHUPGMY")
                 .kullan()
                 .kaldirilacakKlasorlerDoldur(kaldirilicakKlasorler)
                 .toplantiNoDoldur(toplantiNo)
@@ -533,7 +533,7 @@ public class KararYazisiOlusturmaTest extends BaseTest {
                 .evrakSayiSagDoldur()
                 .havaleIslemleriKisiDoldur(kullaniciAdi)
                 .kaydet()
-                .yeniKayitButton();
+                .popUpsv2();
 
         gelenEvraklarPage
                 .openPage()

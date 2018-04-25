@@ -42,7 +42,7 @@ public class VekaletVerPage extends MainPage {
 
     SelenideElement txtEvrakArama = $("[id$='evrakAramaText']");
     SelenideElement btnDokumanAra = $(By.id("vekaletOnayEvrakDialogForm:dokumanAraButton"));
-    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data']");
+    ElementsCollection tblEvrakListesi = $$("tbody[id='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId_data'] tr[data-ri]");
 
     //Vekalet Listesi Tabı
     SelenideElement btnSorgula = $(By.id("vekaletVerForm:vekaletLayout:vekaletSorgula_Id"));
@@ -244,7 +244,7 @@ public class VekaletVerPage extends MainPage {
         tblEvrakListesi
                 .filterBy(Condition.text(evrakNo)).shouldHaveSize(1)
                 .first()
-                .$("[id^='vekaletOnayEvrakDialogForm:sistemdeKayitliEvrakListesiDataTableId'][id$='ekleButton']").click();
+                .$("[id$='ekleButton']").click();
         return this;
     }
 

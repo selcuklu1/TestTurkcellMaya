@@ -228,10 +228,8 @@ public class VekaletIslemleriTest extends BaseTest {
 
         login(usernameVV);
 
-
         mainPage
                 .vekaletVarUyariPopUp();
-
 
         gelenEvraklarPage
                 .openPage()

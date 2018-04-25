@@ -354,6 +354,13 @@ String yeniKonu = konu + getSysDate();
                 .islemMesaji().basariliOlmali(basariMesaji);
     }
 
+//    @Test(enabled = true, description = "TS2183 : Evrak devretmede alan kontrolleri")
+//    public void test() throws InterruptedException {
+//        login(TestData.uservv);
+//        String yeniKonu = konu + getSysDate();
+//    gelenEvrak(yeniKonu);
+//    }
+
     @Step("Test datası oluşturuldu. Gelen Evrak")
     private void gelenEvrak(String konu) throws InterruptedException {
         String basariMesaji = "İşlem başarılıdır!";
@@ -372,6 +379,7 @@ String yeniKonu = konu + getSysDate();
                 .evrakSayiSagDoldur(evrakSayiSag)
 //                .havaleIslemleriKisiDoldur("Username21g")
                 .havaleIslemleriKisiDoldur("Optiim Test")
+//                .havaleIslemleriKisiDoldur("UnVV Test")
                 .ilgiliBilgiFiltreAc()
                 .ilgiBilgileriDosyaEkleme(pathToFileText)
                 .ilgiBilgileriDosyaEkleEkMetinDoldur(icerik)

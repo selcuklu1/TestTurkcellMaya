@@ -823,7 +823,7 @@ public class BirimYonetimiTest extends BaseTest {
         String basariMesaji = "İşlem başarılıdır!";
         String detail = "Optiim Birim";
         String yeniBirimAdi = "Ts1459 Birim" + " " + getSysDate();
-        String optiimBirimIdariKimlikKodu = "234234234234222221";
+        String optiimBirimIdariKimlikKodu = "234234234234222225"; //234234234234222221
 
         birimYonetimiPage
                 .openPage()
@@ -1057,6 +1057,7 @@ public class BirimYonetimiTest extends BaseTest {
                 .ekle()
                 .gorunurlukTipiSec("Görünür")
                 .adDoldur(birimAdi)
+                .antetBilgisiDoldur(atentBilgisi)
                 .postaBirimiSec(postaBirimi, postaBirimDetail)
                 .kepPostaBirimiSec(postaBirimi, postaBirimDetail)
                 .kaydet()

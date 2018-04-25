@@ -347,7 +347,7 @@ public class KararYazisiOlusturPage extends MainPage {
 
         @Step("Kullanıcılar alanını doldur \"{kullanici}\" | \"{birim}\" ")
         public BilgilerTab kullanicilarDoldur(String kullanici, String birim) {
-            txtKullanicilar.type(kullanici).getTitleItems().filterBy(text(birim)).first().click();
+            txtKullanicilar.type(kullanici).getDetailItems().filterBy(text(birim)).first().click();
             txtKullanicilar.closeTreePanel();
             return this;
         }
