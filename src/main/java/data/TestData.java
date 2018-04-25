@@ -25,7 +25,7 @@ public class TestData extends BaseLibrary {
     public static final User userZtekin = new User("ztekin","123","Zübeye TEKİN","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
     public static final User user21g = new User("username21g","123","Username21g TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
-    public static final User uservv = new User("usernameVV","123","usernameVV TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
+    public static final User uservv = new User("unVV","123","usernameVV TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
     public static final User userva = new User("usernameVA","123","usernameVA TEST","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
 
     public static final User userCanSeker = new User("cseker","123","Can Şeker","YAZILIM GELİŞTİRME DİREKTÖRLÜĞÜ");
@@ -60,7 +60,7 @@ public class TestData extends BaseLibrary {
     public static final String username22n = "username22n";
     public static final String password22n = "123";
 
-    public static final String usernamevv = "usernamevv";
+    public static final String usernamevv = "unvv";
     public static final String passwordvv = "123";
 
     public static final String usernameva = "usernameva";

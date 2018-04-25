@@ -350,14 +350,18 @@ String basariMesaji = "İşlem başarılıdır!";
                 .kullaniciGrupDetayCheckBoxKontrolu(true)
                 .kullaniciGrupDetayCheckBoxSecimi(kullanici, false)
                 .kullaniciGrupDetayKullan()
-                .havaleYapButon("Havale Onayına Gönder")
+                .havaleYapButon("Havale Onayına Gönder");
+        waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
+        evrakDetayiPage
                 .islemMesaji().dikkatOlmali(dikkatMesaji);
 
 
         evrakDetayiPage
                 .onaylayacakKisiSec(onaylayacakKisi)
                 .havaleYapHavaleOnayınaGonder();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+        waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
+
+        mainPage.islemMesaji().basariliOlmali(basariMesaji);
 
         login(TestData.usernameMBOZDEMIR, TestData.passwordMBOZDEMIR);
 
@@ -380,7 +384,7 @@ String basariMesaji = "İşlem başarılıdır!";
 //                .kullaniciGrupDetayKullan()
                 .havaleYapButon("Tebliğ Et");
 
-//waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
+waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
 
    mainPage.islemMesaji().basariliOlmali(basariMesaji);
 
@@ -445,8 +449,9 @@ String basariMesaji = "İşlem başarılıdır!";
 
         evrakDetayiPage
                 .btnTikla("İade Et")
-                .iadeEt();
-//                .islemMesaji().basariliOlmali(basariMesaji);
+                .iadeEt()
+//        waitForLoadingJS(WebDriverRunner.getWebDriver(),100000);
+        .islemMesaji().basariliOlmali(basariMesaji);
 
         birimeIadeEdilenlerPage
                 .openPage()
