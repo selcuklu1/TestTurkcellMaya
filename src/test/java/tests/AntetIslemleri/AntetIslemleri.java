@@ -200,7 +200,7 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
