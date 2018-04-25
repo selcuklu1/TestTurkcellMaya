@@ -534,7 +534,9 @@ public class EvrakOlusturPage extends MainPage {
 
         SelenideElement txtEvrakTarihi = $(By.id("yeniGidenEvrakForm:evrakBilgileriList:7:kayitTarih_input"));
 
-        SelenideElement txtGeregiSecimTipiYeniEvrak = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:j_idt']");
+//        SelenideElement txtGeregiSecimTipiYeniEvrak = $("select[id^='yeniGidenEvrakForm:evrakBilgileriList:16:j_idt']");
+        SelenideElement txtGeregiSecimTipiYeniEvrak = $x("//form[@id='yeniGidenEvrakForm']//label[normalize-space(text())='Gereği Seçim Tipi']/ancestor::tr[@class='ui-datagrid-row']//select");
+
         SelenideElement txtGeregiSecimTipiEskiEvrak = $("select[id^='inboxItemInfoForm:evrakBilgileriList:16:j_idt']");
         BelgenetElement cmbGeregiEski = comboLov("[id='inboxItemInfoForm:evrakBilgileriList:16:geregiLov:LovText']");
         SelenideElement btnOtomatikOnayAkisiKapat = $("[id^='yeniGidenEvrakForm:hiyerarsikAkisOlusturDialog'] [class='ui-icon ui-icon-closethick']");
