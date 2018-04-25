@@ -340,10 +340,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,1)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -482,10 +482,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,1)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -620,10 +620,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,1)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -759,10 +759,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,1)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -902,10 +902,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,0)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -1044,10 +1044,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,0)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -1188,10 +1188,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,0)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -1331,10 +1331,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,1)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
@@ -1471,10 +1471,10 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
                 .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,0)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
