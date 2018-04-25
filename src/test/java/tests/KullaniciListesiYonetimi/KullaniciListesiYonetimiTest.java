@@ -312,7 +312,8 @@ String basariMesaji = "İşlem başarılıdır!";
 
         String dikkatMesaji = "Havaleyi onaylayacak kullanıcıyı seçiniz.";
         String kullanici = "Username21g TEST";
-        String onaylayacakKisi = "Unvv TEST";
+//        String onaylayacakKisi = "Unvv TEST";
+        String onaylayacakKisi = "Username28 TEST";
 
 //String guncelAd="TS1005 142310";
 //String konu = "TS1466 171246305";
