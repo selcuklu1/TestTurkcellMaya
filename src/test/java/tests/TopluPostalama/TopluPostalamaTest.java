@@ -2378,7 +2378,7 @@ public class TopluPostalamaTest extends BaseTest {
             mainPage
                     .evrakImzala();
 
-//            logout();
+            logout();
             login(TestData.userMbozdemir);
 
             imzaladiklarimPage

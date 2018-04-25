@@ -825,6 +825,13 @@ public class HavaleYetkisiTest extends BaseTest {
                 .havaleYapKisiAlanindaButonKontrolu(btnBirim, false)
                 .evrakDetayiSayfasiKapat()
                 .islemPenceresiKapatmaOnayiPopup("Kapat");
+
+//        birimHavaleEdilenlerPage
+//                .konuyaGoreTablodanEvrakSecme(konu)
+//                .konuyaGoreTablodanEvrakSecme(konu2)
+//                .
+
+
     }
 
     @Severity(SeverityLevel.CRITICAL)
