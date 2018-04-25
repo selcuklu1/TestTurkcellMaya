@@ -1086,7 +1086,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         page.closePage(false);
     }
 
-    @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
+    @Step("Giden Evrak Kayıt sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void gidenEvrakSayfadaPasifKontrolu(String adi) {
         new GidenEvrakKayitPage().openPage()
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI.getOptionText())
@@ -1173,7 +1173,7 @@ public class DagitimPlaniYonetimiTest extends BaseTest {
         evrakOlusturPage.closePage(false);
     }
 
-    @Step("Evrak Oluştur sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
+    @Step("Giden Evrak Kayıt sayfada pasif yapılan dağıtım planının gereği alanında gelmediği görülür")
     private void gidenEvrakSayfadaAktifKontrolu(String adi) {
         new GidenEvrakKayitPage().openPage()
                 .geregiSecimTipiSec(GeregiSecimTipi.DAGITIM_PLANLARI.getOptionText())
