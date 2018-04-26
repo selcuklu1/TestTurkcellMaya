@@ -2223,7 +2223,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol("","",antetGuncelBirim, "","");
+                .editorAntetKontrol2("","",antetGuncelBirim, "","");
 
         editor
                 .type(editorIcerik)
@@ -2340,12 +2340,6 @@ public class AntetIslemleri extends BaseTest {
         testStatus(testid, "PreCondition");
         birimYonetimiPage
                 .openPage()
-                .birimFiltreDoldur(enUstBirim)
-                .ara()
-                .aktiflerIlkBirimGuncelle()
-                .antetTipiSec(antetGuncelBirimTipi)
-                .kaydet()
-
                 .birimFiltreDoldur(ustBirim)
                 .ara()
                 .aktiflerIlkBirimGuncelle()
@@ -2435,12 +2429,12 @@ public class AntetIslemleri extends BaseTest {
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
-                .ekListesiKontrol("EK-3", "Dağıtım Listesi")
+                .ekListesiKontrol("EK-1", "Dağıtım Listesi")
                 .ekListesiKontrol("EK-2", fileName)
                 .ekListesiKontrol("EK-3","Ek Listesi")
-                .ekListesindeDetayGoster("EK-3", "Dağıtım Listesi")
+                .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFOzelKontrolu("","","","","","","")
+                .dagitimListesiPDFOzelKontrolu("","",ust,birim,ozelAntet,ozelAntet2,normalAntet)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
                 .ekListesiPDFOzelKontrolu("","",ust,birim,ozelAntet,ozelAntet2,normalAntet);
     }
