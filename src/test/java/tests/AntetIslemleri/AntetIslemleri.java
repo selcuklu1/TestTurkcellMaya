@@ -2068,6 +2068,10 @@ public class AntetIslemleri extends BaseTest {
         String antetDefault2 = "ANKARA";
         String antetDefault = "ANKARA";
         String bilgiKurum = "BÜYÜK HARFLERLE KURUM";
+        String ust ="İki";
+        String birim ="İki Üst";
+        String ozelAntet ="İki Üst Birim";
+        String ozelAntet2 ="İki Üst Birim Özel Antet";
 
         testStatus(testid, "PreCondition");
         birimYonetimiPage
@@ -2076,7 +2080,7 @@ public class AntetIslemleri extends BaseTest {
                 .ara()
                 .aktiflerIlkBirimGuncelle()
                 .antetTipiSec(antetEnUstBirimTipi)
-                .antetOzelBilgisiDoldur(antetEnUstBirim)
+                .antetOzelBilgisiTumuDoldur(ust,birim,ozelAntet,ozelAntet2)
                 .kaydet()
 
                 .birimFiltreDoldur(ustBirim)
@@ -2164,7 +2168,7 @@ public class AntetIslemleri extends BaseTest {
                 .searchTable().findRowAndSelect(Condition.text(konu));
 
         imzaBekleyenlerPage
-                .ekOnizlemePDFKontrol("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim);
+                .ekOnizlemePDFKontrolOzelAntet2("","",ust,birim,ozelAntet,ozelAntet2,antetUstBirim);
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
@@ -2173,9 +2177,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFKontrolu("","","","","")
+                .dagitimListesiPDFOzelKontrolu("","",ust,birim,ozelAntet,ozelAntet2,antetUstBirim,0)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekListesiPDFKontrolu("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim);
+                .ekListesiPDFOzelKontrolu("","",ust,birim,ozelAntet,ozelAntet2,antetUstBirim,0);
     }
 
     @Severity(SeverityLevel.CRITICAL)
