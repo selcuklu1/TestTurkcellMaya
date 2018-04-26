@@ -514,8 +514,9 @@ public class ImzaBekleyenlerPage extends MainPage {
         switchTo().frame($("iframe[class='onizlemeFrame']"));
 
         int ozelFlag = 1;
-        if(antetDefault1.equals("") && antetDefault2.equals(""))
+        if(antetDefault1.equals("") && antetDefault2.equals("")){
             ozelFlag =0;
+            }
 
         if(!antetDefault1.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelFlag);
@@ -663,8 +664,10 @@ public class ImzaBekleyenlerPage extends MainPage {
 
         if(!antetDefault1.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(ozelflag);
+
         if(!antetDefault2.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault2)).shouldHaveSize(ozelflag);
+
         if(!ozel1.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(ozel1)).shouldHaveSize(1);
         if(!ozel2.equals(""))
