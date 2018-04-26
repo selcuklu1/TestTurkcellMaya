@@ -490,6 +490,8 @@ public class ImzaBekleyenlerPage extends MainPage {
     public ImzaBekleyenlerPage ekOnizlemePDFKontrolOzelAntet(String antetDefault1,String antetDefault2,String ozel1,String ozel2, String ozel3, String ozel4,String normalAntet) {
         switchTo().frame($("iframe[class='onizlemeFrame']"));
 
+
+
         if(!antetDefault1.equals(""))
             $$(".textLayer div[style^='left']").filterBy(exactText(antetDefault1)).shouldHaveSize(1);
         if(!antetDefault2.equals(""))

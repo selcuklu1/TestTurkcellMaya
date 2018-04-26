@@ -1742,7 +1742,7 @@ public class AntetIslemleri extends BaseTest {
                 .searchTable().findRowAndSelect(Condition.text(konu));
 
         imzaBekleyenlerPage
-                .ekOnizlemePDFKontrol("","",antetGuncelBirim,antetUstBirim,antetEnUstBirim);
+                .ekOnizlemePDFKontrol(antetDefault1,antetDefault2,antetGuncelBirim,antetUstBirim,antetEnUstBirim);
 
         imzaBekleyenlerPage
                 .evrakEkleriTabAc()
@@ -1751,9 +1751,9 @@ public class AntetIslemleri extends BaseTest {
                 .ekListesiKontrol("EK-3","Ek Listesi")
                 .ekListesindeDetayGoster("EK-1", "Dağıtım Listesi")
                 //Bug mevcut, antetUstBirim ve AntetGuncelBirim verileri gelmiyor
-                .dagitimListesiPDFKontrolu("","",antetGuncelBirim,antetUstBirim,antetEnUstBirim)
+                .dagitimListesiPDFKontrolu(antetDefault1,antetDefault2,antetGuncelBirim,antetUstBirim,antetEnUstBirim)
                 .ekListesindeDetayGoster("EK-3", "Ek Listesi")
-                .ekListesiPDFKontrolu("","",antetEnUstBirim,antetUstBirim,antetGuncelBirim);
+                .ekListesiPDFKontrolu(antetDefault1,antetDefault2,antetEnUstBirim,antetUstBirim,antetGuncelBirim);
             }
 
 
