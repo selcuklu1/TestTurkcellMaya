@@ -1541,7 +1541,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol(antetDefault1,antetDefault2,antetGuncelBirim, antetUstBirim, antetEnUstBirim,true);
 
         evrakOlusturPage
                 .bilgilerTabiAc()
@@ -1678,7 +1678,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol("","",antetGuncelBirim, antetUstBirim, antetEnUstBirim);
+                .editorAntetKontrol("","",antetGuncelBirim, antetUstBirim, antetEnUstBirim,false);
 
 
         editor
@@ -2650,7 +2650,7 @@ public class AntetIslemleri extends BaseTest {
         evrakOlusturPage
                 .openPage()
                 .editorTabAc()
-                .editorAntetKontrol2("","",antetnormalBirim, antetUstBirim,antetEnUstBirim);
+                .editorAntetKontrol("","",antetnormalBirim, antetUstBirim,antetEnUstBirim,false);
 
 
         editor
