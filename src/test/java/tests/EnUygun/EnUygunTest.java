@@ -26,7 +26,7 @@ public class EnUygunTest extends BaseTest {
     @Test(enabled = true, description = "TS0001: En Uygun Havaaalanı Seçme")
     public void TS0001() throws InterruptedException {
         String testid = "TS-0001";
-        String testidz = "serdarbranch";
+        String testidz = "serdarmaster";
 
 
 //        testStatus(testid, "PreCondition Evrak Oluşturma");
