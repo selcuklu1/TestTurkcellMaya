@@ -68,7 +68,7 @@ public class BaseTest extends BaseLibrary {
         WebDriverRunner.addListener(new DriverEventListener());
 
         //Configuration.remote = "http://10.101.20.151:4444/wd/hub";
-        //Configuration.remote = "http://localhost:4444/wd/hub";
+        Configuration.remote = "http://localhost:4444/wd/hub";
 
 //        Configuration.baseUrl = (System.getProperty("URL") == null) ? belgenetURL : System.getProperty("URL");
 
@@ -76,7 +76,7 @@ public class BaseTest extends BaseLibrary {
         Configuration.browser = (System.getProperty("browser") == null) ? "chrome" : System.getProperty("browser");
         Configuration.browserVersion = System.getProperty("node");
         Configuration.driverManagerEnabled = false;
-        Configuration.remote = System.getProperty("hub");
+//        Configuration.remote = System.getProperty("hub");
         Configuration.reportsFolder = "test-result/reports";
         Configuration.screenshots = Configuration.remote == null;
         Configuration.savePageSource = false;
