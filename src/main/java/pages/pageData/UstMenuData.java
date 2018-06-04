@@ -8,6 +8,7 @@ package pages.pageData;
 public class UstMenuData {
 
     private enum UstMenuGroup {
+        UcakIslemleri("Ucak İşlemleri"),
         EvrakIslemleri("Evrak İşlemleri"),
         TeskilatKisiTanimlari("Teşkilat/Kişi Tanımları"),
         KlasorIslemleri("Klasör İşlemleri"),
@@ -25,6 +26,25 @@ public class UstMenuData {
 
         public String getName() {
             return name;
+        }
+    }
+
+    public enum UcakIslemleri implements UstMenuDataInterface {
+        UcakBileti("Uçak Bileti");
+
+        private String name;
+        private String groupName = UstMenuGroup.UcakIslemleri.getName();
+
+        UcakIslemleri(final String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getGroupName() {
+            return groupName;
         }
     }
 

@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import pages.pageData.UstMenuData;
 
 import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class UstMenu extends BaseLibrary {
@@ -19,11 +20,18 @@ public class UstMenu extends BaseLibrary {
     public void openMenu(Enum ustMenuData, boolean... useJS) {
         String groupName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getGroupName();
         String menuName = ((UstMenuData.UstMenuDataInterface) ustMenuData).getName();
-
+        System.out.println("groupName:" + groupName + " menuName:" + menuName);
         if ((useJS.length <= 0) || useJS[0])
-            openMenu(menuName);
+            openMenuTest(menuName);
         else
             openMenu(groupName, menuName);
+    }
+
+    private void openMenuTest(String menuName) {
+        SelenideElement menu = $$("a[href='https://www.enuygun.com/ucak-bileti/']").filterBy(text(menuName)).get(0);
+//        SelenideElement menu = $x("//a[class[text()='" + menuName + "']");
+        menu.waitUntil(exist, Configuration.timeout);
+        executeJavaScript("arguments[0].click();", menu);
     }
 
     private void openMenu(String menuName) {
